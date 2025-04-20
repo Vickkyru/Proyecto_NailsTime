@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>30d63bc2-8885-4b5d-80bd-5e4f6b79c94a</ProjectGuid>
+    <ProjectGuid>{30D63BC2-8885-4B5D-80BD-5E4F6B79C94A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BLL_VR750</RootNamespace>
@@ -31,24 +31,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BLLAgendaLaboral_750VR.cs" />
+    <Compile Include="BLLinsumos_750VR.cs" />
+    <Compile Include="BLLResumenTurno_750VR.cs" />
+    <Compile Include="BLLServicio_750VR.cs" />
+    <Compile Include="BLLturnos_750VR.cs" />
+    <Compile Include="BLLusuario_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BE_VR750\BE_VR750.csproj">
+      <Project>{22bee81d-0d51-464a-9283-b39692ee7afd}</Project>
+      <Name>BE_VR750</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL_VR750\DAL_VR750.csproj">
+      <Project>{3f212b34-c675-4882-9470-c3037da85f03}</Project>
+      <Name>DAL_VR750</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>

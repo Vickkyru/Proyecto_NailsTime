@@ -37,12 +37,12 @@
             this.cambiarClaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ventasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verTurnosDisponiblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verTurnosReservadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.turnosAsignadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,9 +59,9 @@
             this.comprasToolStripMenuItem,
             this.reportesToolStripMenuItem,
             this.ayudaToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(670, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(779, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(130, 450);
+            this.menuStrip1.Size = new System.Drawing.Size(130, 507);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -72,14 +72,14 @@
             this.usuariosToolStripMenuItem});
             this.administradorToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.administradorToolStripMenuItem.Name = "administradorToolStripMenuItem";
-            this.administradorToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
+            this.administradorToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
             this.administradorToolStripMenuItem.Text = "Administrador";
             this.administradorToolStripMenuItem.Click += new System.EventHandler(this.administradorToolStripMenuItem_Click);
             // 
             // usuariosToolStripMenuItem
             // 
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
@@ -87,7 +87,7 @@
             // 
             this.maestrosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
-            this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
+            this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
             this.maestrosToolStripMenuItem.Text = "Maestros";
             // 
             // usuarioToolStripMenuItem
@@ -98,7 +98,7 @@
             this.logoutToolStripMenuItem});
             this.usuarioToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
-            this.usuarioToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
+            this.usuarioToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
             this.usuarioToolStripMenuItem.Text = "Usuario";
             // 
             // loginToolStripMenuItem
@@ -130,29 +130,8 @@
             this.turnosAsignadosToolStripMenuItem});
             this.ventasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
-            this.ventasToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
+            this.ventasToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
             this.ventasToolStripMenuItem.Text = "Reserva";
-            // 
-            // comprasToolStripMenuItem
-            // 
-            this.comprasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
-            this.comprasToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
-            this.comprasToolStripMenuItem.Text = "Insumos";
-            // 
-            // reportesToolStripMenuItem
-            // 
-            this.reportesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
-            this.reportesToolStripMenuItem.Text = "Reportes";
-            // 
-            // ayudaToolStripMenuItem
-            // 
-            this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(120, 25);
-            this.ayudaToolStripMenuItem.Text = "Ayuda";
             // 
             // verTurnosDisponiblesToolStripMenuItem
             // 
@@ -173,12 +152,33 @@
             this.turnosAsignadosToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
             this.turnosAsignadosToolStripMenuItem.Text = "Turnos Asignados";
             // 
+            // comprasToolStripMenuItem
+            // 
+            this.comprasToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
+            this.comprasToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
+            this.comprasToolStripMenuItem.Text = "Insumos";
+            // 
+            // reportesToolStripMenuItem
+            // 
+            this.reportesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
+            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
+            this.reportesToolStripMenuItem.Text = "Reportes";
+            // 
+            // ayudaToolStripMenuItem
+            // 
+            this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
+            this.ayudaToolStripMenuItem.Text = "Ayuda";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(909, 507);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
