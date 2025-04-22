@@ -11,7 +11,7 @@ namespace BE_VR750
         public int dni { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
-        public int telefono { get; set; }
+        //sacar telefono de la bd
         public string mail { get; set; }
         public string user { get; set; }
         public string contraseña { get; set; }
@@ -19,12 +19,11 @@ namespace BE_VR750
         public string estado { get; set; }
 
 
-        public Usuario_750VR(int dni, string nombre, string ape, int tel, string mail,string rol, string estado)
+        public Usuario_750VR(int dni, string nombre, string ape, string mail,string rol, string estado)
         {
-                this.dni = dni;
+            this.dni = dni;
             this.nombre = nombre;
             this.apellido = ape;
-            this.telefono = tel;
             this.mail = mail;
             this.user = dni + ape;
             this.contraseña = dni + nombre;

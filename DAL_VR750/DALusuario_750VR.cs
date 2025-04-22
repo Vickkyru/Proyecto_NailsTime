@@ -24,7 +24,7 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Telefono", usuario.telefono);
+                //cmd.Parameters.AddWithValue("@Telefono", usuario.telefono);
                 cmd.Parameters.AddWithValue("@Mail", usuario.mail);
                 cmd.Parameters.AddWithValue("@User", usuario.user);
                 cmd.Parameters.AddWithValue("@Contrasenia", usuario.contraseña);
