@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using DAL_VR750;
 using BE_VR750;
 
+
+
+
+//hacer mejor con la interfaz
 namespace BLL_VR750
 {
     public class BLLusuario_750VR
@@ -18,17 +22,36 @@ namespace BLL_VR750
         }
 
 
-        public bool CrearUsuario(Usuario_750VR usuario)
+        public bool CrearUsuario(UsuarioBE usuario)
         {
-            // Validación básica (podés expandir esto)
             if (string.IsNullOrEmpty(usuario.nombre) || string.IsNullOrEmpty(usuario.apellido))
-                throw new Exception("Faltan datos obligatorios.");
+                throw new Exception("Nombre y apellido son obligatorios.");
 
-            // Generar user y contraseña por defecto
-            usuario.user = usuario.dni.ToString() + usuario.apellido.ToLower();
-            usuario.contraseña = usuario.dni.ToString() + usuario.nombre.ToLower();
+            usuario.user = usuario.dni + usuario.apellido;
+            usuario.contraseña = usuario.dni + usuario.nombre;
 
             return dal.CrearUsuario(usuario);
         }
+
+        public bool ModificarUsuario(UsuarioBE usuario)
+        {
+            return dal.ModificarUsuario(usuario);
+        }
+
+        public bool BorrarUsuarioLogico(string dni)
+        {
+            return dal.BorrarUsuarioLogico(dni);
+        }
+
+        public void DesbloquearUsuario(string dni)
+        {
+            dal.DesbloquearUsuario(dni);
+        }
+
+        public List<UsuarioBE> ObtenerUsuarios(bool soloActivos)
+        {
+            return dal.ObtenerUsuarios(soloActivos);
+        }
+
     }
 }
