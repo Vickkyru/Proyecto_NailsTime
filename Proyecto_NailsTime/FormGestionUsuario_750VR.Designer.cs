@@ -33,17 +33,17 @@
             this.rbtnact = new System.Windows.Forms.RadioButton();
             this.rbtntodos = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblcantuser = new System.Windows.Forms.Label();
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtape = new System.Windows.Forms.TextBox();
             this.txtemail = new System.Windows.Forms.TextBox();
             this.txtnom = new System.Windows.Forms.TextBox();
             this.cmbrol = new System.Windows.Forms.ComboBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.actsi = new System.Windows.Forms.RadioButton();
+            this.actno = new System.Windows.Forms.RadioButton();
+            this.bloqsi = new System.Windows.Forms.RadioButton();
+            this.bloqno = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -60,6 +60,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.btnelim = new System.Windows.Forms.Button();
+            this.txtuser = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblmensaje = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -119,14 +122,13 @@
             this.label1.TabIndex = 11;
             this.label1.Text = "Numero de usuarios:";
             // 
-            // label3
+            // lblcantuser
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(721, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "label3";
+            this.lblcantuser.AutoSize = true;
+            this.lblcantuser.Location = new System.Drawing.Point(721, 26);
+            this.lblcantuser.Name = "lblcantuser";
+            this.lblcantuser.Size = new System.Drawing.Size(0, 13);
+            this.lblcantuser.TabIndex = 12;
             // 
             // txtDNI
             // 
@@ -134,6 +136,7 @@
             this.txtDNI.Name = "txtDNI";
             this.txtDNI.Size = new System.Drawing.Size(100, 20);
             this.txtDNI.TabIndex = 13;
+            this.txtDNI.TextChanged += new System.EventHandler(this.txtDNI_TextChanged);
             // 
             // label4
             // 
@@ -150,6 +153,7 @@
             this.txtape.Name = "txtape";
             this.txtape.Size = new System.Drawing.Size(100, 20);
             this.txtape.TabIndex = 15;
+            this.txtape.TextChanged += new System.EventHandler(this.txtape_TextChanged);
             // 
             // txtemail
             // 
@@ -157,6 +161,7 @@
             this.txtemail.Name = "txtemail";
             this.txtemail.Size = new System.Drawing.Size(100, 20);
             this.txtemail.TabIndex = 16;
+            this.txtemail.TextChanged += new System.EventHandler(this.txtemail_TextChanged);
             // 
             // txtnom
             // 
@@ -164,6 +169,7 @@
             this.txtnom.Name = "txtnom";
             this.txtnom.Size = new System.Drawing.Size(100, 20);
             this.txtnom.TabIndex = 17;
+            this.txtnom.TextChanged += new System.EventHandler(this.txtnom_TextChanged);
             // 
             // cmbrol
             // 
@@ -172,58 +178,59 @@
             this.cmbrol.Name = "cmbrol";
             this.cmbrol.Size = new System.Drawing.Size(121, 21);
             this.cmbrol.TabIndex = 19;
+            this.cmbrol.TextChanged += new System.EventHandler(this.cmbrol_TextChanged);
             // 
-            // radioButton3
+            // actsi
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(262, 378);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(35, 17);
-            this.radioButton3.TabIndex = 20;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "SI";
-            this.radioButton3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.actsi.AutoSize = true;
+            this.actsi.Location = new System.Drawing.Point(262, 378);
+            this.actsi.Name = "actsi";
+            this.actsi.Size = new System.Drawing.Size(35, 17);
+            this.actsi.TabIndex = 20;
+            this.actsi.TabStop = true;
+            this.actsi.Text = "SI";
+            this.actsi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.actsi.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.actsi.UseVisualStyleBackColor = true;
             // 
-            // radioButton4
+            // actno
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(303, 378);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(41, 17);
-            this.radioButton4.TabIndex = 21;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "NO";
-            this.radioButton4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.actno.AutoSize = true;
+            this.actno.Location = new System.Drawing.Point(303, 378);
+            this.actno.Name = "actno";
+            this.actno.Size = new System.Drawing.Size(41, 17);
+            this.actno.TabIndex = 21;
+            this.actno.TabStop = true;
+            this.actno.Text = "NO";
+            this.actno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.actno.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.actno.UseVisualStyleBackColor = true;
             // 
-            // radioButton5
+            // bloqsi
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(262, 420);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(35, 17);
-            this.radioButton5.TabIndex = 22;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "SI";
-            this.radioButton5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButton5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.bloqsi.AutoSize = true;
+            this.bloqsi.Location = new System.Drawing.Point(262, 420);
+            this.bloqsi.Name = "bloqsi";
+            this.bloqsi.Size = new System.Drawing.Size(35, 17);
+            this.bloqsi.TabIndex = 22;
+            this.bloqsi.TabStop = true;
+            this.bloqsi.Text = "SI";
+            this.bloqsi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bloqsi.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.bloqsi.UseVisualStyleBackColor = true;
             // 
-            // radioButton6
+            // bloqno
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(303, 420);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(41, 17);
-            this.radioButton6.TabIndex = 23;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "NO";
-            this.radioButton6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radioButton6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.bloqno.AutoSize = true;
+            this.bloqno.Location = new System.Drawing.Point(303, 420);
+            this.bloqno.Name = "bloqno";
+            this.bloqno.Size = new System.Drawing.Size(41, 17);
+            this.bloqno.TabIndex = 23;
+            this.bloqno.TabStop = true;
+            this.bloqno.Text = "NO";
+            this.bloqno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bloqno.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.bloqno.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -349,6 +356,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblmensaje);
             this.panel1.Controls.Add(this.label12);
             this.panel1.Location = new System.Drawing.Point(416, 248);
             this.panel1.Name = "panel1";
@@ -358,11 +366,12 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(27, 13);
+            this.label12.Location = new System.Drawing.Point(33, 17);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(50, 13);
             this.label12.TabIndex = 0;
             this.label12.Text = "Mensaje:";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // btnelim
             // 
@@ -374,11 +383,40 @@
             this.btnelim.UseVisualStyleBackColor = true;
             this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
+            // txtuser
+            // 
+            this.txtuser.Location = new System.Drawing.Point(262, 328);
+            this.txtuser.Name = "txtuser";
+            this.txtuser.Size = new System.Drawing.Size(100, 20);
+            this.txtuser.TabIndex = 40;
+            this.txtuser.TextChanged += new System.EventHandler(this.txtuser_TextChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(193, 335);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 13);
+            this.label9.TabIndex = 41;
+            this.label9.Text = "User";
+            // 
+            // lblmensaje
+            // 
+            this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmensaje.Location = new System.Drawing.Point(20, 50);
+            this.lblmensaje.Name = "lblmensaje";
+            this.lblmensaje.Size = new System.Drawing.Size(161, 30);
+            this.lblmensaje.TabIndex = 42;
+            // 
             // FormGestionUsuario_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtuser);
             this.Controls.Add(this.btnelim);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnsalir);
@@ -394,17 +432,17 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.radioButton6);
-            this.Controls.Add(this.radioButton5);
-            this.Controls.Add(this.radioButton4);
-            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.bloqno);
+            this.Controls.Add(this.bloqsi);
+            this.Controls.Add(this.actno);
+            this.Controls.Add(this.actsi);
             this.Controls.Add(this.cmbrol);
             this.Controls.Add(this.txtnom);
             this.Controls.Add(this.txtemail);
             this.Controls.Add(this.txtape);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDNI);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblcantuser);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rbtntodos);
             this.Controls.Add(this.rbtnact);
@@ -427,17 +465,17 @@
         private System.Windows.Forms.RadioButton rbtnact;
         private System.Windows.Forms.RadioButton rbtntodos;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblcantuser;
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtape;
         private System.Windows.Forms.TextBox txtemail;
         private System.Windows.Forms.TextBox txtnom;
         private System.Windows.Forms.ComboBox cmbrol;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton actsi;
+        private System.Windows.Forms.RadioButton actno;
+        private System.Windows.Forms.RadioButton bloqsi;
+        private System.Windows.Forms.RadioButton bloqno;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -454,5 +492,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnelim;
+        private System.Windows.Forms.TextBox txtuser;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblmensaje;
     }
 }

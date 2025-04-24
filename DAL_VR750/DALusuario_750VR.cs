@@ -24,7 +24,6 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                //cmd.Parameters.AddWithValue("@Telefono", usuario.telefono);
                 cmd.Parameters.AddWithValue("@Mail", usuario.mail);
                 cmd.Parameters.AddWithValue("@User", usuario.user);
                 cmd.Parameters.AddWithValue("@Contrasenia", usuario.contraseña);
@@ -36,22 +35,9 @@ namespace DAL_VR750
         }
 
 
-        public void DesbloquearUsuario(string dni)
+        public bool ModificarUsuario(Usuario_750VR usuario)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Bloqueo = 1 WHERE DNI = @dni", conn);
-                cmd.Parameters.AddWithValue("@dni", dni);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-
-
-        public bool ModificarUsuario(UsuarioBE usuario)
-        {
-            using (SqlConnection conn = new SqlConnection(Conexion.cadena))
             {
                 conn.Open();
                 string query = @"UPDATE Usuarios SET 
@@ -68,7 +54,6 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Telefono", usuario.telefono);
                 cmd.Parameters.AddWithValue("@Mail", usuario.mail);
                 cmd.Parameters.AddWithValue("@Contrasenia", usuario.contraseña);
                 cmd.Parameters.AddWithValue("@Rol", usuario.rol);
@@ -80,7 +65,7 @@ namespace DAL_VR750
 
         public bool BorrarUsuarioLogico(string dni)
         {
-            using (SqlConnection conn = new SqlConnection(Conexion.cadena))
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
                 string query = "UPDATE Usuarios SET Activo = 0 WHERE DNI = @dni";
@@ -92,7 +77,7 @@ namespace DAL_VR750
 
         public void DesbloquearUsuario(string dni)
         {
-            using (SqlConnection conn = new SqlConnection(Conexion.cadena))
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Bloqueo = 1 WHERE DNI = @dni", conn);
@@ -101,11 +86,11 @@ namespace DAL_VR750
             }
         }
 
-        public List<UsuarioBE> ObtenerUsuarios(bool soloActivos)
+        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
         {
-            List<UsuarioBE> lista = new List<UsuarioBE>();
+            List<Usuario_750VR> lista = new List<Usuario_750VR>();
 
-            using (SqlConnection conn = new SqlConnection(Conexion.cadena))
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
                 string query = soloActivos
@@ -117,12 +102,11 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    UsuarioBE user = new UsuarioBE
+                    Usuario_750VR user = new Usuario_750VR
                     {
                         dni = Convert.ToInt32(reader["DNI"]),
                         nombre = reader["Nombre"].ToString(),
                         apellido = reader["Apellido"].ToString(),
-                        telefono = Convert.ToInt32(reader["Telefono"]),
                         mail = reader["Email"].ToString(),
                         user = reader["UsuarioLogin"].ToString(),
                         contraseña = reader["Contrasenia"].ToString(),
@@ -137,5 +121,50 @@ namespace DAL_VR750
             return lista;
         }
 
+
+        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email)
+        {
+            List<Usuario_750VR> lista = new List<Usuario_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Usuarios WHERE 1=1";
+
+                if (!string.IsNullOrEmpty(dni)) query += " AND DNI LIKE @DNI";
+                if (!string.IsNullOrEmpty(nombre)) query += " AND Nombre LIKE @Nombre";
+                if (!string.IsNullOrEmpty(apellido)) query += " AND Apellido LIKE @Apellido";
+                if (!string.IsNullOrEmpty(email)) query += " AND Email LIKE @Email";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                if (!string.IsNullOrEmpty(dni)) cmd.Parameters.AddWithValue("@DNI", "%" + dni + "%");
+                if (!string.IsNullOrEmpty(nombre)) cmd.Parameters.AddWithValue("@Nombre", "%" + nombre + "%");
+                if (!string.IsNullOrEmpty(apellido)) cmd.Parameters.AddWithValue("@Apellido", "%" + apellido + "%");
+                if (!string.IsNullOrEmpty(email)) cmd.Parameters.AddWithValue("@Email", "%" + email + "%");
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Usuario_750VR user = new Usuario_750VR
+                    {
+                        dni = Convert.ToInt32(reader["DNI"]),
+                        nombre = reader["Nombre"].ToString(),
+                        apellido = reader["Apellido"].ToString(),
+                        mail = reader["Email"].ToString(),
+                        user = reader["UsuarioLogin"].ToString(),
+                        contraseña = reader["Contrasenia"].ToString(),
+                        rol = reader["Rol"].ToString(),
+                        estado = reader["Estado"].ToString(),
+                        //activo = Convert.ToBoolean(reader["Activo"]),
+                        //bloqueado = Convert.ToBoolean(reader["Bloqueo"]),
+                      
+                    };
+
+                    lista.Add(user);
+                }
+            }
+
+            return lista;
+        }
     }
 }

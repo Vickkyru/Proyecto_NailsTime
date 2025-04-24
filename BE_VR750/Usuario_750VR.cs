@@ -33,6 +33,11 @@ namespace BE_VR750
 
         }
 
+        public Usuario_750VR()
+        {
+                
+        }
+
 
     }
 }

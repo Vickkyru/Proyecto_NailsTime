@@ -22,7 +22,7 @@ namespace BLL_VR750
         }
 
 
-        public bool CrearUsuario(UsuarioBE usuario)
+        public bool CrearUsuario(Usuario_750VR usuario)
         {
             if (string.IsNullOrEmpty(usuario.nombre) || string.IsNullOrEmpty(usuario.apellido))
                 throw new Exception("Nombre y apellido son obligatorios.");
@@ -33,7 +33,7 @@ namespace BLL_VR750
             return dal.CrearUsuario(usuario);
         }
 
-        public bool ModificarUsuario(UsuarioBE usuario)
+        public bool ModificarUsuario(Usuario_750VR usuario)
         {
             return dal.ModificarUsuario(usuario);
         }
@@ -48,9 +48,14 @@ namespace BLL_VR750
             dal.DesbloquearUsuario(dni);
         }
 
-        public List<UsuarioBE> ObtenerUsuarios(bool soloActivos)
+        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
         {
             return dal.ObtenerUsuarios(soloActivos);
+        }
+
+        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email)
+        {
+            return dal.BuscarUsuarios(dni, nombre, apellido, email);
         }
 
     }

@@ -145,6 +145,10 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BE_VR750\BE_VR750.csproj">
+      <Project>{22bee81d-0d51-464a-9283-b39692ee7afd}</Project>
+      <Name>BE_VR750</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL_VR750\BLL_VR750.csproj">
       <Project>{30d63bc2-8885-4b5d-80bd-5e4f6b79c94a}</Project>
       <Name>BLL_VR750</Name>

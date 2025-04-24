@@ -8,18 +8,80 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_VR750;
+using BE_VR750;
 
 namespace Proyecto_NailsTime
 {
     public partial class FormGestionUsuario_750VR : Form
     {
-
+        private string modoActual = "consulta";
         public FormGestionUsuario_750VR()
         {
             InitializeComponent();
+            lblcantuser.Text = dataGridView1.Rows.Count.ToString();
+
+            // Cargar solo usuarios activos al iniciar
+            rbtnact.Checked = true; // activa el selector "Activos"
+            CargarUsuariosActivos();
+
+            // Deshabilitar botones Aplicar y Cancelar
+            btnaplicar.Enabled = false;
+            btncancelar.Enabled = false;
+
+            // Habilitar grilla solo para selección (no edición)
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+
+            // Iniciar en modo consulta
+            modoActual = "consulta";
+            lblmensaje.Text = "Modo Consulta";
+
+
+            // Opcional: limpiar campos
+            LimpiarCampos();
+
+        }
+        public void LimpiarCampos()
+        {
+            txtDNI.Clear();
+            txtnom.Clear();
+            txtape.Clear();
+            txtemail.Clear();
+            txtuser.Clear();
+            cmbrol.SelectedIndex = -1;
+            actsi.Checked = false;
+            actno.Checked = false;
+            bloqsi.Checked = false;
+            bloqno.Checked = false;
+
         }
 
-        private string modoActual = "consulta";
+        private void CargarTodosUsuarios()
+        {
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            var lista = bll.ObtenerUsuarios(false);
+            dataGridView1.DataSource = lista;
+            PintarUsuariosInactivos();
+        }
+
+        private void CargarUsuariosActivos()
+        {
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            var lista = bll.ObtenerUsuarios(true);
+            dataGridView1.DataSource = lista;
+            PintarUsuariosInactivos();
+        }
+
+        //hasta aca seria lo q muestra ni bien arranca + lo de los radio btns act y todos
+
+
+
+
+
+
+
+
 
         private void label2_Click(object sender, EventArgs e)
         {
@@ -29,50 +91,42 @@ namespace Proyecto_NailsTime
         //boton crear
         private void button1_Click(object sender, EventArgs e)
         {
-            //UsuarioBE nuevoUsuario = new UsuarioBE();
-
-            //nuevoUsuario.dni = int.Parse(txtDNI.Text);
-            //nuevoUsuario.nombre = txtNombre.Text;
-            //nuevoUsuario.apellido = txtApellido.Text;
-            //nuevoUsuario.telefono = int.Parse(txtTelefono.Text);
-            //nuevoUsuario.mail = txtEmail.Text;
-
-            //// Usuario y contraseña automáticos
-            //nuevoUsuario.user = txtDNI.Text + txtApellido.Text;
-            //nuevoUsuario.contraseña = txtDNI.Text + txtNombre.Text;
-
-            //nuevoUsuario.rol = cmbRol.SelectedItem.ToString();
-
-            //// Estado activo
-            //nuevoUsuario.estado = rbtnActivoSi.Checked ? "Activo" : "Inactivo";
-
-            //// Podés también guardar si está bloqueado o no como campo extra si querés
-
-            //UsuarioBLL usuarioBLL = new UsuarioBLL();
-            //bool creado = usuarioBLL.CrearUsuario(nuevoUsuario);
-
-            //if (creado)
-            //{
-            //    MessageBox.Show("Usuario creado correctamente.");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Error al crear el usuario.");
-            //}
-
-
+         
             modoActual = "añadir";
             ActivarModoEdicion();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            var result = MessageBox.Show("¿Está seguro que desea salir? Se perderán los cambios no guardados.",
+                               "Confirmar salida",
+                               MessageBoxButtons.YesNo,
+                               MessageBoxIcon.Warning);
 
+            if (result == DialogResult.Yes)
+                this.Close();
         }
 
         private void btnaplicar_Click(object sender, EventArgs e)
         {
-            if (!ValidarCampos()) return;
+
+            //después de aplicar el botón aplicar en el datagrid se ponen todos los registros q cumplan con los requerimientos de búsqueda
+            if (modoActual == "consulta")
+            {
+                BLLusuario_750VR bll = new BLLusuario_750VR();
+                var resultados = bll.BuscarUsuarios(txtDNI.Text, txtnom.Text, txtape.Text, txtemail.Text);
+                dataGridView1.DataSource = resultados;
+
+                // Desactivar los selectores
+                rbtnact.Checked = false;
+                rbtntodos.Checked = false;
+
+                PintarUsuariosInactivos();
+                return;
+            }
+
+            if (!ValidarCampos() && modoActual != "eliminar" && modoActual != "desbloquear")
+                return;
 
             switch (modoActual)
             {
@@ -90,8 +144,10 @@ namespace Proyecto_NailsTime
                     break;
             }
 
+            // Volver al estado de consulta
             modoActual = "consulta";
-            ResetearEstadoInterfaz();
+            ResetearEstadoInterfaz(); // Esto desactiva cancelar y activa el resto
+           
         }
 
         private void AplicarDesbloqueo()
@@ -114,13 +170,13 @@ namespace Proyecto_NailsTime
 
 
 
-            if (usuarioSeleccionado != null)
-            {
-                usuarioSeleccionado.Bloqueo = 1; // o false si usás BIT
-                UsuarioBLL bll = new UsuarioBLL();
-                bll.DesbloquearUsuario(usuarioSeleccionado.DNI);
-                MessageBox.Show("Usuario desbloqueado correctamente.");
-            }
+            //if (usuarioSeleccionado != null)
+            //{
+            //    usuarioSeleccionado.Bloqueo = 1; // o false si usás BIT
+            //    UsuarioBLL bll = new UsuarioBLL();
+            //    bll.DesbloquearUsuario(usuarioSeleccionado.DNI);
+            //    MessageBox.Show("Usuario desbloqueado correctamente.");
+            //}
 
 
         }
@@ -151,51 +207,47 @@ namespace Proyecto_NailsTime
 
         private void AplicarModificacion()
         {
-            //try
-            //{
-            //    UsuarioBE usuarioMod = new UsuarioBE
-            //    {
-            //        dni = int.Parse(txtDNI.Text),
-            //        nombre = txtNombre.Text,
-            //        apellido = txtApellido.Text,
-            //        telefono = int.Parse(txtTelefono.Text),
-            //        mail = txtEmail.Text,
-            //        user = txtUsuario.Text,
-            //        contraseña = txtContraseña.Text,
-            //        rol = cmbRol.SelectedItem.ToString(),
-            //        estado = rbtnActivoSi.Checked ? "Activo" : "Inactivo"
-            //    };
-
-            //    UsuarioBLL bll = new UsuarioBLL();
-            //    bool modificado = bll.ModificarUsuario(usuarioMod);
-
-            //    if (modificado)
-            //    {
-            //        MessageBox.Show("Usuario modificado correctamente.");
-            //        CargarUsuariosActivos();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("No se pudo modificar el usuario.");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error al modificar usuario: " + ex.Message);
-            //}
-
-            if (dgvUsuarios.SelectedRows.Count > 0)
+            try
             {
-                DataGridViewRow row = dgvUsuarios.SelectedRows[0];
+                Usuario_750VR usuarioMod = new Usuario_750VR
+                {
+                    dni = int.Parse(txtDNI.Text),
+                    nombre = txtnom.Text,
+                    apellido = txtape.Text,
+                    mail = txtemail.Text,
+                    user = txtuser.Text,
+                    rol = cmbrol.SelectedItem.ToString(),
+                    estado = actsi.Checked ? "Activo" : "Inactivo"
+                };
+
+                BLLusuario_750VR bll = new BLLusuario_750VR();
+                bool modificado = bll.ModificarUsuario(usuarioMod);
+
+                if (modificado)
+                {
+                    MessageBox.Show("Usuario modificado correctamente.");
+                    CargarUsuariosActivos();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo modificar el usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar usuario: " + ex.Message);
+            }
+
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dataGridView1.SelectedRows[0];
                 txtDNI.Text = row.Cells["DNI"].Value.ToString();
-                txtNombre.Text = row.Cells["Nombre"].Value.ToString();
-                txtApellido.Text = row.Cells["Apellido"].Value.ToString();
-                txtTelefono.Text = row.Cells["Telefono"].Value.ToString();
-                txtEmail.Text = row.Cells["Email"].Value.ToString();
-                txtUsuario.Text = row.Cells["UsuarioLogin"].Value.ToString();
-                txtContraseña.Text = row.Cells["Contrasenia"].Value.ToString();
-                cmbRol.SelectedItem = row.Cells["Rol"].Value.ToString();
-                rbtnActivoSi.Checked = row.Cells["Activo"].Value.ToString() == "1";
+                txtnom.Text = row.Cells["Nombre"].Value.ToString();
+                txtape.Text = row.Cells["Apellido"].Value.ToString();
+                txtemail.Text = row.Cells["Email"].Value.ToString();
+                txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
+                cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
+                actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
 
                 modoActual = "modificar";
                 ActivarModoEdicion();
@@ -212,20 +264,19 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                UsuarioBE nuevoUsuario = new UsuarioBE
+                Usuario_750VR nuevoUsuario = new Usuario_750VR
                 {
                     dni = int.Parse(txtDNI.Text),
-                    nombre = txtNombre.Text,
-                    apellido = txtApellido.Text,
-                    telefono = int.Parse(txtTelefono.Text),
-                    mail = txtEmail.Text,
-                    rol = cmbRol.SelectedItem.ToString(),
-                    estado = rbtnActivoSi.Checked ? "Activo" : "Inactivo",
-                    user = txtDNI.Text + txtApellido.Text,
-                    contraseña = txtDNI.Text + txtNombre.Text
+                    nombre = txtnom.Text,
+                    apellido = txtape.Text,
+                    mail = txtemail.Text,
+                    rol = cmbrol.SelectedItem.ToString(),
+                    estado = actsi.Checked ? "Activo" : "Inactivo",
+                    user = txtDNI.Text + txtape.Text,
+                    contraseña = txtDNI.Text + txtnom.Text
                 };
 
-                UsuarioBLL bll = new UsuarioBLL();
+                BLLusuario_750VR bll = new BLLusuario_750VR();
                 bool creado = bll.CrearUsuario(nuevoUsuario);
 
                 if (creado)
@@ -242,16 +293,19 @@ namespace Proyecto_NailsTime
             {
                 MessageBox.Show("Error al crear usuario: " + ex.Message);
             }
+
+
+
         }
 
         private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
-       string.IsNullOrWhiteSpace(txtNombre.Text) ||
-       string.IsNullOrWhiteSpace(txtApellido.Text) ||
-       string.IsNullOrWhiteSpace(txtTelefono.Text) ||
-       string.IsNullOrWhiteSpace(txtEmail.Text) ||
-       string.IsNullOrWhiteSpace(cmbRol.Text))
+       string.IsNullOrWhiteSpace(txtnom.Text) ||
+       string.IsNullOrWhiteSpace(txtape.Text) ||
+       string.IsNullOrWhiteSpace(txtemail.Text) ||
+       string.IsNullOrWhiteSpace(cmbrol.Text))
+       //falta el resto
             {
                 MessageBox.Show("Por favor, complete todos los campos obligatorios.");
                 return false;
@@ -274,35 +328,23 @@ namespace Proyecto_NailsTime
         private void rbtntodos_CheckedChanged(object sender, EventArgs e)
         {
 
-            if (rbtnTodos.Checked)
+            if (rbtntodos.Checked)
                 CargarTodosUsuarios();
         }
 
-        private void CargarTodosUsuarios()
-        {
-            UsuarioBLL bll = new UsuarioBLL();
-            var lista = bll.ObtenerUsuarios(false);
-            dgvUsuarios.DataSource = lista;
-            PintarUsuariosInactivos();
-        }
+
+
 
         private void rbtnact_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtnActivos.Checked)
+            if (rbtnact.Checked)
                 CargarUsuariosActivos();
         }
 
-        private void CargarUsuariosActivos()
-        {
-            UsuarioBLL bll = new UsuarioBLL();
-            var lista = bll.ObtenerUsuarios(true);
-            dgvUsuarios.DataSource = lista;
-            PintarUsuariosInactivos();
-        }
-
+     
         private void PintarUsuariosInactivos()
         {
-            foreach (DataGridViewRow row in dgvUsuarios.Rows)
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 if (row.Cells["Activo"].Value != null && row.Cells["Activo"].Value.ToString() == "0")
                 {
@@ -314,6 +356,24 @@ namespace Proyecto_NailsTime
         private void btncancelar_Click(object sender, EventArgs e)
         {
             modoActual = "consulta";
+
+            // Limpiar todos los campos
+            LimpiarCampos();
+
+            // Restaurar interfaz al estado inicial
+            btnaplicar.Enabled = false;
+            btncancelar.Enabled = false;
+
+            btncrear.Enabled = true;
+            btnmod.Enabled = true;
+            btnelim.Enabled = true;
+            btndesb.Enabled = true;
+
+            rbtnact.Enabled = true;
+            rbtntodos.Enabled = true;
+
+            dataGridView1.Enabled = true;
+            
             ResetearEstadoInterfaz();
         }
 
@@ -322,54 +382,103 @@ namespace Proyecto_NailsTime
         {
             // Habilitar campos de edición según corresponda
             txtDNI.Enabled = modoActual == "añadir";
-            txtNombre.Enabled = true;
-            txtApellido.Enabled = true;
-            txtTelefono.Enabled = true;
-            txtEmail.Enabled = true;
-            cmbRol.Enabled = true;
-            rbtnActivoSi.Enabled = true;
-            rbtnActivoNo.Enabled = true;
+            txtnom.Enabled = true;
+            txtape.Enabled = true;
+            txtemail.Enabled = true;
+            cmbrol.Enabled = true;
+            actsi.Enabled = true;
+            actno.Enabled = true;
 
             // Habilitar botones Aplicar y Cancelar
-            btnAplicar.Enabled = true;
-            btnCancelar.Enabled = true;
+            btnaplicar.Enabled = true;
+            btncancelar.Enabled = true;
 
             // Deshabilitar botones de navegación
-            btnAñadir.Enabled = false;
-            btnModificar.Enabled = false;
-            btnEliminar.Enabled = false;
-            btnDesbloquear.Enabled = false;
-            rbtnActivos.Enabled = false;
-            rbtnTodos.Enabled = false;
+            btncrear.Enabled = false;
+            btnmod.Enabled = false;
+            btnmod.Enabled = false;
+            btndesb.Enabled = false;
+            rbtnact.Enabled = false;
+            rbtntodos.Enabled = false;
 
             // Deshabilitar DataGridView si estás añadiendo o desbloqueando
-            dgvUsuarios.Enabled = modoActual == "modificar" || modoActual == "eliminar";
+            dataGridView1.Enabled = modoActual == "modificar" || modoActual == "eliminar";
         }
 
 
         private void ResetearEstadoInterfaz()
         {
             txtDNI.Enabled = false;
-            txtNombre.Enabled = false;
-            txtApellido.Enabled = false;
-            txtTelefono.Enabled = false;
-            txtEmail.Enabled = false;
-            cmbRol.Enabled = false;
-            rbtnActivoSi.Enabled = false;
-            rbtnActivoNo.Enabled = false;
+            txtnom.Enabled = false;
+            txtape.Enabled = false;
+            txtemail.Enabled = false;
+            cmbrol.Enabled = false;
+            actsi.Enabled = false;
+            actno.Enabled = false;
 
-            btnAplicar.Enabled = false;
-            btnCancelar.Enabled = false;
+            btnaplicar.Enabled = false;
+            btncancelar.Enabled = false;
 
-            btnAñadir.Enabled = true;
-            btnModificar.Enabled = true;
-            btnEliminar.Enabled = true;
-            btnDesbloquear.Enabled = true;
-            rbtnActivos.Enabled = true;
-            rbtnTodos.Enabled = true;
+            btncrear.Enabled = true;
+            btnmod.Enabled = true;
+            btnelim.Enabled = true;
+            btndesb.Enabled = true;
+            rbtnact.Enabled = true;
+            rbtntodos.Enabled = true;
 
-            dgvUsuarios.Enabled = true;
+            dataGridView1.Enabled = true;
         }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDNI_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+
+        private void txtape_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+
+        private void txtnom_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+
+        private void cmbrol_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+
+        private void txtuser_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+        private void VerificarCamposBusqueda() //hasta q no se implementen los campos no se aplica
+        {
+            if (modoActual != "consulta") return;
+
+            // Verifica si al menos un campo está completo
+            bool hayDatos = !string.IsNullOrWhiteSpace(txtDNI.Text)
+                         || !string.IsNullOrWhiteSpace(txtnom.Text)
+                         || !string.IsNullOrWhiteSpace(txtape.Text)
+                         || !string.IsNullOrWhiteSpace(txtemail.Text)
+            || !string.IsNullOrWhiteSpace(cmbrol.Text)
+            || !string.IsNullOrWhiteSpace(txtuser.Text);
+
+            btnaplicar.Enabled = hayDatos;
+        }
+
+        private void txtemail_TextChanged(object sender, EventArgs e) //hasta q no se implementen los campos no se aplica
+        {
+            VerificarCamposBusqueda();
+        }
+
+
 
         //private void textBox5_TextChanged(object sender, EventArgs e)
         //{
