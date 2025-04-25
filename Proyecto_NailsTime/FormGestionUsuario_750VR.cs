@@ -91,7 +91,7 @@ namespace Proyecto_NailsTime
         //boton crear
         private void button1_Click(object sender, EventArgs e)
         {
-         
+
             modoActual = "añadir";
             ActivarModoEdicion();
         }
@@ -147,7 +147,7 @@ namespace Proyecto_NailsTime
             // Volver al estado de consulta
             modoActual = "consulta";
             ResetearEstadoInterfaz(); // Esto desactiva cancelar y activa el resto
-           
+
         }
 
         private void AplicarDesbloqueo()
@@ -305,7 +305,7 @@ namespace Proyecto_NailsTime
        string.IsNullOrWhiteSpace(txtape.Text) ||
        string.IsNullOrWhiteSpace(txtemail.Text) ||
        string.IsNullOrWhiteSpace(cmbrol.Text))
-       //falta el resto
+            //falta el resto
             {
                 MessageBox.Show("Por favor, complete todos los campos obligatorios.");
                 return false;
@@ -316,6 +316,22 @@ namespace Proyecto_NailsTime
         private void btndesb_Click(object sender, EventArgs e)
         {
             modoActual = "desbloquear";
+            // Bloquear otras acciones
+            btncrear.Enabled = false;
+            btnmod.Enabled = false;
+            btnelim.Enabled = false;
+
+            rbtnact.Enabled = false;
+            rbtntodos.Enabled = false;
+
+            // Habilitar botones
+            btncancelar.Enabled = true;
+            btnaplicar.Enabled = true;
+
+            // Activar selección de usuario en el DataGridView
+            dataGridView1.Enabled = true;
+
+            LimpiarCampos(); // opcional
             ActivarModoEdicion();
         }
 
@@ -341,7 +357,7 @@ namespace Proyecto_NailsTime
                 CargarUsuariosActivos();
         }
 
-     
+
         private void PintarUsuariosInactivos()
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -373,21 +389,35 @@ namespace Proyecto_NailsTime
             rbtntodos.Enabled = true;
 
             dataGridView1.Enabled = true;
-            
+
             ResetearEstadoInterfaz();
         }
 
 
         private void ActivarModoEdicion()
         {
-            // Habilitar campos de edición según corresponda
-            txtDNI.Enabled = modoActual == "añadir";
-            txtnom.Enabled = true;
-            txtape.Enabled = true;
-            txtemail.Enabled = true;
-            cmbrol.Enabled = true;
-            actsi.Enabled = true;
-            actno.Enabled = true;
+            if (modoActual == "añadir" || modoActual == "modificar")
+            {
+                txtDNI.Enabled = modoActual == "añadir";
+                txtnom.Enabled = true;
+                txtape.Enabled = true;
+                txtemail.Enabled = true;
+                cmbrol.Enabled = true;
+                actsi.Enabled = true;
+                actno.Enabled = true;
+            }
+            else if (modoActual == "desbloquear")
+            {
+                // Mostrar datos sin habilitar edición
+                txtDNI.Enabled = false;
+                txtnom.Enabled = false;
+                txtape.Enabled = false;
+                txtemail.Enabled = false;
+                cmbrol.Enabled = false;
+                actsi.Enabled = false;
+                actno.Enabled = false;
+            }
+       
 
             // Habilitar botones Aplicar y Cancelar
             btnaplicar.Enabled = true;
@@ -403,6 +433,8 @@ namespace Proyecto_NailsTime
 
             // Deshabilitar DataGridView si estás añadiendo o desbloqueando
             dataGridView1.Enabled = modoActual == "modificar" || modoActual == "eliminar";
+
+        
         }
 
 
@@ -478,11 +510,35 @@ namespace Proyecto_NailsTime
             VerificarCamposBusqueda();
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            //detecta seleccion del desbl
+            if (modoActual == "desbloquear" && dataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+                txtDNI.Text = row.Cells["DNI"].Value.ToString();
+                txtnom.Text = row.Cells["Nombre"].Value.ToString();
+                txtape.Text = row.Cells["Apellido"].Value.ToString();
+                txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
+                txtemail.Text = row.Cells["Email"].Value.ToString();
+                cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
+
+                actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
+                actno.Checked = row.Cells["Activo"].Value.ToString() == "0";
+            }
 
 
-        //private void textBox5_TextChanged(object sender, EventArgs e)
-        //{
 
-        //}
+            //private void textBox5_TextChanged(object sender, EventArgs e)
+            //{
+
+            //}
+        }
     }
 }

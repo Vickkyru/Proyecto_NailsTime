@@ -58,11 +58,11 @@
             this.btncancelar = new System.Windows.Forms.Button();
             this.btnsalir = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblmensaje = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.btnelim = new System.Windows.Forms.Button();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblmensaje = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,8 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(538, 150);
             this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // rbtnact
             // 
@@ -363,6 +365,15 @@
             this.panel1.Size = new System.Drawing.Size(200, 175);
             this.panel1.TabIndex = 38;
             // 
+            // lblmensaje
+            // 
+            this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmensaje.Location = new System.Drawing.Point(20, 50);
+            this.lblmensaje.Name = "lblmensaje";
+            this.lblmensaje.Size = new System.Drawing.Size(161, 30);
+            this.lblmensaje.TabIndex = 42;
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -399,15 +410,6 @@
             this.label9.Size = new System.Drawing.Size(29, 13);
             this.label9.TabIndex = 41;
             this.label9.Text = "User";
-            // 
-            // lblmensaje
-            // 
-            this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblmensaje.Location = new System.Drawing.Point(20, 50);
-            this.lblmensaje.Name = "lblmensaje";
-            this.lblmensaje.Size = new System.Drawing.Size(161, 30);
-            this.lblmensaje.TabIndex = 42;
             // 
             // FormGestionUsuario_750VR
             // 
