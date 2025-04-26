@@ -16,26 +16,23 @@ namespace DAL_VR750
             {
                 conn.Open();
 
-                string query = @"INSERT INTO Usuarios 
-                (DNI, Nombre, Apellido, Telefono, Email, UsuarioLogin, Contrasenia, Rol, Estado)
-                VALUES (@DNI, @Nombre, @Apellido, @Telefono, @Mail, @User, @Contrasenia, @Rol, @Estado)";
+                string query = @"INSERT INTO Usuario_VR750
+                (DNI, Nombre, Apellido, Email, Usuario, Contra, Rol)
+                VALUES (@DNI, @Nombre, @Apellido, @Mail, @Rol)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
                 cmd.Parameters.AddWithValue("@Mail", usuario.mail);
-                cmd.Parameters.AddWithValue("@User", usuario.user);
-                cmd.Parameters.AddWithValue("@Contrasenia", usuario.contraseña);
                 cmd.Parameters.AddWithValue("@Rol", usuario.rol);
-                cmd.Parameters.AddWithValue("@Estado", usuario.estado);
 
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
 
-        public bool ModificarUsuario(Usuario_750VR usuario)
+        public bool ModificarUsuario(Usuario_750VR usuario) //no puse q se cambie el activo o el bloqueo
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -43,11 +40,9 @@ namespace DAL_VR750
                 string query = @"UPDATE Usuarios SET 
                                 Nombre = @Nombre,
                                 Apellido = @Apellido,
-                                Telefono = @Telefono,
                                 Email = @Mail,
-                                Contrasenia = @Contrasenia,
+                                Usuario = @Usuario,
                                 Rol = @Rol,
-                                Estado = @Estado
                             WHERE DNI = @DNI";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -55,15 +50,15 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
                 cmd.Parameters.AddWithValue("@Mail", usuario.mail);
-                cmd.Parameters.AddWithValue("@Contrasenia", usuario.contraseña);
+                cmd.Parameters.AddWithValue("@Usuario", usuario.user);
                 cmd.Parameters.AddWithValue("@Rol", usuario.rol);
-                cmd.Parameters.AddWithValue("@Estado", usuario.estado);
+
 
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
-        public bool BorrarUsuarioLogico(string dni)
+        public bool BorrarUsuarioLogico(string dni) //inactivos 
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -80,13 +75,13 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Bloqueo = 1 WHERE DNI = @dni", conn);
+                SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Bloqueado = 1 WHERE DNI = @dni", conn);
                 cmd.Parameters.AddWithValue("@dni", dni);
                 cmd.ExecuteNonQuery();
             }
         }
 
-        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
+        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos) //obtengo usuarios activos
         {
             List<Usuario_750VR> lista = new List<Usuario_750VR>();
 
@@ -108,10 +103,8 @@ namespace DAL_VR750
                         nombre = reader["Nombre"].ToString(),
                         apellido = reader["Apellido"].ToString(),
                         mail = reader["Email"].ToString(),
-                        user = reader["UsuarioLogin"].ToString(),
-                        contraseña = reader["Contrasenia"].ToString(),
+                        user = reader["Usuario"].ToString(),
                         rol = reader["Rol"].ToString(),
-                        estado = reader["Estado"].ToString()
                     };
 
                     lista.Add(user);
@@ -122,7 +115,8 @@ namespace DAL_VR750
         }
 
 
-        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email)
+        //hacerlo mejor
+        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email) //busca todos 
         {
             List<Usuario_750VR> lista = new List<Usuario_750VR>();
 
