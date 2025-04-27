@@ -58,5 +58,40 @@ namespace BLL_VR750
             return dal.BuscarUsuarios(dni, nombre, apellido, email);
         }
 
+        private int intentosFallidos = 0; // contador de intentos fallidos
+
+        public string Login(string usuarioLogin, string contraseñaIngresada)
+        {
+            //UsuarioDAL dal = new UsuarioDAL();
+            //Usuario_VR750 user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
+
+            //if (user == null)
+            //{
+            //    intentosFallidos++;
+            //    return GestionarIntentosFallidos(usuarioLogin);
+            //}
+
+            //if (!user.Activo)
+            //    return "Cuenta inactiva. Comuníquese con el administrador.";
+
+            //if (user.Bloqueado)
+            //    return "Cuenta bloqueada. Contacte al administrador.";
+
+            //string contraseñaHasheadaIngresada = Servicios.Encriptador.HashearContraseña(contraseñaIngresada, user.Salt);
+
+            //if (contraseñaHasheadaIngresada == user.Contra)
+            //{
+            //    intentosFallidos = 0;
+            //    Servicios.SingletonSesion.Instancia.Login(user); // AQUÍ GUARDA la sesión
+            //    return "Login exitoso";
+            //}
+            //else
+            //{
+            //    intentosFallidos++;
+            //    return GestionarIntentosFallidos(usuarioLogin);
+            //}
+
+        }
+
     }
 }
