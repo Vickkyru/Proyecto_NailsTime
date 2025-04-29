@@ -150,33 +150,45 @@ namespace Proyecto_NailsTime
 
         }
 
-        private void AplicarDesbloqueo()
+        private void AplicarDesbloqueo() //no se si funciona bien
         {
             try
             {
-                string dni = txtDNI.Text;
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                bll.DesbloquearUsuario(dni);
+                if (string.IsNullOrWhiteSpace(txtDNI.Text))
+                {
+                    MessageBox.Show("Debe seleccionar un usuario para desbloquear.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-                MessageBox.Show("Usuario desbloqueado correctamente.");
-                CargarUsuariosActivos();
+                int dni = int.Parse(txtDNI.Text.Trim());
+
+                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+                Usuario_750VR usuarioSeleccionado = usuarioBLL.ObtenerUsuarioPorDNI(dni);
+
+                if (usuarioSeleccionado == null)
+                {
+                    MessageBox.Show("Usuario no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!usuarioSeleccionado.bloqueado)
+                {
+                    MessageBox.Show("El usuario seleccionado no está bloqueado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Desbloquear
+                usuarioBLL.DesbloquearUsuario(usuarioSeleccionado.dni);
+
+                MessageBox.Show("Usuario desbloqueado exitosamente.", "Desbloqueo de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refrescar la grilla o limpiar pantalla
+                LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al desbloquear usuario: " + ex.Message);
+                MessageBox.Show($"Error al desbloquear usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
-
-
-
-            //if (usuarioSeleccionado != null)
-            //{
-            //    usuarioSeleccionado.Bloqueo = 1; // o false si usás BIT
-            //    UsuarioBLL bll = new UsuarioBLL();
-            //    bll.DesbloquearUsuario(usuarioSeleccionado.DNI);
-            //    MessageBox.Show("Usuario desbloqueado correctamente.");
-            //}
 
 
         }
@@ -209,52 +221,48 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                Usuario_750VR usuarioMod = new Usuario_750VR
+                if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
+                    string.IsNullOrWhiteSpace(txtnom.Text) ||
+                    string.IsNullOrWhiteSpace(txtape.Text) ||
+                    string.IsNullOrWhiteSpace(txtemail.Text) ||
+                    cmbrol.SelectedItem == null)
                 {
-                    dni = int.Parse(txtDNI.Text),
-                    nombre = txtnom.Text,
-                    apellido = txtape.Text,
-                    mail = txtemail.Text,
-                    user = txtuser.Text,
-                    rol = cmbrol.SelectedItem.ToString(),
-                    estado = actsi.Checked ? "Activo" : "Inactivo"
-                };
-
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                bool modificado = bll.ModificarUsuario(usuarioMod);
-
-                if (modificado)
-                {
-                    MessageBox.Show("Usuario modificado correctamente.");
-                    CargarUsuariosActivos();
+                    MessageBox.Show("Debe completar todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("No se pudo modificar el usuario.");
-                }
+
+                // Armar usuario modificado
+                Usuario_750VR usuarioModificado = new Usuario_750VR();
+
+                usuarioModificado.dni = int.Parse(txtDNI.Text.Trim()); // No cambia
+                usuarioModificado.nombre = txtnom.Text.Trim();
+                usuarioModificado.apellido = txtape.Text.Trim();
+                usuarioModificado.mail = txtemail.Text.Trim();
+                usuarioModificado.rol = cmbrol.SelectedItem.ToString();
+                usuarioModificado.activo = true; //no cambia
+
+                // Importante: usuarioModificado.Usuario, Contra y Salt no se modifican aquí.
+                // Los recuperamos para no perderlos
+
+                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+                Usuario_750VR datosExistente = usuarioBLL.ObtenerUsuarioPorDNI(usuarioModificado.dni);
+
+                usuarioModificado.user = datosExistente.user;
+                usuarioModificado.contraseña = datosExistente.contraseña;
+                usuarioModificado.salt = datosExistente.salt;
+                usuarioModificado.bloqueado = datosExistente.bloqueado; // respetamos si estaba bloqueado o no
+
+                // Llamar a BLL para actualizar
+                usuarioBLL.ModificarUsuario(usuarioModificado);
+
+                MessageBox.Show("Usuario modificado exitosamente.", "Modificación de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refrescar grilla o limpiar pantalla
+                LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al modificar usuario: " + ex.Message);
-            }
-
-            if (dataGridView1.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dataGridView1.SelectedRows[0];
-                txtDNI.Text = row.Cells["DNI"].Value.ToString();
-                txtnom.Text = row.Cells["Nombre"].Value.ToString();
-                txtape.Text = row.Cells["Apellido"].Value.ToString();
-                txtemail.Text = row.Cells["Email"].Value.ToString();
-                txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
-                cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
-                actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
-
-                modoActual = "modificar";
-                ActivarModoEdicion();
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un usuario de la lista.");
+                MessageBox.Show($"Error al modificar usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -264,34 +272,47 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                Usuario_750VR nuevoUsuario = new Usuario_750VR
+                if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
+                    string.IsNullOrWhiteSpace(txtnom.Text) ||
+                    string.IsNullOrWhiteSpace(txtape.Text) ||
+                    string.IsNullOrWhiteSpace(txtemail.Text) ||
+                    cmbrol.SelectedItem == null)
                 {
-                    dni = int.Parse(txtDNI.Text),
-                    nombre = txtnom.Text,
-                    apellido = txtape.Text,
-                    mail = txtemail.Text,
-                    rol = cmbrol.SelectedItem.ToString(),
-                    estado = actsi.Checked ? "Activo" : "Inactivo",
-                    user = txtDNI.Text + txtape.Text,
-                    contraseña = txtDNI.Text + txtnom.Text
-                };
-
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                bool creado = bll.CrearUsuario(nuevoUsuario);
-
-                if (creado)
-                {
-                    MessageBox.Show("Usuario creado correctamente.");
-                    CargarUsuariosActivos();
+                    MessageBox.Show("Debe completar todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("No se pudo crear el usuario.");
-                }
+
+                // Crear nuevo usuario
+                Usuario_750VR nuevoUsuario = new Usuario_750VR();
+
+                nuevoUsuario.dni = int.Parse(txtDNI.Text.Trim());
+                nuevoUsuario.nombre = txtnom.Text.Trim();
+                nuevoUsuario.apellido = txtape.Text.Trim();
+                nuevoUsuario.mail = txtemail.Text.Trim();
+                nuevoUsuario.user = nuevoUsuario.dni.ToString() + nuevoUsuario.apellido; // User predeterminado
+
+                string contraseñaPredeterminada = nuevoUsuario.dni.ToString() + nuevoUsuario.nombre; // Contraseña predeterminada
+
+                // Generar Salt y encriptar contraseña
+                nuevoUsuario.salt = SERVICIOS_VR750.Encriptador_VR750.GenerarSalt();
+                nuevoUsuario.contraseña = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaPredeterminada, nuevoUsuario.salt);
+
+                nuevoUsuario.rol = cmbrol.SelectedItem.ToString();
+                nuevoUsuario.activo = true; // al dar de alta -> Activo
+                nuevoUsuario.bloqueado = false; // Alta de usuario ➔ no bloqueado
+
+                // Llamar a BLL para guardar
+                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+                usuarioBLL.CrearUsuario(nuevoUsuario);
+
+                MessageBox.Show("Usuario creado exitosamente.", "Alta de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refrescar la grilla o limpiar campos
+                LimpiarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear usuario: " + ex.Message);
+                MessageBox.Show($"Error al crear usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 

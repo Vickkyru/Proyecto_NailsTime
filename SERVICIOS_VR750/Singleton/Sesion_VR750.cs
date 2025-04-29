@@ -13,6 +13,7 @@ namespace SERVICIOS_VR750.Singleton
 
         public Usuario_750VR Usuario => _usuario;
 
+
         public void Login(Usuario_750VR usuario)
         {
             _usuario = usuario;

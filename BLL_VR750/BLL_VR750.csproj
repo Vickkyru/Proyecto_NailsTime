@@ -66,6 +66,10 @@
       <Project>{3f212b34-c675-4882-9470-c3037da85f03}</Project>
       <Name>DAL_VR750</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SERVICIOS_VR750\SERVICIOS_VR750.csproj">
+      <Project>{c972d5bb-41c1-4809-b348-f3e7e4cff2be}</Project>
+      <Name>SERVICIOS_VR750</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

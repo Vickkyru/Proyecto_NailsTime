@@ -15,7 +15,7 @@ namespace Proyecto_NailsTime
 {
     public partial class FormLogIn_750VR : Form
     {
-        private BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+        public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
 
         public FormLogIn_750VR()
         {
@@ -24,29 +24,49 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string usuario = textBox1.Text.Trim();
-            string contraseña = textBox2.Text.Trim();
-
-            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(contraseña))
+            try
             {
-                MessageBox.Show("Debe completar usuario y contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                // Validar campos
+                if (string.IsNullOrWhiteSpace(txtuser.Text) || string.IsNullOrWhiteSpace(txtcontra.Text))
+                {
+                    MessageBox.Show("Debe completar Usuario y Contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            string resultadoLogin = usuarioBLL.(usuario, contraseña);
+                string usuarioLogin = txtuser.Text.Trim();
+                string contraseñaIngresada = txtcontra.Text.Trim();
 
-            if (resultadoLogin == "Login exitoso")
-            {
-                this.Hide(); // Ocultamos el login
-                Form1 formPrincipal = new Form1();
-                formPrincipal.Show();
+                //BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+                string resultadoLogin = usuarioBLL.Login(usuarioLogin, contraseñaIngresada);
+
+                if (resultadoLogin == "Login exitoso")
+                {
+                    MessageBox.Show("¡Bienvenido/a!", "Login Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Abrir Form Principal
+                    this.Hide();
+                    //Form1 formPrincipal = new form();
+                    //formPrincipal.Show();
+                }
+                else
+                {
+                    MessageBox.Show(resultadoLogin, "Error de Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(resultadoLogin, "Error de Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBox2.Clear();
-                textBox2.Focus();
+                MessageBox.Show($"Error en el login: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FormLogIn_750VR_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

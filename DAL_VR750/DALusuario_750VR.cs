@@ -10,51 +10,54 @@ namespace DAL_VR750
 {
     public class DALusuario_750VR
     {
-        public bool CrearUsuario(Usuario_750VR usuario)
-        {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena)) // Conexion.Cadena es tu cadena de conexión estática
-            {
-                conn.Open();
-
-                string query = @"INSERT INTO Usuario_VR750
-                (DNI, Nombre, Apellido, Email, Usuario, Contra, Rol)
-                VALUES (@DNI, @Nombre, @Apellido, @Mail, @Rol)";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@DNI", usuario.dni);
-                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
-                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Mail", usuario.mail);
-                cmd.Parameters.AddWithValue("@Rol", usuario.rol);
-
-                return cmd.ExecuteNonQuery() > 0;
-            }
-        }
-
-
-        public bool ModificarUsuario(Usuario_750VR usuario) //no puse q se cambie el activo o el bloqueo
+        public void CrearUsuario(Usuario_750VR usuario) //alta user
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = @"UPDATE Usuarios SET 
-                                Nombre = @Nombre,
-                                Apellido = @Apellido,
-                                Email = @Mail,
-                                Usuario = @Usuario,
-                                Rol = @Rol,
-                            WHERE DNI = @DNI";
+                string query = @"INSERT INTO Usuario_VR750 
+        (DNI, Nombre, Apellido, Email, Usuario, Contra, Salt, Rol, Activo, Bloqueado) 
+        VALUES (@DNI, @Nombre, @Apellido, @Email, @Usuario, @Contra, @Salt, @Rol, @Activo, @Bloqueado)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Mail", usuario.mail);
+                cmd.Parameters.AddWithValue("@Email", usuario.mail);
                 cmd.Parameters.AddWithValue("@Usuario", usuario.user);
+                cmd.Parameters.AddWithValue("@Contra", usuario.contraseña);
+                cmd.Parameters.AddWithValue("@Salt", usuario.salt);
                 cmd.Parameters.AddWithValue("@Rol", usuario.rol);
+                cmd.Parameters.AddWithValue("@Activo", usuario.activo);
+                cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
 
 
-                return cmd.ExecuteNonQuery() > 0;
+        public void ModificarUsuario(Usuario_750VR usuario) //no puse q se cambie el activo o el bloqueo
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"UPDATE Usuario_VR750 
+                        SET Nombre = @Nombre, 
+                            Apellido = @Apellido, 
+                            Email = @Email, 
+                            Rol = @Rol, 
+                            Activo = @Activo
+                        WHERE DNI = @DNI";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
+                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
+                cmd.Parameters.AddWithValue("@Email", usuario.mail);
+                cmd.Parameters.AddWithValue("@Rol", usuario.rol);
+                cmd.Parameters.AddWithValue("@Activo", usuario.activo); //esto creo q no
+                cmd.Parameters.AddWithValue("@DNI", usuario.dni);
+
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -70,13 +73,14 @@ namespace DAL_VR750
             }
         }
 
-        public void DesbloquearUsuario(string dni)
+        public void DesbloquearUsuario(int dni)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Usuarios SET Bloqueado = 1 WHERE DNI = @dni", conn);
-                cmd.Parameters.AddWithValue("@dni", dni);
+                string query = "UPDATE Usuario_VR750 SET Bloqueado = 0 WHERE DNI = @DNI";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DNI", dni);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -145,13 +149,13 @@ namespace DAL_VR750
                         nombre = reader["Nombre"].ToString(),
                         apellido = reader["Apellido"].ToString(),
                         mail = reader["Email"].ToString(),
-                        user = reader["UsuarioLogin"].ToString(),
-                        contraseña = reader["Contrasenia"].ToString(),
+                        user = reader["Usuario"].ToString(),
+                        contraseña = reader["Contra"].ToString(),
+                        salt = reader["Salt"].ToString(),
                         rol = reader["Rol"].ToString(),
-                        estado = reader["Estado"].ToString(),
-                        //activo = Convert.ToBoolean(reader["Activo"]),
-                        //bloqueado = Convert.ToBoolean(reader["Bloqueo"]),
-                      
+                        activo = Convert.ToBoolean(reader["Activo"]),
+                        bloqueado = Convert.ToBoolean(reader["Bloqueo"]),
+
                     };
 
                     lista.Add(user);
@@ -159,6 +163,87 @@ namespace DAL_VR750
             }
 
             return lista;
+        }
+
+        public Usuario_750VR ObtenerUsuarioPorLogin(string usuarioLogin)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+
+                string query = "SELECT * FROM Usuario_VR750 WHERE Usuario = @Usuario";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Usuario", usuarioLogin);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new Usuario_750VR
+                    {
+                        dni = Convert.ToInt32(reader["DNI"]),
+                        nombre = reader["Nombre"].ToString(),
+                        apellido = reader["Apellido"].ToString(),
+                        mail = reader["Email"].ToString(),
+                        user = reader["Usuario"].ToString(),
+                        contraseña = reader["Contra"].ToString(),
+                        salt = reader["Salt"].ToString(),
+                        rol = reader["Rol"].ToString(),
+                        activo = Convert.ToBoolean(reader["Activo"]),
+                        bloqueado = Convert.ToBoolean(reader["Bloqueado"])
+                    };
+                }
+                return null;
+            }
+        
+            
+        }
+
+        public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Usuario_VR750 WHERE DNI = @DNI";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DNI", dni);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Usuario_750VR user = new Usuario_750VR
+                    {
+                        dni = Convert.ToInt32(reader["DNI"]),
+                        nombre = reader["Nombre"].ToString(),
+                        apellido = reader["Apellido"].ToString(),
+                        mail = reader["Email"].ToString(),
+                        user = reader["Usuario"].ToString(),
+                        contraseña = reader["Contra"].ToString(),
+                        salt = reader["Salt"].ToString(),
+                        rol = reader["Rol"].ToString(),
+                        activo = Convert.ToBoolean(reader["Activo"]),
+                        bloqueado = Convert.ToBoolean(reader["Bloqueado"])
+                    };
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public void BloquearUsuario(string usuarioLogin)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "UPDATE Usuario_VR750 SET Bloqueado = 1 WHERE Usuario = @Usuario";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Usuario", usuarioLogin);
+
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

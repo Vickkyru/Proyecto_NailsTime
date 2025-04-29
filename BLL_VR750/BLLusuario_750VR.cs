@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL_VR750;
 using BE_VR750;
+using SERVICIOS_VR750;
 
 
 
@@ -22,20 +23,16 @@ namespace BLL_VR750
         }
 
 
-        public bool CrearUsuario(Usuario_750VR usuario)
+        public void CrearUsuario(Usuario_750VR usuario)
         {
-            if (string.IsNullOrEmpty(usuario.nombre) || string.IsNullOrEmpty(usuario.apellido))
-                throw new Exception("Nombre y apellido son obligatorios.");
-
-            usuario.user = usuario.dni + usuario.apellido;
-            usuario.contraseña = usuario.dni + usuario.nombre;
-
-            return dal.CrearUsuario(usuario);
+           
+            dal.CrearUsuario(usuario);
         }
 
-        public bool ModificarUsuario(Usuario_750VR usuario)
+        public void ModificarUsuario(Usuario_750VR usuario)
         {
-            return dal.ModificarUsuario(usuario);
+           
+            dal.ModificarUsuario(usuario);
         }
 
         public bool BorrarUsuarioLogico(string dni)
@@ -43,9 +40,10 @@ namespace BLL_VR750
             return dal.BorrarUsuarioLogico(dni);
         }
 
-        public void DesbloquearUsuario(string dni)
+        public void DesbloquearUsuario(int dni)
         {
-            dal.DesbloquearUsuario(dni);
+            
+            dal.DesbloquearUsuario(dni); // le pasa el dni
         }
 
         public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
@@ -62,36 +60,56 @@ namespace BLL_VR750
 
         public string Login(string usuarioLogin, string contraseñaIngresada)
         {
-            //UsuarioDAL dal = new UsuarioDAL();
-            //Usuario_VR750 user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
+           
+            Usuario_750VR user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
 
-            //if (user == null)
-            //{
-            //    intentosFallidos++;
-            //    return GestionarIntentosFallidos(usuarioLogin);
-            //}
+            if (user == null)
+            {
+                intentosFallidos++;
+                return GestionarIntentosFallidos(usuarioLogin);
+            }
 
-            //if (!user.Activo)
-            //    return "Cuenta inactiva. Comuníquese con el administrador.";
+            if (!user.activo)
+                return "Cuenta inactiva. Comuníquese con el administrador.";
 
-            //if (user.Bloqueado)
-            //    return "Cuenta bloqueada. Contacte al administrador.";
+            if (user.bloqueado)
+                return "Cuenta bloqueada. Contacte al administrador.";
 
-            //string contraseñaHasheadaIngresada = Servicios.Encriptador.HashearContraseña(contraseñaIngresada, user.Salt);
+            string contraseñaHasheadaIngresada = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
 
-            //if (contraseñaHasheadaIngresada == user.Contra)
-            //{
-            //    intentosFallidos = 0;
-            //    Servicios.SingletonSesion.Instancia.Login(user); // AQUÍ GUARDA la sesión
-            //    return "Login exitoso";
-            //}
-            //else
-            //{
-            //    intentosFallidos++;
-            //    return GestionarIntentosFallidos(usuarioLogin);
-            //}
+            if (contraseñaHasheadaIngresada == user.contraseña)
+            {
+                intentosFallidos = 0;
+                SERVICIOS_VR750.Singleton.SingletonSesion_VR750.Instancia.Login(user); // AQUÍ GUARDA la sesión
+                return "Login exitoso";
+            }
+            else
+            {
+                intentosFallidos++;
+                return GestionarIntentosFallidos(usuarioLogin);
+            }
 
         }
 
+        private string GestionarIntentosFallidos(string usuarioLogin)
+        {
+           
+
+            if (intentosFallidos >= 3)
+            {
+                
+                dal.BloquearUsuario(usuarioLogin); // Bloquea en base de datos
+
+                intentosFallidos = 0; // Resetear intentos después de bloquear
+                return "Usuario bloqueado por múltiples intentos fallidos.";
+            }
+
+            return $"Usuario o contraseña incorrectos. Intentos fallidos: {intentosFallidos}/3";
+        }
+
+        public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
+        {
+            return dal.ObtenerUsuarioPorDNI(dni);
+        }
     }
 }

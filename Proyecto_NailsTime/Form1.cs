@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SERVICIOS_VR750;
 
 
 namespace Proyecto_NailsTime
@@ -75,7 +76,8 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
+          
         }
 
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)

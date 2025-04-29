@@ -16,5 +16,24 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                SERVICIOS_VR750.Singleton.SingletonSesion_VR750.Instancia.Logout();
+                this.Hide();
+
+                Form1 loginForm = new Form1();
+                loginForm.Show();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

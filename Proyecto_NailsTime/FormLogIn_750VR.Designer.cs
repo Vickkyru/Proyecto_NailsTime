@@ -33,8 +33,8 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtcontra = new System.Windows.Forms.TextBox();
+            this.txtuser = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -55,8 +55,8 @@
             this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.txtcontra);
+            this.panel1.Controls.Add(this.txtuser);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(81, 117);
@@ -83,6 +83,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -96,19 +97,19 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox2
+            // txtcontra
             // 
-            this.textBox2.Location = new System.Drawing.Point(136, 41);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 4;
+            this.txtcontra.Location = new System.Drawing.Point(136, 41);
+            this.txtcontra.Name = "txtcontra";
+            this.txtcontra.Size = new System.Drawing.Size(100, 20);
+            this.txtcontra.TabIndex = 4;
             // 
-            // textBox1
+            // txtuser
             // 
-            this.textBox1.Location = new System.Drawing.Point(136, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.txtuser.Location = new System.Drawing.Point(136, 18);
+            this.txtuser.Name = "txtuser";
+            this.txtuser.Size = new System.Drawing.Size(100, 20);
+            this.txtuser.TabIndex = 3;
             // 
             // label3
             // 
@@ -138,6 +139,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormLogIn_750VR";
             this.Text = "FormLogIn_750VR";
+            this.Load += new System.EventHandler(this.FormLogIn_750VR_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -153,7 +155,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtcontra;
+        private System.Windows.Forms.TextBox txtuser;
     }
 }

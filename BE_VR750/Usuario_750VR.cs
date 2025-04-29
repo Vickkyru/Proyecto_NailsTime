@@ -15,20 +15,25 @@ namespace BE_VR750
         public string mail { get; set; }
         public string user { get; set; }
         public string contraseña { get; set; }
+
+        public string salt { get; set; }
         public string rol { get; set; }
-        public string estado { get; set; }
+        public bool activo { get; set; }
+        public bool bloqueado { get; set; }
 
 
-        public Usuario_750VR(int dni, string nombre, string ape, string mail,string rol, string estado)
+        public Usuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado)
         {
             this.dni = dni;
             this.nombre = nombre;
             this.apellido = ape;
             this.mail = mail;
-            this.user = dni + ape;
-            this.contraseña = dni + nombre;
+            this.user = user;
+            this.contraseña = contra;
+            this.salt = salt;
             this.rol = rol;
-            this.estado = estado;
+            this.activo = activo;
+            this.bloqueado = bloqueado;
 
 
         }
