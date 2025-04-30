@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using BE_VR750;
+using SERVICIOS_VR750;
 
 namespace DAL_VR750
 {
     public class DALusuario_750VR
     {
+        BaseDeDatos_750VR db { get; }
+        //Encriptador_VR750 hasher { get; set; }
+
+        public DALusuario_750VR()
+        {
+            db = new BaseDeDatos_750VR();
+            //hasher = new Encriptador_VR750();
+        }
         public void CrearUsuario(Usuario_750VR usuario) //alta user
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
@@ -243,6 +253,87 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@Usuario", usuarioLogin);
 
                 cmd.ExecuteNonQuery();
+            }
+        }
+
+        public Resultado_VR750<Usuario_750VR> recuperarUsuario(string user, string contraseña)
+        {
+            Resultado_VR750<Usuario_750VR> resultado = new Resultado_VR750<Usuario_750VR>();
+
+            string sqlQuery = "USE Proyecto_NailsTime_750VR; SELECT * FROM Usuario_VR750 WHERE Usuario = @Usuario";
+
+            try
+            {
+                if (!db.Conectar())
+                    throw new Exception("Error al conectar a la base de datos.");
+
+                using (SqlCommand command = new SqlCommand(sqlQuery, db.Connection))
+                {
+                    command.Parameters.AddWithValue("@Usuario", user);
+
+                    using (SqlDataReader lector = command.ExecuteReader())
+                    {
+                        if (!lector.HasRows)
+                            throw new Exception("Usuario no encontrado.");
+
+                        if (lector.Read())
+                        {
+                            // Recuperar campos
+                            int dni = lector.GetInt32(0);
+                            string nombre = lector.GetString(1);
+                            string apellido = lector.GetString(2);
+                            string email = lector.GetString(3);
+                            string usuarioDB = lector.GetString(4);
+                            string contraseñaHashAlmacenada = lector.GetString(5);
+                            string saltAlmacenado = lector.GetString(6);
+                            string rol = lector.GetString(7);
+                            bool activo = lector.GetBoolean(8);
+                            bool bloqueado = lector.GetBoolean(9);
+
+                            if (!activo)
+                                throw new Exception("El usuario está inactivo.");
+
+                            if (bloqueado)
+                                throw new Exception("El usuario está bloqueado.");
+
+                            // Encriptar contraseña ingresada
+                            string hashIngresado = Encriptador_VR750.HashearConSalt(contraseña, saltAlmacenado);
+
+                            if (hashIngresado != contraseñaHashAlmacenada)
+                                throw new Exception("Contraseña incorrecta.");
+
+                            // Crear entidad
+                            Usuario_750VR usuario = new Usuario_750VR
+                            {
+                                dni = dni,
+                                nombre = nombre,
+                                apellido = apellido,
+                                mail = email,
+                                user = usuarioDB,
+                                contraseña = contraseñaHashAlmacenada,
+                                salt = saltAlmacenado,
+                                rol = rol,
+                                activo = activo,
+                                bloqueado = bloqueado
+                            };
+
+                            resultado.resultado = true;
+                            resultado.entidad = usuario;
+                            resultado.mensaje = "Login exitoso";
+                        }
+                    }
+                }
+
+                db.Desconectar();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                resultado.resultado = false;
+                resultado.mensaje = ex.Message;
+                resultado.entidad = null;
+                db.Desconectar();
+                return resultado;
             }
         }
     }

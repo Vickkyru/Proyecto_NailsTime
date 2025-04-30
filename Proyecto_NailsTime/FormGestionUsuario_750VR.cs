@@ -561,5 +561,10 @@ namespace Proyecto_NailsTime
 
             //}
         }
+
+        private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

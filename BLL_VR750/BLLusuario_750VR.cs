@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAL_VR750;
 using BE_VR750;
 using SERVICIOS_VR750;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 
 
@@ -80,7 +81,7 @@ namespace BLL_VR750
             if (contraseñaHasheadaIngresada == user.contraseña)
             {
                 intentosFallidos = 0;
-                SERVICIOS_VR750.Singleton.SingletonSesion_VR750.Instancia.Login(user); // AQUÍ GUARDA la sesión
+                SessionManager_VR750.Instancia.IniciarSesion(user); // AQUÍ GUARDA la sesión
                 return "Login exitoso";
             }
             else
@@ -110,6 +111,12 @@ namespace BLL_VR750
         public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
         {
             return dal.ObtenerUsuarioPorDNI(dni);
+        }
+
+       
+        public Resultado_VR750<Usuario_750VR> recuperarUsuario(string user, string contraseña)
+        {
+            return dal.recuperarUsuario(user, contraseña);
         }
     }
 }

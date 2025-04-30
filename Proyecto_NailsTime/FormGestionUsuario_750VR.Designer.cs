@@ -452,6 +452,7 @@
             this.Controls.Add(this.label2);
             this.Name = "FormGestionUsuario_750VR";
             this.Text = "FormAgregarUsuario_750VR";
+            this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

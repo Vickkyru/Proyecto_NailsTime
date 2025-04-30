@@ -59,6 +59,10 @@
       <Project>{22bee81d-0d51-464a-9283-b39692ee7afd}</Project>
       <Name>BE_VR750</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SERVICIOS_VR750\SERVICIOS_VR750.csproj">
+      <Project>{c972d5bb-41c1-4809-b348-f3e7e4cff2be}</Project>
+      <Name>SERVICIOS_VR750</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

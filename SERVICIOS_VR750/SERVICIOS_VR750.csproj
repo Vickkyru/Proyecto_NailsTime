@@ -51,8 +51,8 @@
   <ItemGroup>
     <Compile Include="Encriptador_VR750.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Singleton\Sesion_VR750.cs" />
-    <Compile Include="Singleton\SingletonSesion_VR750.cs" />
+    <Compile Include="Resultado_VR750.cs" />
+    <Compile Include="SessionManager_VR750.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
