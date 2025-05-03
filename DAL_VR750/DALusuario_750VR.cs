@@ -119,6 +119,8 @@ namespace DAL_VR750
                         mail = reader["Email"].ToString(),
                         user = reader["Usuario"].ToString(),
                         rol = reader["Rol"].ToString(),
+                        activo = Convert.ToBoolean(reader["Activo"]),
+                        bloqueado = Convert.ToBoolean(reader["Bloqueado"])
                     };
 
                     lista.Add(user);
