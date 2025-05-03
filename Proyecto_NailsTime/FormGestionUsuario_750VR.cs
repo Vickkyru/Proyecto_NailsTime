@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL_VR750;
 using BE_VR750;
 
+
 namespace Proyecto_NailsTime
 {
     public partial class FormGestionUsuario_750VR : Form
@@ -18,27 +19,7 @@ namespace Proyecto_NailsTime
         public FormGestionUsuario_750VR()
         {
             InitializeComponent();
-            lblcantuser.Text = dataGridView1.Rows.Count.ToString();
-
-            // Cargar solo usuarios activos al iniciar
-            rbtnact.Checked = true; // activa el selector "Activos"
-            CargarUsuariosActivos();
-
-            // Deshabilitar botones Aplicar y Cancelar
-            btnaplicar.Enabled = false;
-            btncancelar.Enabled = false;
-
-            // Habilitar grilla solo para selección (no edición)
-            dataGridView1.ReadOnly = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-
-            // Iniciar en modo consulta
-            modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
-
-
-            // Opcional: limpiar campos
+ 
             LimpiarCampos();
 
         }
@@ -61,6 +42,7 @@ namespace Proyecto_NailsTime
         {
             BLLusuario_750VR bll = new BLLusuario_750VR();
             var lista = bll.ObtenerUsuarios(false);
+            dataGridView1.AutoGenerateColumns = false; 
             dataGridView1.DataSource = lista;
             PintarUsuariosInactivos();
         }
@@ -69,11 +51,12 @@ namespace Proyecto_NailsTime
         {
             BLLusuario_750VR bll = new BLLusuario_750VR();
             var lista = bll.ObtenerUsuarios(true);
+            dataGridView1.AutoGenerateColumns = false; 
             dataGridView1.DataSource = lista;
             PintarUsuariosInactivos();
         }
 
-        //hasta aca seria lo q muestra ni bien arranca + lo de los radio btns act y todos
+  
 
 
 
@@ -91,11 +74,12 @@ namespace Proyecto_NailsTime
         //boton crear
         private void button1_Click(object sender, EventArgs e)
         {
-
+            lblmensaje.Text = "Modo Añadir";
             modoActual = "añadir";
             ActivarModoEdicion();
         }
 
+        //boton salir
         private void button7_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("¿Está seguro que desea salir? Se perderán los cambios no guardados.",
@@ -109,15 +93,14 @@ namespace Proyecto_NailsTime
 
         private void btnaplicar_Click(object sender, EventArgs e)
         {
-
-            //después de aplicar el botón aplicar en el datagrid se ponen todos los registros q cumplan con los requerimientos de búsqueda
+            // Si estamos en modo consulta, se hace la búsqueda
             if (modoActual == "consulta")
             {
                 BLLusuario_750VR bll = new BLLusuario_750VR();
                 var resultados = bll.BuscarUsuarios(txtDNI.Text, txtnom.Text, txtape.Text, txtemail.Text);
                 dataGridView1.DataSource = resultados;
 
-                // Desactivar los selectores
+                // Desmarcar los radio buttons
                 rbtnact.Checked = false;
                 rbtntodos.Checked = false;
 
@@ -125,9 +108,11 @@ namespace Proyecto_NailsTime
                 return;
             }
 
+            // Validar campos solo si no estamos eliminando ni desbloqueando
             if (!ValidarCampos() && modoActual != "eliminar" && modoActual != "desbloquear")
                 return;
 
+            // Ejecutar la acción según el modo
             switch (modoActual)
             {
                 case "añadir":
@@ -146,48 +131,26 @@ namespace Proyecto_NailsTime
 
             // Volver al estado de consulta
             modoActual = "consulta";
-            ResetearEstadoInterfaz(); // Esto desactiva cancelar y activa el resto
+            lblmensaje.Text = "Modo Consulta";
+            ResetearEstadoInterfaz();
+            CargarTodosUsuarios(); // Refrescar grilla general
 
         }
 
-        private void AplicarDesbloqueo() //no se si funciona bien
+        private void AplicarDesbloqueo() //falta
         {
-            try
+            int dni = int.Parse(txtDNI.Text);
+
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            bool ok = bll.DesbloquearUsuario(dni);
+
+            if (ok)
             {
-                if (string.IsNullOrWhiteSpace(txtDNI.Text))
-                {
-                    MessageBox.Show("Debe seleccionar un usuario para desbloquear.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                int dni = int.Parse(txtDNI.Text.Trim());
-
-                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
-                Usuario_750VR usuarioSeleccionado = usuarioBLL.ObtenerUsuarioPorDNI(dni);
-
-                if (usuarioSeleccionado == null)
-                {
-                    MessageBox.Show("Usuario no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (!usuarioSeleccionado.bloqueado)
-                {
-                    MessageBox.Show("El usuario seleccionado no está bloqueado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Desbloquear
-                usuarioBLL.DesbloquearUsuario(usuarioSeleccionado.dni);
-
-                MessageBox.Show("Usuario desbloqueado exitosamente.", "Desbloqueo de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Refrescar la grilla o limpiar pantalla
-                LimpiarCampos();
+                MessageBox.Show("Usuario desbloqueado correctamente.");
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al desbloquear usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo desbloquear el usuario.");
             }
 
 
@@ -336,28 +299,26 @@ namespace Proyecto_NailsTime
 
         private void btndesb_Click(object sender, EventArgs e)
         {
-            modoActual = "desbloquear";
-            // Bloquear otras acciones
-            btncrear.Enabled = false;
-            btnmod.Enabled = false;
-            btnelim.Enabled = false;
+            if (dataGridView1.CurrentRow != null)
+            {
+                // Cambiar modo
+                modoActual = "desbloquear";
+                lblmensaje.Text = "Modo Desbloquear";
 
-            rbtnact.Enabled = false;
-            rbtntodos.Enabled = false;
+                // Activar la lógica de edición para este modo
+                ActivarModoEdicion();
 
-            // Habilitar botones
-            btncancelar.Enabled = true;
-            btnaplicar.Enabled = true;
-
-            // Activar selección de usuario en el DataGridView
-            dataGridView1.Enabled = true;
-
-            LimpiarCampos(); // opcional
-            ActivarModoEdicion();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un usuario bloqueado para desbloquear.");
+            }
+            LimpiarCampos();
         }
 
         private void btnelim_Click(object sender, EventArgs e)
         {
+            lblmensaje.Text = "Modo Eliminar";
             modoActual = "eliminar";
             ActivarModoEdicion();
         }
@@ -366,7 +327,11 @@ namespace Proyecto_NailsTime
         {
 
             if (rbtntodos.Checked)
+            {
                 CargarTodosUsuarios();
+
+            }
+                
         }
 
 
@@ -375,23 +340,28 @@ namespace Proyecto_NailsTime
         private void rbtnact_CheckedChanged(object sender, EventArgs e)
         {
             if (rbtnact.Checked)
+            {
                 CargarUsuariosActivos();
+            }
+                
         }
 
 
         private void PintarUsuariosInactivos()
         {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataGridViewRow fila in dataGridView1.Rows)
             {
-                if (row.Cells["Activo"].Value != null && row.Cells["Activo"].Value.ToString() == "0")
+                if (fila.Cells["activo"].Value != null && !(bool)fila.Cells["activo"].Value)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Red;
+                    fila.DefaultCellStyle.BackColor = Color.Red;
                 }
             }
         }
 
+        //boton cancelar
         private void btncancelar_Click(object sender, EventArgs e)
         {
+            lblmensaje.Text = "Modo Consulta";
             modoActual = "consulta";
 
             // Limpiar todos los campos
@@ -412,6 +382,8 @@ namespace Proyecto_NailsTime
             dataGridView1.Enabled = true;
 
             ResetearEstadoInterfaz();
+            rbtntodos.Checked = true; // Marcar por defecto
+            CargarTodosUsuarios();   // Mostrar todos
         }
 
 
@@ -430,13 +402,13 @@ namespace Proyecto_NailsTime
             else if (modoActual == "desbloquear")
             {
                 // Mostrar datos sin habilitar edición
-                txtDNI.Enabled = false;
-                txtnom.Enabled = false;
-                txtape.Enabled = false;
-                txtemail.Enabled = false;
-                cmbrol.Enabled = false;
-                actsi.Enabled = false;
-                actno.Enabled = false;
+                //txtDNI.Enabled = false;
+                //txtnom.Enabled = false;
+                //txtape.Enabled = false;
+                //txtemail.Enabled = false;
+                //cmbrol.Enabled = false;
+                //actsi.Enabled = false;
+                //actno.Enabled = false;
             }
        
 
@@ -453,7 +425,7 @@ namespace Proyecto_NailsTime
             rbtntodos.Enabled = false;
 
             // Deshabilitar DataGridView si estás añadiendo o desbloqueando
-            dataGridView1.Enabled = modoActual == "modificar" || modoActual == "eliminar";
+            //dataGridView1.Enabled = modoActual == "modificar" || modoActual == "eliminar";
 
         
         }
@@ -533,28 +505,40 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridView1.CurrentRow != null)
+            {
+                txtDNI.Text = dataGridView1.CurrentRow.Cells["dni"].Value.ToString();
+                txtnom.Text = dataGridView1.CurrentRow.Cells["nombre"].Value.ToString();
+                txtape.Text = dataGridView1.CurrentRow.Cells["apellido"].Value.ToString();
+                txtemail.Text = dataGridView1.CurrentRow.Cells["email"].Value.ToString();
+                cmbrol.Text = dataGridView1.CurrentRow.Cells["rol"].Value.ToString();
 
+                // Asignar radio button según valor booleano o entero
+                bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
+                actsi.Checked = activo;
+                actno.Checked = !activo;
+            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             //detecta seleccion del desbl
-            if (modoActual == "desbloquear" && dataGridView1.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dataGridView1.SelectedRows[0];
+            //if (modoActual == "desbloquear" && dataGridView1.SelectedRows.Count > 0)
+            //{
+            //    DataGridViewRow row = dataGridView1.SelectedRows[0];
 
-                txtDNI.Text = row.Cells["DNI"].Value.ToString();
-                txtnom.Text = row.Cells["Nombre"].Value.ToString();
-                txtape.Text = row.Cells["Apellido"].Value.ToString();
-                txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
-                txtemail.Text = row.Cells["Email"].Value.ToString();
-                cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
+            //    txtDNI.Text = row.Cells["DNI"].Value.ToString();
+            //    txtnom.Text = row.Cells["Nombre"].Value.ToString();
+            //    txtape.Text = row.Cells["Apellido"].Value.ToString();
+            //    txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
+            //    txtemail.Text = row.Cells["Email"].Value.ToString();
+            //    cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
 
-                actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
-                actno.Checked = row.Cells["Activo"].Value.ToString() == "0";
-            }
+            //    actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
+            //    actno.Checked = row.Cells["Activo"].Value.ToString() == "0";
+            //}
 
-
+         
 
             //private void textBox5_TextChanged(object sender, EventArgs e)
             //{
@@ -564,7 +548,34 @@ namespace Proyecto_NailsTime
 
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
+            rbtntodos.Checked = true; // Marcar por defecto
+            CargarTodosUsuarios();   // Mostrar todos
 
+            lblcantuser.Text = dataGridView1.Rows.Count.ToString();
+
+
+            // Deshabilitar botones Aplicar y Cancelar
+            btnaplicar.Enabled = false;
+            btncancelar.Enabled = false;
+
+    
+
+            // Habilitar grilla solo para selección (no edición)
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+
+            // Iniciar en modo consulta
+            modoActual = "consulta";
+            lblmensaje.Text = "Modo Consulta";
+
+
+
+        }
+
+        private void btnmod_Click(object sender, EventArgs e)
+        {
+            lblmensaje.Text = "Modo Modificar";
         }
     }
 }

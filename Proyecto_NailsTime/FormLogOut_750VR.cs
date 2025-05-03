@@ -23,7 +23,7 @@ namespace Proyecto_NailsTime
 
             if (result == DialogResult.Yes)
             {
-                SERVICIOS_VR750.Singleton.SingletonSesion_VR750.Instancia.Logout();
+                //SERVICIOS_VR750.SessionManager_VR750.Instancia.Logout();
                 this.Hide();
 
                 Form1 loginForm = new Form1();

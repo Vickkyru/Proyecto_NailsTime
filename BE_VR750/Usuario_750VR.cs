@@ -40,7 +40,20 @@ namespace BE_VR750
 
         public Usuario_750VR()
         {
-                
+               
+            
+        }
+
+        public Usuario_750VR(int dni, string nombre, string ape, string mail,string salt, string rol, bool activo, bool bloqueado)
+        {
+            this.dni = dni;
+            this.nombre = nombre;
+            this.apellido = ape;
+            this.mail = mail;
+            this.user = user;
+            this.rol = rol;
+            this.activo = activo;
+            this.bloqueado = bloqueado;
         }
 
 

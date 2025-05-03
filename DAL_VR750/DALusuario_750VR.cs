@@ -83,7 +83,7 @@ namespace DAL_VR750
             }
         }
 
-        public void DesbloquearUsuario(int dni)
+        public bool DesbloquearUsuario(int dni)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -91,7 +91,9 @@ namespace DAL_VR750
                 string query = "UPDATE Usuario_VR750 SET Bloqueado = 0 WHERE DNI = @DNI";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", dni);
-                cmd.ExecuteNonQuery();
+
+                int filasAfectadas = cmd.ExecuteNonQuery();
+                return filasAfectadas > 0; // Devuelve true si al menos una fila fue actualizada
             }
         }
 
@@ -103,8 +105,8 @@ namespace DAL_VR750
             {
                 conn.Open();
                 string query = soloActivos
-                    ? "SELECT * FROM Usuarios WHERE Activo = 1"
-                    : "SELECT * FROM Usuarios";
+                    ? "SELECT * FROM Usuario_VR750 WHERE Activo = 1"
+                    : "SELECT * FROM Usuario_VR750";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -139,7 +141,7 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = "SELECT * FROM Usuarios WHERE 1=1";
+                string query = "SELECT * FROM Usuario_VR750 WHERE 1=1";
 
                 if (!string.IsNullOrEmpty(dni)) query += " AND DNI LIKE @DNI";
                 if (!string.IsNullOrEmpty(nombre)) query += " AND Nombre LIKE @Nombre";
@@ -166,7 +168,7 @@ namespace DAL_VR750
                         salt = reader["Salt"].ToString(),
                         rol = reader["Rol"].ToString(),
                         activo = Convert.ToBoolean(reader["Activo"]),
-                        bloqueado = Convert.ToBoolean(reader["Bloqueo"]),
+                        bloqueado = Convert.ToBoolean(reader["Bloqueado"]),
 
                     };
 

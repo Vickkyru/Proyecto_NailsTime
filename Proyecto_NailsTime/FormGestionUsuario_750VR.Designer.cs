@@ -59,10 +59,17 @@
             this.btnsalir = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblmensaje = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.btnelim = new System.Windows.Forms.Button();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Activo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +78,7 @@
             // 
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 21);
+            this.label2.Location = new System.Drawing.Point(23, 6);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(371, 45);
             this.label2.TabIndex = 7;
@@ -81,9 +88,18 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(18, 69);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DNI,
+            this.Nombre,
+            this.Apellido,
+            this.Email,
+            this.Usuario,
+            this.Rol,
+            this.Activo,
+            this.Bloqueado});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 66);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(538, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(770, 150);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
@@ -91,7 +107,7 @@
             // rbtnact
             // 
             this.rbtnact.AutoSize = true;
-            this.rbtnact.Location = new System.Drawing.Point(340, 34);
+            this.rbtnact.Location = new System.Drawing.Point(311, 12);
             this.rbtnact.Name = "rbtnact";
             this.rbtnact.Size = new System.Drawing.Size(60, 17);
             this.rbtnact.TabIndex = 9;
@@ -105,7 +121,7 @@
             // rbtntodos
             // 
             this.rbtntodos.AutoSize = true;
-            this.rbtntodos.Location = new System.Drawing.Point(429, 34);
+            this.rbtntodos.Location = new System.Drawing.Point(400, 12);
             this.rbtntodos.Name = "rbtntodos";
             this.rbtntodos.Size = new System.Drawing.Size(55, 17);
             this.rbtntodos.TabIndex = 10;
@@ -118,7 +134,7 @@
             // 
             this.label1.Cursor = System.Windows.Forms.Cursors.Default;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(544, 21);
+            this.label1.Location = new System.Drawing.Point(476, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 30);
             this.label1.TabIndex = 11;
@@ -127,7 +143,7 @@
             // lblcantuser
             // 
             this.lblcantuser.AutoSize = true;
-            this.lblcantuser.Location = new System.Drawing.Point(721, 26);
+            this.lblcantuser.Location = new System.Drawing.Point(653, 14);
             this.lblcantuser.Name = "lblcantuser";
             this.lblcantuser.Size = new System.Drawing.Size(0, 13);
             this.lblcantuser.TabIndex = 12;
@@ -176,6 +192,11 @@
             // cmbrol
             // 
             this.cmbrol.FormattingEnabled = true;
+            this.cmbrol.Items.AddRange(new object[] {
+            "Administrador",
+            "Recepcionista",
+            "Manicurista",
+            "Cliente"});
             this.cmbrol.Location = new System.Drawing.Point(262, 283);
             this.cmbrol.Name = "cmbrol";
             this.cmbrol.Size = new System.Drawing.Size(121, 21);
@@ -263,7 +284,7 @@
             // 
             // btncrear
             // 
-            this.btncrear.Location = new System.Drawing.Point(562, 69);
+            this.btncrear.Location = new System.Drawing.Point(18, 17);
             this.btncrear.Name = "btncrear";
             this.btncrear.Size = new System.Drawing.Size(75, 23);
             this.btncrear.TabIndex = 27;
@@ -300,7 +321,7 @@
             // 
             // btndesb
             // 
-            this.btndesb.Location = new System.Drawing.Point(651, 69);
+            this.btndesb.Location = new System.Drawing.Point(107, 17);
             this.btndesb.Name = "btndesb";
             this.btndesb.Size = new System.Drawing.Size(75, 23);
             this.btndesb.TabIndex = 32;
@@ -310,12 +331,13 @@
             // 
             // btnmod
             // 
-            this.btnmod.Location = new System.Drawing.Point(651, 117);
+            this.btnmod.Location = new System.Drawing.Point(107, 65);
             this.btnmod.Name = "btnmod";
             this.btnmod.Size = new System.Drawing.Size(75, 23);
             this.btnmod.TabIndex = 33;
             this.btnmod.Text = "Modificar";
             this.btnmod.UseVisualStyleBackColor = true;
+            this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
             // 
             // btnact
             // 
@@ -328,7 +350,7 @@
             // 
             // btnaplicar
             // 
-            this.btnaplicar.Location = new System.Drawing.Point(603, 165);
+            this.btnaplicar.Location = new System.Drawing.Point(59, 113);
             this.btnaplicar.Name = "btnaplicar";
             this.btnaplicar.Size = new System.Drawing.Size(75, 23);
             this.btnaplicar.TabIndex = 35;
@@ -358,8 +380,11 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lblmensaje);
-            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.btndesb);
+            this.panel1.Controls.Add(this.btncrear);
+            this.panel1.Controls.Add(this.btnmod);
+            this.panel1.Controls.Add(this.btnaplicar);
+            this.panel1.Controls.Add(this.btnelim);
             this.panel1.Location = new System.Drawing.Point(416, 248);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 175);
@@ -369,24 +394,14 @@
             // 
             this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblmensaje.Location = new System.Drawing.Point(20, 50);
+            this.lblmensaje.Location = new System.Drawing.Point(25, 230);
             this.lblmensaje.Name = "lblmensaje";
             this.lblmensaje.Size = new System.Drawing.Size(161, 30);
             this.lblmensaje.TabIndex = 42;
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(33, 17);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(50, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Mensaje:";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
-            // 
             // btnelim
             // 
-            this.btnelim.Location = new System.Drawing.Point(562, 117);
+            this.btnelim.Location = new System.Drawing.Point(18, 65);
             this.btnelim.Name = "btnelim";
             this.btnelim.Size = new System.Drawing.Size(75, 23);
             this.btnelim.TabIndex = 39;
@@ -411,26 +426,70 @@
             this.label9.TabIndex = 41;
             this.label9.Text = "User";
             // 
+            // DNI
+            // 
+            this.DNI.DataPropertyName = "dni";
+            this.DNI.HeaderText = "DNI";
+            this.DNI.Name = "DNI";
+            // 
+            // Nombre
+            // 
+            this.Nombre.DataPropertyName = "nombre";
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.Name = "Nombre";
+            // 
+            // Apellido
+            // 
+            this.Apellido.DataPropertyName = "apellido";
+            this.Apellido.HeaderText = "Apellido";
+            this.Apellido.Name = "Apellido";
+            // 
+            // Email
+            // 
+            this.Email.DataPropertyName = "mail";
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            // 
+            // Usuario
+            // 
+            this.Usuario.DataPropertyName = "user";
+            this.Usuario.HeaderText = "Usuario";
+            this.Usuario.Name = "Usuario";
+            // 
+            // Rol
+            // 
+            this.Rol.DataPropertyName = "rol";
+            this.Rol.HeaderText = "Rol";
+            this.Rol.Name = "Rol";
+            // 
+            // Activo
+            // 
+            this.Activo.DataPropertyName = "activo";
+            this.Activo.HeaderText = "Activo";
+            this.Activo.Name = "Activo";
+            // 
+            // Bloqueado
+            // 
+            this.Bloqueado.DataPropertyName = "bloqueado";
+            this.Bloqueado.HeaderText = "Bloqueado";
+            this.Bloqueado.Name = "Bloqueado";
+            // 
             // FormGestionUsuario_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtuser);
-            this.Controls.Add(this.btnelim);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btncancelar);
-            this.Controls.Add(this.btnaplicar);
             this.Controls.Add(this.btnact);
-            this.Controls.Add(this.btnmod);
-            this.Controls.Add(this.btndesb);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.btncrear);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -455,7 +514,6 @@
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -493,10 +551,17 @@
         private System.Windows.Forms.Button btncancelar;
         private System.Windows.Forms.Button btnsalir;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnelim;
         private System.Windows.Forms.TextBox txtuser;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblmensaje;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Apellido;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Activo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Bloqueado;
     }
 }

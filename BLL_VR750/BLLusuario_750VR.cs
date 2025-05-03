@@ -41,10 +41,10 @@ namespace BLL_VR750
             return dal.BorrarUsuarioLogico(dni);
         }
 
-        public void DesbloquearUsuario(int dni)
+        public bool DesbloquearUsuario(int dni)
         {
             
-            dal.DesbloquearUsuario(dni); // le pasa el dni
+            return dal.DesbloquearUsuario(dni); // le pasa el dni
         }
 
         public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
