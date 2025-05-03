@@ -30,10 +30,10 @@ namespace BLL_VR750
             dal.CrearUsuario(usuario);
         }
 
-        public void ModificarUsuario(Usuario_750VR usuario)
+        public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo)
         {
-           
-            dal.ModificarUsuario(usuario);
+
+            return dal.ModificarUsuario(dni, nombre, apellido, mail, rol, activo);
         }
 
         public bool BorrarUsuarioLogico(string dni)

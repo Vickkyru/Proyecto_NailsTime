@@ -46,28 +46,24 @@ namespace DAL_VR750
         }
 
 
-        public void ModificarUsuario(Usuario_750VR usuario) //no puse q se cambie el activo o el bloqueo
+        public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
                 string query = @"UPDATE Usuario_VR750 
-                        SET Nombre = @Nombre, 
-                            Apellido = @Apellido, 
-                            Email = @Email, 
-                            Rol = @Rol, 
-                            Activo = @Activo
-                        WHERE DNI = @DNI";
+                         SET Nombre = @Nombre, Apellido = @Apellido, Email = @Mail, Rol = @Rol, Activo = @Activo 
+                         WHERE DNI = @DNI";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
-                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Email", usuario.mail);
-                cmd.Parameters.AddWithValue("@Rol", usuario.rol);
-                cmd.Parameters.AddWithValue("@Activo", usuario.activo); //esto creo q no
-                cmd.Parameters.AddWithValue("@DNI", usuario.dni);
+                cmd.Parameters.AddWithValue("@Nombre", nombre);
+                cmd.Parameters.AddWithValue("@Apellido", apellido);
+                cmd.Parameters.AddWithValue("@Mail", mail);
+                cmd.Parameters.AddWithValue("@Rol", rol);
+                cmd.Parameters.AddWithValue("@Activo", activo);
+                cmd.Parameters.AddWithValue("@DNI", dni);
 
-                cmd.ExecuteNonQuery();
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
 
