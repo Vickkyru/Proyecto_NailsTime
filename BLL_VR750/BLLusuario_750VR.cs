@@ -24,10 +24,38 @@ namespace BLL_VR750
         }
 
 
-        public void CrearUsuario(Usuario_750VR usuario)
+        //public void CrearUsuario(Usuario_750VR usuario)
+        //{
+
+        //    dal.CrearUsuario(usuario);
+        //}
+        public void CrearUsuario(string dniStr, string nombre, string apellido, string mail, string rol)
         {
-           
-            dal.CrearUsuario(usuario);
+            if (!int.TryParse(dniStr, out int dni))
+                throw new Exception("El DNI ingresado no es válido.");
+
+            Usuario_750VR nuevoUsuario = new Usuario_750VR();
+            nuevoUsuario.dni = dni;
+            nuevoUsuario.nombre = nombre;
+            nuevoUsuario.apellido = apellido;
+            nuevoUsuario.mail = mail;
+
+            // Login y contraseña predeterminada
+            nuevoUsuario.user = $"{dni}{apellido}";
+            string contraseña = $"{dni}{nombre}";
+
+            // Encriptar
+            nuevoUsuario.salt = SERVICIOS_VR750.Encriptador_VR750.GenerarSalt();
+            nuevoUsuario.contraseña = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseña, nuevoUsuario.salt);
+
+            // Otros datos
+            nuevoUsuario.rol = rol;
+            nuevoUsuario.activo = true;
+            nuevoUsuario.bloqueado = false;
+
+            // Llamar a DAL
+            DALusuario_750VR dal = new DALusuario_750VR();
+            dal.CrearUsuario(nuevoUsuario);
         }
 
         public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo)

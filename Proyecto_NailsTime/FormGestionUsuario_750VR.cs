@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_VR750;
-using BE_VR750;
+//using BE_VR750;
 
 
 namespace Proyecto_NailsTime
@@ -222,32 +222,17 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // Crear nuevo usuario
-                Usuario_750VR nuevoUsuario = new Usuario_750VR();
-
-                nuevoUsuario.dni = int.Parse(txtDNI.Text.Trim());
-                nuevoUsuario.nombre = txtnom.Text.Trim();
-                nuevoUsuario.apellido = txtape.Text.Trim();
-                nuevoUsuario.mail = txtemail.Text.Trim();
-                nuevoUsuario.user = nuevoUsuario.dni.ToString() + nuevoUsuario.apellido; // User predeterminado
-
-                string contraseñaPredeterminada = nuevoUsuario.dni.ToString() + nuevoUsuario.nombre; // Contraseña predeterminada
-
-                // Generar Salt y encriptar contraseña
-                nuevoUsuario.salt = SERVICIOS_VR750.Encriptador_VR750.GenerarSalt();
-                nuevoUsuario.contraseña = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaPredeterminada, nuevoUsuario.salt);
-
-                nuevoUsuario.rol = cmbrol.SelectedItem.ToString();
-                nuevoUsuario.activo = true; // al dar de alta -> Activo
-                nuevoUsuario.bloqueado = false; // Alta de usuario ➔ no bloqueado
-
-                // Llamar a BLL para guardar
+                // Llamar a la BLL con los valores de la GUI (datos crudos)
                 BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
-                usuarioBLL.CrearUsuario(nuevoUsuario);
+                usuarioBLL.CrearUsuario(
+                    txtDNI.Text.Trim(),
+                    txtnom.Text.Trim(),
+                    txtape.Text.Trim(),
+                    txtemail.Text.Trim(),
+                    cmbrol.SelectedItem.ToString()
+                );
 
                 MessageBox.Show("Usuario creado exitosamente.", "Alta de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Refrescar la grilla o limpiar campos
                 LimpiarCampos();
             }
             catch (Exception ex)
