@@ -30,6 +30,14 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Activo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rbtnact = new System.Windows.Forms.RadioButton();
             this.rbtntodos = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -58,18 +66,10 @@
             this.btncancelar = new System.Windows.Forms.Button();
             this.btnsalir = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblmensaje = new System.Windows.Forms.Label();
             this.btnelim = new System.Windows.Forms.Button();
+            this.lblmensaje = new System.Windows.Forms.Label();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Activo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +103,54 @@
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // DNI
+            // 
+            this.DNI.DataPropertyName = "dni";
+            this.DNI.HeaderText = "DNI";
+            this.DNI.Name = "DNI";
+            // 
+            // Nombre
+            // 
+            this.Nombre.DataPropertyName = "nombre";
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.Name = "Nombre";
+            // 
+            // Apellido
+            // 
+            this.Apellido.DataPropertyName = "apellido";
+            this.Apellido.HeaderText = "Apellido";
+            this.Apellido.Name = "Apellido";
+            // 
+            // Email
+            // 
+            this.Email.DataPropertyName = "mail";
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            // 
+            // Usuario
+            // 
+            this.Usuario.DataPropertyName = "user";
+            this.Usuario.HeaderText = "Usuario";
+            this.Usuario.Name = "Usuario";
+            // 
+            // Rol
+            // 
+            this.Rol.DataPropertyName = "rol";
+            this.Rol.HeaderText = "Rol";
+            this.Rol.Name = "Rol";
+            // 
+            // Activo
+            // 
+            this.Activo.DataPropertyName = "activo";
+            this.Activo.HeaderText = "Activo";
+            this.Activo.Name = "Activo";
+            // 
+            // Bloqueado
+            // 
+            this.Bloqueado.DataPropertyName = "bloqueado";
+            this.Bloqueado.HeaderText = "Bloqueado";
+            this.Bloqueado.Name = "Bloqueado";
             // 
             // rbtnact
             // 
@@ -341,12 +389,13 @@
             // 
             // btnact
             // 
-            this.btnact.Location = new System.Drawing.Point(651, 277);
+            this.btnact.Location = new System.Drawing.Point(18, 65);
             this.btnact.Name = "btnact";
             this.btnact.Size = new System.Drawing.Size(75, 23);
             this.btnact.TabIndex = 34;
             this.btnact.Text = "Act/Desact";
             this.btnact.UseVisualStyleBackColor = true;
+            this.btnact.Click += new System.EventHandler(this.btnact_Click);
             // 
             // btnaplicar
             // 
@@ -384,11 +433,21 @@
             this.panel1.Controls.Add(this.btncrear);
             this.panel1.Controls.Add(this.btnmod);
             this.panel1.Controls.Add(this.btnaplicar);
-            this.panel1.Controls.Add(this.btnelim);
+            this.panel1.Controls.Add(this.btnact);
             this.panel1.Location = new System.Drawing.Point(416, 248);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 175);
             this.panel1.TabIndex = 38;
+            // 
+            // btnelim
+            // 
+            this.btnelim.Location = new System.Drawing.Point(651, 277);
+            this.btnelim.Name = "btnelim";
+            this.btnelim.Size = new System.Drawing.Size(75, 23);
+            this.btnelim.TabIndex = 39;
+            this.btnelim.Text = "Eliminar";
+            this.btnelim.UseVisualStyleBackColor = true;
+            this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
             // lblmensaje
             // 
@@ -398,16 +457,6 @@
             this.lblmensaje.Name = "lblmensaje";
             this.lblmensaje.Size = new System.Drawing.Size(161, 30);
             this.lblmensaje.TabIndex = 42;
-            // 
-            // btnelim
-            // 
-            this.btnelim.Location = new System.Drawing.Point(18, 65);
-            this.btnelim.Name = "btnelim";
-            this.btnelim.Size = new System.Drawing.Size(75, 23);
-            this.btnelim.TabIndex = 39;
-            this.btnelim.Text = "Eliminar";
-            this.btnelim.UseVisualStyleBackColor = true;
-            this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
             // txtuser
             // 
@@ -426,54 +475,6 @@
             this.label9.TabIndex = 41;
             this.label9.Text = "User";
             // 
-            // DNI
-            // 
-            this.DNI.DataPropertyName = "dni";
-            this.DNI.HeaderText = "DNI";
-            this.DNI.Name = "DNI";
-            // 
-            // Nombre
-            // 
-            this.Nombre.DataPropertyName = "nombre";
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            // 
-            // Apellido
-            // 
-            this.Apellido.DataPropertyName = "apellido";
-            this.Apellido.HeaderText = "Apellido";
-            this.Apellido.Name = "Apellido";
-            // 
-            // Email
-            // 
-            this.Email.DataPropertyName = "mail";
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "user";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            // 
-            // Rol
-            // 
-            this.Rol.DataPropertyName = "rol";
-            this.Rol.HeaderText = "Rol";
-            this.Rol.Name = "Rol";
-            // 
-            // Activo
-            // 
-            this.Activo.DataPropertyName = "activo";
-            this.Activo.HeaderText = "Activo";
-            this.Activo.Name = "Activo";
-            // 
-            // Bloqueado
-            // 
-            this.Bloqueado.DataPropertyName = "bloqueado";
-            this.Bloqueado.HeaderText = "Bloqueado";
-            this.Bloqueado.Name = "Bloqueado";
-            // 
             // FormGestionUsuario_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,9 +485,9 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtuser);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnelim);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btncancelar);
-            this.Controls.Add(this.btnact);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);

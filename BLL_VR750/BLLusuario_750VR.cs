@@ -64,9 +64,9 @@ namespace BLL_VR750
             return dal.ModificarUsuario(dni, nombre, apellido, mail, rol, activo);
         }
 
-        public bool BorrarUsuarioLogico(string dni)
+        public bool CambiarEstadoUsuario(int dni, bool nuevoEstado)
         {
-            return dal.BorrarUsuarioLogico(dni);
+            return dal.CambiarEstadoUsuario(dni, nuevoEstado);
         }
 
         public bool DesbloquearUsuario(int dni)
@@ -75,7 +75,7 @@ namespace BLL_VR750
             return dal.DesbloquearUsuario(dni); // le pasa el dni
         }
 
-        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos)
+        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos) 
         {
             return dal.ObtenerUsuarios(soloActivos);
         }
@@ -85,56 +85,55 @@ namespace BLL_VR750
             return dal.BuscarUsuarios(dni, nombre, apellido, email);
         }
 
-        private int intentosFallidos = 0; // contador de intentos fallidos
+        public List<Usuario_750VR> leerEntidades()
+        {
+            return dal.leerEntidades();
+        }
+
+        private static int intentosFallidos = 0;
 
         public string Login(string usuarioLogin, string contraseñaIngresada)
         {
-           
-            Usuario_750VR user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
+            var user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
 
             if (user == null)
-            {
-                intentosFallidos++;
-                return GestionarIntentosFallidos(usuarioLogin);
-            }
+                return "Usuario no encontrado.";
 
             if (!user.activo)
-                return "Cuenta inactiva. Comuníquese con el administrador.";
+                return "Cuenta inactiva. Contacte al administrador.";
 
             if (user.bloqueado)
                 return "Cuenta bloqueada. Contacte al administrador.";
 
-            string contraseñaHasheadaIngresada = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
+            string hashIngresado = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
 
-            if (contraseñaHasheadaIngresada == user.contraseña)
+            if (hashIngresado == user.contraseña)
             {
                 intentosFallidos = 0;
-                SessionManager_VR750.Instancia.IniciarSesion(user); // AQUÍ GUARDA la sesión
-                return "Login exitoso";
+                if (!SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia().IniciarSesion(user))
+                    return "Ya hay una sesión activa.";
+
+                return "Login exitoso.";
             }
             else
             {
                 intentosFallidos++;
-                return GestionarIntentosFallidos(usuarioLogin);
+                if (intentosFallidos >= 3)
+                {
+                    BloquearUsuario(user.user);
+                    return "Cuenta bloqueada tras 3 intentos fallidos.";
+                }
+
+                return $"Contraseña incorrecta. Intentos fallidos: {intentosFallidos}";
             }
 
         }
-
-        private string GestionarIntentosFallidos(string usuarioLogin)
+        private void BloquearUsuario(string usuarioLogin)
         {
-           
-
-            if (intentosFallidos >= 3)
-            {
-                
-                dal.BloquearUsuario(usuarioLogin); // Bloquea en base de datos
-
-                intentosFallidos = 0; // Resetear intentos después de bloquear
-                return "Usuario bloqueado por múltiples intentos fallidos.";
-            }
-
-            return $"Usuario o contraseña incorrectos. Intentos fallidos: {intentosFallidos}/3";
+            dal.BloquearUsuario(usuarioLogin);
         }
+
+       
 
         public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
         {

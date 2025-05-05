@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using BE_VR750;
 using BLL_VR750;
 //using BE_VR750;
 
@@ -20,7 +21,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
  
-            LimpiarCampos();
+            
 
         }
         public void LimpiarCampos()
@@ -97,7 +98,13 @@ namespace Proyecto_NailsTime
             if (modoActual == "consulta")
             {
                 BLLusuario_750VR bll = new BLLusuario_750VR();
-                var resultados = bll.BuscarUsuarios(txtDNI.Text, txtnom.Text, txtape.Text, txtemail.Text);
+                var resultados = bll.BuscarUsuarios(
+            string.IsNullOrWhiteSpace(txtDNI.Text) ? null : txtDNI.Text,
+            string.IsNullOrWhiteSpace(txtnom.Text) ? null : txtnom.Text,
+            string.IsNullOrWhiteSpace(txtape.Text) ? null : txtape.Text,
+            string.IsNullOrWhiteSpace(txtemail.Text) ? null : txtemail.Text
+        );
+
                 dataGridView1.DataSource = resultados;
 
                 // Desmarcar los radio buttons
@@ -105,6 +112,7 @@ namespace Proyecto_NailsTime
                 rbtntodos.Checked = false;
 
                 PintarUsuariosInactivos();
+                LimpiarCampos();
                 return;
             }
 
@@ -121,8 +129,8 @@ namespace Proyecto_NailsTime
                 case "modificar":
                     AplicarModificacion();
                     break;
-                case "eliminar":
-                    AplicarBorradoLogico();
+                case "Activar/Desactivar":
+                    AplicarActivarDesactivar();
                     break;
                 case "desbloquear":
                     AplicarDesbloqueo();
@@ -134,7 +142,7 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Consulta";
             ResetearEstadoInterfaz();
             CargarTodosUsuarios(); // Refrescar grilla general
-            LimpiarCampos();
+            
 
         }
 
@@ -147,44 +155,56 @@ namespace Proyecto_NailsTime
 
                 if (!bloqueado)
                 {
-                    MessageBox.Show("El usuario ya está desbloqueado. Por favor seleccione uno que esté bloqueado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("El usuario ya está desbloqueado. Por favor seleccione uno que esté bloqueado.");
                     return;
                 }
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
                 bll.DesbloquearUsuario(dni);
 
-                MessageBox.Show("Usuario desbloqueado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario desbloqueado correctamente.", "Éxito");
+                CargarUsuariosActivos();// o el método que refresca el DataGrid
+                LimpiarCampos();
             }
 
         }
 
-        private void AplicarBorradoLogico()
+        private void AplicarActivarDesactivar()
         {
-            try
+            if (dataGridView1.CurrentRow == null)
             {
-                string dni = txtDNI.Text;
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                bool eliminado = bll.BorrarUsuarioLogico(dni);
-
-                if (eliminado)
-                {
-                    MessageBox.Show("Usuario marcado como inactivo.");
-                    CargarUsuariosActivos();
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo borrar el usuario.");
-                }
+                MessageBox.Show("Seleccione un usuario de la lista.");
+                return;
             }
-            catch (Exception ex)
+
+            int dni = Convert.ToInt32(dataGridView1.CurrentRow.Cells["dni"].Value);
+            bool activoActual = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
+
+            bool nuevoEstado = !activoActual; // invertimos el estado
+
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            bool exito = bll.CambiarEstadoUsuario(dni, nuevoEstado);
+
+            if (exito)
             {
-                MessageBox.Show("Error al borrar usuario: " + ex.Message);
+                string mensaje = nuevoEstado ? "Usuario activado correctamente." : "Usuario desactivado correctamente.";
+                MessageBox.Show(mensaje);
+                CargarTodosUsuarios();
+                LimpiarCampos();
+            }
+            else
+            {
+                MessageBox.Show("Error al cambiar estado del usuario.");
             }
         }
 
         private void AplicarModificacion()
         {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione un usuario de la lista.");
+                return;
+            }
             int dni = int.Parse(txtDNI.Text);
             string nombre = txtnom.Text;
             string apellido = txtape.Text;
@@ -198,7 +218,8 @@ namespace Proyecto_NailsTime
             if (exito)
             {
                 MessageBox.Show("Usuario modificado correctamente.");
-                CargarUsuariosActivos(); // o el método que refresca el DataGrid
+                CargarUsuariosActivos();// o el método que refresca el DataGrid
+                LimpiarCampos();
             }
             else
             {
@@ -212,15 +233,7 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
-                    string.IsNullOrWhiteSpace(txtnom.Text) ||
-                    string.IsNullOrWhiteSpace(txtape.Text) ||
-                    string.IsNullOrWhiteSpace(txtemail.Text) ||
-                    cmbrol.SelectedItem == null)
-                {
-                    MessageBox.Show("Debe completar todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                ValidarCampos();
 
                 // Llamar a la BLL con los valores de la GUI (datos crudos)
                 BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
@@ -232,8 +245,9 @@ namespace Proyecto_NailsTime
                     cmbrol.SelectedItem.ToString()
                 );
 
-                MessageBox.Show("Usuario creado exitosamente.", "Alta de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario creado exitosamente.");
                 LimpiarCampos();
+                CargarUsuariosActivos();
             }
             catch (Exception ex)
             {
@@ -268,9 +282,9 @@ namespace Proyecto_NailsTime
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Eliminar";
-            modoActual = "eliminar";
-            ActivarModoEdicion();
+            //lblmensaje.Text = "Modo Eliminar";
+            //modoActual = "eliminar";
+            //ActivarModoEdicion();
         }
 
         private void rbtntodos_CheckedChanged(object sender, EventArgs e)
@@ -325,6 +339,7 @@ namespace Proyecto_NailsTime
             btnmod.Enabled = true;
             btnelim.Enabled = true;
             btndesb.Enabled = true;
+            btnact.Enabled = true;
 
             rbtnact.Enabled = true;
             rbtntodos.Enabled = true;
@@ -370,6 +385,7 @@ namespace Proyecto_NailsTime
             btnmod.Enabled = false;
             btnelim.Enabled = false;
             btndesb.Enabled = false;
+            btnact.Enabled = false;
             rbtnact.Enabled = false;
             rbtntodos.Enabled = false;
 
@@ -396,6 +412,7 @@ namespace Proyecto_NailsTime
             btncrear.Enabled = false;
             btnmod.Enabled = false;
             btnelim.Enabled = false;
+            btnact.Enabled = false;
             btndesb.Enabled = false;
             rbtnact.Enabled = true;
             rbtntodos.Enabled = true;
@@ -461,6 +478,7 @@ namespace Proyecto_NailsTime
                 txtape.Text = dataGridView1.CurrentRow.Cells["apellido"].Value.ToString();
                 txtemail.Text = dataGridView1.CurrentRow.Cells["email"].Value.ToString();
                 cmbrol.Text = dataGridView1.CurrentRow.Cells["rol"].Value.ToString();
+                txtuser.Text = dataGridView1.CurrentRow.Cells["usuario"].Value.ToString();
 
                 // Asignar radio button según valor booleano o entero
                 bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
@@ -475,6 +493,7 @@ namespace Proyecto_NailsTime
                 txtape.Text = dataGridView1.CurrentRow.Cells["apellido"].Value.ToString();
                 txtemail.Text = dataGridView1.CurrentRow.Cells["mail"].Value.ToString();
                 cmbrol.Text = dataGridView1.CurrentRow.Cells["rol"].Value.ToString();
+                txtuser.Text = dataGridView1.CurrentRow.Cells["usuario"].Value.ToString();
 
                 bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
                 actsi.Checked = activo;
@@ -484,36 +503,21 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            //detecta seleccion del desbl
-            //if (modoActual == "desbloquear" && dataGridView1.SelectedRows.Count > 0)
-            //{
-            //    DataGridViewRow row = dataGridView1.SelectedRows[0];
-
-            //    txtDNI.Text = row.Cells["DNI"].Value.ToString();
-            //    txtnom.Text = row.Cells["Nombre"].Value.ToString();
-            //    txtape.Text = row.Cells["Apellido"].Value.ToString();
-            //    txtuser.Text = row.Cells["UsuarioLogin"].Value.ToString();
-            //    txtemail.Text = row.Cells["Email"].Value.ToString();
-            //    cmbrol.SelectedItem = row.Cells["Rol"].Value.ToString();
-
-            //    actsi.Checked = row.Cells["Activo"].Value.ToString() == "1";
-            //    actno.Checked = row.Cells["Activo"].Value.ToString() == "0";
-            //}
-
-         
-
-            //private void textBox5_TextChanged(object sender, EventArgs e)
-            //{
-
-            //}
+            
         }
 
+        private void MostrarCantidadUsuarios()
+        {
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            var listaUsuarios = bll.leerEntidades();
+            lblcantuser.Text = $"{listaUsuarios.Count}";
+        }
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
-            rbtntodos.Checked = true; // Marcar por defecto
-            CargarTodosUsuarios();   // Mostrar todos
+            rbtnact.Checked = true; // Marcar por defecto
+            CargarUsuariosActivos();   // Mostrar activos
 
-            lblcantuser.Text = dataGridView1.Rows.Count.ToString();
+            MostrarCantidadUsuarios(); //muetsra en el label cant users
 
 
             // Deshabilitar botones Aplicar y Cancelar
@@ -540,6 +544,13 @@ namespace Proyecto_NailsTime
             modoActual = "modificar";
             ActivarModoEdicion();
             lblmensaje.Text = "Modo Modificar";
+        }
+
+        private void btnact_Click(object sender, EventArgs e)
+        {
+            lblmensaje.Text = "Modo Activar/Desactivar";
+            modoActual = "Activar/Desactivar";
+            ActivarModoEdicion();
         }
     }
 }

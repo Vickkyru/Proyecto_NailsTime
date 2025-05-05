@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 using System.Windows.Forms;
 using BE_VR750;
 using BLL_VR750;
@@ -25,39 +26,58 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string usuarioLogin = txtuser.Text.Trim();
-            string contraseña = txtcontra.Text.Trim();
+            //// Validación de campos vacíos
+            //if (string.IsNullOrWhiteSpace(txtuser.Text) || string.IsNullOrWhiteSpace(txtcontra.Text))
+            //{
+            //    MessageBox.Show("Complete los campos");
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(usuarioLogin) || string.IsNullOrWhiteSpace(contraseña))
+            //// Verificar si ya hay una sesión activa
+            //if (SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia().UsuarioActual != null)
+            //{
+            //    MessageBox.Show("Ya hay una sesión activa.");
+            //    return;
+            //}
+
+            //// Llamar a BLL
+            //BLLusuario_750VR bll = new BLLusuario_750VR();
+            //string resultadoLogin = bll.Login(txtuser.Text.Trim(), txtcontra.Text.Trim());
+
+            //if (resultadoLogin != "Login exitoso.")
+            //{
+            //    MessageBox.Show(resultadoLogin);
+            //    return;
+            //}
+
+            //// Login exitoso
+            //MessageBox.Show("Sesión iniciada correctamente");
+
+            //// Abrir form principal
+
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            if (txtuser.Text == "" || txtcontra.Text == "")
             {
-                MessageBox.Show("Debe completar todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Complete los campos");
                 return;
             }
 
-            try
+            if (SessionManager_VR750.ObtenerInstancia().UsuarioActual != null)
             {
-                // Usamos BLL
-                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
-                var resultado = usuarioBLL.recuperarUsuario(usuarioLogin, contraseña);
-
-                if (resultado.resultado) // Login exitoso
-                {
-                    SERVICIOS_VR750.SessionManager_VR750.Instancia
-                        .IniciarSesion(resultado.entidad);
-
-                    MessageBox.Show("Bienvenido/a", "Inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show(resultado.mensaje, "Error de inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                MessageBox.Show("Ya hay una sesión activa.");
+                this.Close();
+                return;
             }
-            catch (Exception ex)
+
+            string resultado = bll.Login(txtuser.Text.Trim(), txtcontra.Text.Trim());
+
+            MessageBox.Show(resultado);
+
+            if (resultado == "Login exitoso.")
             {
-                MessageBox.Show($"Error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               this.Close();
             }
+            //this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
