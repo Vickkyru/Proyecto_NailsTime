@@ -41,7 +41,7 @@ namespace BLL_VR750
             nuevoUsuario.mail = mail;
 
             // Login y contraseña predeterminada
-            nuevoUsuario.user = $"{dni}{apellido}";
+            nuevoUsuario.user = $"{mail}";
             string contraseña = $"{dni}{nombre}";
 
             // Encriptar

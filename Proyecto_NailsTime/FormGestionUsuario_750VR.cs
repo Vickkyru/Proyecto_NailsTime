@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using BE_VR750;
 using BLL_VR750;
-//using BE_VR750;
+
 
 
 namespace Proyecto_NailsTime
@@ -78,6 +79,9 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Añadir";
             modoActual = "añadir";
             ActivarModoEdicion();
+            txtuser.Visible = false;   // textbox donde normalmente aparece el user
+            bloqno.Visible = false;
+            bloqsi.Visible = false;
         }
 
         //boton salir
@@ -142,7 +146,9 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Consulta";
             ResetearEstadoInterfaz();
             CargarTodosUsuarios(); // Refrescar grilla general
-            
+            MostrarCantidadUsuarios();
+            LimpiarCampos();
+
 
         }
 
@@ -205,6 +211,11 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Seleccione un usuario de la lista.");
                 return;
             }
+
+            // Validamos primero
+            if (!ValidarCampos())
+                return;
+
             int dni = int.Parse(txtDNI.Text);
             string nombre = txtnom.Text;
             string apellido = txtape.Text;
@@ -228,12 +239,15 @@ namespace Proyecto_NailsTime
 
 
         }
+       
 
         private void AplicarAlta()
         {
             try
             {
-                ValidarCampos();
+                // Validamos primero
+                if (!ValidarCampos())
+                    return;
 
                 // Llamar a la BLL con los valores de la GUI (datos crudos)
                 BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
@@ -270,7 +284,35 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Por favor, complete todos los campos obligatorios.");
                 return false;
             }
+            // 2.2) DNI: 7–8 dígitos, con o sin puntos (12.345.678 o 12345678)
+            string dniPattern = @"^(\d{7,8}|\d{2}\.\d{3}\.\d{3})$";
+            if (!Regex.IsMatch(txtDNI.Text.Trim(), dniPattern))
+            {
+                MessageBox.Show("Debe ingresar un DNI válido (7–8 dígitos, con o sin puntos).");
+                return false;
+            }
+
+            // 2.3) E-mail
+            if (!EsEmailValido(txtemail.Text.Trim()))
+            {
+                MessageBox.Show("Debe ingresar un e-mail válido.");
+                return false;
+            }
+
             return true;
+        }
+        // 1) Valida formato de e-mail
+        private bool EsEmailValido(string email)
+        {
+            try
+            {
+                var addr = new MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void btndesb_Click(object sender, EventArgs e)
@@ -398,26 +440,26 @@ namespace Proyecto_NailsTime
 
         private void ResetearEstadoInterfaz()
         {
-            txtDNI.Enabled = true;
-            txtnom.Enabled = true;
-            txtape.Enabled = true;
-            txtemail.Enabled = true;
-            cmbrol.Enabled = true;
-            actsi.Enabled = true;
-            actno.Enabled = true;
+            // Campos de texto deshabilitados
+            txtDNI.Enabled = txtnom.Enabled = txtape.Enabled = txtemail.Enabled = true;
+            cmbrol.Enabled = actsi.Enabled = actno.Enabled = true;
 
-            btnaplicar.Enabled = true;
-            btncancelar.Enabled = true;
+            // CRUD y filtros habilitados
+            btncrear.Enabled = btnmod.Enabled = btnelim.Enabled = btndesb.Enabled = true;
+            rbtnact.Enabled = rbtntodos.Enabled = true;
+            btnact.Enabled = true; 
 
-            btncrear.Enabled = false;
-            btnmod.Enabled = false;
-            btnelim.Enabled = false;
-            btnact.Enabled = false;
-            btndesb.Enabled = false;
-            rbtnact.Enabled = true;
-            rbtntodos.Enabled = true;
+            // Aplicar/Cancelar deshabilitados
+            btnaplicar.Enabled = false;
+            btncancelar.Enabled = false;
 
+            // Grilla habilitada para seleccionar
             dataGridView1.Enabled = true;
+
+            // (si ocultaste txtUser en Crear, mostrala de nuevo)
+            txtuser.Visible = txtuser.Visible = true;
+            bloqno.Visible = true;
+            bloqsi.Visible = true;
         }
 
         private void label12_Click(object sender, EventArgs e)
