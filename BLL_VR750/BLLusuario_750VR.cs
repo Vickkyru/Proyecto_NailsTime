@@ -54,7 +54,7 @@ namespace BLL_VR750
             nuevoUsuario.bloqueado = false;
 
             // Llamar a DAL
-            DALusuario_750VR dal = new DALusuario_750VR();
+          
             dal.CrearUsuario(nuevoUsuario);
         }
 

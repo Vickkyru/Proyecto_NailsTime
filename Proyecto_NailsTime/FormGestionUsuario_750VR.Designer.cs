@@ -66,7 +66,6 @@
             this.btncancelar = new System.Windows.Forms.Button();
             this.btnsalir = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnelim = new System.Windows.Forms.Button();
             this.lblmensaje = new System.Windows.Forms.Label();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -439,16 +438,6 @@
             this.panel1.Size = new System.Drawing.Size(200, 175);
             this.panel1.TabIndex = 38;
             // 
-            // btnelim
-            // 
-            this.btnelim.Location = new System.Drawing.Point(651, 277);
-            this.btnelim.Name = "btnelim";
-            this.btnelim.Size = new System.Drawing.Size(75, 23);
-            this.btnelim.TabIndex = 39;
-            this.btnelim.Text = "Eliminar";
-            this.btnelim.UseVisualStyleBackColor = true;
-            this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
-            // 
             // lblmensaje
             // 
             this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
@@ -485,7 +474,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtuser);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btnelim);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btncancelar);
             this.Controls.Add(this.label11);
@@ -552,7 +540,6 @@
         private System.Windows.Forms.Button btncancelar;
         private System.Windows.Forms.Button btnsalir;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnelim;
         private System.Windows.Forms.TextBox txtuser;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblmensaje;
