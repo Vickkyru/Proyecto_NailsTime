@@ -18,6 +18,7 @@ namespace Proyecto_NailsTime
     public partial class FormLogIn_750VR : Form
     {
         public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
+        BLLusuario_750VR bll = new BLLusuario_750VR();
 
         public FormLogIn_750VR()
         {
@@ -26,31 +27,26 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            if (txtuser.Text == "" || txtcontra.Text == "")
+
+            if (string.IsNullOrWhiteSpace(txtuser.Text) || string.IsNullOrWhiteSpace(txtcontra.Text))
             {
-                MessageBox.Show("Complete los campos");
+                MessageBox.Show("Complete los campos.");
                 return;
             }
 
-            if (SessionManager_VR750.ObtenerInstancia.UsuarioActual != null)
-            {
-                MessageBox.Show("Ya hay una sesión activa.");
-                this.Close();
-                return;
-            }
-
+            // Validar login con BLL
             string resultado = bll.Login(txtuser.Text.Trim(), txtcontra.Text.Trim());
-
-            MessageBox.Show(resultado);
 
             if (resultado == "Login exitoso.")
             {
-               this.Close();
+                MessageBox.Show(resultado);
+                this.Close(); // cerrar login si fue exitoso
             }
-            //this.Close();
+            else
+            {
+                MessageBox.Show(resultado);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -61,6 +57,16 @@ namespace Proyecto_NailsTime
         private void FormLogIn_750VR_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtcontra_TextChanged(object sender, EventArgs e)
+        {
+            txtcontra.UseSystemPasswordChar = true;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtcontra.UseSystemPasswordChar = !checkBox1.Checked;
         }
     }
 }

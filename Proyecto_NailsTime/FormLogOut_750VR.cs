@@ -22,8 +22,8 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                SERVICIOS_VR750.SessionManager_VR750.CerrarSesion();
-                Application.Restart(); // O redirigir al login manualmente
+                SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.CerrarSesion();
+                Application.Restart(); // reinicia la app para forzar el login de nuevo
             }
             catch (Exception ex)
             {

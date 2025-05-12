@@ -76,18 +76,18 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            //try
-            //{
-            //    var usuario = SessionManager_VR750.ObtenerInstancia.UsuarioActual;
-            //   lblbienvenido.Text = $"Bienvenido/a {usuario.nombre} {usuario.apellido}";
-            //    lblrol.Text = $"Rol: {usuario.rol}";
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("No hay sesión activa.");
-            //    //this.Close(); // o redirigir al login
-            //}
+            //falta
+            if (SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.EstaLogueado())
+            {
+                var usuarioActual = SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.UsuarioActual;
+                lblbienvenido.Text = $"{usuarioActual.nombre}";
+                lblrol.Text = $"Rol: {usuarioActual.rol}";
+            }
+            else
+            {
+                lblbienvenido.Text = "";
+                lblrol.Text = "";
+            }
         }
 
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)

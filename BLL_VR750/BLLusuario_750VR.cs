@@ -94,7 +94,7 @@ namespace BLL_VR750
 
         public string Login(string usuarioLogin, string contraseñaIngresada)
         {
-            var user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
+            Usuario_750VR user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
 
             if (user == null)
                 return "Usuario no encontrado.";
@@ -105,29 +105,24 @@ namespace BLL_VR750
             if (user.bloqueado)
                 return "Cuenta bloqueada. Contacte al administrador.";
 
-            string hashIngresado = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
+            string hashIngresado = Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
 
             if (hashIngresado == user.contraseña)
             {
-
                 intentosFallidos = 0;
 
-                try
-                {
-                    SERVICIOS_VR750.SessionManager_VR750.IniciarSesion(user);
-                    return "Login exitoso.";
-                }
-                catch (Exception ex)
-                {
-                    return ex.Message; // "Sesion ya iniciada"
-                }
+                bool sesionIniciada = SessionManager_VR750.ObtenerInstancia.IniciarSesion(user);
+                if (!sesionIniciada)
+                    return "Ya hay una sesión activa.";
+
+                return "Login exitoso.";
             }
             else
             {
                 intentosFallidos++;
                 if (intentosFallidos >= 3)
                 {
-                    BloquearUsuario(user.user);
+                    dal.BloquearUsuario(usuarioLogin);
                     return "Cuenta bloqueada tras 3 intentos fallidos.";
                 }
 
@@ -135,6 +130,12 @@ namespace BLL_VR750
             }
 
         }
+
+        //public void Logout()
+        //{
+        //    if (SessionManager_VR750.Instancia.EstaLogueado())
+        //        SessionManager_VR750.Instancia.CerrarSesion();
+        //}
         private void BloquearUsuario(string usuarioLogin)
         {
             dal.BloquearUsuario(usuarioLogin);
