@@ -46,6 +46,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblbienvenido = new System.Windows.Forms.Label();
+            this.lblrol = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -204,12 +206,32 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Rol:";
             // 
+            // lblbienvenido
+            // 
+            this.lblbienvenido.AutoSize = true;
+            this.lblbienvenido.Location = new System.Drawing.Point(96, 467);
+            this.lblbienvenido.Name = "lblbienvenido";
+            this.lblbienvenido.Size = new System.Drawing.Size(10, 13);
+            this.lblbienvenido.TabIndex = 6;
+            this.lblbienvenido.Text = "-";
+            // 
+            // lblrol
+            // 
+            this.lblrol.AutoSize = true;
+            this.lblrol.Location = new System.Drawing.Point(339, 467);
+            this.lblrol.Name = "lblrol";
+            this.lblrol.Size = new System.Drawing.Size(10, 13);
+            this.lblrol.TabIndex = 7;
+            this.lblrol.Text = "-";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(899, 489);
+            this.Controls.Add(this.lblrol);
+            this.Controls.Add(this.lblbienvenido);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
@@ -246,6 +268,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblbienvenido;
+        private System.Windows.Forms.Label lblrol;
     }
 }
 

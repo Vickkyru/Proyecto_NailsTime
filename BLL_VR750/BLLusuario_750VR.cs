@@ -109,11 +109,18 @@ namespace BLL_VR750
 
             if (hashIngresado == user.contraseña)
             {
-                intentosFallidos = 0;
-                if (!SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia().IniciarSesion(user))
-                    return "Ya hay una sesión activa.";
 
-                return "Login exitoso.";
+                intentosFallidos = 0;
+
+                try
+                {
+                    SERVICIOS_VR750.SessionManager_VR750.IniciarSesion(user);
+                    return "Login exitoso.";
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message; // "Sesion ya iniciada"
+                }
             }
             else
             {

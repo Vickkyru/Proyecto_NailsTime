@@ -26,34 +26,7 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //// Validación de campos vacíos
-            //if (string.IsNullOrWhiteSpace(txtuser.Text) || string.IsNullOrWhiteSpace(txtcontra.Text))
-            //{
-            //    MessageBox.Show("Complete los campos");
-            //    return;
-            //}
-
-            //// Verificar si ya hay una sesión activa
-            //if (SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia().UsuarioActual != null)
-            //{
-            //    MessageBox.Show("Ya hay una sesión activa.");
-            //    return;
-            //}
-
-            //// Llamar a BLL
-            //BLLusuario_750VR bll = new BLLusuario_750VR();
-            //string resultadoLogin = bll.Login(txtuser.Text.Trim(), txtcontra.Text.Trim());
-
-            //if (resultadoLogin != "Login exitoso.")
-            //{
-            //    MessageBox.Show(resultadoLogin);
-            //    return;
-            //}
-
-            //// Login exitoso
-            //MessageBox.Show("Sesión iniciada correctamente");
-
-            //// Abrir form principal
+            
 
             BLLusuario_750VR bll = new BLLusuario_750VR();
             if (txtuser.Text == "" || txtcontra.Text == "")
@@ -62,7 +35,7 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            if (SessionManager_VR750.ObtenerInstancia().UsuarioActual != null)
+            if (SessionManager_VR750.ObtenerInstancia.UsuarioActual != null)
             {
                 MessageBox.Show("Ya hay una sesión activa.");
                 this.Close();

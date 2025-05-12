@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL_VR750;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,12 +20,15 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia().CerrarSesion();
-            MessageBox.Show("Sesión cerrada correctamente.");
-
-            // Cerrar formulario principal y volver al Login
-            
-            this.Close();
+            try
+            {
+                SERVICIOS_VR750.SessionManager_VR750.CerrarSesion();
+                Application.Restart(); // O redirigir al login manualmente
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al cerrar sesión");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

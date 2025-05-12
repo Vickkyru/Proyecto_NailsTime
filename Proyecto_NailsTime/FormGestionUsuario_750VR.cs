@@ -379,7 +379,7 @@ namespace Proyecto_NailsTime
 
             btncrear.Enabled = true;
             btnmod.Enabled = true;
-            btnelim.Enabled = true;
+            //btnelim.Enabled = true;
             btndesb.Enabled = true;
             btnact.Enabled = true;
 
@@ -425,7 +425,7 @@ namespace Proyecto_NailsTime
             // Deshabilitar botones de navegación
             btncrear.Enabled = false;
             btnmod.Enabled = false;
-            btnelim.Enabled = false;
+            //btnelim.Enabled = false;
             btndesb.Enabled = false;
             btnact.Enabled = false;
             rbtnact.Enabled = false;
@@ -445,7 +445,7 @@ namespace Proyecto_NailsTime
             cmbrol.Enabled = actsi.Enabled = actno.Enabled = true;
 
             // CRUD y filtros habilitados
-            btncrear.Enabled = btnmod.Enabled = btnelim.Enabled = btndesb.Enabled = true;
+            btncrear.Enabled = btnmod.Enabled = /*btnelim.Enabled =*/ btndesb.Enabled = true;
             rbtnact.Enabled = rbtntodos.Enabled = true;
             btnact.Enabled = true; 
 

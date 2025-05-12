@@ -3,83 +3,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using BE_VR750;
 
 namespace SERVICIOS_VR750
 {
     public sealed class SessionManager_VR750
     {
-        //private static SessionManager_VR750 instancia = null;
-        //private static readonly object _lock = new object();
-        //private Usuario_750VR _usuario = null;
-
-        //private SessionManager_VR750() { }
-
-        //public static SessionManager_VR750 Instancia
-        //{
-        //    get
-        //    {
-        //        lock (_lock)
-        //        {
-        //            if (instancia == null)
-        //                instancia = new SessionManager_VR750();
-        //            return instancia;
-        //        }
-        //    }
-        //}
-
-        //public void IniciarSesion(Usuario_750VR usuario)
-        //{
-        //    _usuario = usuario;
-        //}
-
-        //public void CerrarSesion()
-        //{
-        //    _usuario = null;
-        //}
-
-        //public bool EstaLogueado()
-        //{
-        //    return _usuario != null;
-        //}
-
-        //public Usuario_750VR Usuario => _usuario;
-
-        //public int DNIUsuario => _usuario?.dni ?? 0;
-        private static SessionManager_VR750 Instancia = null;
-        private Usuario_750VR _user = null;
+      
+        private static SessionManager_VR750 Instancia;
+        public Usuario_750VR user;
 
         private SessionManager_VR750() { }
 
-        public static SessionManager_VR750 ObtenerInstancia()
+        public static SessionManager_VR750 ObtenerInstancia
         {
-            if (Instancia == null)
-                Instancia = new SessionManager_VR750();
-            return Instancia;
+            get
+            {
+                
+                //if (Instancia == null) throw new Exception("Sesion no iniciada");
+                return Instancia;
+            }
         }
 
         public bool EstaLogueado()
         {
-            return _user != null;
+            return user != null;
         }
 
-        public bool IniciarSesion(Usuario_750VR userNuevo)
+        public static void IniciarSesion(Usuario_750VR userNuevo)
         {
-            if (_user != null)
+          
+
+            if (Instancia == null)
             {
-                // Ya hay sesión activa
-                return false;
+                Instancia = new SessionManager_VR750();
+                Instancia.user = userNuevo;
+   
+                MessageBox.Show($"Se inicio la sesión de {Instancia.user.nombre}");
             }
-
-            _user = userNuevo;
-            return true;
+            else
+            {
+                throw new Exception("Sesion ya iniciada");
+            }
         }
 
-        public void CerrarSesion()
+        public static void CerrarSesion()
         {
-            _user = null;
+            if (Instancia != null)
+            {
+
+                Instancia = null;
+                MessageBox.Show($" Se cerro sesión de {Instancia.user.nombre}");
+            }
+            else
+            {
+                throw new Exception("Sesion no iniciada");
+            }
         }
 
-        public Usuario_750VR UsuarioActual => _user;
+        public Usuario_750VR UsuarioActual => user;
     }
 }
