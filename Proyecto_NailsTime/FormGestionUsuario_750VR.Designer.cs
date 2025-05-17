@@ -57,8 +57,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.btncrear = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.btndesb = new System.Windows.Forms.Button();
             this.btnmod = new System.Windows.Forms.Button();
             this.btnact = new System.Windows.Forms.Button();
@@ -69,8 +67,12 @@
             this.lblmensaje = new System.Windows.Forms.Label();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -252,7 +254,7 @@
             // actsi
             // 
             this.actsi.AutoSize = true;
-            this.actsi.Location = new System.Drawing.Point(262, 378);
+            this.actsi.Location = new System.Drawing.Point(13, 21);
             this.actsi.Name = "actsi";
             this.actsi.Size = new System.Drawing.Size(35, 17);
             this.actsi.TabIndex = 20;
@@ -265,7 +267,7 @@
             // actno
             // 
             this.actno.AutoSize = true;
-            this.actno.Location = new System.Drawing.Point(303, 378);
+            this.actno.Location = new System.Drawing.Point(54, 21);
             this.actno.Name = "actno";
             this.actno.Size = new System.Drawing.Size(41, 17);
             this.actno.TabIndex = 21;
@@ -274,11 +276,12 @@
             this.actno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.actno.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.actno.UseVisualStyleBackColor = true;
+            this.actno.CheckedChanged += new System.EventHandler(this.actno_CheckedChanged);
             // 
             // bloqsi
             // 
             this.bloqsi.AutoSize = true;
-            this.bloqsi.Location = new System.Drawing.Point(262, 420);
+            this.bloqsi.Location = new System.Drawing.Point(6, 22);
             this.bloqsi.Name = "bloqsi";
             this.bloqsi.Size = new System.Drawing.Size(35, 17);
             this.bloqsi.TabIndex = 22;
@@ -291,7 +294,7 @@
             // bloqno
             // 
             this.bloqno.AutoSize = true;
-            this.bloqno.Location = new System.Drawing.Point(303, 420);
+            this.bloqno.Location = new System.Drawing.Point(47, 22);
             this.bloqno.Name = "bloqno";
             this.bloqno.Size = new System.Drawing.Size(41, 17);
             this.bloqno.TabIndex = 23;
@@ -346,24 +349,6 @@
             this.label8.Size = new System.Drawing.Size(23, 13);
             this.label8.TabIndex = 28;
             this.label8.Text = "Rol";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(193, 378);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(37, 13);
-            this.label10.TabIndex = 30;
-            this.label10.Text = "Activo";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(193, 422);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(58, 13);
-            this.label11.TabIndex = 31;
-            this.label11.Text = "Bloqueado";
             // 
             // btndesb
             // 
@@ -463,28 +448,46 @@
             this.label9.TabIndex = 41;
             this.label9.Text = "User";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.bloqno);
+            this.groupBox1.Controls.Add(this.bloqsi);
+            this.groupBox1.Location = new System.Drawing.Point(301, 393);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(93, 55);
+            this.groupBox1.TabIndex = 43;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Bloqueado";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.actno);
+            this.groupBox2.Controls.Add(this.actsi);
+            this.groupBox2.Location = new System.Drawing.Point(180, 393);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(100, 45);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Activo";
+            // 
             // FormGestionUsuario_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtuser);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btncancelar);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.bloqno);
-            this.Controls.Add(this.bloqsi);
-            this.Controls.Add(this.actno);
-            this.Controls.Add(this.actsi);
             this.Controls.Add(this.cmbrol);
             this.Controls.Add(this.txtnom);
             this.Controls.Add(this.txtemail);
@@ -502,6 +505,10 @@
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -530,8 +537,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btncrear;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btndesb;
         private System.Windows.Forms.Button btnmod;
         private System.Windows.Forms.Button btnact;
@@ -550,5 +555,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Rol;
         private System.Windows.Forms.DataGridViewTextBoxColumn Activo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Bloqueado;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

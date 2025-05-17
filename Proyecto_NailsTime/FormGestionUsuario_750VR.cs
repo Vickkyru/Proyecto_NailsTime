@@ -580,7 +580,7 @@ namespace Proyecto_NailsTime
                 // Asignar radio button según valor booleano o entero
                 bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
                 bool bloq = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
-                MessageBox.Show("Bloqueado: " + dataGridView1.CurrentRow.Cells["bloqueado"].Value.ToString());
+           
 
                 bloqsi.Checked = bloq;
                 bloqno.Checked = !bloq;
@@ -658,6 +658,11 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Activar/Desactivar";
             modoActual = "Activar/Desactivar";
             ActivarModoEdicion();
+        }
+
+        private void actno_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
