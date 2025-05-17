@@ -9,7 +9,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BE_VR750;
 using BLL_VR750;
+using SERVICIOS_VR750;
 
 
 
@@ -106,7 +108,9 @@ namespace Proyecto_NailsTime
             string.IsNullOrWhiteSpace(txtDNI.Text) ? null : txtDNI.Text,
             string.IsNullOrWhiteSpace(txtnom.Text) ? null : txtnom.Text,
             string.IsNullOrWhiteSpace(txtape.Text) ? null : txtape.Text,
-            string.IsNullOrWhiteSpace(txtemail.Text) ? null : txtemail.Text
+            string.IsNullOrWhiteSpace(txtemail.Text) ? null : txtemail.Text,
+            string.IsNullOrWhiteSpace(txtuser.Text) ? null : txtuser.Text,
+            string.IsNullOrWhiteSpace(cmbrol.Text) ? null : cmbrol.Text
         );
 
                 dataGridView1.DataSource = resultados;
@@ -251,13 +255,56 @@ namespace Proyecto_NailsTime
 
                 // Llamar a la BLL con los valores de la GUI (datos crudos)
                 BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
-                usuarioBLL.CrearUsuario(
-                    txtDNI.Text.Trim(),
-                    txtnom.Text.Trim(),
-                    txtape.Text.Trim(),
-                    txtemail.Text.Trim(),
-                    cmbrol.SelectedItem.ToString()
-                );
+
+
+                int dni = Convert.ToInt32(txtDNI.Text);
+                string nombre = txtnom.Text.Trim();
+                string apellido = txtape.Text.Trim();
+                string mail = txtemail.Text.Trim();
+                string rol = cmbrol.SelectedItem?.ToString();
+
+
+                ValidarCampos();
+
+
+                BLLusuario_750VR bll = new BLLusuario_750VR();
+
+                // Verificar existencia por DNI
+                if (bll.ObtenerUsuarioPorLogin(mail) != null)
+                {
+                    MessageBox.Show("Ya existe un usuario con ese mail.");
+                    return;
+                }
+
+                // Verificar existencia por mail/login
+                if (bll.ObtenerUsuarioPorDNI(dni) != null)
+                {
+                    MessageBox.Show("Ya existe un usuario con ese DNI.");
+                    return;
+                   
+                }
+
+                Encriptador_VR750 encriptador = new Encriptador_VR750();
+                string contraseña = $"{dni}{nombre}";
+                string salt = encriptador.GenerarSalt();
+
+                Usuario_750VR nuevo = new Usuario_750VR
+                {
+                    dni = dni,
+                    nombre = nombre,
+                    apellido = apellido,
+                    mail = mail,
+                    user = mail,
+                    salt = salt,
+                    contraseña = encriptador.HashearConSalt(contraseña, salt),
+                    rol = rol,
+                    activo = true,
+                    bloqueado = false
+                };
+
+                bll.CrearUsuario(nuevo);
+                MessageBox.Show("Usuario creado correctamente.");
+                this.Close();
 
                 MessageBox.Show("Usuario creado exitosamente.");
                 LimpiarCampos();
@@ -405,6 +452,8 @@ namespace Proyecto_NailsTime
                 cmbrol.Enabled = true;
                 actsi.Enabled = true;
                 actno.Enabled = true;
+                bloqno.Enabled = true;
+                bloqsi.Enabled = true;
             }
             else if (modoActual == "desbloquear")
             {
@@ -460,6 +509,11 @@ namespace Proyecto_NailsTime
             txtuser.Visible = txtuser.Visible = true;
             bloqno.Visible = true;
             bloqsi.Visible = true;
+
+            if(txtDNI.Text != null)
+            {
+                btncancelar.Enabled = true;
+            }
         }
 
         private void label12_Click(object sender, EventArgs e)

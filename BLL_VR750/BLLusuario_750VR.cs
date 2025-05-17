@@ -23,39 +23,14 @@ namespace BLL_VR750
           dal = new DALusuario_750VR();
         }
 
+        Encriptador_VR750 encriptador = new Encriptador_VR750();
 
-        //public void CrearUsuario(Usuario_750VR usuario)
-        //{
-
-        //    dal.CrearUsuario(usuario);
-        //}
-        public void CrearUsuario(string dniStr, string nombre, string apellido, string mail, string rol)
+     
+        public void CrearUsuario(Usuario_750VR usuario)
         {
-            if (!int.TryParse(dniStr, out int dni))
-                throw new Exception("El DNI ingresado no es válido.");
-
-            Usuario_750VR nuevoUsuario = new Usuario_750VR();
-            nuevoUsuario.dni = dni;
-            nuevoUsuario.nombre = nombre;
-            nuevoUsuario.apellido = apellido;
-            nuevoUsuario.mail = mail;
-
-            // Login y contraseña predeterminada
-            nuevoUsuario.user = $"{mail}";
-            string contraseña = $"{dni}{nombre}";
-
-            // Encriptar
-            nuevoUsuario.salt = SERVICIOS_VR750.Encriptador_VR750.GenerarSalt();
-            nuevoUsuario.contraseña = SERVICIOS_VR750.Encriptador_VR750.HashearConSalt(contraseña, nuevoUsuario.salt);
-
-            // Otros datos
-            nuevoUsuario.rol = rol;
-            nuevoUsuario.activo = true;
-            nuevoUsuario.bloqueado = false;
-
-            // Llamar a DAL
+     
           
-            dal.CrearUsuario(nuevoUsuario);
+           dal.CrearUsuario(usuario);
         }
 
         public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo)
@@ -80,9 +55,9 @@ namespace BLL_VR750
             return dal.ObtenerUsuarios(soloActivos);
         }
 
-        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email)
+        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email, string user, string rol)
         {
-            return dal.BuscarUsuarios(dni, nombre, apellido, email);
+            return dal.BuscarUsuarios(dni, nombre, apellido, email,user,rol);
         }
 
         public List<Usuario_750VR> leerEntidades()
@@ -90,58 +65,16 @@ namespace BLL_VR750
             return dal.leerEntidades();
         }
 
-        private static int intentosFallidos = 0;
-
-        public string Login(string usuarioLogin, string contraseñaIngresada)
+        public Usuario_750VR ObtenerUsuarioPorLogin(string login)
         {
-            Usuario_750VR user = dal.ObtenerUsuarioPorLogin(usuarioLogin);
-
-            if (user == null)
-                return "Usuario no encontrado.";
-
-            if (!user.activo)
-                return "Cuenta inactiva. Contacte al administrador.";
-
-            if (user.bloqueado)
-                return "Cuenta bloqueada. Contacte al administrador.";
-
-            string hashIngresado = Encriptador_VR750.HashearConSalt(contraseñaIngresada, user.salt);
-
-            if (hashIngresado == user.contraseña)
-            {
-                intentosFallidos = 0;
-
-                bool sesionIniciada = SessionManager_VR750.ObtenerInstancia.IniciarSesion(user);
-                if (!sesionIniciada)
-                    return "Ya hay una sesión activa.";
-
-                return "Login exitoso.";
-            }
-            else
-            {
-                intentosFallidos++;
-                if (intentosFallidos >= 3)
-                {
-                    dal.BloquearUsuario(usuarioLogin);
-                    return "Cuenta bloqueada tras 3 intentos fallidos.";
-                }
-
-                return $"Contraseña incorrecta. Intentos fallidos: {intentosFallidos}";
-            }
-
+            return dal.ObtenerUsuarioPorLogin(login);
         }
 
-        //public void Logout()
-        //{
-        //    if (SessionManager_VR750.Instancia.EstaLogueado())
-        //        SessionManager_VR750.Instancia.CerrarSesion();
-        //}
-        private void BloquearUsuario(string usuarioLogin)
+    
+        public void CambiarContraseña(Usuario_750VR usuario, string NuevaContraseña)
         {
-            dal.BloquearUsuario(usuarioLogin);
+            dal.CambiarContraseña(usuario,NuevaContraseña);
         }
-
-       
 
         public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
         {
@@ -149,9 +82,14 @@ namespace BLL_VR750
         }
 
        
-        public Resultado_VR750<Usuario_750VR> recuperarUsuario(string user, string contraseña)
+        public Resultado_VR750<Usuario_750VR> Login(string user, string contraseña)
         {
             return dal.recuperarUsuario(user, contraseña);
+        }
+
+        public void BloquearUsuario(string login)
+        {
+            dal.BloquearUsuario(login);
         }
     }
 }

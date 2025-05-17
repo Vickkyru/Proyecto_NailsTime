@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.SessionState;
 using System.Windows.Forms;
 using SERVICIOS_VR750;
 
@@ -19,6 +20,7 @@ namespace Proyecto_NailsTime
         public Form1()
         {
             InitializeComponent();
+            ActualizarLabels();
 
         }
 
@@ -76,20 +78,19 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //falta
-            if (SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.EstaLogueado())
-            {
-                var usuarioActual = SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.UsuarioActual;
-                lblbienvenido.Text = $"{usuarioActual.nombre}";
-                lblrol.Text = $"Rol: {usuarioActual.rol}";
-            }
-            else
-            {
-                lblbienvenido.Text = "";
-                lblrol.Text = "";
-            }
+          
         }
 
+        public void ActualizarLabels()
+        {
+            var usuario = SessionManager_VR750.ObtenerInstancia.user;
+
+            if (usuario != null)
+            {
+                lblbienvenido.Text = usuario.nombre;
+                lblrol.Text = usuario.rol;
+            }
+        }
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)
         {
 

@@ -24,31 +24,53 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
         }
+        private int intentosFallidos = 0;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            BLLusuario_750VR bll = new BLLusuario_750VR();
+            string login = txtuser.Text.Trim();
+            string password = txtcontra.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(txtuser.Text) || string.IsNullOrWhiteSpace(txtcontra.Text))
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("Complete los campos.");
                 return;
             }
 
-            // Validar login con BLL
-            string resultado = bll.Login(txtuser.Text.Trim(), txtcontra.Text.Trim());
+            BLLusuario_750VR bll = new BLLusuario_750VR();
+            Resultado_VR750<Usuario_750VR> resultado = bll.Login(login, password);
 
-            if (resultado == "Login exitoso.")
+            if (resultado.resultado)
             {
-                MessageBox.Show(resultado);
-                this.Close(); // cerrar login si fue exitoso
+                intentosFallidos = 0; // ✅ se resetean
+
+                if (!SessionManager_VR750.ObtenerInstancia.IniciarSesion(resultado.entidad))
+                {
+                    MessageBox.Show("Ya hay una sesión activa.");
+                    return;
+                }
+
+                MessageBox.Show("Login exitoso.");
+                this.Close();
             }
             else
             {
-                MessageBox.Show(resultado);
+                intentosFallidos++;
+
+                if (intentosFallidos >= 3)
+                {
+                    bll.BloquearUsuario(login);
+                    MessageBox.Show("Cuenta bloqueada tras 3 intentos fallidos.");
+                }
+                else
+                {
+                    MessageBox.Show(resultado.mensaje + $" Intentos fallidos: {intentosFallidos}");
+                }
             }
+
         }
 
+        
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();

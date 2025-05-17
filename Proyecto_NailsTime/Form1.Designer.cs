@@ -208,21 +208,17 @@
             // 
             // lblbienvenido
             // 
-            this.lblbienvenido.AutoSize = true;
-            this.lblbienvenido.Location = new System.Drawing.Point(96, 467);
+            this.lblbienvenido.Location = new System.Drawing.Point(96, 456);
             this.lblbienvenido.Name = "lblbienvenido";
-            this.lblbienvenido.Size = new System.Drawing.Size(10, 13);
+            this.lblbienvenido.Size = new System.Drawing.Size(113, 24);
             this.lblbienvenido.TabIndex = 6;
-            this.lblbienvenido.Text = "-";
             // 
             // lblrol
             // 
-            this.lblrol.AutoSize = true;
-            this.lblrol.Location = new System.Drawing.Point(339, 467);
+            this.lblrol.Location = new System.Drawing.Point(339, 456);
             this.lblrol.Name = "lblrol";
-            this.lblrol.Size = new System.Drawing.Size(10, 13);
+            this.lblrol.Size = new System.Drawing.Size(117, 24);
             this.lblrol.TabIndex = 7;
-            this.lblrol.Text = "-";
             // 
             // Form1
             // 
