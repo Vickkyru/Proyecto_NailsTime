@@ -27,6 +27,7 @@ namespace Proyecto_NailsTime
             
 
         }
+
         public void LimpiarCampos()
         {
             txtDNI.Clear();
@@ -578,8 +579,14 @@ namespace Proyecto_NailsTime
 
                 // Asignar radio button según valor booleano o entero
                 bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
+                bool bloq = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
+                MessageBox.Show("Bloqueado: " + dataGridView1.CurrentRow.Cells["bloqueado"].Value.ToString());
+
+                bloqsi.Checked = bloq;
+                bloqno.Checked = !bloq;
                 actsi.Checked = activo;
                 actno.Checked = !activo;
+
             }
 
             if (dataGridView1.CurrentRow != null && (modoActual == "modificar" || modoActual == "desbloquear"))
@@ -592,8 +599,12 @@ namespace Proyecto_NailsTime
                 txtuser.Text = dataGridView1.CurrentRow.Cells["usuario"].Value.ToString();
 
                 bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
+                bool bloq = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
                 actsi.Checked = activo;
                 actno.Checked = !activo;
+                bloqno.Checked = bloq;
+                bloqsi.Checked = !bloq;
+
             }
         }
 
