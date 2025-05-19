@@ -55,7 +55,7 @@
     <Compile Include="ResumenTurno_750VR.cs" />
     <Compile Include="Servicios_750VR.cs" />
     <Compile Include="Turnos_750VR.cs" />
-    <Compile Include="Usuario_750VR.cs" />
+    <Compile Include="BEusuario_750VR.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -24,8 +24,6 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
  
-            
-
         }
 
         public void LimpiarCampos()
@@ -43,32 +41,21 @@ namespace Proyecto_NailsTime
 
         }
 
-        private void CargarTodosUsuarios()
+ 
+
+        private void CargarUsuarios(bool soloActivos)
         {
-            BLLusuario_750VR bll = new BLLusuario_750VR();
-            var lista = bll.ObtenerUsuarios(false);
-            dataGridView1.AutoGenerateColumns = false; 
+            var bll = new BLLusuario_750VR();
+            var lista = bll.leerEntidades_750VR();
+            if (soloActivos)
+                lista = lista.Where(u => u.activo_750VR).ToList();
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = lista;
+            dataGridView1.Columns["contraseña_750VR"].Visible = false;
+            dataGridView1.Columns["salt_750VR"].Visible = false;
             PintarUsuariosInactivos();
         }
-
-        private void CargarUsuariosActivos()
-        {
-            BLLusuario_750VR bll = new BLLusuario_750VR();
-            var lista = bll.ObtenerUsuarios(true);
-            dataGridView1.AutoGenerateColumns = false; 
-            dataGridView1.DataSource = lista;
-            PintarUsuariosInactivos();
-        }
-
-  
-
-
-
-
-
-
-
 
 
         private void label2_Click(object sender, EventArgs e)
@@ -82,9 +69,6 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Añadir";
             modoActual = "añadir";
             ActivarModoEdicion();
-            txtuser.Visible = false;   // textbox donde normalmente aparece el user
-            bloqno.Visible = false;
-            bloqsi.Visible = false;
         }
 
         //boton salir
@@ -105,7 +89,7 @@ namespace Proyecto_NailsTime
             if (modoActual == "consulta")
             {
                 BLLusuario_750VR bll = new BLLusuario_750VR();
-                var resultados = bll.BuscarUsuarios(
+                var resultados = bll.BuscarUsuarios_750VR(
             string.IsNullOrWhiteSpace(txtDNI.Text) ? null : txtDNI.Text,
             string.IsNullOrWhiteSpace(txtnom.Text) ? null : txtnom.Text,
             string.IsNullOrWhiteSpace(txtape.Text) ? null : txtape.Text,
@@ -126,7 +110,7 @@ namespace Proyecto_NailsTime
             }
 
             // Validar campos solo si no estamos eliminando ni desbloqueando
-            if (!ValidarCampos() && modoActual != "eliminar" && modoActual != "desbloquear")
+            if (!ValidarCampos() && modoActual != "Activar/Desactivar" && modoActual != "desbloquear" )
                 return;
 
             // Ejecutar la acción según el modo
@@ -150,7 +134,7 @@ namespace Proyecto_NailsTime
             modoActual = "consulta";
             lblmensaje.Text = "Modo Consulta";
             ResetearEstadoInterfaz();
-            CargarTodosUsuarios(); // Refrescar grilla general
+            CargarUsuarios(true); // Refrescar grilla general
             MostrarCantidadUsuarios();
             LimpiarCampos();
 
@@ -159,22 +143,20 @@ namespace Proyecto_NailsTime
 
         private void AplicarDesbloqueo() //falta
         {
-            if (dataGridView1.CurrentRow != null)
+            if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
             {
-                int dni = Convert.ToInt32(dataGridView1.CurrentRow.Cells["dni"].Value);
-                bool bloqueado = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
-
-                if (!bloqueado)
+                if (!usuario.bloqueado_750VR)
                 {
                     MessageBox.Show("El usuario ya está desbloqueado. Por favor seleccione uno que esté bloqueado.");
                     return;
                 }
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
-                bll.DesbloquearUsuario(dni);
+                bll.DesbloquearUsuario_750VR(usuario.dni_750VR);
 
                 MessageBox.Show("Usuario desbloqueado correctamente.", "Éxito");
-                CargarUsuariosActivos();// o el método que refresca el DataGrid
+                CargarUsuarios(true); // refresca la lista
+                ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
 
@@ -182,25 +164,30 @@ namespace Proyecto_NailsTime
 
         private void AplicarActivarDesactivar()
         {
-            if (dataGridView1.CurrentRow == null)
+            var item = dataGridView1.CurrentRow?.DataBoundItem as BEusuario_750VR;
+            if (item == null)
             {
-                MessageBox.Show("Seleccione un usuario de la lista.");
+                MessageBox.Show("Seleccione un usuario válido de la lista.");
                 return;
             }
 
-            int dni = Convert.ToInt32(dataGridView1.CurrentRow.Cells["dni"].Value);
-            bool activoActual = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
-
-            bool nuevoEstado = !activoActual; // invertimos el estado
+            bool nuevoEstado = !item.activo_750VR;
 
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            bool exito = bll.CambiarEstadoUsuario(dni, nuevoEstado);
+            bool exito = bll.CambiarEstadoUsuario_750VR(item.dni_750VR, nuevoEstado);
 
             if (exito)
             {
                 string mensaje = nuevoEstado ? "Usuario activado correctamente." : "Usuario desactivado correctamente.";
                 MessageBox.Show(mensaje);
-                CargarTodosUsuarios();
+
+                if (!nuevoEstado)
+                {
+                    MessageBox.Show("Recuerde que el usuario no podrá iniciar sesión.");
+                }
+
+                CargarUsuarios(true);
+                ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
             else
@@ -217,7 +204,6 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            // Validamos primero
             if (!ValidarCampos())
                 return;
 
@@ -226,22 +212,35 @@ namespace Proyecto_NailsTime
             string apellido = txtape.Text;
             string mail = txtemail.Text;
             string rol = cmbrol.Text;
-            bool activo = actsi.Checked;
+            string usuario = $"{nombre}{apellido}";
 
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            bool exito = bll.ModificarUsuario(dni, nombre, apellido, mail, rol, activo);
+
+            // ⚠️ Obtener usuario original
+            BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
+
+            bool seModificoApellido = original.apellido_750VR != apellido;
+
+            bool exito = bll.ModificarUsuario_750VR(dni, nombre, apellido, mail, rol, usuario);
 
             if (exito)
             {
                 MessageBox.Show("Usuario modificado correctamente.");
-                CargarUsuariosActivos();// o el método que refresca el DataGrid
+
+                // 🔔 Mostrar mensaje solo si se modificó el user
+                if (seModificoApellido)
+                {
+                    MessageBox.Show($"Recuerde que ahora su nombre de usuario es {usuario}.");
+                }
+
+                CargarUsuarios(true);
+                ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
             else
             {
                 MessageBox.Show("Error al modificar el usuario.");
             }
-
 
         }
        
@@ -253,63 +252,56 @@ namespace Proyecto_NailsTime
                 // Validamos primero
                 if (!ValidarCampos())
                     return;
-
-                // Llamar a la BLL con los valores de la GUI (datos crudos)
-                BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
-
-
                 int dni = Convert.ToInt32(txtDNI.Text);
                 string nombre = txtnom.Text.Trim();
                 string apellido = txtape.Text.Trim();
                 string mail = txtemail.Text.Trim();
                 string rol = cmbrol.SelectedItem?.ToString();
-
-
-                ValidarCampos();
-
+                string user = $"{nombre}{apellido}";
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
 
                 // Verificar existencia por DNI
-                if (bll.ObtenerUsuarioPorLogin(mail) != null)
+                if (bll.ObtenerUsuarioPorLogin_750VR(mail) != null)
                 {
                     MessageBox.Show("Ya existe un usuario con ese mail.");
                     return;
                 }
 
                 // Verificar existencia por mail/login
-                if (bll.ObtenerUsuarioPorDNI(dni) != null)
+                if (bll.ObtenerUsuarioPorDNI_750VR(dni) != null)
                 {
                     MessageBox.Show("Ya existe un usuario con ese DNI.");
                     return;
                    
                 }
 
-                Encriptador_VR750 encriptador = new Encriptador_VR750();
+                Encriptador_750VR encriptador = new Encriptador_750VR();
                 string contraseña = $"{dni}{nombre}";
-                string salt = encriptador.GenerarSalt();
+                string salt = encriptador.GenerarSalt_750VR();
 
-                Usuario_750VR nuevo = new Usuario_750VR
+                BEusuario_750VR nuevo = new BEusuario_750VR
                 {
-                    dni = dni,
-                    nombre = nombre,
-                    apellido = apellido,
-                    mail = mail,
-                    user = mail,
-                    salt = salt,
-                    contraseña = encriptador.HashearConSalt(contraseña, salt),
-                    rol = rol,
-                    activo = true,
-                    bloqueado = false
+                    dni_750VR = dni,
+                    nombre_750VR = nombre,
+                    apellido_750VR = apellido,
+                    mail_750VR = mail,
+                    user_750VR = user,
+                    salt_750VR = salt,
+                    contraseña_750VR = encriptador.HashearConSalt_750VR(contraseña, salt),
+                    rol_750VR = rol,
+                    activo_750VR = true,
+                    bloqueado_750VR = false
                 };
 
-                bll.CrearUsuario(nuevo);
+                bll.CrearUsuario_750VR(nuevo);
                 MessageBox.Show("Usuario creado correctamente.");
-                this.Close();
+                MessageBox.Show("Recuerde que usuario=nombre+apellido, contraseña=dni+nombre");
 
-                MessageBox.Show("Usuario creado exitosamente.");
+
                 LimpiarCampos();
-                CargarUsuariosActivos();
+                rbtnact.Checked = true;
+                CargarUsuarios(true);
             }
             catch (Exception ex)
             {
@@ -368,13 +360,12 @@ namespace Proyecto_NailsTime
             modoActual = "desbloquear";
             ActivarModoEdicion();
             lblmensaje.Text = "Modo desbloqueo";
+  
         }
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-            //lblmensaje.Text = "Modo Eliminar";
-            //modoActual = "eliminar";
-            //ActivarModoEdicion();
+            
         }
 
         private void rbtntodos_CheckedChanged(object sender, EventArgs e)
@@ -382,12 +373,11 @@ namespace Proyecto_NailsTime
 
             if (rbtntodos.Checked)
             {
-                CargarTodosUsuarios();
+                CargarUsuarios(false);
 
             }
                 
         }
-
 
 
 
@@ -395,7 +385,7 @@ namespace Proyecto_NailsTime
         {
             if (rbtnact.Checked)
             {
-                CargarUsuariosActivos();
+                CargarUsuarios(true);
             }
                 
         }
@@ -403,9 +393,10 @@ namespace Proyecto_NailsTime
 
         private void PintarUsuariosInactivos()
         {
+            
             foreach (DataGridViewRow fila in dataGridView1.Rows)
             {
-                if (fila.Cells["activo"].Value != null && !(bool)fila.Cells["activo"].Value)
+                if (fila.DataBoundItem is BEusuario_750VR usuario && !usuario.activo_750VR)
                 {
                     fila.DefaultCellStyle.BackColor = Color.Red;
                 }
@@ -421,24 +412,9 @@ namespace Proyecto_NailsTime
             // Limpiar todos los campos
             LimpiarCampos();
 
-            // Restaurar interfaz al estado inicial
-            btnaplicar.Enabled = false;
-            btncancelar.Enabled = false;
-
-            btncrear.Enabled = true;
-            btnmod.Enabled = true;
-            //btnelim.Enabled = true;
-            btndesb.Enabled = true;
-            btnact.Enabled = true;
-
-            rbtnact.Enabled = true;
-            rbtntodos.Enabled = true;
-
-            dataGridView1.Enabled = true;
-
             ResetearEstadoInterfaz();
-            rbtntodos.Checked = true; // Marcar por defecto
-            CargarTodosUsuarios();   // Mostrar todos
+            rbtnact.Checked = true; // Marcar por defecto
+            CargarUsuarios(true);   // Mostrar todos
         }
 
 
@@ -451,12 +427,13 @@ namespace Proyecto_NailsTime
                 txtape.Enabled = true;
                 txtemail.Enabled = true;
                 cmbrol.Enabled = true;
-                actsi.Enabled = true;
-                actno.Enabled = true;
-                bloqno.Enabled = true;
-                bloqsi.Enabled = true;
+                actsi.Enabled = false;
+                actno.Enabled = false;
+                bloqno.Enabled = false;
+                bloqsi.Enabled = false;
+                txtuser.Enabled = false;
             }
-            else if (modoActual == "desbloquear")
+            else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
             {
                 // Mostrar datos sin habilitar edición
                 txtDNI.Enabled = false;
@@ -464,6 +441,9 @@ namespace Proyecto_NailsTime
                 txtape.Enabled = false;
                 txtemail.Enabled = false;
                 cmbrol.Enabled = false;
+                txtuser.Enabled=false;
+                bloqno .Enabled = false;
+                bloqsi .Enabled = false;
                 actsi.Enabled = false;
                 actno.Enabled = false;
             }
@@ -507,14 +487,17 @@ namespace Proyecto_NailsTime
             dataGridView1.Enabled = true;
 
             // (si ocultaste txtUser en Crear, mostrala de nuevo)
-            txtuser.Visible = txtuser.Visible = true;
-            bloqno.Visible = true;
-            bloqsi.Visible = true;
+            txtuser.Enabled = true;
 
-            if(txtDNI.Text != null)
-            {
-                btncancelar.Enabled = true;
-            }
+            //el boton de activos activado
+            rbtnact.Checked = true;
+
+            //deshabilito bloq y act
+            bloqno.Enabled = false;
+            bloqsi.Enabled = false;
+            actno.Enabled = false;
+            actsi.Enabled = false;
+
         }
 
         private void label12_Click(object sender, EventArgs e)
@@ -556,7 +539,10 @@ namespace Proyecto_NailsTime
                          || !string.IsNullOrWhiteSpace(txtape.Text)
                          || !string.IsNullOrWhiteSpace(txtemail.Text)
             || !string.IsNullOrWhiteSpace(cmbrol.Text)
-            || !string.IsNullOrWhiteSpace(txtuser.Text);
+            || !string.IsNullOrWhiteSpace(txtuser.Text)
+
+           
+            ;
 
             btnaplicar.Enabled = hayDatos;
         }
@@ -568,44 +554,7 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentRow != null)
-            {
-                txtDNI.Text = dataGridView1.CurrentRow.Cells["dni"].Value.ToString();
-                txtnom.Text = dataGridView1.CurrentRow.Cells["nombre"].Value.ToString();
-                txtape.Text = dataGridView1.CurrentRow.Cells["apellido"].Value.ToString();
-                txtemail.Text = dataGridView1.CurrentRow.Cells["email"].Value.ToString();
-                cmbrol.Text = dataGridView1.CurrentRow.Cells["rol"].Value.ToString();
-                txtuser.Text = dataGridView1.CurrentRow.Cells["usuario"].Value.ToString();
-
-                // Asignar radio button según valor booleano o entero
-                bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
-                bool bloq = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
            
-
-                bloqsi.Checked = bloq;
-                bloqno.Checked = !bloq;
-                actsi.Checked = activo;
-                actno.Checked = !activo;
-
-            }
-
-            if (dataGridView1.CurrentRow != null && (modoActual == "modificar" || modoActual == "desbloquear"))
-            {
-                txtDNI.Text = dataGridView1.CurrentRow.Cells["dni"].Value.ToString();
-                txtnom.Text = dataGridView1.CurrentRow.Cells["nombre"].Value.ToString();
-                txtape.Text = dataGridView1.CurrentRow.Cells["apellido"].Value.ToString();
-                txtemail.Text = dataGridView1.CurrentRow.Cells["mail"].Value.ToString();
-                cmbrol.Text = dataGridView1.CurrentRow.Cells["rol"].Value.ToString();
-                txtuser.Text = dataGridView1.CurrentRow.Cells["usuario"].Value.ToString();
-
-                bool activo = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["activo"].Value);
-                bool bloq = Convert.ToBoolean(dataGridView1.CurrentRow.Cells["bloqueado"].Value);
-                actsi.Checked = activo;
-                actno.Checked = !activo;
-                bloqno.Checked = bloq;
-                bloqsi.Checked = !bloq;
-
-            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -616,13 +565,13 @@ namespace Proyecto_NailsTime
         private void MostrarCantidadUsuarios()
         {
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            var listaUsuarios = bll.leerEntidades();
+            var listaUsuarios = bll.leerEntidades_750VR();
             lblcantuser.Text = $"{listaUsuarios.Count}";
         }
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
             rbtnact.Checked = true; // Marcar por defecto
-            CargarUsuariosActivos();   // Mostrar activos
+            CargarUsuarios(true);   // Mostrar activos
 
             MostrarCantidadUsuarios(); //muetsra en el label cant users
 
@@ -631,18 +580,20 @@ namespace Proyecto_NailsTime
             btnaplicar.Enabled = false;
             btncancelar.Enabled = false;
 
-    
-
             // Habilitar grilla solo para selección (no edición)
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
 
+            //deshabilito bloq y act
+            bloqno.Enabled = false;
+            bloqsi .Enabled = false;
+            actno .Enabled = false;
+            actsi .Enabled = false;
+
             // Iniciar en modo consulta
             modoActual = "consulta";
             lblmensaje.Text = "Modo Consulta";
-
-
 
         }
 
@@ -651,6 +602,7 @@ namespace Proyecto_NailsTime
             modoActual = "modificar";
             ActivarModoEdicion();
             lblmensaje.Text = "Modo Modificar";
+  
         }
 
         private void btnact_Click(object sender, EventArgs e)
@@ -658,11 +610,66 @@ namespace Proyecto_NailsTime
             lblmensaje.Text = "Modo Activar/Desactivar";
             modoActual = "Activar/Desactivar";
             ActivarModoEdicion();
+
         }
 
         private void actno_CheckedChanged(object sender, EventArgs e)
         {
+          
+        }
 
+        private void actsi_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void bloqsi_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void bloqno_CheckedChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
+            {
+                txtDNI.Text = usuario.dni_750VR.ToString();
+                txtnom.Text = usuario.nombre_750VR;
+                txtape.Text = usuario.apellido_750VR;
+                txtemail.Text = usuario.mail_750VR;
+                cmbrol.Text = usuario.rol_750VR;
+                txtuser.Text = usuario.user_750VR;
+
+                bloqsi.Checked = usuario.bloqueado_750VR;
+                bloqno.Checked = !usuario.bloqueado_750VR;
+                actsi.Checked = usuario.activo_750VR;
+                actno.Checked = !usuario.activo_750VR;
+
+                btncancelar.Enabled = true;
+                btncrear.Enabled = false;
+
+                if (modoActual == "modificar" || modoActual == "desbloquear")
+                {
+                    txtDNI.Text = usuario.dni_750VR.ToString();
+                    txtnom.Text = usuario.nombre_750VR;
+                    txtape.Text = usuario.apellido_750VR;
+                    txtemail.Text = usuario.mail_750VR;
+                    cmbrol.Text = usuario.rol_750VR;
+                    txtuser.Text = usuario.user_750VR;
+
+                    bloqsi.Checked = usuario.bloqueado_750VR;
+                    bloqno.Checked = !usuario.bloqueado_750VR;
+                    actsi.Checked = usuario.activo_750VR;
+                    actno.Checked = !usuario.activo_750VR;
+
+                    btncancelar.Enabled = true;
+                    btncrear.Enabled = false;
+                }
+            }
         }
     }
 }

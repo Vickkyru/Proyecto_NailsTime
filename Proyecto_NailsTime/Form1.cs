@@ -20,9 +20,13 @@ namespace Proyecto_NailsTime
         public Form1()
         {
             InitializeComponent();
-            ActualizarLabels();
+           
 
         }
+
+        
+
+
 
         private void AbrirForm(Form formu)
         {
@@ -58,7 +62,11 @@ namespace Proyecto_NailsTime
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormLogIn_750VR());
+            //AbrirForm(new FormLogIn_750VR());
+
+            FormLogIn_750VR login = new FormLogIn_750VR(this); // PASÁS EL PRINCIPAL
+            AbrirForm(login);
+
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,17 +86,36 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+            ActualizarLabels();
+            //DeshabilitarMenus();
+            //MostrarDatosUsuario();
+
+            //.VerificarYCrearTablaUsuarios();
         }
 
+        private void DeshabilitarMenus()
+        {
+            administradorToolStripMenuItem.Enabled = false;
+            maestrosToolStripMenuItem.Enabled = false;
+            reservaToolStripMenuItem.Enabled = false;
+            insumosToolStripMenuItem.Enabled = false;
+            reportesToolStripMenuItem.Enabled = false;
+            ayudaToolStripMenuItem.Enabled = false;
+            logoutToolStripMenuItem.Enabled = false;
+
+            loginToolStripMenuItem.Enabled = true;
+            usuariosToolStripMenuItem.Enabled = true;
+        }
+
+    
         public void ActualizarLabels()
         {
-            var usuario = SessionManager_VR750.ObtenerInstancia.user;
+            var usuario = SessionManager_750VR.ObtenerInstancia.user;
 
             if (usuario != null)
             {
-                lblbienvenido.Text = usuario.nombre;
-                lblrol.Text = usuario.rol;
+                lblbienvenido.Text = usuario.nombre_750VR;
+                lblrol.Text = usuario.rol_750VR;
             }
         }
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -99,6 +126,22 @@ namespace Proyecto_NailsTime
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
+        }
+
+        public void MostrarDatosUsuarioLogueado()
+        {
+            var usuario = SessionManager_750VR.ObtenerInstancia.user;
+
+            if (usuario != null)
+            {
+                lblbienvenido.Text = $"{usuario.nombre_750VR}";
+                lblrol.Text = $"{usuario.rol_750VR}";
+            }
+            else
+            {
+                lblbienvenido.Text = "";
+                lblrol.Text = "";
+            }
         }
     }
 }

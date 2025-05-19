@@ -14,15 +14,15 @@ namespace DAL_VR750
     public class DALusuario_750VR
     {
         BaseDeDatos_750VR db { get; }
-        Encriptador_VR750 hasher { get; set; }
+        Encriptador_750VR hasher { get; set; }
 
         public DALusuario_750VR()
         {
             db = new BaseDeDatos_750VR();
-            hasher = new Encriptador_VR750();
+            hasher = new Encriptador_750VR();
         }
 
-        public void CrearUsuario(Usuario_750VR usuario) //alta user
+        public void CrearUsuario_750VR(BEusuario_750VR usuario) //alta user
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -32,43 +32,44 @@ namespace DAL_VR750
         VALUES (@DNI, @Nombre, @Apellido, @Email, @Usuario, @Contra, @Salt, @Rol, @Activo, @Bloqueado)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@DNI", usuario.dni);
-                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre);
-                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido);
-                cmd.Parameters.AddWithValue("@Email", usuario.mail);
-                cmd.Parameters.AddWithValue("@Usuario", usuario.user);
-                cmd.Parameters.AddWithValue("@Contra", usuario.contraseña);
-                cmd.Parameters.AddWithValue("@Salt", usuario.salt);
-                cmd.Parameters.AddWithValue("@Rol", usuario.rol);
-                cmd.Parameters.AddWithValue("@Activo", usuario.activo);
-                cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado);
+                cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
+                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre_750VR);
+                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido_750VR);
+                cmd.Parameters.AddWithValue("@Email", usuario.mail_750VR);
+                cmd.Parameters.AddWithValue("@Usuario", usuario.user_750VR);
+                cmd.Parameters.AddWithValue("@Contra", usuario.contraseña_750VR);
+                cmd.Parameters.AddWithValue("@Salt", usuario.salt_750VR);
+                cmd.Parameters.AddWithValue("@Rol", usuario.rol_750VR);
+                cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
+                cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado_750VR);
 
                 cmd.ExecuteNonQuery();
             }
         }
 
 
-        public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo) //mod user
+        public bool ModificarUsuario_750VR(int dni, string nombre, string apellido, string mail, string rol, string usuario) //mod user
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
                 string query = @"UPDATE Usuario_VR750 
-                         SET Nombre_VR750 = @Nombre, Apellido_VR750 = @Apellido, Email_VR750 = @Mail, Rol_VR750 = @Rol
-                         WHERE DNI = @DNI";
+                         SET Nombre_VR750 = @Nombre, Apellido_VR750 = @Apellido, Email_VR750 = @Mail, Rol_VR750 = @Rol, Usuario_VR750 = @Usuario
+                         WHERE DNI_VR750 = @DNI";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", nombre);
                 cmd.Parameters.AddWithValue("@Apellido", apellido);
                 cmd.Parameters.AddWithValue("@Mail", mail);
                 cmd.Parameters.AddWithValue("@Rol", rol);
+                cmd.Parameters.AddWithValue("@usuario", usuario);
                 cmd.Parameters.AddWithValue("@DNI", dni);
 
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
 
-        public bool CambiarEstadoUsuario(int dni, bool nuevoEstado)
+        public bool CambiarEstadoUsuario_750VR(int dni, bool nuevoEstado)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -82,7 +83,7 @@ namespace DAL_VR750
             }
         }
 
-        public bool DesbloquearUsuario(int dni) //desb
+        public bool DesbloquearUsuario_750VR(int dni) //desb
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -96,45 +97,11 @@ namespace DAL_VR750
             }
         }
 
-        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos) //obtengo usuarios activos
+      
+
+        public List<BEusuario_750VR> BuscarUsuarios_750VR(string dni, string nombre, string apellido, string email, string user, string rol)
         {
-            List<Usuario_750VR> lista = new List<Usuario_750VR>();
-
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                string query = soloActivos
-                    ? "SELECT * FROM Usuario_VR750 WHERE Activo_VR750 = 1"
-                    : "SELECT * FROM Usuario_VR750";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    Usuario_750VR user = new Usuario_750VR
-                    {
-                        dni = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre = reader["Nombre_VR750"].ToString(),
-                        apellido = reader["Apellido_VR750"].ToString(),
-                        mail = reader["Email_VR750"].ToString(),
-                        user = reader["Usuario_VR750"].ToString(),
-                        rol = reader["Rol_VR750"].ToString(),
-                        activo = Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado = Convert.ToBoolean(reader["Bloqueado_VR750"])
-                    };
-
-                    lista.Add(user);
-                }
-            }
-
-            return lista;
-        }
-
-
-        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email, string user, string rol)
-        {
-            List<Usuario_750VR> lista = new List<Usuario_750VR>();
+            List<BEusuario_750VR> lista = new List<BEusuario_750VR>();
 
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -184,18 +151,18 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    Usuario_750VR userr = new Usuario_750VR
+                    BEusuario_750VR userr = new BEusuario_750VR
                     {
-                        dni = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre = reader["Nombre_VR750"].ToString(),
-                        apellido = reader["Apellido_VR750"].ToString(),
-                        mail = reader["Email_VR750"].ToString(),
-                        user = reader["Usuario_VR750"].ToString(),
-                        contraseña = reader["Contra_VR750"].ToString(),
-                        salt = reader["Salt_VR750"].ToString(),
-                        rol = reader["Rol_VR750"].ToString(),
-                        activo = Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado = Convert.ToBoolean(reader["Bloqueado_VR750"])
+                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
+                        nombre_750VR = reader["Nombre_VR750"].ToString(),
+                        apellido_750VR = reader["Apellido_VR750"].ToString(),
+                        mail_750VR = reader["Email_VR750"].ToString(),
+                        user_750VR = reader["Usuario_VR750"].ToString(),
+                        contraseña_750VR = reader["Contra_VR750"].ToString(),
+                        salt_750VR = reader["Salt_VR750"].ToString(),
+                        rol_750VR = reader["Rol_VR750"].ToString(),
+                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
+                        bloqueado_750VR = Convert.ToBoolean(reader["Bloqueado_VR750"])
                     };
 
                     lista.Add(userr);
@@ -204,32 +171,32 @@ namespace DAL_VR750
 
             return lista;
         }
-        public List<Usuario_750VR> leerEntidades() //busca todos
+        public List<BEusuario_750VR> leerEntidades_750VR() //busca todos
         {
-            List<Usuario_750VR> lista = new List<Usuario_750VR>();
+            List<BEusuario_750VR> lista = new List<BEusuario_750VR>();
 
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = "SELECT * FROM Usuario_VR750";  // SIN filtros dinámicos
+                string query = "SELECT * FROM Usuario_VR750";  
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Usuario_750VR user = new Usuario_750VR
+                    BEusuario_750VR user = new BEusuario_750VR
                     {
-                        dni = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre = reader["Nombre_VR750"].ToString(),
-                        apellido = reader["Apellido_VR750"].ToString(),
-                        mail = reader["Email_VR750"].ToString(),
-                        user = reader["Usuario_VR750"].ToString(),
-                        contraseña = reader["Contra_VR750"].ToString(),
-                        salt = reader["Salt_VR750"].ToString(),
-                        rol = reader["Rol_VR750"].ToString(),
-                        activo = Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado = Convert.ToBoolean(reader["Bloqueado_VR750"])
+                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
+                        nombre_750VR = reader["Nombre_VR750"].ToString(),
+                        apellido_750VR = reader["Apellido_VR750"].ToString(),
+                        mail_750VR = reader["Email_VR750"].ToString(),
+                        user_750VR = reader["Usuario_VR750"].ToString(),
+                        contraseña_750VR = reader["Contra_VR750"].ToString(),
+                        salt_750VR = reader["Salt_VR750"].ToString(),
+                        rol_750VR = reader["Rol_VR750"].ToString(),
+                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
+                        bloqueado_750VR = Convert.ToBoolean(reader["Bloqueado_VR750"])
                     };
 
                     lista.Add(user);
@@ -239,7 +206,7 @@ namespace DAL_VR750
             return lista;
         }
 
-        public Usuario_750VR ObtenerUsuarioPorLogin(string usuarioLogin)
+        public BEusuario_750VR ObtenerUsuarioPorLogin_750VR(string usuarioLogin)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -252,18 +219,18 @@ namespace DAL_VR750
                 {
                     if (reader.Read())
                     {
-                        return new Usuario_750VR
+                        return new BEusuario_750VR
                         {
-                            dni = Convert.ToInt32(reader["DNI_VR750"]),
-                            nombre = reader["Nombre_VR750"].ToString(),
-                            apellido = reader["Apellido_VR750"].ToString(),
-                            mail = reader["Email_VR750"].ToString(),
-                            user = reader["Usuario_VR750"].ToString(),
-                            contraseña = reader["Contra_VR750"].ToString(),
-                            salt = reader["Salt_VR750"].ToString(),
-                            rol = reader["Rol_VR750"].ToString(),
-                            activo = Convert.ToBoolean(reader["Activo_VR750"]),
-                            bloqueado = Convert.ToBoolean(reader["Bloqueado_VR750"])
+                            dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
+                            nombre_750VR = reader["Nombre_VR750"].ToString(),
+                            apellido_750VR = reader["Apellido_VR750"].ToString(),
+                            mail_750VR = reader["Email_VR750"].ToString(),
+                            user_750VR = reader["Usuario_VR750"].ToString(),
+                            contraseña_750VR = reader["Contra_VR750"].ToString(),
+                            salt_750VR = reader["Salt_VR750"].ToString(),
+                            rol_750VR = reader["Rol_VR750"].ToString(),
+                            activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
+                            bloqueado_750VR = Convert.ToBoolean(reader["Bloqueado_VR750"])
                         };
                     }
                 }
@@ -273,7 +240,7 @@ namespace DAL_VR750
 
         }
 
-        public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
+        public BEusuario_750VR ObtenerUsuarioPorDNI_750VR(int dni)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -285,18 +252,18 @@ namespace DAL_VR750
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    Usuario_750VR user = new Usuario_750VR
+                    BEusuario_750VR user = new BEusuario_750VR
                     {
-                        dni = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre = reader["Nombre_VR750"].ToString(),
-                        apellido = reader["Apellido_VR750"].ToString(),
-                        mail = reader["Email_VR750"].ToString(),
-                        user = reader["Usuario_VR750"].ToString(),
-                        contraseña = reader["Contra_VR750"].ToString(),
-                        salt = reader["Salt_VR750"].ToString(),
-                        rol = reader["Rol_VR750"].ToString(),
-                        activo = Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado = Convert.ToBoolean(reader["Bloqueado_VR750"])
+                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
+                        nombre_750VR = reader["Nombre_VR750"].ToString(),
+                        apellido_750VR = reader["Apellido_VR750"].ToString(),
+                        mail_750VR = reader["Email_VR750"].ToString(),
+                        user_750VR = reader["Usuario_VR750"].ToString(),
+                        contraseña_750VR = reader["Contra_VR750"].ToString(),
+                        salt_750VR = reader["Salt_VR750"].ToString(),
+                        rol_750VR = reader["Rol_VR750"].ToString(),
+                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
+                        bloqueado_750VR = Convert.ToBoolean(reader["Bloqueado_VR750"])
                     };
                     return user;
                 }
@@ -307,7 +274,7 @@ namespace DAL_VR750
             }
         }
 
-        public void BloquearUsuario(string usuarioLogin)
+        public void BloquearUsuario_750VR(string usuarioLogin)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -320,15 +287,14 @@ namespace DAL_VR750
             }
         }
 
-        public Resultado_VR750<Usuario_750VR> recuperarUsuario(string user, string contraseña)
+     
+        public BEusuario_750VR recuperarUsuario_750VR(string user, string contraseña)
         {
-            Resultado_VR750<Usuario_750VR> resultado = new Resultado_VR750<Usuario_750VR>();
-
             string sqlQuery = "USE ProyectoNailsTime_VR750; SELECT * FROM Usuario_VR750 WHERE Usuario_VR750 = @Usuario";
 
             try
             {
-                if (!db.Conectar())
+                if (!db.Conectar_750VR())
                     throw new Exception("Error al conectar a la base de datos.");
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, db.Connection))
@@ -361,47 +327,38 @@ namespace DAL_VR750
                                 throw new Exception("El usuario está bloqueado.");
 
                             // Encriptar contraseña ingresada
-                            string hashIngresado = hasher.HashearConSalt(contraseña, saltAlmacenado);
+                            string hashIngresado = hasher.HashearConSalt_750VR(contraseña, saltAlmacenado);
 
                             if (hashIngresado != contraseñaHashAlmacenada)
-                                throw new Exception("Contraseña incorrecta.");
+                                throw new Exception("Contraseña incorrecta");
 
-                            // Crear entidad
-                            Usuario_750VR usuario = new Usuario_750VR
+                            // Crear y devolver entidad
+                            return new BEusuario_750VR
                             {
-                                dni = dni,
-                                nombre = nombre,
-                                apellido = apellido,
-                                mail = email,
-                                user = usuarioDB,
-                                contraseña = contraseñaHashAlmacenada,
-                                salt = saltAlmacenado,
-                                rol = rol,
-                                activo = activo,
-                                bloqueado = bloqueado
+                                dni_750VR = dni,
+                                nombre_750VR = nombre,
+                                apellido_750VR = apellido,
+                                mail_750VR = email,
+                                user_750VR = usuarioDB,
+                                contraseña_750VR = contraseñaHashAlmacenada,
+                                salt_750VR = saltAlmacenado,
+                                rol_750VR = rol,
+                                activo_750VR = activo,
+                                bloqueado_750VR = bloqueado
                             };
-
-                            resultado.resultado = true;
-                            resultado.entidad = usuario;
-                            resultado.mensaje = "Login exitoso";
                         }
                     }
                 }
 
-                db.Desconectar();
-                return resultado;
+                throw new Exception("No se pudo leer el usuario.");
             }
-            catch (Exception ex)
+            finally
             {
-                resultado.resultado = false;
-                resultado.mensaje = ex.Message;
-                resultado.entidad = null;
-                db.Desconectar();
-                return resultado;
+                db.Desconectar_750VR();
             }
         }
 
-        public void CambiarContraseña(Usuario_750VR usuario, string NuevaContraseña)
+        public void CambiarContraseña_750VR(BEusuario_750VR usuario, string NuevaContraseña)
         {
         
 
@@ -409,17 +366,17 @@ namespace DAL_VR750
 
             try
             {
-                bool conectado = db.Conectar();
+                bool conectado = db.Conectar_750VR();
                 if (!conectado) throw new Exception("Error al conectarse a la base de datos");
 
-                string NuevoSalt = hasher.GenerarSalt();
-                string nuevaContraseñaHasheada = hasher.HashearConSalt(NuevaContraseña, NuevoSalt);
+                string NuevoSalt = hasher.GenerarSalt_750VR();
+                string nuevaContraseñaHasheada = hasher.HashearConSalt_750VR(NuevaContraseña, NuevoSalt);
 
                 using (SqlCommand updateCommand = new SqlCommand(sqlUpdateUsuario, db.Connection))
                 {
                     updateCommand.Parameters.AddWithValue("@Contraseña", nuevaContraseñaHasheada);
                     updateCommand.Parameters.AddWithValue("@Salt", NuevoSalt);
-                    updateCommand.Parameters.AddWithValue("@DNI", usuario.dni);
+                    updateCommand.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
 
                     int filasAfectadas = updateCommand.ExecuteNonQuery();
                     if (filasAfectadas == 0)
@@ -430,7 +387,7 @@ namespace DAL_VR750
             }
             finally
             {
-                db.Desconectar();
+                db.Desconectar_750VR();
             }
 
 

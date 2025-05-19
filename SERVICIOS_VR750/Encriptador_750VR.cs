@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SERVICIOS_VR750
 {
-    public class Encriptador_VR750
+    public class Encriptador_750VR
     {
-        public string HashearSHA256(string texto)
+        public string HashearSHA256_750VR(string texto)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -25,12 +25,12 @@ namespace SERVICIOS_VR750
             }
         }
 
-        public  string HashearConSalt(string texto, string salt)
+        public string HashearConSalt_750VR(string texto, string salt)
         {
-            return HashearSHA256(texto + salt);
+            return HashearSHA256_750VR(texto + salt);
         }
 
-        public  string GenerarSalt()
+        public string GenerarSalt_750VR()
         {
             var rng = new RNGCryptoServiceProvider();
             byte[] saltBytes = new byte[16];

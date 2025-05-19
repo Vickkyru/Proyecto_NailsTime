@@ -19,7 +19,7 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             
         }
-        Encriptador_VR750 encriptador = new Encriptador_VR750();
+        Encriptador_750VR encriptador = new Encriptador_750VR();
 
 
         private void FormCambiarClave_750VR_Load(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var usuario = SessionManager_VR750.ObtenerInstancia.user;
+            var usuario = SessionManager_750VR.ObtenerInstancia.user;
 
             if (usuario == null)
             {
@@ -41,8 +41,8 @@ namespace Proyecto_NailsTime
             string nueva = textBox3.Text;
             string confirmar = textBox4.Text;
 
-            string hashActual = encriptador.HashearConSalt(actual, usuario.salt);
-            if (hashActual != usuario.contraseña)
+            string hashActual = encriptador.HashearConSalt_750VR(actual, usuario.salt_750VR);
+            if (hashActual != usuario.contraseña_750VR)
             {
                 MessageBox.Show("La contraseña actual es incorrecta.");
                 return;
@@ -60,35 +60,22 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            if (nueva == usuario.contraseña)
+            if (nueva == usuario.contraseña_750VR)
             {
                 MessageBox.Show("Las contraseña nueva no puede ser la contraseña actual.");
                 return;
             }
 
-            //string hashNueva = encriptador.HashearConSalt(nueva, usuario.salt);
-            //if (hashNueva == usuario.contraseña)
-            //{
-            //    MessageBox.Show("La nueva contraseña no puede ser igual a la anterior.");
-            //    return;
-            //}
-
-            //// Si todo está bien, generar nuevo salt y guardar
-            //string nuevoSalt = encriptador.GenerarSalt();
-            //string nuevoHash = encriptador.HashearConSalt(nueva, nuevoSalt);
-
+ 
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            bll.CambiarContraseña(usuario,nueva);
+            bll.CambiarContraseña_750VR(usuario,nueva);
 
-            // Actualizar en sesión
-            //usuario.salt = nuevoSalt;
-            //usuario.contraseña = nuevoHash;
 
             MessageBox.Show("Contraseña actualizada exitosamente.");
 
             
 
-            SERVICIOS_VR750.SessionManager_VR750.ObtenerInstancia.CerrarSesion();
+            SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
             MessageBox.Show("Contraseña actualizada exitosamente. Se cerro la sesion, vuelva a inciar sesion con su nueva contraseña");
             Application.Restart();
 

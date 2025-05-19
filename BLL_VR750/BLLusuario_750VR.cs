@@ -23,73 +23,69 @@ namespace BLL_VR750
           dal = new DALusuario_750VR();
         }
 
-        Encriptador_VR750 encriptador = new Encriptador_VR750();
+        Encriptador_750VR encriptador = new Encriptador_750VR();
 
      
-        public void CrearUsuario(Usuario_750VR usuario)
+        public void CrearUsuario_750VR(BEusuario_750VR usuario)
         {
      
           
-           dal.CrearUsuario(usuario);
+           dal.CrearUsuario_750VR(usuario);
         }
 
-        public bool ModificarUsuario(int dni, string nombre, string apellido, string mail, string rol, bool activo)
+        public bool ModificarUsuario_750VR(int dni, string nombre, string apellido, string mail, string rol, string usuario)
         {
 
-            return dal.ModificarUsuario(dni, nombre, apellido, mail, rol, activo);
+            return dal.ModificarUsuario_750VR(dni, nombre, apellido, mail, rol, usuario);
         }
 
-        public bool CambiarEstadoUsuario(int dni, bool nuevoEstado)
+        public bool CambiarEstadoUsuario_750VR(int dni, bool nuevoEstado)
         {
-            return dal.CambiarEstadoUsuario(dni, nuevoEstado);
+            return dal.CambiarEstadoUsuario_750VR(dni, nuevoEstado);
         }
 
-        public bool DesbloquearUsuario(int dni)
+        public bool DesbloquearUsuario_750VR(int dni)
         {
             
-            return dal.DesbloquearUsuario(dni); // le pasa el dni
+            return dal.DesbloquearUsuario_750VR(dni); // le pasa el dni
         }
 
-        public List<Usuario_750VR> ObtenerUsuarios(bool soloActivos) 
+ 
+        public List<BEusuario_750VR> BuscarUsuarios_750VR(string dni, string nombre, string apellido, string email, string user, string rol)
         {
-            return dal.ObtenerUsuarios(soloActivos);
+            return dal.BuscarUsuarios_750VR(dni, nombre, apellido, email,user,rol);
         }
 
-        public List<Usuario_750VR> BuscarUsuarios(string dni, string nombre, string apellido, string email, string user, string rol)
+        public List<BEusuario_750VR> leerEntidades_750VR()
         {
-            return dal.BuscarUsuarios(dni, nombre, apellido, email,user,rol);
+            return dal.leerEntidades_750VR();
         }
 
-        public List<Usuario_750VR> leerEntidades()
+        public BEusuario_750VR ObtenerUsuarioPorLogin_750VR(string login)
         {
-            return dal.leerEntidades();
-        }
-
-        public Usuario_750VR ObtenerUsuarioPorLogin(string login)
-        {
-            return dal.ObtenerUsuarioPorLogin(login);
+            return dal.ObtenerUsuarioPorLogin_750VR(login);
         }
 
     
-        public void CambiarContraseña(Usuario_750VR usuario, string NuevaContraseña)
+        public void CambiarContraseña_750VR(BEusuario_750VR usuario, string NuevaContraseña)
         {
-            dal.CambiarContraseña(usuario,NuevaContraseña);
+            dal.CambiarContraseña_750VR(usuario,NuevaContraseña);
         }
 
-        public Usuario_750VR ObtenerUsuarioPorDNI(int dni)
+        public BEusuario_750VR ObtenerUsuarioPorDNI_750VR(int dni)
         {
-            return dal.ObtenerUsuarioPorDNI(dni);
+            return dal.ObtenerUsuarioPorDNI_750VR(dni);
         }
 
        
-        public Resultado_VR750<Usuario_750VR> Login(string user, string contraseña)
+        public BEusuario_750VR Login_750VR(string user, string contraseña)
         {
-            return dal.recuperarUsuario(user, contraseña);
+            return dal.recuperarUsuario_750VR(user, contraseña);
         }
 
-        public void BloquearUsuario(string login)
+        public void BloquearUsuario_750VR(string login)
         {
-            dal.BloquearUsuario(login);
+            dal.BloquearUsuario_750VR(login);
         }
     }
 }

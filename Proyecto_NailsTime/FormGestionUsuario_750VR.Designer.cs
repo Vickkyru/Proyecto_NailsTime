@@ -29,15 +29,6 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Usuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Activo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rbtnact = new System.Windows.Forms.RadioButton();
             this.rbtntodos = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -69,10 +60,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -85,73 +77,6 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Gestion de usuarios";
             this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DNI,
-            this.Nombre,
-            this.Apellido,
-            this.Email,
-            this.Usuario,
-            this.Rol,
-            this.Activo,
-            this.Bloqueado});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 66);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(770, 150);
-            this.dataGridView1.TabIndex = 8;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            // 
-            // DNI
-            // 
-            this.DNI.DataPropertyName = "dni";
-            this.DNI.HeaderText = "DNI";
-            this.DNI.Name = "DNI";
-            // 
-            // Nombre
-            // 
-            this.Nombre.DataPropertyName = "nombre";
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.Name = "Nombre";
-            // 
-            // Apellido
-            // 
-            this.Apellido.DataPropertyName = "apellido";
-            this.Apellido.HeaderText = "Apellido";
-            this.Apellido.Name = "Apellido";
-            // 
-            // Email
-            // 
-            this.Email.DataPropertyName = "mail";
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            // 
-            // Usuario
-            // 
-            this.Usuario.DataPropertyName = "user";
-            this.Usuario.HeaderText = "Usuario";
-            this.Usuario.Name = "Usuario";
-            // 
-            // Rol
-            // 
-            this.Rol.DataPropertyName = "rol";
-            this.Rol.HeaderText = "Rol";
-            this.Rol.Name = "Rol";
-            // 
-            // Activo
-            // 
-            this.Activo.DataPropertyName = "activo";
-            this.Activo.HeaderText = "Activo";
-            this.Activo.Name = "Activo";
-            // 
-            // Bloqueado
-            // 
-            this.Bloqueado.DataPropertyName = "bloqueado";
-            this.Bloqueado.HeaderText = "Bloqueado";
-            this.Bloqueado.Name = "Bloqueado";
             // 
             // rbtnact
             // 
@@ -202,7 +127,7 @@
             this.txtDNI.Location = new System.Drawing.Point(61, 284);
             this.txtDNI.Name = "txtDNI";
             this.txtDNI.Size = new System.Drawing.Size(100, 20);
-            this.txtDNI.TabIndex = 13;
+            this.txtDNI.TabIndex = 0;
             this.txtDNI.TextChanged += new System.EventHandler(this.txtDNI_TextChanged);
             // 
             // label4
@@ -219,7 +144,7 @@
             this.txtape.Location = new System.Drawing.Point(61, 324);
             this.txtape.Name = "txtape";
             this.txtape.Size = new System.Drawing.Size(100, 20);
-            this.txtape.TabIndex = 15;
+            this.txtape.TabIndex = 1;
             this.txtape.TextChanged += new System.EventHandler(this.txtape_TextChanged);
             // 
             // txtemail
@@ -227,7 +152,7 @@
             this.txtemail.Location = new System.Drawing.Point(61, 418);
             this.txtemail.Name = "txtemail";
             this.txtemail.Size = new System.Drawing.Size(100, 20);
-            this.txtemail.TabIndex = 16;
+            this.txtemail.TabIndex = 3;
             this.txtemail.TextChanged += new System.EventHandler(this.txtemail_TextChanged);
             // 
             // txtnom
@@ -235,7 +160,7 @@
             this.txtnom.Location = new System.Drawing.Point(61, 371);
             this.txtnom.Name = "txtnom";
             this.txtnom.Size = new System.Drawing.Size(100, 20);
-            this.txtnom.TabIndex = 17;
+            this.txtnom.TabIndex = 2;
             this.txtnom.TextChanged += new System.EventHandler(this.txtnom_TextChanged);
             // 
             // cmbrol
@@ -248,7 +173,7 @@
             this.cmbrol.Location = new System.Drawing.Point(262, 283);
             this.cmbrol.Name = "cmbrol";
             this.cmbrol.Size = new System.Drawing.Size(121, 21);
-            this.cmbrol.TabIndex = 19;
+            this.cmbrol.TabIndex = 4;
             this.cmbrol.TextChanged += new System.EventHandler(this.cmbrol_TextChanged);
             // 
             // actsi
@@ -263,6 +188,7 @@
             this.actsi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.actsi.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.actsi.UseVisualStyleBackColor = true;
+            this.actsi.CheckedChanged += new System.EventHandler(this.actsi_CheckedChanged);
             // 
             // actno
             // 
@@ -290,6 +216,7 @@
             this.bloqsi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bloqsi.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.bloqsi.UseVisualStyleBackColor = true;
+            this.bloqsi.CheckedChanged += new System.EventHandler(this.bloqsi_CheckedChanged);
             // 
             // bloqno
             // 
@@ -303,6 +230,7 @@
             this.bloqno.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bloqno.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.bloqno.UseVisualStyleBackColor = true;
+            this.bloqno.CheckedChanged += new System.EventHandler(this.bloqno_CheckedChanged);
             // 
             // label5
             // 
@@ -336,7 +264,7 @@
             this.btncrear.Location = new System.Drawing.Point(18, 17);
             this.btncrear.Name = "btncrear";
             this.btncrear.Size = new System.Drawing.Size(75, 23);
-            this.btncrear.TabIndex = 27;
+            this.btncrear.TabIndex = 1;
             this.btncrear.Text = "Crear";
             this.btncrear.UseVisualStyleBackColor = true;
             this.btncrear.Click += new System.EventHandler(this.button1_Click);
@@ -355,7 +283,7 @@
             this.btndesb.Location = new System.Drawing.Point(107, 17);
             this.btndesb.Name = "btndesb";
             this.btndesb.Size = new System.Drawing.Size(75, 23);
-            this.btndesb.TabIndex = 32;
+            this.btndesb.TabIndex = 3;
             this.btndesb.Text = "Desbloquear";
             this.btndesb.UseVisualStyleBackColor = true;
             this.btndesb.Click += new System.EventHandler(this.btndesb_Click);
@@ -365,7 +293,7 @@
             this.btnmod.Location = new System.Drawing.Point(107, 65);
             this.btnmod.Name = "btnmod";
             this.btnmod.Size = new System.Drawing.Size(75, 23);
-            this.btnmod.TabIndex = 33;
+            this.btnmod.TabIndex = 4;
             this.btnmod.Text = "Modificar";
             this.btnmod.UseVisualStyleBackColor = true;
             this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
@@ -375,7 +303,7 @@
             this.btnact.Location = new System.Drawing.Point(18, 65);
             this.btnact.Name = "btnact";
             this.btnact.Size = new System.Drawing.Size(75, 23);
-            this.btnact.TabIndex = 34;
+            this.btnact.TabIndex = 2;
             this.btnact.Text = "Act/Desact";
             this.btnact.UseVisualStyleBackColor = true;
             this.btnact.Click += new System.EventHandler(this.btnact_Click);
@@ -385,7 +313,7 @@
             this.btnaplicar.Location = new System.Drawing.Point(59, 113);
             this.btnaplicar.Name = "btnaplicar";
             this.btnaplicar.Size = new System.Drawing.Size(75, 23);
-            this.btnaplicar.TabIndex = 35;
+            this.btnaplicar.TabIndex = 0;
             this.btnaplicar.Text = "Aplicar";
             this.btnaplicar.UseVisualStyleBackColor = true;
             this.btnaplicar.Click += new System.EventHandler(this.btnaplicar_Click);
@@ -395,7 +323,7 @@
             this.btncancelar.Location = new System.Drawing.Point(651, 322);
             this.btncancelar.Name = "btncancelar";
             this.btncancelar.Size = new System.Drawing.Size(75, 23);
-            this.btncancelar.TabIndex = 36;
+            this.btncancelar.TabIndex = 6;
             this.btncancelar.Text = "Cancelar";
             this.btncancelar.UseVisualStyleBackColor = true;
             this.btncancelar.Click += new System.EventHandler(this.btncancelar_Click);
@@ -405,7 +333,7 @@
             this.btnsalir.Location = new System.Drawing.Point(651, 372);
             this.btnsalir.Name = "btnsalir";
             this.btnsalir.Size = new System.Drawing.Size(75, 23);
-            this.btnsalir.TabIndex = 37;
+            this.btnsalir.TabIndex = 7;
             this.btnsalir.Text = "Salir";
             this.btnsalir.UseVisualStyleBackColor = true;
             this.btnsalir.Click += new System.EventHandler(this.button7_Click);
@@ -436,7 +364,7 @@
             this.txtuser.Location = new System.Drawing.Point(262, 328);
             this.txtuser.Name = "txtuser";
             this.txtuser.Size = new System.Drawing.Size(100, 20);
-            this.txtuser.TabIndex = 40;
+            this.txtuser.TabIndex = 5;
             this.txtuser.TextChanged += new System.EventHandler(this.txtuser_TextChanged);
             // 
             // label9
@@ -470,12 +398,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Activo";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 54);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(762, 150);
+            this.dataGridView1.TabIndex = 44;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
+            // 
             // FormGestionUsuario_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblmensaje);
@@ -498,17 +436,16 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rbtntodos);
             this.Controls.Add(this.rbtnact);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Name = "FormGestionUsuario_750VR";
             this.Text = "FormAgregarUsuario_750VR";
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -517,7 +454,6 @@
         #endregion
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.RadioButton rbtnact;
         private System.Windows.Forms.RadioButton rbtntodos;
         private System.Windows.Forms.Label label1;
@@ -547,15 +483,8 @@
         private System.Windows.Forms.TextBox txtuser;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblmensaje;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DNI;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Apellido;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Usuario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Rol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Activo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Bloqueado;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

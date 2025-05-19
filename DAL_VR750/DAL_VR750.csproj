@@ -50,8 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDeDatos_750VR.cs" />
+    <Compile Include="DALagenda_750VR.cs" />
+    <Compile Include="DALcategoria_750VR.cs" />
+    <Compile Include="DALcliente_750VR.cs" />
+    <Compile Include="DALreserva_750VR.cs" />
+    <Compile Include="DALresumenTurno_750VR.cs" />
+    <Compile Include="DALservicio_750VR.cs" />
     <Compile Include="DALusuario_750VR.cs" />
-    <Compile Include="ICRUD_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

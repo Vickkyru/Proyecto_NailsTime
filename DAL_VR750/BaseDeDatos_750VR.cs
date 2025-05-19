@@ -15,7 +15,7 @@ namespace DAL_VR750
         public static string cadena = $"Data source={dataSource};Initial Catalog={dbName};Integrated Security=True;";
         public SqlConnection Connection = new SqlConnection(cadena); //conexion a bd
         public SqlCommand Command = new SqlCommand(); //ejecutar consultas SQL
-        public bool Conectar()
+        public bool Conectar_750VR()
         {
             if (Connection.State == ConnectionState.Closed)
             {
@@ -24,7 +24,7 @@ namespace DAL_VR750
             }
             return false;
         }
-        public bool Desconectar()
+        public bool Desconectar_750VR()
         {
             if (Connection.State == ConnectionState.Open)
             {
@@ -34,18 +34,41 @@ namespace DAL_VR750
             return false;
         }
 
-        //public void ScriptDatos()
-        //{
-        //    EjecutarQuery(
-        //        "$USE ProyectoNailsTime_VR750; INSERT INTO Usuario (DNI, Nombre, Apellido, Email, Usuario, Contra, Salt, Rol, Activo, Bloqueado) " + 
-        //        "VALUES" +
-        //         $"('22333444', 'Victoria', 'Russo', 'vicky.russo@gmail.com', '223334444Russo', '22333444Vicky', 'SALT1234SALT1234SALT12', Cliente, 1, 0)," +  
-        //        $"('45.984.456', 'Valentin', 'Giraldes', 'DjZdD/7Aksao6E0lKeym8g==', 'lMPxDzCF7FEwOYwHAShO6Q==', 'valen@gmail.com', '2004-08-26', 2, '39', 'ES')," +  
-        //        $"('55.666.777', 'Nicolas', 'Spagnolo', 'Xc+kIThHkb8o0TwkWoE2mw==', 'e+F4/sgxP3/Nm8+Bjgrcdw==', 'nico@gmail.com', '2024-11-29', 3, '12', 'EN');");  
+        public void VerificarYCrearTablaUsuarios_750VR()
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
 
-        
-            
-        //}
+                // Verifica si la tabla ya existe
+                string verificarTabla = @"
+            IF NOT EXISTS (
+                SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_NAME = 'Usuario_VR750'
+            )
+            BEGIN
+                CREATE TABLE Usuario_VR750 (
+                    DNI_VR750 INT PRIMARY KEY,
+                    Nombre_VR750 VARCHAR(100) NOT NULL,
+                    Apellido_VR750 VARCHAR(100) NOT NULL,
+                    Email_VR750 VARCHAR(150) NOT NULL,
+                    Usuario_VR750 VARCHAR(150) NOT NULL UNIQUE,
+                    Contra_VR750 VARCHAR(256) NOT NULL,
+                    Salt_VR750 VARCHAR(50) NOT NULL,
+                    Rol_VR750 VARCHAR(50) NOT NULL,
+                    Activo_VR750 BIT NOT NULL DEFAULT 1,
+                    Bloqueado_VR750 BIT NOT NULL DEFAULT 0
+                )
+            END
+        ";
+
+                using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
     }
 }
