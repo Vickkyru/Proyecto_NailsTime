@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Web.SessionState;
 using System.Windows.Forms;
 using SERVICIOS_VR750;
-using DAL_VR750;
 
 
 namespace Proyecto_NailsTime
@@ -18,16 +17,10 @@ namespace Proyecto_NailsTime
     {
         private static Form formactivo = null;
 
-        BaseDeDatos_750VR db = new BaseDeDatos_750VR();
-<<<<<<< HEAD
-
-=======
->>>>>>> 717d3e1fa4bf797a747316d7c9fa026a98c005e4
         public Form1_750VR()
         {
             InitializeComponent();
-            db.VerificarOCrearBaseDeDatos();
-            db.VerificarYCrearTablaUsuarios_750VR();
+           
 
         }
 
