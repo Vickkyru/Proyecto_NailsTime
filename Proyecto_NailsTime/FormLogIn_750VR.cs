@@ -20,9 +20,9 @@ namespace Proyecto_NailsTime
         public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
         BLLusuario_750VR bll = new BLLusuario_750VR();
 
-        private Form1 formPrincipal;
+        private Form1_750VR formPrincipal;
 
-        public FormLogIn_750VR(Form1 principal)
+        public FormLogIn_750VR(Form1_750VR principal)
         {
             InitializeComponent();
             formPrincipal = principal;

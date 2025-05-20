@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormAgendaManicurista
+    partial class FormAgendaManicurista_750VR
     {
         /// <summary>
         /// Required designer variable.

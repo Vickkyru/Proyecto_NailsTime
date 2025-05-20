@@ -13,11 +13,11 @@ using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class Form1 : Form
+    public partial class Form1_750VR : Form
     {
         private static Form formactivo = null;
 
-        public Form1()
+        public Form1_750VR()
         {
             InitializeComponent();
            

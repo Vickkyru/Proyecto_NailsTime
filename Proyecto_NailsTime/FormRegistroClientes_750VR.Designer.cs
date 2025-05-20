@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormRegistroClientes
+    partial class FormRegistroClientes_750VR
     {
         /// <summary>
         /// Required designer variable.

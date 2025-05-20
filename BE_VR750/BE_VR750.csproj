@@ -54,7 +54,6 @@
     <Compile Include="BETecnica_750VR.cs" />
     <Compile Include="BECliente_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BEResumenTurno.cs" />
     <Compile Include="BEServicio_750VR.cs" />
     <Compile Include="BEReserva_750VR.cs" />
     <Compile Include="BEusuario_750VR.cs" />

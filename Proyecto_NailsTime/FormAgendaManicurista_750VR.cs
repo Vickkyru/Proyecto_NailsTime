@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormRegistroClientes : Form
+    public partial class FormAgendaManicurista_750VR : Form
     {
-        public FormRegistroClientes()
+        public FormAgendaManicurista_750VR()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

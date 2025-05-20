@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class Form1
+    partial class Form1_750VR
     {
         /// <summary>
         /// Variable del diseñador necesaria.

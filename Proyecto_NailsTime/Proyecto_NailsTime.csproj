@@ -56,23 +56,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormAgendaManicurista.cs">
+    <Compile Include="FormAgendaManicurista_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAgendaManicurista.Designer.cs">
-      <DependentUpon>FormAgendaManicurista.cs</DependentUpon>
+    <Compile Include="FormAgendaManicurista_750VR.Designer.cs">
+      <DependentUpon>FormAgendaManicurista_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCobrarReserva.cs">
+    <Compile Include="FormCobrarReserva_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCobrarReserva.Designer.cs">
-      <DependentUpon>FormCobrarReserva.cs</DependentUpon>
+    <Compile Include="FormCobrarReserva_750VR.Designer.cs">
+      <DependentUpon>FormCobrarReserva_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Form1_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Form1_750VR.Designer.cs">
+      <DependentUpon>Form1_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FormGestionReserva_750VR.cs">
       <SubType>Form</SubType>
@@ -104,28 +104,28 @@
     <Compile Include="FormLogOut_750VR.Designer.cs">
       <DependentUpon>FormLogOut_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRegistroClientes.cs">
+    <Compile Include="FormRegistroClientes_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRegistroClientes.Designer.cs">
-      <DependentUpon>FormRegistroClientes.cs</DependentUpon>
+    <Compile Include="FormRegistroClientes_750VR.Designer.cs">
+      <DependentUpon>FormRegistroClientes_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
     <None Include="Resources\Captura de pantalla 2025-04-21 230616.png" />
     <None Include="Resources\ChatGPT Image 21 abr 2025, 11_01_13 p.m..png" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Form1_750VR.resx">
+      <DependentUpon>Form1_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormAgendaManicurista.resx">
-      <DependentUpon>FormAgendaManicurista.cs</DependentUpon>
+    <EmbeddedResource Include="FormAgendaManicurista_750VR.resx">
+      <DependentUpon>FormAgendaManicurista_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCambiarClave_750VR.resx">
       <DependentUpon>FormCambiarClave_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCobrarReserva.resx">
-      <DependentUpon>FormCobrarReserva.cs</DependentUpon>
+    <EmbeddedResource Include="FormCobrarReserva_750VR.resx">
+      <DependentUpon>FormCobrarReserva_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGestionReserva_750VR.resx">
       <DependentUpon>FormGestionReserva_750VR.cs</DependentUpon>
@@ -139,8 +139,8 @@
     <EmbeddedResource Include="FormLogOut_750VR.resx">
       <DependentUpon>FormLogOut_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRegistroClientes.resx">
-      <DependentUpon>FormRegistroClientes.cs</DependentUpon>
+    <EmbeddedResource Include="FormRegistroClientes_750VR.resx">
+      <DependentUpon>FormRegistroClientes_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -55,7 +55,6 @@
     <Compile Include="DALTecnica_750VR.cs" />
     <Compile Include="DALcliente_750VR.cs" />
     <Compile Include="DALreserva_750VR.cs" />
-    <Compile Include="DALresumenTurno_750VR.cs" />
     <Compile Include="DALservicio_750VR.cs" />
     <Compile Include="DALusuario_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
