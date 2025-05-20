@@ -19,8 +19,7 @@ namespace DAL_VR750
 
         public BaseDeDatos_750VR()
         {
-            VerificarOCrearBaseDeDatos();
-            VerificarYCrearTablaUsuarios_750VR();
+           
         }
         public bool Conectar_750VR()
         {
@@ -52,7 +51,7 @@ namespace DAL_VR750
         }
 
 
-        private void VerificarOCrearBaseDeDatos()
+        public void VerificarOCrearBaseDeDatos()
         {
             string conexionMaster = $"Data Source={dataSource};Initial Catalog=master;Integrated Security=True";
             string scriptCrearBD = $@"

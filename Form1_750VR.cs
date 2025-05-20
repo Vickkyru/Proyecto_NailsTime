@@ -19,7 +19,6 @@ namespace Proyecto_NailsTime
         private static Form formactivo = null;
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
-
         public Form1_750VR()
         {
             InitializeComponent();
