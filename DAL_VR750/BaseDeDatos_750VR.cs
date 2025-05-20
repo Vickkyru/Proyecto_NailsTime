@@ -19,11 +19,7 @@ namespace DAL_VR750
 
         public BaseDeDatos_750VR()
         {
-<<<<<<< HEAD
-           
-=======
-            
->>>>>>> 717d3e1fa4bf797a747316d7c9fa026a98c005e4
+        
         }
         public bool Conectar_750VR()
         {

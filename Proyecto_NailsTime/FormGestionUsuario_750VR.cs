@@ -644,50 +644,48 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-<<<<<<< HEAD
-            if (dataGridView1.SelectedRows.Count > 0)
-            {
-                string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
-                // Llamar al BLL para recuperar el usuario por DNI
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                var resultado = bll.ObtenerUsuarioPorDNI_750VR(int.Parse(dniSeleccionado));
-
-=======
-            //if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
+            //if (dataGridView1.SelectedRows.Count > 0)
             //{
-            //    txtDNI.Text = usuario.dni_750VR.ToString();
-            //    txtnom.Text = usuario.nombre_750VR;
-            //    txtape.Text = usuario.apellido_750VR;
-            //    txtemail.Text = usuario.mail_750VR;
-            //    cmbrol.Text = usuario.rol_750VR;
-            //    txtuser.Text = usuario.user_750VR;
+            //    string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
+            //    // Llamar al BLL para recuperar el usuario por DNI
+            //    BLLusuario_750VR bll = new BLLusuario_750VR();
+            //    var resultado = bll.ObtenerUsuarioPorDNI_750VR(int.Parse(dniSeleccionado));
 
-            //    bloqsi.Checked = usuario.bloqueado_750VR;
-            //    bloqno.Checked = !usuario.bloqueado_750VR;
-            //    actsi.Checked = usuario.activo_750VR;
-            //    actno.Checked = !usuario.activo_750VR;
+                //if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
+                //{
+                //    txtDNI.Text = usuario.dni_750VR.ToString();
+                //    txtnom.Text = usuario.nombre_750VR;
+                //    txtape.Text = usuario.apellido_750VR;
+                //    txtemail.Text = usuario.mail_750VR;
+                //    cmbrol.Text = usuario.rol_750VR;
+                //    txtuser.Text = usuario.user_750VR;
 
-            //    btncancelar.Enabled = true;
-            //    btncrear.Enabled = false;
+                //    bloqsi.Checked = usuario.bloqueado_750VR;
+                //    bloqno.Checked = !usuario.bloqueado_750VR;
+                //    actsi.Checked = usuario.activo_750VR;
+                //    actno.Checked = !usuario.activo_750VR;
 
-            //    if (modoActual == "modificar" || modoActual == "desbloquear")
-            //    {
-            //        txtDNI.Text = usuario.dni_750VR.ToString();
-            //        txtnom.Text = usuario.nombre_750VR;
-            //        txtape.Text = usuario.apellido_750VR;
-            //        txtemail.Text = usuario.mail_750VR;
-            //        cmbrol.Text = usuario.rol_750VR;
-            //        txtuser.Text = usuario.user_750VR;
+                //    btncancelar.Enabled = true;
+                //    btncrear.Enabled = false;
 
-            //        bloqsi.Checked = usuario.bloqueado_750VR;
-            //        bloqno.Checked = !usuario.bloqueado_750VR;
-            //        actsi.Checked = usuario.activo_750VR;
-            //        actno.Checked = !usuario.activo_750VR;
+                //    if (modoActual == "modificar" || modoActual == "desbloquear")
+                //    {
+                //        txtDNI.Text = usuario.dni_750VR.ToString();
+                //        txtnom.Text = usuario.nombre_750VR;
+                //        txtape.Text = usuario.apellido_750VR;
+                //        txtemail.Text = usuario.mail_750VR;
+                //        cmbrol.Text = usuario.rol_750VR;
+                //        txtuser.Text = usuario.user_750VR;
 
-            //        btncancelar.Enabled = true;
-            //        btncrear.Enabled = false;
-            //    }
-              
+                //        bloqsi.Checked = usuario.bloqueado_750VR;
+                //        bloqno.Checked = !usuario.bloqueado_750VR;
+                //        actsi.Checked = usuario.activo_750VR;
+                //        actno.Checked = !usuario.activo_750VR;
+
+                //        btncancelar.Enabled = true;
+                //        btncrear.Enabled = false;
+                //    }
+
             //}
         }
 
@@ -708,7 +706,6 @@ namespace Proyecto_NailsTime
                 BLLusuario_750VR bll = new BLLusuario_750VR();
                 var resultado = bll.ObtenerUsuarioPorDNI_750VR(int.Parse(dniSeleccionado));
 
->>>>>>> 717d3e1fa4bf797a747316d7c9fa026a98c005e4
                 if (resultado != null)
                 {
                     // Cargar los campos con los datos del usuario
