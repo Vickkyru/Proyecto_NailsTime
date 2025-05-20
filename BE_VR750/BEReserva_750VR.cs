@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE_VR750
 {
-    internal class ResumenTurno_750VR
+    internal class BEReserva_750VR
     {
     }
 }

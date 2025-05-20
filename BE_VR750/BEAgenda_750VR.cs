@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL_VR750
+namespace BE_VR750
 {
-    internal class BLLinsumos_750VR
+    internal class BEAgenda_750VR
     {
     }
 }

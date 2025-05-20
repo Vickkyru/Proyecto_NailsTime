@@ -51,7 +51,8 @@
   <ItemGroup>
     <Compile Include="BaseDeDatos_750VR.cs" />
     <Compile Include="DALagenda_750VR.cs" />
-    <Compile Include="DALcategoria_750VR.cs" />
+    <Compile Include="DALPago_750VR.cs" />
+    <Compile Include="DALTecnica_750VR.cs" />
     <Compile Include="DALcliente_750VR.cs" />
     <Compile Include="DALreserva_750VR.cs" />
     <Compile Include="DALresumenTurno_750VR.cs" />

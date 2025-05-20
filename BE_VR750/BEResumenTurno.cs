@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL_VR750
+namespace BE_VR750
 {
-    internal class DALcategoria_750VR
+    internal class BEResumenTurno
     {
     }
 }

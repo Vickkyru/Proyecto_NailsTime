@@ -33,10 +33,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btncrear = new System.Windows.Forms.Button();
             this.btnmod = new System.Windows.Forms.Button();
-            this.btnaplicar = new System.Windows.Forms.Button();
             this.btnact = new System.Windows.Forms.Button();
-            this.btnsalir = new System.Windows.Forms.Button();
             this.btncancelar = new System.Windows.Forms.Button();
+            this.btnsalir = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -47,8 +46,6 @@
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.lblcantuser = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.rbtntodos = new System.Windows.Forms.RadioButton();
-            this.rbtnact = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -75,7 +72,6 @@
             // 
             this.panel1.Controls.Add(this.btncrear);
             this.panel1.Controls.Add(this.btnmod);
-            this.panel1.Controls.Add(this.btnaplicar);
             this.panel1.Controls.Add(this.btnact);
             this.panel1.Controls.Add(this.btncancelar);
             this.panel1.Controls.Add(this.btnsalir);
@@ -102,15 +98,6 @@
             this.btnmod.Text = "Modificar";
             this.btnmod.UseVisualStyleBackColor = true;
             // 
-            // btnaplicar
-            // 
-            this.btnaplicar.Location = new System.Drawing.Point(109, 65);
-            this.btnaplicar.Name = "btnaplicar";
-            this.btnaplicar.Size = new System.Drawing.Size(75, 23);
-            this.btnaplicar.TabIndex = 0;
-            this.btnaplicar.Text = "Aplicar";
-            this.btnaplicar.UseVisualStyleBackColor = true;
-            // 
             // btnact
             // 
             this.btnact.Location = new System.Drawing.Point(18, 65);
@@ -120,15 +107,6 @@
             this.btnact.Text = "Act/Desact";
             this.btnact.UseVisualStyleBackColor = true;
             // 
-            // btnsalir
-            // 
-            this.btnsalir.Location = new System.Drawing.Point(109, 125);
-            this.btnsalir.Name = "btnsalir";
-            this.btnsalir.Size = new System.Drawing.Size(75, 23);
-            this.btnsalir.TabIndex = 54;
-            this.btnsalir.Text = "Salir";
-            this.btnsalir.UseVisualStyleBackColor = true;
-            // 
             // btncancelar
             // 
             this.btncancelar.Location = new System.Drawing.Point(18, 124);
@@ -137,6 +115,15 @@
             this.btncancelar.TabIndex = 52;
             this.btncancelar.Text = "Cancelar";
             this.btncancelar.UseVisualStyleBackColor = true;
+            // 
+            // btnsalir
+            // 
+            this.btnsalir.Location = new System.Drawing.Point(109, 125);
+            this.btnsalir.Name = "btnsalir";
+            this.btnsalir.Size = new System.Drawing.Size(75, 23);
+            this.btnsalir.TabIndex = 54;
+            this.btnsalir.Text = "Salir";
+            this.btnsalir.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -220,30 +207,6 @@
             this.label1.TabIndex = 57;
             this.label1.Text = "Numero de clientes:";
             // 
-            // rbtntodos
-            // 
-            this.rbtntodos.AutoSize = true;
-            this.rbtntodos.Location = new System.Drawing.Point(396, 17);
-            this.rbtntodos.Name = "rbtntodos";
-            this.rbtntodos.Size = new System.Drawing.Size(55, 17);
-            this.rbtntodos.TabIndex = 56;
-            this.rbtntodos.TabStop = true;
-            this.rbtntodos.Text = "Todos";
-            this.rbtntodos.UseVisualStyleBackColor = true;
-            // 
-            // rbtnact
-            // 
-            this.rbtnact.AutoSize = true;
-            this.rbtnact.Location = new System.Drawing.Point(314, 17);
-            this.rbtnact.Name = "rbtnact";
-            this.rbtnact.Size = new System.Drawing.Size(60, 17);
-            this.rbtnact.TabIndex = 55;
-            this.rbtnact.TabStop = true;
-            this.rbtnact.Text = "Activos";
-            this.rbtnact.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.rbtnact.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.rbtnact.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
@@ -273,8 +236,6 @@
             this.Controls.Add(this.txtDNI);
             this.Controls.Add(this.lblcantuser);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.rbtntodos);
-            this.Controls.Add(this.rbtnact);
             this.Controls.Add(this.label2);
             this.Name = "FormRegistroClientes";
             this.Text = "FormRegistroClientes";
@@ -292,7 +253,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btncrear;
         private System.Windows.Forms.Button btnmod;
-        private System.Windows.Forms.Button btnaplicar;
         private System.Windows.Forms.Button btnact;
         private System.Windows.Forms.Button btnsalir;
         private System.Windows.Forms.Button btncancelar;
@@ -306,8 +266,6 @@
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label lblcantuser;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton rbtntodos;
-        private System.Windows.Forms.RadioButton rbtnact;
         private System.Windows.Forms.Label label2;
     }
 }

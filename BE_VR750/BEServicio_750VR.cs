@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE_VR750
 {
-    internal class Turnos_750VR
+    internal class BEServicio_750VR
     {
     }
 }

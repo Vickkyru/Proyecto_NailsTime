@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BE_VR750
+namespace BLL_VR750
 {
-    internal class AgendaLaboral_750VR
+    internal class BLLpago_750VR
     {
     }
 }

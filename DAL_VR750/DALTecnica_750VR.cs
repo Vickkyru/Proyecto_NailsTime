@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BE_VR750
+namespace DAL_VR750
 {
-    internal class Insumos_750VR
+    internal class DALTecnica_750VR
     {
     }
 }

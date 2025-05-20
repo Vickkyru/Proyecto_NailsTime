@@ -39,7 +39,6 @@
             this.reservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verTurnosDisponiblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verTurnosReservadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.turnosAsignadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,8 +131,7 @@
             // 
             this.reservaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.verTurnosDisponiblesToolStripMenuItem,
-            this.verTurnosReservadosToolStripMenuItem,
-            this.turnosAsignadosToolStripMenuItem});
+            this.verTurnosReservadosToolStripMenuItem});
             this.reservaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.reservaToolStripMenuItem.Name = "reservaToolStripMenuItem";
             this.reservaToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
@@ -149,14 +147,8 @@
             // verTurnosReservadosToolStripMenuItem
             // 
             this.verTurnosReservadosToolStripMenuItem.Name = "verTurnosReservadosToolStripMenuItem";
-            this.verTurnosReservadosToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
-            this.verTurnosReservadosToolStripMenuItem.Text = "Turnos Reservados";
-            // 
-            // turnosAsignadosToolStripMenuItem
-            // 
-            this.turnosAsignadosToolStripMenuItem.Name = "turnosAsignadosToolStripMenuItem";
-            this.turnosAsignadosToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
-            this.turnosAsignadosToolStripMenuItem.Text = "Turnos Asignados";
+            this.verTurnosReservadosToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.verTurnosReservadosToolStripMenuItem.Text = "Turnos Asignados";
             // 
             // insumosToolStripMenuItem
             // 
@@ -260,7 +252,6 @@
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verTurnosDisponiblesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verTurnosReservadosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem turnosAsignadosToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
