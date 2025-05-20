@@ -644,39 +644,82 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
+            //if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
+            //{
+            //    txtDNI.Text = usuario.dni_750VR.ToString();
+            //    txtnom.Text = usuario.nombre_750VR;
+            //    txtape.Text = usuario.apellido_750VR;
+            //    txtemail.Text = usuario.mail_750VR;
+            //    cmbrol.Text = usuario.rol_750VR;
+            //    txtuser.Text = usuario.user_750VR;
+
+            //    bloqsi.Checked = usuario.bloqueado_750VR;
+            //    bloqno.Checked = !usuario.bloqueado_750VR;
+            //    actsi.Checked = usuario.activo_750VR;
+            //    actno.Checked = !usuario.activo_750VR;
+
+            //    btncancelar.Enabled = true;
+            //    btncrear.Enabled = false;
+
+            //    if (modoActual == "modificar" || modoActual == "desbloquear")
+            //    {
+            //        txtDNI.Text = usuario.dni_750VR.ToString();
+            //        txtnom.Text = usuario.nombre_750VR;
+            //        txtape.Text = usuario.apellido_750VR;
+            //        txtemail.Text = usuario.mail_750VR;
+            //        cmbrol.Text = usuario.rol_750VR;
+            //        txtuser.Text = usuario.user_750VR;
+
+            //        bloqsi.Checked = usuario.bloqueado_750VR;
+            //        bloqno.Checked = !usuario.bloqueado_750VR;
+            //        actsi.Checked = usuario.activo_750VR;
+            //        actno.Checked = !usuario.activo_750VR;
+
+            //        btncancelar.Enabled = true;
+            //        btncrear.Enabled = false;
+            //    }
+              
+            //}
+        }
+
+        private void dataGridView1_CurrentCellChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dataGridView1_SelectionChanged_1(object sender, EventArgs e)
+        {
+          
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                txtDNI.Text = usuario.dni_750VR.ToString();
-                txtnom.Text = usuario.nombre_750VR;
-                txtape.Text = usuario.apellido_750VR;
-                txtemail.Text = usuario.mail_750VR;
-                cmbrol.Text = usuario.rol_750VR;
-                txtuser.Text = usuario.user_750VR;
+                // Obtener DNI del usuario seleccionado
+                string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
 
-                bloqsi.Checked = usuario.bloqueado_750VR;
-                bloqno.Checked = !usuario.bloqueado_750VR;
-                actsi.Checked = usuario.activo_750VR;
-                actno.Checked = !usuario.activo_750VR;
+                // Llamar al BLL para recuperar el usuario por DNI
+                BLLusuario_750VR bll = new BLLusuario_750VR();
+                var resultado = bll.ObtenerUsuarioPorDNI_750VR(int.Parse(dniSeleccionado));
 
-                btncancelar.Enabled = true;
-                btncrear.Enabled = false;
-
-                if (modoActual == "modificar" || modoActual == "desbloquear")
+                if (resultado != null)
                 {
-                    txtDNI.Text = usuario.dni_750VR.ToString();
-                    txtnom.Text = usuario.nombre_750VR;
-                    txtape.Text = usuario.apellido_750VR;
-                    txtemail.Text = usuario.mail_750VR;
-                    cmbrol.Text = usuario.rol_750VR;
-                    txtuser.Text = usuario.user_750VR;
+                    // Cargar los campos con los datos del usuario
+                    txtDNI.Text = resultado.dni_750VR.ToString();
+                    txtnom.Text = resultado.nombre_750VR;
+                    txtape.Text = resultado.apellido_750VR;
+                    txtemail.Text = resultado.mail_750VR;
+                    cmbrol.Text = resultado.rol_750VR;
+                    txtuser.Text = resultado.user_750VR;
 
-                    bloqsi.Checked = usuario.bloqueado_750VR;
-                    bloqno.Checked = !usuario.bloqueado_750VR;
-                    actsi.Checked = usuario.activo_750VR;
-                    actno.Checked = !usuario.activo_750VR;
+                    bloqsi.Checked = resultado.bloqueado_750VR;
+                    bloqno.Checked = !resultado.bloqueado_750VR;
+                    actsi.Checked = resultado.activo_750VR;
+                    actno.Checked = !resultado.activo_750VR;
 
                     btncancelar.Enabled = true;
                     btncrear.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("Error al recuperar los datos del usuario.");
                 }
             }
         }
