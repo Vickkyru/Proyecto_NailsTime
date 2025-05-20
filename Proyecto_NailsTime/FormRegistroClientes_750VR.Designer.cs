@@ -30,12 +30,6 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.lblmensaje = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btncrear = new System.Windows.Forms.Button();
-            this.btnmod = new System.Windows.Forms.Button();
-            this.btnact = new System.Windows.Forms.Button();
-            this.btncancelar = new System.Windows.Forms.Button();
-            this.btnsalir = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -47,8 +41,10 @@
             this.lblcantuser = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -56,7 +52,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(19, 52);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(762, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(468, 180);
             this.dataGridView1.TabIndex = 68;
             // 
             // lblmensaje
@@ -67,63 +63,6 @@
             this.lblmensaje.Name = "lblmensaje";
             this.lblmensaje.Size = new System.Drawing.Size(161, 30);
             this.lblmensaje.TabIndex = 66;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btncrear);
-            this.panel1.Controls.Add(this.btnmod);
-            this.panel1.Controls.Add(this.btnact);
-            this.panel1.Controls.Add(this.btncancelar);
-            this.panel1.Controls.Add(this.btnsalir);
-            this.panel1.Location = new System.Drawing.Point(423, 246);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 175);
-            this.panel1.TabIndex = 64;
-            // 
-            // btncrear
-            // 
-            this.btncrear.Location = new System.Drawing.Point(18, 17);
-            this.btncrear.Name = "btncrear";
-            this.btncrear.Size = new System.Drawing.Size(75, 23);
-            this.btncrear.TabIndex = 1;
-            this.btncrear.Text = "Crear";
-            this.btncrear.UseVisualStyleBackColor = true;
-            // 
-            // btnmod
-            // 
-            this.btnmod.Location = new System.Drawing.Point(109, 17);
-            this.btnmod.Name = "btnmod";
-            this.btnmod.Size = new System.Drawing.Size(75, 23);
-            this.btnmod.TabIndex = 4;
-            this.btnmod.Text = "Modificar";
-            this.btnmod.UseVisualStyleBackColor = true;
-            // 
-            // btnact
-            // 
-            this.btnact.Location = new System.Drawing.Point(18, 65);
-            this.btnact.Name = "btnact";
-            this.btnact.Size = new System.Drawing.Size(75, 23);
-            this.btnact.TabIndex = 2;
-            this.btnact.Text = "Act/Desact";
-            this.btnact.UseVisualStyleBackColor = true;
-            // 
-            // btncancelar
-            // 
-            this.btncancelar.Location = new System.Drawing.Point(18, 124);
-            this.btncancelar.Name = "btncancelar";
-            this.btncancelar.Size = new System.Drawing.Size(75, 23);
-            this.btncancelar.TabIndex = 52;
-            this.btncancelar.Text = "Cancelar";
-            this.btncancelar.UseVisualStyleBackColor = true;
-            // 
-            // btnsalir
-            // 
-            this.btnsalir.Location = new System.Drawing.Point(109, 125);
-            this.btnsalir.Name = "btnsalir";
-            this.btnsalir.Size = new System.Drawing.Size(75, 23);
-            this.btnsalir.TabIndex = 54;
-            this.btnsalir.Text = "Salir";
-            this.btnsalir.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -201,7 +140,7 @@
             // 
             this.label1.Cursor = System.Windows.Forms.Cursors.Default;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(478, 12);
+            this.label1.Location = new System.Drawing.Point(266, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 30);
             this.label1.TabIndex = 57;
@@ -217,15 +156,44 @@
             this.label2.TabIndex = 53;
             this.label2.Text = "Registro Clientes";
             // 
-            // FormRegistroClientes
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(93, 367);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 69;
+            this.button1.Text = "Registrar";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(210, 367);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 70;
+            this.button2.Text = "Cancelar";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(330, 367);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 71;
+            this.button3.Text = "Salir";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // FormRegistroClientes_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(557, 426);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblmensaje);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -237,10 +205,9 @@
             this.Controls.Add(this.lblcantuser);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
-            this.Name = "FormRegistroClientes";
+            this.Name = "FormRegistroClientes_750VR";
             this.Text = "FormRegistroClientes";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,12 +217,6 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label lblmensaje;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btncrear;
-        private System.Windows.Forms.Button btnmod;
-        private System.Windows.Forms.Button btnact;
-        private System.Windows.Forms.Button btnsalir;
-        private System.Windows.Forms.Button btncancelar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -267,5 +228,8 @@
         private System.Windows.Forms.Label lblcantuser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="BLLagenda_750VR.cs" />
     <Compile Include="BLLCliente_750VR.cs" />
-    <Compile Include="BLLpago_750VR.cs" />
     <Compile Include="BLLServicio_750VR.cs" />
     <Compile Include="BLLReserva_750VR.cs" />
     <Compile Include="BLLusuario_750VR.cs" />

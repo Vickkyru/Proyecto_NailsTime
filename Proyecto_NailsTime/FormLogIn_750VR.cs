@@ -51,7 +51,8 @@ namespace Proyecto_NailsTime
                 if (!SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario))
                 {
                     MessageBox.Show("Ya hay una sesión activa.");
-                    return;
+                    this.Close();
+
                 }
 
                 formPrincipal.MostrarDatosUsuarioLogueado();

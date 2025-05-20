@@ -100,6 +100,7 @@ namespace Proyecto_NailsTime
 
                 dataGridView1.DataSource = resultados;
 
+                btncancelar.Enabled = false;
                 // Desmarcar los radio buttons
                 rbtnact.Checked = false;
                 rbtntodos.Checked = false;
@@ -216,8 +217,10 @@ namespace Proyecto_NailsTime
 
             BLLusuario_750VR bll = new BLLusuario_750VR();
 
-            // ⚠️ Obtener usuario original
-            BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
+            
+            //BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
+           
+            BEusuario_750VR original = bll.ObtenerUsuarioPorDNI_750VR(dni);
 
             bool seModificoApellido = original.apellido_750VR != apellido;
 
@@ -420,7 +423,12 @@ namespace Proyecto_NailsTime
 
         private void ActivarModoEdicion()
         {
-            if (modoActual == "añadir" || modoActual == "modificar")
+            if (modoActual == "añadir")
+            {
+                dataGridView1.Enabled = false;
+            }
+
+                if (modoActual == "añadir" || modoActual == "modificar")
             {
                 txtDNI.Enabled = modoActual == "añadir";
                 txtnom.Enabled = true;
@@ -435,6 +443,8 @@ namespace Proyecto_NailsTime
             }
             else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
             {
+                dataGridView1.Enabled = true;
+
                 // Mostrar datos sin habilitar edición
                 txtDNI.Enabled = false;
                 txtnom.Enabled = false;
@@ -461,8 +471,7 @@ namespace Proyecto_NailsTime
             rbtnact.Enabled = false;
             rbtntodos.Enabled = false;
 
-            // Permitir selección solo en modificar y desbloquear
-            dataGridView1.Enabled = modoActual == "modificar" || modoActual == "desbloquear";
+           
 
 
         }
@@ -571,7 +580,7 @@ namespace Proyecto_NailsTime
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
             rbtnact.Checked = true; // Marcar por defecto
-            CargarUsuarios(true);   // Mostrar activos
+            //CargarUsuarios(true);   // Mostrar activos
 
             MostrarCantidadUsuarios(); //muetsra en el label cant users
 

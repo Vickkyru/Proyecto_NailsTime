@@ -71,9 +71,6 @@ namespace Proyecto_NailsTime
             bll.CambiarContraseña_750VR(usuario,nueva);
 
 
-            MessageBox.Show("Contraseña actualizada exitosamente.");
-
-            
 
             SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
             MessageBox.Show("Contraseña actualizada exitosamente. Se cerro la sesion, vuelva a inciar sesion con su nueva contraseña");

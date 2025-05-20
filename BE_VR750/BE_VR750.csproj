@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BEAgenda_750VR.cs" />
-    <Compile Include="BEPago_750VR.cs" />
     <Compile Include="BETecnica_750VR.cs" />
     <Compile Include="BECliente_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
