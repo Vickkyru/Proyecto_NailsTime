@@ -52,7 +52,7 @@ namespace DAL_VR750
         }
 
 
-        public void VerificarOCrearBaseDeDatos()
+        private void VerificarOCrearBaseDeDatos()
         {
             string conexionMaster = $"Data Source={dataSource};Initial Catalog=master;Integrated Security=True";
             string scriptCrearBD = $@"
