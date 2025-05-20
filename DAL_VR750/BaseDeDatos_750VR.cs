@@ -19,8 +19,7 @@ namespace DAL_VR750
 
         public BaseDeDatos_750VR()
         {
-            VerificarOCrearBaseDeDatos();
-            VerificarYCrearTablaUsuarios_750VR();
+            
         }
         public bool Conectar_750VR()
         {
