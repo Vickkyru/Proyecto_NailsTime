@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL_VR750
+namespace DAL_VR750
 {
-    internal class BLLagenda_750VR
+    internal class DALdisponibilidad_750VR
     {
     }
 }

@@ -27,6 +27,8 @@ namespace Proyecto_NailsTime
 
         }
 
+        //hacer lo de los intentos 
+
         private void button1_Click(object sender, EventArgs e)
         {
             var usuario = SessionManager_750VR.ObtenerInstancia.user;

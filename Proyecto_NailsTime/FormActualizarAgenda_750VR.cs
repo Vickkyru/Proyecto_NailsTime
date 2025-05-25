@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormCobrarReserva_750VR : Form
+    public partial class FormActualizarAgenda_750VR : Form
     {
-        public FormCobrarReserva_750VR()
+        public FormActualizarAgenda_750VR()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

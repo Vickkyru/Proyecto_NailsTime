@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormCobrarReserva_750VR
+    partial class FormCobrarServicio_750VR
     {
         /// <summary>
         /// Required designer variable.

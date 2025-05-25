@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormRegistroClientes_750VR : Form
+    public partial class FormABMClientes_750VR : Form
     {
-        public FormRegistroClientes_750VR()
+        public FormABMClientes_750VR()
         {
             InitializeComponent();
         }

@@ -56,17 +56,29 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormAgendaManicurista_750VR.cs">
+    <Compile Include="FormABMdisponibilidad.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAgendaManicurista_750VR.Designer.cs">
-      <DependentUpon>FormAgendaManicurista_750VR.cs</DependentUpon>
+    <Compile Include="FormABMdisponibilidad.Designer.cs">
+      <DependentUpon>FormABMdisponibilidad.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCobrarReserva_750VR.cs">
+    <Compile Include="FormABMservicios_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCobrarReserva_750VR.Designer.cs">
-      <DependentUpon>FormCobrarReserva_750VR.cs</DependentUpon>
+    <Compile Include="FormABMservicios_750VR.Designer.cs">
+      <DependentUpon>FormABMservicios_750VR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormActualizarAgenda_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormActualizarAgenda_750VR.Designer.cs">
+      <DependentUpon>FormActualizarAgenda_750VR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCobrarServicio_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCobrarServicio_750VR.Designer.cs">
+      <DependentUpon>FormCobrarServicio_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1_750VR.cs">
       <SubType>Form</SubType>
@@ -74,11 +86,11 @@
     <Compile Include="Form1_750VR.Designer.cs">
       <DependentUpon>Form1_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormGestionReserva_750VR.cs">
+    <Compile Include="FormRegistrarReserva_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormGestionReserva_750VR.Designer.cs">
-      <DependentUpon>FormGestionReserva_750VR.cs</DependentUpon>
+    <Compile Include="FormRegistrarReserva_750VR.Designer.cs">
+      <DependentUpon>FormRegistrarReserva_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FormGestionUsuario_750VR.cs">
       <SubType>Form</SubType>
@@ -104,11 +116,11 @@
     <Compile Include="FormLogOut_750VR.Designer.cs">
       <DependentUpon>FormLogOut_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRegistroClientes_750VR.cs">
+    <Compile Include="FormABMClientes_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRegistroClientes_750VR.Designer.cs">
-      <DependentUpon>FormRegistroClientes_750VR.cs</DependentUpon>
+    <Compile Include="FormABMClientes_750VR.Designer.cs">
+      <DependentUpon>FormABMClientes_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,17 +130,20 @@
     <EmbeddedResource Include="Form1_750VR.resx">
       <DependentUpon>Form1_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormAgendaManicurista_750VR.resx">
-      <DependentUpon>FormAgendaManicurista_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormABMservicios_750VR.resx">
+      <DependentUpon>FormABMservicios_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormActualizarAgenda_750VR.resx">
+      <DependentUpon>FormActualizarAgenda_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCambiarClave_750VR.resx">
       <DependentUpon>FormCambiarClave_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCobrarReserva_750VR.resx">
-      <DependentUpon>FormCobrarReserva_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormCobrarServicio_750VR.resx">
+      <DependentUpon>FormCobrarServicio_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormGestionReserva_750VR.resx">
-      <DependentUpon>FormGestionReserva_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormRegistrarReserva_750VR.resx">
+      <DependentUpon>FormRegistrarReserva_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGestionUsuario_750VR.resx">
       <DependentUpon>FormGestionUsuario_750VR.cs</DependentUpon>
@@ -139,8 +154,8 @@
     <EmbeddedResource Include="FormLogOut_750VR.resx">
       <DependentUpon>FormLogOut_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRegistroClientes_750VR.resx">
-      <DependentUpon>FormRegistroClientes_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormABMClientes_750VR.resx">
+      <DependentUpon>FormABMClientes_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormGestionReserva_750VR : Form
+    public partial class FormRegistrarReserva_750VR : Form
     {
-        public FormGestionReserva_750VR()
+        public FormRegistrarReserva_750VR()
         {
             InitializeComponent();
         }

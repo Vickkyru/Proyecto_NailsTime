@@ -47,6 +47,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblbienvenido = new System.Windows.Forms.Label();
             this.lblrol = new System.Windows.Forms.Label();
+            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serviciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.personalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -84,12 +87,16 @@
             // usuariosToolStripMenuItem
             // 
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
             // maestrosToolStripMenuItem
             // 
+            this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clientesToolStripMenuItem,
+            this.serviciosToolStripMenuItem,
+            this.personalToolStripMenuItem});
             this.maestrosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
             this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
@@ -140,15 +147,15 @@
             // verTurnosDisponiblesToolStripMenuItem
             // 
             this.verTurnosDisponiblesToolStripMenuItem.Name = "verTurnosDisponiblesToolStripMenuItem";
-            this.verTurnosDisponiblesToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
-            this.verTurnosDisponiblesToolStripMenuItem.Text = "Gestion Reserva";
+            this.verTurnosDisponiblesToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.verTurnosDisponiblesToolStripMenuItem.Text = "Registrar Reserva";
             this.verTurnosDisponiblesToolStripMenuItem.Click += new System.EventHandler(this.verTurnosDisponiblesToolStripMenuItem_Click);
             // 
             // verTurnosReservadosToolStripMenuItem
             // 
             this.verTurnosReservadosToolStripMenuItem.Name = "verTurnosReservadosToolStripMenuItem";
-            this.verTurnosReservadosToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
-            this.verTurnosReservadosToolStripMenuItem.Text = "Turnos Asignados";
+            this.verTurnosReservadosToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.verTurnosReservadosToolStripMenuItem.Text = "Actualizar Agenda";
             // 
             // insumosToolStripMenuItem
             // 
@@ -212,7 +219,25 @@
             this.lblrol.Size = new System.Drawing.Size(117, 41);
             this.lblrol.TabIndex = 7;
             // 
-            // Form1
+            // clientesToolStripMenuItem
+            // 
+            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.clientesToolStripMenuItem.Text = "Clientes";
+            // 
+            // serviciosToolStripMenuItem
+            // 
+            this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
+            this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.serviciosToolStripMenuItem.Text = "Servicios";
+            // 
+            // personalToolStripMenuItem
+            // 
+            this.personalToolStripMenuItem.Name = "personalToolStripMenuItem";
+            this.personalToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.personalToolStripMenuItem.Text = "Horarios";
+            // 
+            // Form1_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -225,7 +250,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "Form1_750VR";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -257,6 +282,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblbienvenido;
         private System.Windows.Forms.Label lblrol;
+        private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem personalToolStripMenuItem;
     }
 }
 
