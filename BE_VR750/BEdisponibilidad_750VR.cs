@@ -9,7 +9,7 @@ namespace BE_VR750
     public class BEdisponibilidad_750VR
     {
         public int IdDisponibilidad { get; set; }
-        public int IdEmpleado { get; set; }             // FK a Empleado o Usuario
+        public int DNIempleado { get; set; }             // FK a Empleado o Usuario
         public int DiaSemana { get; set; }              // 1 = Lunes, ..., 7 = Domingo
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }

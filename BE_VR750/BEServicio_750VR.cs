@@ -8,7 +8,7 @@ namespace BE_VR750
 {
     public class BEServicio_750VR
     {
-        public int id_750VR { get;set;}
+        public int idServicio_750VR { get;set;}
         public string nombre_750VR { get;set;}
         public string tecnica_750VR { get;set;}
         

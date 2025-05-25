@@ -24,8 +24,8 @@ namespace BE_VR750
 
 
         public int IdReserva { get; set; }
-        public int IdCliente { get; set; }              // FK a Cliente
-        public int IdEmpleado { get; set; }             // FK a Empleado
+        public int DNIcli { get; set; }              // FK a Cliente
+        public int DNImanic { get; set; }             // FK a Empleado
         public int IdServicio { get; set; }             // FK a Servicio
 
         public DateTime Fecha { get; set; }
