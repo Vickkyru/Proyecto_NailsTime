@@ -142,11 +142,11 @@
             // 
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(19, 4);
+            this.label2.Location = new System.Drawing.Point(19, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(371, 45);
             this.label2.TabIndex = 53;
-            this.label2.Text = "Maestro de clientes";
+            this.label2.Text = "ABM clientes";
             // 
             // btnañadir
             // 

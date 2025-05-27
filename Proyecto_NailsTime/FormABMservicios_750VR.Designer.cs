@@ -28,78 +28,85 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnapli = new System.Windows.Forms.Button();
+            this.btnelim = new System.Windows.Forms.Button();
+            this.btnmod = new System.Windows.Forms.Button();
+            this.btnsalir = new System.Windows.Forms.Button();
+            this.btncance = new System.Windows.Forms.Button();
+            this.btnañadir = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtnom = new System.Windows.Forms.TextBox();
-            this.txtemail = new System.Windows.Forms.TextBox();
+            this.txtduracion = new System.Windows.Forms.TextBox();
+            this.txtprecio = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtDNI = new System.Windows.Forms.TextBox();
+            this.txtnombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbtec = new System.Windows.Forms.ComboBox();
+            this.lblmensaje = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button6
+            // btnapli
             // 
-            this.button6.Location = new System.Drawing.Point(508, 299);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 98;
-            this.button6.Text = "Aplicar";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnapli.Location = new System.Drawing.Point(511, 351);
+            this.btnapli.Name = "btnapli";
+            this.btnapli.Size = new System.Drawing.Size(75, 23);
+            this.btnapli.TabIndex = 98;
+            this.btnapli.Text = "Aplicar";
+            this.btnapli.UseVisualStyleBackColor = true;
+            this.btnapli.Click += new System.EventHandler(this.btnapli_Click);
             // 
-            // button5
+            // btnelim
             // 
-            this.button5.Location = new System.Drawing.Point(402, 361);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 97;
-            this.button5.Text = "Eliminar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnelim.Location = new System.Drawing.Point(405, 413);
+            this.btnelim.Name = "btnelim";
+            this.btnelim.Size = new System.Drawing.Size(75, 23);
+            this.btnelim.TabIndex = 97;
+            this.btnelim.Text = "Eliminar";
+            this.btnelim.UseVisualStyleBackColor = true;
+            this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
-            // button4
+            // btnmod
             // 
-            this.button4.Location = new System.Drawing.Point(402, 330);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 96;
-            this.button4.Text = "Modificar";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnmod.Location = new System.Drawing.Point(405, 382);
+            this.btnmod.Name = "btnmod";
+            this.btnmod.Size = new System.Drawing.Size(75, 23);
+            this.btnmod.TabIndex = 96;
+            this.btnmod.Text = "Modificar";
+            this.btnmod.UseVisualStyleBackColor = true;
+            this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
             // 
-            // button3
+            // btnsalir
             // 
-            this.button3.Location = new System.Drawing.Point(508, 361);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 91;
-            this.button3.Text = "Salir";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnsalir.Location = new System.Drawing.Point(511, 413);
+            this.btnsalir.Name = "btnsalir";
+            this.btnsalir.Size = new System.Drawing.Size(75, 23);
+            this.btnsalir.TabIndex = 91;
+            this.btnsalir.Text = "Salir";
+            this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
             // 
-            // button2
+            // btncance
             // 
-            this.button2.Location = new System.Drawing.Point(508, 330);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 90;
-            this.button2.Text = "Cancelar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btncance.Location = new System.Drawing.Point(511, 382);
+            this.btncance.Name = "btncance";
+            this.btncance.Size = new System.Drawing.Size(75, 23);
+            this.btncance.TabIndex = 90;
+            this.btncance.Text = "Cancelar";
+            this.btncance.UseVisualStyleBackColor = true;
+            this.btncance.Click += new System.EventHandler(this.btncance_Click);
             // 
-            // button1
+            // btnañadir
             // 
-            this.button1.Location = new System.Drawing.Point(402, 299);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 89;
-            this.button1.Text = "Añadir";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnañadir.Location = new System.Drawing.Point(405, 351);
+            this.btnañadir.Name = "btnañadir";
+            this.btnañadir.Size = new System.Drawing.Size(75, 23);
+            this.btnañadir.TabIndex = 89;
+            this.btnañadir.Text = "Añadir";
+            this.btnañadir.UseVisualStyleBackColor = true;
+            this.btnañadir.Click += new System.EventHandler(this.btnañadir_Click);
             // 
             // dataGridView1
             // 
@@ -108,6 +115,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(641, 180);
             this.dataGridView1.TabIndex = 88;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label7
             // 
@@ -136,19 +144,21 @@
             this.label5.TabIndex = 85;
             this.label5.Text = "Tecnica";
             // 
-            // txtnom
+            // txtduracion
             // 
-            this.txtnom.Location = new System.Drawing.Point(133, 328);
-            this.txtnom.Name = "txtnom";
-            this.txtnom.Size = new System.Drawing.Size(121, 20);
-            this.txtnom.TabIndex = 81;
+            this.txtduracion.Location = new System.Drawing.Point(133, 328);
+            this.txtduracion.Name = "txtduracion";
+            this.txtduracion.Size = new System.Drawing.Size(121, 20);
+            this.txtduracion.TabIndex = 81;
+            this.txtduracion.TextChanged += new System.EventHandler(this.txtduracion_TextChanged);
             // 
-            // txtemail
+            // txtprecio
             // 
-            this.txtemail.Location = new System.Drawing.Point(133, 354);
-            this.txtemail.Name = "txtemail";
-            this.txtemail.Size = new System.Drawing.Size(121, 20);
-            this.txtemail.TabIndex = 82;
+            this.txtprecio.Location = new System.Drawing.Point(133, 354);
+            this.txtprecio.Name = "txtprecio";
+            this.txtprecio.Size = new System.Drawing.Size(121, 20);
+            this.txtprecio.TabIndex = 82;
+            this.txtprecio.TextChanged += new System.EventHandler(this.txtprecio_TextChanged);
             // 
             // label4
             // 
@@ -159,12 +169,13 @@
             this.label4.TabIndex = 84;
             this.label4.Text = "Precio";
             // 
-            // txtDNI
+            // txtnombre
             // 
-            this.txtDNI.Location = new System.Drawing.Point(133, 274);
-            this.txtDNI.Name = "txtDNI";
-            this.txtDNI.Size = new System.Drawing.Size(121, 20);
-            this.txtDNI.TabIndex = 79;
+            this.txtnombre.Location = new System.Drawing.Point(133, 274);
+            this.txtnombre.Name = "txtnombre";
+            this.txtnombre.Size = new System.Drawing.Size(121, 20);
+            this.txtnombre.TabIndex = 79;
+            this.txtnombre.TextChanged += new System.EventHandler(this.txtnombre_TextChanged);
             // 
             // label2
             // 
@@ -176,13 +187,24 @@
             this.label2.TabIndex = 83;
             this.label2.Text = "Maestro de servicio";
             // 
-            // comboBox1
+            // cmbtec
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(133, 301);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 99;
+            this.cmbtec.FormattingEnabled = true;
+            this.cmbtec.Location = new System.Drawing.Point(133, 301);
+            this.cmbtec.Name = "cmbtec";
+            this.cmbtec.Size = new System.Drawing.Size(121, 21);
+            this.cmbtec.TabIndex = 99;
+            this.cmbtec.SelectedIndexChanged += new System.EventHandler(this.cmbtec_SelectedIndexChanged);
+            // 
+            // lblmensaje
+            // 
+            this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmensaje.Location = new System.Drawing.Point(320, 266);
+            this.lblmensaje.Name = "lblmensaje";
+            this.lblmensaje.Size = new System.Drawing.Size(371, 45);
+            this.lblmensaje.TabIndex = 100;
+            this.lblmensaje.Click += new System.EventHandler(this.lblmensaje_Click);
             // 
             // FormABMservicios_750VR
             // 
@@ -190,24 +212,26 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lblmensaje);
+            this.Controls.Add(this.cmbtec);
+            this.Controls.Add(this.btnapli);
+            this.Controls.Add(this.btnelim);
+            this.Controls.Add(this.btnmod);
+            this.Controls.Add(this.btnsalir);
+            this.Controls.Add(this.btncance);
+            this.Controls.Add(this.btnañadir);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtnom);
-            this.Controls.Add(this.txtemail);
+            this.Controls.Add(this.txtduracion);
+            this.Controls.Add(this.txtprecio);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtDNI);
+            this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label2);
             this.Name = "FormABMservicios_750VR";
             this.Text = "FormABMservicios_750VR";
+            this.Load += new System.EventHandler(this.FormABMservicios_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -216,21 +240,22 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnapli;
+        private System.Windows.Forms.Button btnelim;
+        private System.Windows.Forms.Button btnmod;
+        private System.Windows.Forms.Button btnsalir;
+        private System.Windows.Forms.Button btncance;
+        private System.Windows.Forms.Button btnañadir;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtnom;
-        private System.Windows.Forms.TextBox txtemail;
+        private System.Windows.Forms.TextBox txtduracion;
+        private System.Windows.Forms.TextBox txtprecio;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtDNI;
+        private System.Windows.Forms.TextBox txtnombre;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbtec;
+        private System.Windows.Forms.Label lblmensaje;
     }
 }

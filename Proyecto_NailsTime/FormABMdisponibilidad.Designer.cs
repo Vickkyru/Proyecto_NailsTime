@@ -28,12 +28,222 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.lblmensaje = new System.Windows.Forms.Label();
+            this.btnapli = new System.Windows.Forms.Button();
+            this.btnelim = new System.Windows.Forms.Button();
+            this.btnmod = new System.Windows.Forms.Button();
+            this.btnsalir = new System.Windows.Forms.Button();
+            this.btncance = new System.Windows.Forms.Button();
+            this.btnañadir = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtnom = new System.Windows.Forms.TextBox();
+            this.txtemail = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // lblmensaje
+            // 
+            this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblmensaje.Location = new System.Drawing.Point(360, 274);
+            this.lblmensaje.Name = "lblmensaje";
+            this.lblmensaje.Size = new System.Drawing.Size(371, 45);
+            this.lblmensaje.TabIndex = 100;
+            // 
+            // btnapli
+            // 
+            this.btnapli.Location = new System.Drawing.Point(509, 330);
+            this.btnapli.Name = "btnapli";
+            this.btnapli.Size = new System.Drawing.Size(75, 23);
+            this.btnapli.TabIndex = 99;
+            this.btnapli.Text = "Aplicar";
+            this.btnapli.UseVisualStyleBackColor = true;
+            // 
+            // btnelim
+            // 
+            this.btnelim.Location = new System.Drawing.Point(403, 392);
+            this.btnelim.Name = "btnelim";
+            this.btnelim.Size = new System.Drawing.Size(75, 23);
+            this.btnelim.TabIndex = 98;
+            this.btnelim.Text = "Eliminar";
+            this.btnelim.UseVisualStyleBackColor = true;
+            // 
+            // btnmod
+            // 
+            this.btnmod.Location = new System.Drawing.Point(403, 361);
+            this.btnmod.Name = "btnmod";
+            this.btnmod.Size = new System.Drawing.Size(75, 23);
+            this.btnmod.TabIndex = 97;
+            this.btnmod.Text = "Modificar";
+            this.btnmod.UseVisualStyleBackColor = true;
+            // 
+            // btnsalir
+            // 
+            this.btnsalir.Location = new System.Drawing.Point(509, 392);
+            this.btnsalir.Name = "btnsalir";
+            this.btnsalir.Size = new System.Drawing.Size(75, 23);
+            this.btnsalir.TabIndex = 92;
+            this.btnsalir.Text = "Salir";
+            this.btnsalir.UseVisualStyleBackColor = true;
+            // 
+            // btncance
+            // 
+            this.btncance.Location = new System.Drawing.Point(509, 361);
+            this.btncance.Name = "btncance";
+            this.btncance.Size = new System.Drawing.Size(75, 23);
+            this.btncance.TabIndex = 91;
+            this.btncance.Text = "Cancelar";
+            this.btncance.UseVisualStyleBackColor = true;
+            // 
+            // btnañadir
+            // 
+            this.btnañadir.Location = new System.Drawing.Point(403, 330);
+            this.btnañadir.Name = "btnañadir";
+            this.btnañadir.Size = new System.Drawing.Size(75, 23);
+            this.btnañadir.TabIndex = 90;
+            this.btnañadir.Text = "Añadir";
+            this.btnañadir.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 72);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(756, 180);
+            this.dataGridView1.TabIndex = 89;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(82, 389);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 13);
+            this.label7.TabIndex = 88;
+            this.label7.Text = "Hora Fin";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(82, 361);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 13);
+            this.label6.TabIndex = 87;
+            this.label6.Text = "Hora Inicio";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(82, 334);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(23, 13);
+            this.label5.TabIndex = 86;
+            this.label5.Text = "Dia";
+            // 
+            // txtnom
+            // 
+            this.txtnom.Location = new System.Drawing.Point(156, 356);
+            this.txtnom.Name = "txtnom";
+            this.txtnom.Size = new System.Drawing.Size(100, 20);
+            this.txtnom.TabIndex = 82;
+            // 
+            // txtemail
+            // 
+            this.txtemail.Location = new System.Drawing.Point(156, 382);
+            this.txtemail.Name = "txtemail";
+            this.txtemail.Size = new System.Drawing.Size(100, 20);
+            this.txtemail.TabIndex = 83;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(82, 309);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 85;
+            this.label4.Text = "Manicurista";
+            // 
+            // label2
+            // 
+            this.label2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(27, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(371, 45);
+            this.label2.TabIndex = 84;
+            this.label2.Text = "ABM disponibilidad";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(156, 301);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 101;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(156, 326);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 102;
+            // 
+            // FormABMdisponibilidad
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.lblmensaje);
+            this.Controls.Add(this.btnapli);
+            this.Controls.Add(this.btnelim);
+            this.Controls.Add(this.btnmod);
+            this.Controls.Add(this.btnsalir);
+            this.Controls.Add(this.btncance);
+            this.Controls.Add(this.btnañadir);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtnom);
+            this.Controls.Add(this.txtemail);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label2);
+            this.Name = "FormABMdisponibilidad";
             this.Text = "FormABMdisponibilidad";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblmensaje;
+        private System.Windows.Forms.Button btnapli;
+        private System.Windows.Forms.Button btnelim;
+        private System.Windows.Forms.Button btnmod;
+        private System.Windows.Forms.Button btnsalir;
+        private System.Windows.Forms.Button btncance;
+        private System.Windows.Forms.Button btnañadir;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtnom;
+        private System.Windows.Forms.TextBox txtemail;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

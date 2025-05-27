@@ -130,6 +130,9 @@
     <EmbeddedResource Include="Form1_750VR.resx">
       <DependentUpon>Form1_750VR.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormABMdisponibilidad.resx">
+      <DependentUpon>FormABMdisponibilidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormABMservicios_750VR.resx">
       <DependentUpon>FormABMservicios_750VR.cs</DependentUpon>
     </EmbeddedResource>
