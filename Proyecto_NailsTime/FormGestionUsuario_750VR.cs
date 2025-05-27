@@ -41,7 +41,6 @@ namespace Proyecto_NailsTime
 
         }
 
- 
 
         private void CargarUsuarios(bool soloActivos)
         {

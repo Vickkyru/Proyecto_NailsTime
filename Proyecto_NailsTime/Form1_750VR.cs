@@ -147,5 +147,20 @@ namespace Proyecto_NailsTime
                 lblrol.Text = "";
             }
         }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormABMClientes_750VR());
+        }
+
+        private void serviciosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormABMservicios_750VR());
+        }
+
+        private void personalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //AbrirForm(new FormABMdisponibilidad_750VR());
+        }
     }
 }

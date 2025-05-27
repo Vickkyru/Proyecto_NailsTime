@@ -17,6 +17,10 @@ namespace BE_VR750
         public int celular_750VR { get; set; }
 
         public bool activo_750VR { get; set; }
+        public BECliente_750VR()
+        {
+                
+        }
 
     }
 }
