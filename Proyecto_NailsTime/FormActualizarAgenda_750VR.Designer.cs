@@ -43,6 +43,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(513, 219);
             this.dataGridView1.TabIndex = 18;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label1
             // 
@@ -95,6 +96,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormActualizarAgenda_750VR";
             this.Text = "FormAgendaManicurista";
+            this.Load += new System.EventHandler(this.FormActualizarAgenda_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

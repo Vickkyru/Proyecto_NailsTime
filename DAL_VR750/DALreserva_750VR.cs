@@ -1,12 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BE_VR750;
 
 namespace DAL_VR750
 {
-    internal class DALreserva_750VR
+    public class DALreserva_750VR
     {
+        public List<BEReserva_750VR> ObtenerReservasPorManicurista(int dniManicurista)
+        {
+            List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Reserva_VR750 WHERE DNImanic_VR750 = @DNI";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DNI", dniManicurista);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var reserva = new BEReserva_750VR
+                        {
+                            IdReserva = Convert.ToInt32(reader["IdReserva_VR750"]),
+                            DNIcli = Convert.ToInt32(reader["DNIcli_VR750"]),
+                            DNImanic = Convert.ToInt32(reader["DNImanic_VR750"]),
+                            IdServicio = Convert.ToInt32(reader["IdServicio_VR750"]),
+                            Fecha = Convert.ToDateTime(reader["Fecha_VR750"]),
+                            HoraInicio = (TimeSpan)reader["HoraInicio_VR750"],
+                            DuracionMinutos = Convert.ToInt32(reader["DuracionMinutos_VR750"]),
+                            Precio = Convert.ToDecimal(reader["Precio_VR750"]),
+                            Estado = Convert.ToBoolean(reader["Estado_VR750"]),
+                            NombreCliente = reader["NombreCliente_VR750"].ToString(),
+                            NombreManic = reader["NombreManicurista_VR750"].ToString(),
+                            NombreServicio = reader["NombreServicio_VR750"].ToString()
+                        };
+                        lista.Add(reserva);
+                    }
+                }
+            }
+
+            return lista;
+        }
     }
 }

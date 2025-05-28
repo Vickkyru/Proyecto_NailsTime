@@ -38,7 +38,7 @@ namespace BE_VR750
 
         // Propiedades extra para mostrar datos relacionados (no mapeadas directamente)
         public string NombreCliente { get; set; }
-        public string NombreEmpleado { get; set; }
+        public string NombreManic { get; set; }
         public string NombreServicio { get; set; }
 
         // Propiedad calculada

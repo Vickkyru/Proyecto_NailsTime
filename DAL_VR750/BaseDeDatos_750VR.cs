@@ -159,13 +159,17 @@ namespace DAL_VR750
                         CREATE TABLE Reserva_VR750 (
                             IdReserva_VR750 INT PRIMARY KEY IDENTITY(1,1),
                             DNIcli_VR750 INT NOT NULL FOREIGN KEY REFERENCES Cliente_VR750(DNI_VR750),
-                            DNImanic INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
+                            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
                             IdServicio_VR750 INT NOT NULL FOREIGN KEY REFERENCES Servicio_VR750(IdServicio_VR750),
                             Fecha_VR750 DATE NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
                             DuracionMinutos_VR750 INT NOT NULL,
                             Precio_VR750 DECIMAL(10,2) NOT NULL,
-                            Estado_VR750 NVARCHAR(20) DEFAULT 'Pendiente'
+                            Estado_VR750 NVARCHAR(20) DEFAULT 'Pendiente',
+ NombreCliente_VR750 NVARCHAR(100),
+    NombreManicurista_VR750 NVARCHAR(100),
+    NombreServicio_VR750 NVARCHAR(100)
+
                         );
                     END;
                 ";

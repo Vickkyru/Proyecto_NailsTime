@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE_VR750;
+using BLL_VR750;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
@@ -21,5 +24,23 @@ namespace Proyecto_NailsTime
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void FormActualizarAgenda_750VR_Load(object sender, EventArgs e)
+        {
+            int dniManicurista = SessionManager_750VR.ObtenerInstancia.user.dni_750VR;
+
+            var bll = new BLLReserva_750VR();
+            var reservas = bll.ObtenerReservasPorManicurista(dniManicurista);
+
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = reservas;
+        }
     }
+    
 }
