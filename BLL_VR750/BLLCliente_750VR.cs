@@ -12,6 +12,11 @@ namespace BLL_VR750
     {
         DALcliente_750VR dal;
 
+        public BLLCliente_750VR()
+        {
+                dal = new DALcliente_750VR();
+        }
+
         public BECliente_750VR ObtenerClientePorDNI_750VR(int dni)
         {
             return dal.ObtenerClientePorDNI_750VR(dni);

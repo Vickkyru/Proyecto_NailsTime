@@ -12,6 +12,10 @@ namespace BLL_VR750
     public class BLLServicio_750VR
     {
         DALservicio_750VR dal;
+        public BLLServicio_750VR()
+        {
+            dal = new DALservicio_750VR();
+        }
         public void CrearServicio_750VR(BEServicio_750VR servicio)
         {
 

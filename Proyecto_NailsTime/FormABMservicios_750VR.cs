@@ -192,12 +192,11 @@ namespace Proyecto_NailsTime
             if (!ValidarCampos())
                 return;
 
-            int dni = int.Parse(txtdni.Text);
-            string nombre = txtnom.Text;
-            string apellido = txtape.Text;
-            string mail = txtemail.Text;
-            int cel = int.Parse(txtcel.Text);
-            string dire = txtdire.Text;
+            int precio = int.Parse(txtprecio.Text);
+            string nombre = txtnombre.Text;
+        
+            int cel = int.Parse(txtduracion.Text);
+            string tecnica = cmbtec.Text;
 
             BLLCliente_750VR bll = new BLLCliente_750VR();
 
@@ -206,37 +205,37 @@ namespace Proyecto_NailsTime
 
 
 
-            bool exito = bll.ModificarCliente_750VR(dni, nombre, apellido, mail, dire, cel);
+            //bool exito = bll.ModificarCliente_750VR(precio, nombre, tecnica, cel);
 
-            if (exito)
-            {
-                MessageBox.Show("Usuario modificado correctamente.");
+            //if (exito)
+            //{
+            //    MessageBox.Show("Usuario modificado correctamente.");
 
-                CargarUsuarios();
-                ResetearEstadoInterfaz();
-                LimpiarCampos();
-            }
-            else
-            {
-                MessageBox.Show("Error al modificar el usuario.");
-            }
+            //    CargarUsuarios();
+            //    ResetearEstadoInterfaz();
+            //    LimpiarCampos();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error al modificar el usuario.");
+            //}
         }
 
         private void AplicarAlta()
         {
             try
             {
-                // Validamos primero
-                if (!ValidarCampos())
-                    return;
-                int dni = Convert.ToInt32(txtdni.Text);
-                string nombre = txtnom.Text.Trim();
-                string apellido = txtape.Text.Trim();
-                string mail = txtemail.Text.Trim();
-                int cel = int.Parse(txtcel.Text);
-                string dire = txtdire.Text;
+                //// Validamos primero
+                //if (!ValidarCampos())
+                //    return;
+                //int dni = Convert.ToInt32(txtdni.Text);
+                //string nombre = txtnom.Text.Trim();
+                //string apellido = txtape.Text.Trim();
+                //string mail = txtemail.Text.Trim();
+                //int cel = int.Parse(txtcel.Text);
+                //string dire = txtdire.Text;
 
-                BLLCliente_750VR bll = new BLLCliente_750VR();
+                //BLLCliente_750VR bll = new BLLCliente_750VR();
 
                 // Verificar existencia por DNI
                 //if (bll.ObtenerClientePorLogin_750VR(mail) != null)
@@ -246,27 +245,27 @@ namespace Proyecto_NailsTime
                 //}
 
                 // Verificar existencia por mail/login
-                if (bll.ObtenerClientePorDNI_750VR(dni) != null)
-                {
-                    MessageBox.Show("Ya existe un cliente con ese DNI.");
-                    return;
+                //if (bll.ObtenerClientePorDNI_750VR(dni) != null)
+                //{
+                //    MessageBox.Show("Ya existe un cliente con ese DNI.");
+                //    return;
 
-                }
+                //}
 
 
-                BECliente_750VR nuevo = new BECliente_750VR
-                {
-                    dni_750VR = dni,
-                    nombre_750VR = nombre,
-                    apellido_750VR = apellido,
-                    gmail_750VR = mail,
-                    celular_750VR = cel,
-                    direccion_750VR = dire,
-                    activo_750VR = true,
-                };
+                //BECliente_750VR nuevo = new BECliente_750VR
+                //{
+                //    dni_750VR = dni,
+                //    nombre_750VR = nombre,
+                //    apellido_750VR = apellido,
+                //    gmail_750VR = mail,
+                //    celular_750VR = cel,
+                //    direccion_750VR = dire,
+                //    activo_750VR = true,
+                //};
 
-                bll.CrearCliente_750VR(nuevo);
-                MessageBox.Show("Cliente creado correctamente.");
+                //bll.CrearCliente_750VR(nuevo);
+                //MessageBox.Show("Cliente creado correctamente.");
 
 
                 LimpiarCampos();
@@ -280,12 +279,13 @@ namespace Proyecto_NailsTime
 
         private bool ValidarCampos()
         {
-            if (string.IsNullOrWhiteSpace(txtdni.Text) ||
-       string.IsNullOrWhiteSpace(txtnom.Text) ||
-       string.IsNullOrWhiteSpace(txtape.Text) ||
-       string.IsNullOrWhiteSpace(txtemail.Text) ||
-       string.IsNullOrWhiteSpace(txtdire.Text) ||
-     string.IsNullOrWhiteSpace(txtcel.Text))
+            if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
+       string.IsNullOrWhiteSpace(txtduracion.Text) ||
+       string.IsNullOrWhiteSpace(txtprecio.Text) ||
+       string.IsNullOrWhiteSpace(cmbtec.Text))
+                return true; return false;
+      
+  
 
         }
 
@@ -322,28 +322,28 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = false;
             }
 
-            if (modoActual == "añadir" || modoActual == "modificar")
-            {
-                txtdni.Enabled = modoActual == "añadir";
-                txtnom.Enabled = true;
-                txtape.Enabled = true;
-                txtemail.Enabled = true;
-                txtcel.Enabled = true;
-                txtdire.Enabled = true;
-            }
-            else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
-            {
-                dataGridView1.Enabled = true;
+            //if (modoActual == "añadir" || modoActual == "modificar")
+            //{
+            //    txtdni.Enabled = modoActual == "añadir";
+            //    txtnom.Enabled = true;
+            //    txtape.Enabled = true;
+            //    txtemail.Enabled = true;
+            //    txtcel.Enabled = true;
+            //    txtdire.Enabled = true;
+            //}
+            //else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
+            //{
+            //    dataGridView1.Enabled = true;
 
-                // Mostrar datos sin habilitar edición
-                txtdni.Enabled = false;
-                txtnom.Enabled = false;
-                txtape.Enabled = false;
-                txtemail.Enabled = false;
-                txtdire.Enabled = false;
-                txtcel.Enabled = false;
+            //    // Mostrar datos sin habilitar edición
+            //    txtdni.Enabled = false;
+            //    txtnom.Enabled = false;
+            //    txtape.Enabled = false;
+            //    txtemail.Enabled = false;
+            //    txtdire.Enabled = false;
+            //    txtcel.Enabled = false;
 
-            }
+            //}
 
             // Habilitar botones Aplicar y Cancelar
             btnapli.Enabled = true;
@@ -360,9 +360,9 @@ namespace Proyecto_NailsTime
 
         private void ResetearEstadoInterfaz()
         {
-            // Campos de texto deshabilitados
-            txtdni.Enabled = txtnom.Enabled = txtape.Enabled = txtemail.Enabled = true;
-            txtdire.Enabled = txtcel.Enabled = true;
+            //// Campos de texto deshabilitados
+            //txtdni.Enabled = txtnom.Enabled = txtape.Enabled = txtemail.Enabled = true;
+            //txtdire.Enabled = txtcel.Enabled = true;
 
             // CRUD y filtros habilitados
             btnañadir.Enabled = btnmod.Enabled = /*btnelim.Enabled =*/ true;
@@ -382,18 +382,18 @@ namespace Proyecto_NailsTime
         {
             if (modoActual != "consulta") return;
 
-            // Verifica si al menos un campo está completo
-            bool hayDatos = !string.IsNullOrWhiteSpace(txtdni.Text)
-                         || !string.IsNullOrWhiteSpace(txtnom.Text)
-                         || !string.IsNullOrWhiteSpace(txtape.Text)
-                         || !string.IsNullOrWhiteSpace(txtemail.Text)
-            || !string.IsNullOrWhiteSpace(txtcel.Text)
-            || !string.IsNullOrWhiteSpace(txtdire.Text)
+            //// Verifica si al menos un campo está completo
+            //bool hayDatos = !string.IsNullOrWhiteSpace(txtdni.Text)
+            //             || !string.IsNullOrWhiteSpace(txtnom.Text)
+            //             || !string.IsNullOrWhiteSpace(txtape.Text)
+            //             || !string.IsNullOrWhiteSpace(txtemail.Text)
+            //|| !string.IsNullOrWhiteSpace(txtcel.Text)
+            //|| !string.IsNullOrWhiteSpace(txtdire.Text)
 
 
             ;
 
-            btnapli.Enabled = hayDatos;
+            //btnapli.Enabled = hayDatos;
         }
 
         private void txtnombre_TextChanged(object sender, EventArgs e)

@@ -12,6 +12,10 @@ namespace BLL_VR750
     public class BLLReserva_750VR
     {
         DALreserva_750VR dal;
+        public BLLReserva_750VR()
+        {
+                dal = new DALreserva_750VR();
+        }
         public List<BEReserva_750VR> ObtenerReservasPorManicurista(int dniManicurista)
         {
             return dal.ObtenerReservasPorManicurista(dniManicurista);

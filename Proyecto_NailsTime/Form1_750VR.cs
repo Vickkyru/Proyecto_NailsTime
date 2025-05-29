@@ -162,5 +162,10 @@ namespace Proyecto_NailsTime
         {
             //AbrirForm(new FormABMdisponibilidad_750VR());
         }
+
+        private void verTurnosReservadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormActualizarAgenda_750VR());
+        }
     }
 }
