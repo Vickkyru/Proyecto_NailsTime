@@ -32,11 +32,23 @@ namespace Proyecto_NailsTime
 
         private void FormActualizarAgenda_750VR_Load(object sender, EventArgs e)
         {
-            int dniManicurista = SessionManager_750VR.ObtenerInstancia.user.dni_750VR;
+            // Validar si hay sesión iniciada
+            var sesion = SessionManager_750VR.ObtenerInstancia;
+            if (sesion == null || sesion.user == null)
+            {
+                MessageBox.Show("No hay ningún manicurista logueado actualmente.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Hide(); // O podés deshabilitar controles si preferís mantener la pantalla abierta
+                return;
+            }
 
+            // Obtener DNI del manicurista logueado
+            int dniManicurista = sesion.user.dni_750VR;
+
+            // Cargar reservas
             var bll = new BLLReserva_750VR();
             var reservas = bll.ObtenerReservasPorManicurista(dniManicurista);
 
+            // Mostrar en el DataGridView
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = reservas;

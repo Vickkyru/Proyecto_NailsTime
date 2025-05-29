@@ -16,7 +16,7 @@ namespace Proyecto_NailsTime
 {
     public partial class Form1_750VR : Form
     {
-        private static Form formactivo = null;
+        private Form formActivo = null;
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
 
@@ -32,19 +32,32 @@ namespace Proyecto_NailsTime
 
 
 
-        private void AbrirForm(Form formu)
+        private void AbrirForm(Form nuevoForm)
         {
-            if (formactivo != null)
-            {
-                formactivo.Close();
-            }
-            formactivo = formu;
-            formu.TopLevel = false;
-            formu.FormBorderStyle = FormBorderStyle.None;
-            formu.Dock = DockStyle.Fill;
+            // Si ya está abierto el mismo tipo de formulario, no hacemos nada
+            if (formActivo != null && formActivo.GetType() == nuevoForm.GetType())
+                return;
 
-            this.Controls.Add(formu);
-            formu.Show();
+            // Cerrar y eliminar el anterior si existe
+            if (formActivo != null)
+            {
+                if (!formActivo.IsDisposed)
+                {
+                    this.Controls.Remove(formActivo);
+                    formActivo.Dispose();   // Cierra
+                }
+
+                formActivo = null; // Limpia referencia
+            }
+
+            // Configurar el nuevo formulario
+            formActivo = nuevoForm;
+            nuevoForm.TopLevel = false;
+            nuevoForm.FormBorderStyle = FormBorderStyle.None;
+            nuevoForm.Dock = DockStyle.Fill;
+
+            this.Controls.Add(nuevoForm);
+            nuevoForm.Show();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
