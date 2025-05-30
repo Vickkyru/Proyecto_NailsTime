@@ -465,8 +465,8 @@ namespace Proyecto_NailsTime
 
         private void FormABMClientes_750VR_Load(object sender, EventArgs e)
         {
-           
-            //CargarUsuarios(true);   // Mostrar activos
+
+            CargarUsuarios();
 
             // Deshabilitar botones Aplicar y Cancelar
             btnapli.Enabled = false;

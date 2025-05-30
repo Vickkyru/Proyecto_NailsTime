@@ -46,7 +46,10 @@ namespace BLL_VR750
             return dal.BuscarClientes_750VR(dni, nombre, apellido, email, dire, celu);
         }
 
-
+        public List<BECliente_750VR> leerEntidades_750VR()
+        {
+            return dal.leerEntidades_750VR();
+        }
 
     }
 }

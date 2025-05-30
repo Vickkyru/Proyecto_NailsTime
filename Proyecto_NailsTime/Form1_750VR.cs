@@ -137,7 +137,7 @@ namespace Proyecto_NailsTime
         }
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            AbrirForm(new FormRegistrarReserva_750VR());
         }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e)

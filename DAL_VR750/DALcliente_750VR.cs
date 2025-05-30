@@ -173,5 +173,37 @@ namespace DAL_VR750
 
             return lista;
         }
+
+        public List<BECliente_750VR> leerEntidades_750VR() //busca todos
+        {
+            List<BECliente_750VR> lista = new List<BECliente_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Cliente_VR750";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    BECliente_750VR cli = new BECliente_750VR
+                    {
+                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
+                        nombre_750VR = reader["Nombre_VR750"].ToString(),
+                        apellido_750VR = reader["Apellido_VR750"].ToString(),
+                        gmail_750VR = reader["Email_VR750"].ToString(),
+                        direccion_750VR = reader["Direccion_VR750"].ToString(),
+                        celular_750VR = Convert.ToInt32(reader["Celular_VR750"]),
+                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"])
+                    };
+
+                    lista.Add(cli);
+                }
+            }
+
+            return lista;
+        }
     }
 }
