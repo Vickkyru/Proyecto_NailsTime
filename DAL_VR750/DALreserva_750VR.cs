@@ -48,5 +48,33 @@ namespace DAL_VR750
 
             return lista;
         }
+
+        BaseDeDatos_750VR db = new BaseDeDatos_750VR();
+
+        public void CrearReserva(BEReserva_750VR reserva)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"
+                INSERT INTO Reserva_VR750 
+                (DNIcli_VR750, DNImanic_VR750, IdServicio_VR750, Fecha_VR750, HoraInicio_VR750, DuracionMinutos_VR750, Precio_VR750, Estado_VR750, NombreCliente_VR750, NombreManicurista_VR750, NombreServicio_VR750) 
+                VALUES (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @Duracion, @Precio, 'Pendiente', @NombreCliente, @NombreManicurista, @NombreServicio)";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli);
+                cmd.Parameters.AddWithValue("@DNImanic", reserva.DNImanic);
+                cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio);
+                cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha);
+                cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
+                cmd.Parameters.AddWithValue("@Duracion", reserva.DuracionMinutos);
+                cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
+                cmd.Parameters.AddWithValue("@NombreCliente", reserva.NombreCliente);
+                cmd.Parameters.AddWithValue("@NombreManicurista", reserva.NombreManic);
+                cmd.Parameters.AddWithValue("@NombreServicio", reserva.NombreServicio);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

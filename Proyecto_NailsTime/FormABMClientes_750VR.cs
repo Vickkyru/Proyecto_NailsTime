@@ -130,7 +130,7 @@ namespace Proyecto_NailsTime
 
         private void CargarUsuarios()
         {
-            var bll = new BLLusuario_750VR();
+            var bll = new BLLCliente_750VR();
             var lista = bll.leerEntidades_750VR();
 
             dataGridView1.Columns.Clear();
@@ -243,14 +243,7 @@ namespace Proyecto_NailsTime
 
                 BLLCliente_750VR bll = new BLLCliente_750VR();
 
-                // Verificar existencia por DNI
-                //if (bll.ObtenerClientePorLogin_750VR(mail) != null)
-                //{
-                //    MessageBox.Show("Ya existe un usuario con ese mail.");
-                //    return;
-                //}
-
-                // Verificar existencia por mail/login
+              //falta validar el resto
                 if (bll.ObtenerClientePorDNI_750VR(dni) != null)
                 {
                     MessageBox.Show("Ya existe un cliente con ese DNI.");

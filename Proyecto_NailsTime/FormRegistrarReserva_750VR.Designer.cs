@@ -40,26 +40,28 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txtdni = new System.Windows.Forms.TextBox();
+            this.txtnom = new System.Windows.Forms.TextBox();
+            this.txthorest = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cmbserv = new System.Windows.Forms.ComboBox();
+            this.txttec = new System.Windows.Forms.ComboBox();
+            this.txtmanic = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtdia = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtpre = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
+            this.txthorario = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -85,7 +87,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(186, 281);
+            this.button1.Location = new System.Drawing.Point(186, 302);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -167,26 +169,26 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "Horario";
             // 
-            // textBox3
+            // txtdni
             // 
-            this.textBox3.Location = new System.Drawing.Point(89, 40);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 16;
+            this.txtdni.Location = new System.Drawing.Point(89, 40);
+            this.txtdni.Name = "txtdni";
+            this.txtdni.Size = new System.Drawing.Size(100, 20);
+            this.txtdni.TabIndex = 16;
             // 
-            // textBox4
+            // txtnom
             // 
-            this.textBox4.Location = new System.Drawing.Point(416, 38);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 17;
+            this.txtnom.Location = new System.Drawing.Point(416, 38);
+            this.txtnom.Name = "txtnom";
+            this.txtnom.Size = new System.Drawing.Size(100, 20);
+            this.txtnom.TabIndex = 17;
             // 
-            // textBox7
+            // txthorest
             // 
-            this.textBox7.Location = new System.Drawing.Point(732, 110);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 20;
+            this.txthorest.Location = new System.Drawing.Point(732, 110);
+            this.txthorest.Name = "txthorest";
+            this.txthorest.Size = new System.Drawing.Size(100, 20);
+            this.txthorest.TabIndex = 20;
             // 
             // label8
             // 
@@ -234,29 +236,29 @@
             this.label12.TabIndex = 26;
             this.label12.Text = "Manicurista";
             // 
-            // comboBox2
+            // cmbserv
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(89, 110);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(100, 21);
-            this.comboBox2.TabIndex = 30;
+            this.cmbserv.FormattingEnabled = true;
+            this.cmbserv.Location = new System.Drawing.Point(89, 110);
+            this.cmbserv.Name = "cmbserv";
+            this.cmbserv.Size = new System.Drawing.Size(100, 21);
+            this.cmbserv.TabIndex = 30;
             // 
-            // comboBox3
+            // txttec
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(292, 110);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(105, 21);
-            this.comboBox3.TabIndex = 31;
+            this.txttec.FormattingEnabled = true;
+            this.txttec.Location = new System.Drawing.Point(292, 110);
+            this.txttec.Name = "txttec";
+            this.txttec.Size = new System.Drawing.Size(105, 21);
+            this.txttec.TabIndex = 31;
             // 
-            // comboBox4
+            // txtmanic
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(89, 213);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(100, 21);
-            this.comboBox4.TabIndex = 32;
+            this.txtmanic.FormattingEnabled = true;
+            this.txtmanic.Location = new System.Drawing.Point(89, 213);
+            this.txtmanic.Name = "txtmanic";
+            this.txtmanic.Size = new System.Drawing.Size(100, 21);
+            this.txtmanic.TabIndex = 32;
             // 
             // label14
             // 
@@ -276,12 +278,12 @@
             this.label15.TabIndex = 35;
             this.label15.Text = "Dia";
             // 
-            // textBox5
+            // txtdia
             // 
-            this.textBox5.Location = new System.Drawing.Point(297, 213);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 34;
+            this.txtdia.Location = new System.Drawing.Point(297, 213);
+            this.txtdia.Name = "txtdia";
+            this.txtdia.Size = new System.Drawing.Size(100, 20);
+            this.txtdia.TabIndex = 34;
             // 
             // label16
             // 
@@ -292,12 +294,12 @@
             this.label16.TabIndex = 37;
             this.label16.Text = "Precio";
             // 
-            // textBox6
+            // txtpre
             // 
-            this.textBox6.Location = new System.Drawing.Point(520, 110);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 36;
+            this.txtpre.Location = new System.Drawing.Point(520, 110);
+            this.txtpre.Name = "txtpre";
+            this.txtpre.Size = new System.Drawing.Size(100, 20);
+            this.txtpre.TabIndex = 36;
             // 
             // button5
             // 
@@ -307,6 +309,7 @@
             this.button5.TabIndex = 40;
             this.button5.Text = "Crear Cliente";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button3
             // 
@@ -316,6 +319,7 @@
             this.button3.TabIndex = 41;
             this.button3.Text = "Buscar";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // dataGridView2
             // 
@@ -334,32 +338,50 @@
             this.label7.TabIndex = 43;
             this.label7.Text = "Reservas";
             // 
+            // txthorario
+            // 
+            this.txthorario.Location = new System.Drawing.Point(292, 257);
+            this.txthorario.Name = "txthorario";
+            this.txthorario.Size = new System.Drawing.Size(100, 20);
+            this.txthorario.TabIndex = 44;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(238, 264);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 45;
+            this.label13.Text = "Horario";
+            // 
             // FormRegistrarReserva_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(852, 522);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.txthorario);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.txtpre);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.txtdia);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.txtmanic);
+            this.Controls.Add(this.txttec);
+            this.Controls.Add(this.cmbserv);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txthorest);
+            this.Controls.Add(this.txtnom);
+            this.Controls.Add(this.txtdni);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
@@ -395,25 +417,27 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtdni;
+        private System.Windows.Forms.TextBox txtnom;
+        private System.Windows.Forms.TextBox txthorest;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cmbserv;
+        private System.Windows.Forms.ComboBox txttec;
+        private System.Windows.Forms.ComboBox txtmanic;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtdia;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtpre;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txthorario;
+        private System.Windows.Forms.Label label13;
     }
 }

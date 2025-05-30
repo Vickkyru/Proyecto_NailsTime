@@ -34,6 +34,7 @@ namespace BE_VR750
         public decimal Precio { get; set; }
 
         public bool Estado { get; set; } /*= "Pendiente";*/ // Opcional: usar enum
+        public bool Cobrado { get; set; }
         public bool activo_750VR { get; set; }
 
         // Propiedades extra para mostrar datos relacionados (no mapeadas directamente)
