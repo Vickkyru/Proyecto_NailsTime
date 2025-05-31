@@ -12,24 +12,24 @@ namespace BLL_VR750
     {
         DALdisponibilidad_750VR dal = new DALdisponibilidad_750VR();
 
-        public void CrearDisponibilidad(BEdisponibilidad_750VR disp)
+        public void CrearDisponibilidad_750VR(BEdisponibilidad_750VR disp)
         {
-            dal.CrearDisponibilidad(disp);
+            dal.CrearDisponibilidad_750VR(disp);
         }
 
-        public bool ModificarDisponibilidad (BEdisponibilidad_750VR dispo)
+        public bool ModificarDisponibilidad_750VR (BEdisponibilidad_750VR dispo)
         {
-            return dal.ModificarDisponibilidad(dispo);
+            return dal.ModificarDisponibilidad_750VR(dispo);
         }
 
-        public bool CambiarEstadoActivo(int id, bool nuevoEstado)
+        public bool CambiarEstado_750VR(int id, bool nuevoEstado)
         {
-            return CambiarEstadoActivo(id, nuevoEstado);
+            return CambiarEstado_750VR(id, nuevoEstado);
         }
 
-        public List<BEdisponibilidad_750VR> LeerDisponibilidades()
+        public List<BEdisponibilidad_750VR> LeerDisponibilidades_750VR()
         {
-            return dal.LeerDisponibilidades();
+            return dal.LeerDisponibilidades_750VR();
         }
     }
 }

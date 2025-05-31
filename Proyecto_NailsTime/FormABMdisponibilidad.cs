@@ -22,11 +22,12 @@ namespace Proyecto_NailsTime
             InitializeComponent();
         }
         private string modoActual = "consulta";
+        BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
 
         private void CargarDisponibilidad()
         {
-            BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
-            var lista = bll.LeerDisponibilidades();
+            
+            var lista = bll.LeerDisponibilidades_750VR();
 
             dataGridView1.DataSource = lista;
             PintarFilasInactivas();
@@ -36,7 +37,7 @@ namespace Proyecto_NailsTime
         {
             foreach (DataGridViewRow fila in dataGridView1.Rows)
             {
-                if (fila.DataBoundItem is BEdisponibilidad_750VR dispo && !dispo.Activo)
+                if (fila.DataBoundItem is BEdisponibilidad_750VR dispo && !dispo.activo_750VR)
                 {
                     fila.DefaultCellStyle.BackColor = Color.LightCoral;
                 }
@@ -89,61 +90,59 @@ namespace Proyecto_NailsTime
             LimpiarCampos();
         }
 
+        private void CargarManicuristas()
+        {
+            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
+
+            cmbmanic.DataSource = manicuristas;
+            cmbmanic.DisplayMember = "nombre_750VR";   // o $"{nombre} {apellido}" si querés mostrar ambos
+            cmbmanic.ValueMember = "dni_750VR";
+        }
+
         private void AplicarAlta()
         {
-            var disponibilidad = new BEdisponibilidad_750VR
-            {
-                DNIempleado = Convert.ToInt32(cmbmanic.SelectedValue),
-                DiaSemana = cmbdia.SelectedIndex + 1,
-                HoraInicio = TimeSpan.Parse(txtinicio.Text),
-                HoraFin = TimeSpan.Parse(txtfin.Text),
-                Activo = true,
-                estado = false
-            };
-            bll.Crear(disponibilidad);
-            MessageBox.Show("Disponibilidad creada exitosamente.");
 
             try
             {
                 // Validamos primero
                 if (!ValidarCampos())
                     return;
-                int dni = Convert.ToInt32(cmbmanic.SelectedValue);
+                int dni = Convert.ToInt32(txtdnimanic.Text);
+                string nom = cmbmanic.Text;
                 int dia = cmbdia.SelectedIndex + 1;
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
-            
 
-                BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
 
                 // me falta verificar existencia
 
                 BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR
                 {
-                    dni_750VR = dni,
-                    nombre_750VR = nombre,
-                    apellido_750VR = apellido,
-                    mail_750VR = mail,
-                    user_750VR = user,
-                    salt_750VR = salt,
-                    contraseña_750VR = encriptador.HashearConSalt_750VR(contraseña, salt),
-                    rol_750VR = rol,
+                    DNImanic_750VR = dni,
+                    Nombremanic_750VR = nom,
+                    HoraInicio_750VR = inicio,
+                    DiaSemana_750VR = dia,
+                    HoraFin_750VR = fin,
                     activo_750VR = true,
-                    bloqueado_750VR = false
+                    estado_750VR = false
                 };
 
-                bll.CrearUsuario_750VR(nuevo);
-                MessageBox.Show("Usuario creado correctamente.");
-                MessageBox.Show("Recuerde que usuario=nombre+apellido, contraseña=dni+nombre");
-
+                bll.CrearDisponibilidad_750VR(nuevo);
+                MessageBox.Show("Disponibilidad creada correctamente.");
 
                 LimpiarCampos();
-
-                CargarUsuarios(true);
+                //CargarUsuarios();
             }
-private bool ValidarCampos()
+            catch(Exception ex)
+            {
+                MessageBox.Show("No se pudo");
+
+            }
+        }
+            private bool ValidarCampos()
         {
-            if (cmbmanicurista.SelectedItem == null)
+            if (cmbmanic.SelectedItem == null)
             {
                 MessageBox.Show("Debe seleccionar un manicurista.");
                 return false;
@@ -155,13 +154,13 @@ private bool ValidarCampos()
                 return false;
             }
 
-            if (!TimeSpan.TryParse(txthorainicio.Text.Trim(), out TimeSpan horaInicio))
+            if (!TimeSpan.TryParse(txtinicio.Text.Trim(), out TimeSpan horaInicio))
             {
                 MessageBox.Show("La hora de inicio no es válida. Formato esperado: HH:mm");
                 return false;
             }
 
-            if (!TimeSpan.TryParse(txthorafin.Text.Trim(), out TimeSpan horaFin))
+            if (!TimeSpan.TryParse(txtfin.Text.Trim(), out TimeSpan horaFin))
             {
                 MessageBox.Show("La hora de fin no es válida. Formato esperado: HH:mm");
                 return false;
@@ -180,10 +179,10 @@ private bool ValidarCampos()
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                d.DiaSemana = cmbdia.SelectedIndex + 1;
-                d.HoraInicio = TimeSpan.Parse(txthoraInicio.Text);
-                d.HoraFin = TimeSpan.Parse(txthoraFin.Text);
-                bll.Modificar(d);
+                d.DiaSemana_750VR = cmbdia.SelectedIndex + 1;
+                d.HoraInicio_750VR = TimeSpan.Parse(txtinicio.Text);
+                d.HoraFin_750VR = TimeSpan.Parse(txtfin.Text);
+                bll.ModificarDisponibilidad_750VR(d);
                 MessageBox.Show("Disponibilidad modificada correctamente.");
             }
         }
@@ -192,8 +191,8 @@ private bool ValidarCampos()
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                bll.CambiarEstado(d.IdDisponibilidad, !d.Activo);
-                string msg = d.Activo ? "Disponibilidad desactivada." : "Disponibilidad activada.";
+                bll.CambiarEstado_750VR(d.IdDisponibilidad_750VR, !d.activo_750VR);
+                string msg = d.activo_750VR ? "Disponibilidad desactivada." : "Disponibilidad activada.";
                 MessageBox.Show(msg);
             }
         }
@@ -207,48 +206,45 @@ private bool ValidarCampos()
         }
         private void ActivarModoEdicion()
         {
-            cmbdia.Enabled = txthoraInicio.Enabled = txthoraFin.Enabled = cmbmanicurista.Enabled = true;
-            btnaplicar.Enabled = true;
-            btncancelar.Enabled = true;
-            btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = false;
+            cmbdia.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
+            //btnaplicar.Enabled = true;
+            //btncancelar.Enabled = true;
+            //btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = false;
             dataGridView1.Enabled = true;
         }
 
         private void ResetearInterfaz()
         {
-            btnaplicar.Enabled = false;
-            btncancelar.Enabled = false;
-            btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = true;
-            cmbdia.Enabled = txthoraInicio.Enabled = txthoraFin.Enabled = cmbmanicurista.Enabled = false;
+            //btnaplicar.Enabled = false;
+            //btncancelar.Enabled = false;
+            //btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = true;
+            //cmbdia.Enabled = txthoraInicio.Enabled = txthoraFin.Enabled = cmbmanicurista.Enabled = false;
             dataGridView1.Enabled = true;
         }
 
         private void LimpiarCampos()
         {
             cmbdia.SelectedIndex = -1;
-            cmbmanicurista.SelectedIndex = -1;
-            txthoraInicio.Clear();
-            txthoraFin.Clear();
+            cmbmanic.SelectedIndex = -1;
+            txtinicio.Clear();
+            txtfin.Clear();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                cmbmanicurista.SelectedValue = d.DNIempleado;
-                cmbdia.SelectedIndex = d.DiaSemana - 1;
-                txthoraInicio.Text = d.HoraInicio.ToString();
-                txthoraFin.Text = d.HoraFin.ToString();
+                cmbmanic.SelectedValue = d.Nombremanic_750VR;
+                cmbdia.SelectedIndex = d.DiaSemana_750VR - 1;
+                txtinicio.Text = d.HoraInicio_750VR.ToString();
+                txtfin.Text = d.HoraFin_750VR.ToString();
             }
         }
-        private void CargarManicuristas()
-        {
-            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
-            var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
+   
 
-            cmbmanicurista.DataSource = manicuristas;
-            cmbmanicurista.DisplayMember = "nombre_750VR";   // o $"{nombre} {apellido}" si querés mostrar ambos
-            cmbmanicurista.ValueMember = "dni_750VR";
+        private void lblmensaje_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -143,6 +143,7 @@ namespace DAL_VR750
                         CREATE TABLE Disponibilidad_VR750 (
                             IdDisponibilidad_VR750 INT PRIMARY KEY IDENTITY(1,1),
                             DNIempleado_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
+                            NombreManic_VR750 VARCHAR(50) NOT NULL,
                             DiaSemana_VR750 INT NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
                             HoraFin_VR750 TIME NOT NULL,

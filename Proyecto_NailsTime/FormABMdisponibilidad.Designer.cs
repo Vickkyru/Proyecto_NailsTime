@@ -58,6 +58,7 @@
             this.lblmensaje.Name = "lblmensaje";
             this.lblmensaje.Size = new System.Drawing.Size(371, 45);
             this.lblmensaje.TabIndex = 100;
+            this.lblmensaje.Click += new System.EventHandler(this.lblmensaje_Click);
             // 
             // btnapli
             // 

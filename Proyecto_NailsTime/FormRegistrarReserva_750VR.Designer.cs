@@ -62,6 +62,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txthorario = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -87,12 +88,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(186, 302);
+            this.button1.Location = new System.Drawing.Point(109, 302);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(93, 23);
             this.button1.TabIndex = 5;
-            this.button1.Text = "Cobrar";
+            this.button1.Text = "Crear Reserva";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox2
             // 
@@ -354,12 +356,23 @@
             this.label13.TabIndex = 45;
             this.label13.Text = "Horario";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(227, 302);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(93, 23);
+            this.button4.TabIndex = 46;
+            this.button4.Text = "Cobrar";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // FormRegistrarReserva_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(852, 522);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txthorario);
             this.Controls.Add(this.label7);
@@ -439,5 +452,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txthorario;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button4;
     }
 }

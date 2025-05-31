@@ -16,14 +16,7 @@ namespace BE_VR750
         public decimal precio_750VR { get;set;}
         public bool activo_750VR { get; set; }
 
-        // Propiedad útil para mostrar en ComboBox, etc.
-        public string DescripcionCompleta_750VR
-        {
-            get
-            {
-                return $"{nombre_750VR} - {tecnica_750VR} ({duracion_750VR} min)";
-            }
-        }
+
 
     }
 }

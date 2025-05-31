@@ -60,5 +60,16 @@ namespace Proyecto_NailsTime
             txtdni.Text = dni;
             txtnom.Text = nombre;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            FormCobrarServicio_750VR frm = new FormCobrarServicio_750VR();
+            frm.ShowDialog();
+        }
     }
 }
