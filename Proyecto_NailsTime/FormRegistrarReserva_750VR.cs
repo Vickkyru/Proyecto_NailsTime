@@ -45,13 +45,20 @@ namespace Proyecto_NailsTime
             }
         }
 
-        //crea cliente
 
+        //crea cliente
         private void button5_Click(object sender, EventArgs e)
         {
-            FormABMClientes_750VR formCrearCliente = new FormABMClientes_750VR();
-            formCrearCliente.StartPosition = FormStartPosition.CenterScreen;
-            formCrearCliente.ShowDialog(); // bloquea el formulario actual hasta que se cierre el otro
+
+            FormABMClientes_750VR frm = new FormABMClientes_750VR();
+            frm.InvocadoDesdeReserva = true;
+            frm.FormularioReserva = this;
+            frm.ShowDialog(); 
+        }
+        public void CompletarCamposCliente(string dni, string nombre)
+        {
+            txtdni.Text = dni;
+            txtnom.Text = nombre;
         }
     }
 }

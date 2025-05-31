@@ -18,10 +18,15 @@ namespace Proyecto_NailsTime
     public partial class FormABMClientes_750VR : Form
     {
         private string modoActual = "consulta";
+ 
         public FormABMClientes_750VR()
         {
             InitializeComponent();
+  
         }
+        // Propiedades para comunicación con el formulario de reserva
+        public bool InvocadoDesdeReserva { get; set; } = false;
+        public FormRegistrarReserva_750VR FormularioReserva { get; set; } = null;
         public void LimpiarCampos()
         {
             txtdni.Clear();
@@ -264,11 +269,19 @@ namespace Proyecto_NailsTime
                 };
 
                 bll.CrearCliente_750VR(nuevo);
-                MessageBox.Show("Cliente creado correctamente.");
 
+                if (InvocadoDesdeReserva && FormularioReserva != null)
+                {
+                    FormularioReserva.CompletarCamposCliente(txtdni.Text, txtnom.Text);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Cliente creado correctamente.");
+                    LimpiarCampos();
+                    CargarUsuarios(); 
+                }
 
-                LimpiarCampos();
-                CargarUsuarios();
             }
             catch (Exception ex)
             {

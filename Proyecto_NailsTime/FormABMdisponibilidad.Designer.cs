@@ -39,12 +39,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtnom = new System.Windows.Forms.TextBox();
-            this.txtemail = new System.Windows.Forms.TextBox();
+            this.txtinicio = new System.Windows.Forms.TextBox();
+            this.txtfin = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbdia = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtdnimanic = new System.Windows.Forms.TextBox();
+            this.cmbmanic = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +67,7 @@
             this.btnapli.TabIndex = 99;
             this.btnapli.Text = "Aplicar";
             this.btnapli.UseVisualStyleBackColor = true;
+            this.btnapli.Click += new System.EventHandler(this.btnapli_Click);
             // 
             // btnelim
             // 
@@ -74,6 +77,7 @@
             this.btnelim.TabIndex = 98;
             this.btnelim.Text = "Eliminar";
             this.btnelim.UseVisualStyleBackColor = true;
+            this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
             // btnmod
             // 
@@ -83,6 +87,7 @@
             this.btnmod.TabIndex = 97;
             this.btnmod.Text = "Modificar";
             this.btnmod.UseVisualStyleBackColor = true;
+            this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
             // 
             // btnsalir
             // 
@@ -101,6 +106,7 @@
             this.btncance.TabIndex = 91;
             this.btncance.Text = "Cancelar";
             this.btncance.UseVisualStyleBackColor = true;
+            this.btncance.Click += new System.EventHandler(this.btncance_Click);
             // 
             // btnañadir
             // 
@@ -110,6 +116,7 @@
             this.btnañadir.TabIndex = 90;
             this.btnañadir.Text = "Añadir";
             this.btnañadir.UseVisualStyleBackColor = true;
+            this.btnañadir.Click += new System.EventHandler(this.btnañadir_Click);
             // 
             // dataGridView1
             // 
@@ -118,6 +125,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(756, 180);
             this.dataGridView1.TabIndex = 89;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label7
             // 
@@ -146,24 +154,24 @@
             this.label5.TabIndex = 86;
             this.label5.Text = "Dia";
             // 
-            // txtnom
+            // txtinicio
             // 
-            this.txtnom.Location = new System.Drawing.Point(156, 356);
-            this.txtnom.Name = "txtnom";
-            this.txtnom.Size = new System.Drawing.Size(100, 20);
-            this.txtnom.TabIndex = 82;
+            this.txtinicio.Location = new System.Drawing.Point(156, 356);
+            this.txtinicio.Name = "txtinicio";
+            this.txtinicio.Size = new System.Drawing.Size(100, 20);
+            this.txtinicio.TabIndex = 82;
             // 
-            // txtemail
+            // txtfin
             // 
-            this.txtemail.Location = new System.Drawing.Point(156, 382);
-            this.txtemail.Name = "txtemail";
-            this.txtemail.Size = new System.Drawing.Size(100, 20);
-            this.txtemail.TabIndex = 83;
+            this.txtfin.Location = new System.Drawing.Point(156, 382);
+            this.txtfin.Name = "txtfin";
+            this.txtfin.Size = new System.Drawing.Size(100, 20);
+            this.txtfin.TabIndex = 83;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(82, 309);
+            this.label4.Location = new System.Drawing.Point(79, 306);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 85;
@@ -179,21 +187,37 @@
             this.label2.TabIndex = 84;
             this.label2.Text = "ABM disponibilidad";
             // 
-            // comboBox1
+            // cmbdia
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(156, 301);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 101;
+            this.cmbdia.FormattingEnabled = true;
+            this.cmbdia.Location = new System.Drawing.Point(156, 326);
+            this.cmbdia.Name = "cmbdia";
+            this.cmbdia.Size = new System.Drawing.Size(121, 21);
+            this.cmbdia.TabIndex = 102;
             // 
-            // comboBox2
+            // label1
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(156, 326);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 102;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(68, 274);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 104;
+            this.label1.Text = "DNI manicurista";
+            // 
+            // txtdnimanic
+            // 
+            this.txtdnimanic.Location = new System.Drawing.Point(156, 267);
+            this.txtdnimanic.Name = "txtdnimanic";
+            this.txtdnimanic.Size = new System.Drawing.Size(100, 20);
+            this.txtdnimanic.TabIndex = 105;
+            // 
+            // cmbmanic
+            // 
+            this.cmbmanic.FormattingEnabled = true;
+            this.cmbmanic.Location = new System.Drawing.Point(156, 298);
+            this.cmbmanic.Name = "cmbmanic";
+            this.cmbmanic.Size = new System.Drawing.Size(121, 21);
+            this.cmbmanic.TabIndex = 106;
             // 
             // FormABMdisponibilidad
             // 
@@ -201,8 +225,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbmanic);
+            this.Controls.Add(this.txtdnimanic);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cmbdia);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.btnapli);
             this.Controls.Add(this.btnelim);
@@ -214,12 +240,13 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtnom);
-            this.Controls.Add(this.txtemail);
+            this.Controls.Add(this.txtinicio);
+            this.Controls.Add(this.txtfin);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Name = "FormABMdisponibilidad";
             this.Text = "FormABMdisponibilidad";
+            this.Load += new System.EventHandler(this.FormABMdisponibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -239,11 +266,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtnom;
-        private System.Windows.Forms.TextBox txtemail;
+        private System.Windows.Forms.TextBox txtinicio;
+        private System.Windows.Forms.TextBox txtfin;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbdia;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtdnimanic;
+        private System.Windows.Forms.ComboBox cmbmanic;
     }
 }

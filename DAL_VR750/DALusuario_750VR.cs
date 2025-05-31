@@ -21,6 +21,11 @@ namespace DAL_VR750
             db = new BaseDeDatos_750VR();
             hasher = new Encriptador_750VR();
         }
+        public List<BEusuario_750VR> ObtenerManicuristasActivos_750VR()
+        {
+            var lista = leerEntidades_750VR();
+            return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
+        }
 
         public void CrearUsuario_750VR(BEusuario_750VR usuario) //alta user
         {
