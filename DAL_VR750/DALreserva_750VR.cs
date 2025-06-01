@@ -28,16 +28,16 @@ namespace DAL_VR750
                     {
                         var reserva = new BEReserva_750VR
                         {
-                            IdReserva = Convert.ToInt32(reader["IdReserva_VR750"]),
-                            DNIcli = Convert.ToInt32(reader["DNIcli_VR750"]),
-                            DNImanic = Convert.ToInt32(reader["DNImanic_VR750"]),
-                            IdServicio = Convert.ToInt32(reader["IdServicio_VR750"]),
-                            Fecha = Convert.ToDateTime(reader["Fecha_VR750"]),
-                            HoraInicio = (TimeSpan)reader["HoraInicio_VR750"],
-                            HoraFin = (TimeSpan)reader["HoraFin_VR750"],
-                            Precio = Convert.ToDecimal(reader["Precio_VR750"]),
-                            Estado = Convert.ToBoolean(reader["Estado_VR750"]),
-                            Cobrado = Convert.ToBoolean(reader["Estado_VR750"]),
+                            IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
+                            DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
+                            DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
+                            IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
+                            Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
+                            HoraInicio_750VR = (TimeSpan)reader["HoraInicio_VR750"],
+                            HoraFin_750VR = (TimeSpan)reader["HoraFin_VR750"],
+                            Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
+                            Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
+                            Cobrado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
                         };
                         lista.Add(reserva);
                     }
@@ -49,7 +49,7 @@ namespace DAL_VR750
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
 
-        public void CrearReserva(BEReserva_750VR reserva)
+        public void CrearReserva_750VR(BEReserva_750VR reserva)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -60,21 +60,54 @@ namespace DAL_VR750
                 VALUES (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @Duracion, @Precio, @Estado, @Cobrado)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli);
-                cmd.Parameters.AddWithValue("@DNImanic", reserva.DNImanic);
-                cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio);
-                cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha);
-                cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
-                cmd.Parameters.AddWithValue("@Duracion", reserva.HoraFin);
-                cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
-                cmd.Parameters.AddWithValue("@Estado", reserva.Estado);
-                cmd.Parameters.AddWithValue("@Cobrado", reserva.Cobrado);
+                cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli_750VR);
+                cmd.Parameters.AddWithValue("@DNImanic", reserva.DNImanic_750VR);
+                cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio_750VR);
+                cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha_750VR);
+                cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio_750VR);
+                cmd.Parameters.AddWithValue("@Duracion", reserva.HoraFin_750VR);
+                cmd.Parameters.AddWithValue("@Precio", reserva.Precio_750VR);
+                cmd.Parameters.AddWithValue("@Estado", reserva.Estado_750VR);
+                cmd.Parameters.AddWithValue("@Cobrado", reserva.Cobrado_750VR);
 
 
                 cmd.ExecuteNonQuery();
             }
         }
+        public List<BEReserva_750VR> leerEntidades_750VR() //busca todos
+        {
+            List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
 
-       
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Reserva_VR750";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    BEReserva_750VR user = new BEReserva_750VR
+                    {
+                        IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
+                        DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
+                        DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
+                        IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
+                        Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
+                        HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
+                        HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
+                        Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
+                        Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
+                        Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
+                    };
+
+                    lista.Add(user);
+                }
+            }
+
+            return lista;
+        }
+
     }
 }

@@ -20,9 +20,14 @@ namespace BLL_VR750
         {
             return dal.ObtenerReservasPorManicurista(dniManicurista);
         }
-        public void CrearReserva(BEReserva_750VR reserva)
+        public void CrearReserva_750VR(BEReserva_750VR reserva)
         {
-            dal.CrearReserva(reserva);
+            dal.CrearReserva_750VR(reserva);
+        }
+
+        public List<BEReserva_750VR> leerEntidades()
+        {
+            return dal.leerEntidades_750VR();
         }
     }
 }

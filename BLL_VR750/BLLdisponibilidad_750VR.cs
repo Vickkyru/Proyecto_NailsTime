@@ -24,7 +24,7 @@ namespace BLL_VR750
 
         public bool CambiarEstado_750VR(int id, bool nuevoEstado)
         {
-            return CambiarEstado_750VR(id, nuevoEstado);
+            return dal.CambiarEstado_750VR(id, nuevoEstado);
         }
 
         public List<BEdisponibilidad_750VR> LeerDisponibilidades_750VR()

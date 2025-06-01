@@ -163,7 +163,7 @@ namespace DAL_VR750
                             IdServicio_VR750 INT NOT NULL FOREIGN KEY REFERENCES Servicio_VR750(IdServicio_VR750),
                             Fecha_VR750 DATE NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
-                            HoraFin_VR750 INT NOT NULL,
+                            HoraFin_VR750 TIME NOT NULL,
                             Precio_VR750 DECIMAL(10,2) NOT NULL,
                             Estado_VR750 BIT DEFAULT 0,
                             Cobrado_VR750 BIT DEFAULT 0
