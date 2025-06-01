@@ -24,10 +24,10 @@ namespace BE_VR750
 
 
         public int IdReserva { get; set; }
-        public int DNIcli { get; set; }   
-        
-        public BECliente_750VR cliente {  get; set; }
-        
+        public int DNIcli { get; set; }
+
+        public BECliente_750VR cliente { get; set; }
+
         public int DNImanic { get; set; }
         public BEusuario_750VR manic { get; set; }
 
@@ -37,19 +37,10 @@ namespace BE_VR750
         public DateTime Fecha { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFin { get; set; }
-        //public int DuracionMinutos { get; set; } 
-        //public decimal Precio { get; set; }
+        public decimal Precio { get; set; }
 
         public bool Estado { get; set; } /*= "Pendiente";*/ 
         public bool Cobrado { get; set; }
-        //public bool activo_750VR { get; set; } 
 
-        // Propiedades extra para mostrar datos relacionados (no mapeadas directamente)
-        //public string NombreCliente { get; set; }
-        //public string NombreManic { get; set; }
-        //public string NombreServicio { get; set; }
-
-        // Propiedad calculada
-        //public TimeSpan HoraFin => HoraInicio.Add(TimeSpan.FromMinutes(DuracionMinutos));
     }
 }

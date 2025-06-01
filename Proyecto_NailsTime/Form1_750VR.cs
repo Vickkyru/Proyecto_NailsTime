@@ -104,8 +104,6 @@ namespace Proyecto_NailsTime
             ActualizarLabels();
             //DeshabilitarMenus();
             //MostrarDatosUsuario();
-
-            //.VerificarYCrearTablaUsuarios();
         }
 
         private void DeshabilitarMenus()
@@ -171,7 +169,7 @@ namespace Proyecto_NailsTime
 
         private void personalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //AbrirForm(new FormABMdisponibilidad_750VR());
+            AbrirForm(new FormABMdisponibilidad());
         }
 
         private void verTurnosReservadosToolStripMenuItem_Click(object sender, EventArgs e)

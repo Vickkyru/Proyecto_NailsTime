@@ -143,11 +143,11 @@ namespace DAL_VR750
                         CREATE TABLE Disponibilidad_VR750 (
                             IdDisponibilidad_VR750 INT PRIMARY KEY IDENTITY(1,1),
                             DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
-                            DiaSemana_VR750 varchar(50) NOT NULL,
+                            Fecha_VR750 DATE NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
                             HoraFin_VR750 TIME NOT NULL,
                             Activo_VR750 BIT DEFAULT 1,
-                            Estado_VR750 NVARCHAR(20) DEFAULT 'Desocupado'
+                            Estado_VR750 BIT DEFAULT 0
                         );
                     END;
 
@@ -163,9 +163,10 @@ namespace DAL_VR750
                             IdServicio_VR750 INT NOT NULL FOREIGN KEY REFERENCES Servicio_VR750(IdServicio_VR750),
                             Fecha_VR750 DATE NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
-                            DuracionMinutos_VR750 INT NOT NULL,
+                            HoraFin_VR750 INT NOT NULL,
                             Precio_VR750 DECIMAL(10,2) NOT NULL,
-                            Estado_VR750 NVARCHAR(20) DEFAULT 'Pendiente',
+                            Estado_VR750 BIT DEFAULT 0,
+                            Cobrado_VR750 BIT DEFAULT 0
 
                         );
                     END;
@@ -187,44 +188,60 @@ namespace DAL_VR750
                 {
                     conn.Open();
                     string script = @"
-                IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)
-                BEGIN
-                    INSERT INTO Servicio_VR750 (Nombre_VR750, Tecnica_VR750, DuracionMinutos_VR750, Precio_VR750, Activo_VR750) VALUES
-                    ('Masajes', 'Relajantes', 60, 8000.00, 1),
-                    ('Masajes', 'Descontracturantes', 60, 9000.00, 1),
+            IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)
+            BEGIN
+                INSERT INTO Servicio_VR750 (Nombre_VR750, Tecnica_VR750, DuracionMinutos_VR750, Precio_VR750, Activo_VR750) VALUES
+                ('Masajes', 'Relajantes', 60, 8000.00, 1),
+                ('Masajes', 'Descontracturantes', 60, 9000.00, 1),
+                ('Pedicura', 'Esmaltado tradicional', 20, 4000.00, 1),
+                ('Pedicura', 'Esmaltado semi', 40, 5000.00, 1),
+                ('Pedicura', 'Esmaltado tradicional + Spa', 60, 6000.00, 1),
+                ('Manicura', 'Esmaltado tradicional', 30, 4000.00, 1),
+                ('Manicura', 'Semipermanente', 45, 8000.00, 1),
+                ('Manicura', 'Kapping con gel', 60, 10000.00, 1),
+                ('Manicura', 'Uñas esculpidas acrílicas', 90, 12000.00, 1),
+                ('Limpieza facial', 'Profunda', 60, 7000.00, 1),
+                ('Limpieza facial', 'Express', 30, 4000.00, 1),
+                ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
+                ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1)
+            END
 
-                    ('Pedicura', 'Esmaltado tradicional', 20, 4000.00, 1),
-                    ('Pedicura', 'Esmaltado semi', 40, 5000.00, 1),
-                    ('Pedicura', 'Esmaltado tradicional + Spa', 60, 6000.00, 1),
+            IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
+            BEGIN
+                INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) VALUES
+                (10011234, 'ana', 'lopez', 'ana@gmail.com', 'analopez',
+                 '0935ae7165a594bf172f79181e2f10e7610225e7c5e196491cfe2dfd5e019e43',
+                 'zT8@Lp!xKw#93vNa', 'Manicurista', 1, 0),
+                (10025678, 'sofia', 'martinez', 'sofia@gmail.com', 'sofiamartinez',
+                 '37449c166be0ceaf1f03b7d2f1e1b90efbdb0597287e2c6e74aa318ed20d37fb',
+                 'Wr!7Xp@Lm#93zQc2', 'Manicurista', 1, 0),
+                (10039876, 'carla', 'gomez', 'carla@gmail.com', 'carlagomez',
+                 'c3c41be16154e19e0f65ae70c62a420bb52c3b1ab92cd1f6378a00e87c6a4f60',
+                 'M@p7Qv#XL2!zTkw1', 'Manicurista', 1, 0),
+                (10041234, 'juan', 'perez', 'juan@gmail.com', 'juanperez',
+                 '3d6fd20799b61eb45822531cb62e920fc47ee68db7ed8f9d46033f2cf302ddee',
+                 'Az8#pZ!x7WvQLk23', 'Administrador', 1, 0),
+                (10055678, 'lucia', 'ramirez', 'lucia@gmail.com', 'luciaramirez',
+                 'cb803c98cb17321b5c6d7a9fbc8e4f1e1472a6f85cd7b66c28a5663e7e537b7f',
+                 'Lx1$Ma!Z#9vTpWq7', 'Recepcionista', 1, 0)
+            END
 
-                    ('Manicura', 'Esmaltado tradicional', 30, 4000.00, 1),
-                    ('Manicura', 'Semipermanente', 45, 8000.00, 1),
-                    ('Manicura', 'Kapping con gel', 60, 10000.00, 1),
-                    ('Manicura', 'Uñas esculpidas acrílicas', 90, 12000.00, 1),
+            IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
+            BEGIN
+                INSERT INTO Disponibilidad_VR750 (DNImanic_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
+                (10011234, '2025-07-14', '09:00', '13:00', 1, 0),
+                (10011234, '2025-07-16', '14:00', '18:00', 1, 0),
+                (10025678, '2025-07-15', '10:00', '14:00', 1, 0),
+                (10025678, '2025-07-17', '15:00', '19:00', 1, 0),
+                (10039876, '2025-07-18', '09:30', '12:30', 1, 0),
+                (10039876, '2025-07-19', '11:00', '15:00', 1, 0)
+            END
 
-                    ('Limpieza facial', 'Profunda', 60, 7000.00, 1),
-                    ('Limpieza facial', 'Express', 30, 4000.00, 1),
-                    ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
-                    ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1);
-//mejorar este script
-                IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
-                BEGIN
-                    INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) VALUES
-                    (46198750, 'Ana', 'López', 'ana.lopez@gmail.com', 'ana.lopez', 'abc123', 'salt1', 'Manicurista', 1, 0),
-                    (28282829, 'Sofía', 'Martínez', 'sofia.martinez@gmail.com', 'sofia.martinez', 'abc123', 'salt2', 'Manicurista', 1, 0),
-                    (30303030, 'Carla', 'Gómez', 'carla.gomez@gmail.com', 'carla.gomez', 'abc123', 'salt3', 'Manicurista', 1, 0);
-                END;
-
-                IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
-                BEGIN
-                    INSERT INTO Disponibilidad_VR750 (DNIempleado_VR750, DiaSemana_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
-                    (28282829, 'Lunes', '09:00', '13:00', 1, 'Desocupado'),
-                    (28282829, 'Miércoles', '14:00', '18:00', 1, 'Desocupado'),
-                    (30303030, 'Martes', '10:00', '14:00', 1, 'Desocupado'),
-                    (30303030, 'Jueves', '15:00', '19:00', 1, 'Desocupado'),
-                    (46168750, 'Viernes', '09:30', '12:30', 1, 'Desocupado'),
-                    (46168750, 'Sábado', '11:00', '15:00', 1, 'Desocupado');
-                END;
+            IF NOT EXISTS (SELECT 1 FROM Cliente_VR750 WHERE DNI_VR750 = 33111222)
+            BEGIN
+                INSERT INTO Cliente_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Direccion_VR750, Celular_VR750, Activo_VR750)
+                VALUES (33111222, 'martina', 'ruiz', 'martina@gmail.com', 'Cordoba1234', 1134567890, 1)
+            END
             ";
 
                     using (SqlCommand cmd = new SqlCommand(script, conn))
@@ -238,7 +255,6 @@ namespace DAL_VR750
                 }
             }
         }
-
 
 
 

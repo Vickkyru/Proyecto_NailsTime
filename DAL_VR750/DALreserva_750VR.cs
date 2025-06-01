@@ -34,12 +34,10 @@ namespace DAL_VR750
                             IdServicio = Convert.ToInt32(reader["IdServicio_VR750"]),
                             Fecha = Convert.ToDateTime(reader["Fecha_VR750"]),
                             HoraInicio = (TimeSpan)reader["HoraInicio_VR750"],
-                            //DuracionMinutos = Convert.ToInt32(reader["DuracionMinutos_VR750"]),
-                            //Precio = Convert.ToDecimal(reader["Precio_VR750"]),
+                            HoraFin = (TimeSpan)reader["HoraFin_VR750"],
+                            Precio = Convert.ToDecimal(reader["Precio_VR750"]),
                             Estado = Convert.ToBoolean(reader["Estado_VR750"]),
-                            //NombreCliente = reader["NombreCliente_VR750"].ToString(),
-                            //NombreManic = reader["NombreManicurista_VR750"].ToString(),
-                            //NombreServicio = reader["NombreServicio_VR750"].ToString()
+                            Cobrado = Convert.ToBoolean(reader["Estado_VR750"]),
                         };
                         lista.Add(reserva);
                     }
@@ -58,8 +56,8 @@ namespace DAL_VR750
                 conn.Open();
                 string query = @"
                 INSERT INTO Reserva_VR750 
-                (DNIcli_VR750, DNImanic_VR750, IdServicio_VR750, Fecha_VR750, HoraInicio_VR750, DuracionMinutos_VR750, Precio_VR750, Estado_VR750, NombreCliente_VR750, NombreManicurista_VR750, NombreServicio_VR750) 
-                VALUES (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @Duracion, @Precio, 'Pendiente', @NombreCliente, @NombreManicurista, @NombreServicio)";
+                (DNIcli_VR750, DNImanic_VR750, IdServicio_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Precio_VR750, Estado_VR750, Cobrado_VR750) 
+                VALUES (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @Duracion, @Precio, @Estado, @Cobrado)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli);
@@ -67,11 +65,11 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio);
                 cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha);
                 cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
-                //cmd.Parameters.AddWithValue("@Duracion", reserva.DuracionMinutos);
-                //cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
-                //cmd.Parameters.AddWithValue("@NombreCliente", reserva.NombreCliente);
-                //cmd.Parameters.AddWithValue("@NombreManicurista", reserva.NombreManic);
-                //cmd.Parameters.AddWithValue("@NombreServicio", reserva.NombreServicio);
+                cmd.Parameters.AddWithValue("@Duracion", reserva.HoraFin);
+                cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
+                cmd.Parameters.AddWithValue("@Estado", reserva.Estado);
+                cmd.Parameters.AddWithValue("@Cobrado", reserva.Cobrado);
+
 
                 cmd.ExecuteNonQuery();
             }

@@ -38,15 +38,15 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.Fecha = new System.Windows.Forms.Label();
             this.txtinicio = new System.Windows.Forms.TextBox();
             this.txtfin = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbdia = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtdnimanic = new System.Windows.Forms.TextBox();
             this.cmbmanic = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,7 +124,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 72);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(756, 180);
+            this.dataGridView1.Size = new System.Drawing.Size(702, 172);
             this.dataGridView1.TabIndex = 89;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -146,14 +146,14 @@
             this.label6.TabIndex = 87;
             this.label6.Text = "Hora Inicio";
             // 
-            // label5
+            // Fecha
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(82, 334);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 13);
-            this.label5.TabIndex = 86;
-            this.label5.Text = "Dia";
+            this.Fecha.AutoSize = true;
+            this.Fecha.Location = new System.Drawing.Point(82, 334);
+            this.Fecha.Name = "Fecha";
+            this.Fecha.Size = new System.Drawing.Size(37, 13);
+            this.Fecha.TabIndex = 86;
+            this.Fecha.Text = "Fecha";
             // 
             // txtinicio
             // 
@@ -188,14 +188,6 @@
             this.label2.TabIndex = 84;
             this.label2.Text = "ABM disponibilidad";
             // 
-            // cmbdia
-            // 
-            this.cmbdia.FormattingEnabled = true;
-            this.cmbdia.Location = new System.Drawing.Point(156, 326);
-            this.cmbdia.Name = "cmbdia";
-            this.cmbdia.Size = new System.Drawing.Size(121, 21);
-            this.cmbdia.TabIndex = 102;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -220,16 +212,23 @@
             this.cmbmanic.Size = new System.Drawing.Size(121, 21);
             this.cmbmanic.TabIndex = 106;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(156, 329);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 108;
+            // 
             // FormABMdisponibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.cmbmanic);
             this.Controls.Add(this.txtdnimanic);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.cmbdia);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.btnapli);
             this.Controls.Add(this.btnelim);
@@ -240,7 +239,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.Fecha);
             this.Controls.Add(this.txtinicio);
             this.Controls.Add(this.txtfin);
             this.Controls.Add(this.label4);
@@ -266,14 +265,14 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label Fecha;
         private System.Windows.Forms.TextBox txtinicio;
         private System.Windows.Forms.TextBox txtfin;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbdia;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtdnimanic;
         private System.Windows.Forms.ComboBox cmbmanic;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

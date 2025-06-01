@@ -27,7 +27,7 @@ namespace Proyecto_NailsTime
             txtnombre.Clear();
             txtduracion.Clear();
             txtprecio.Clear();
-            cmbtec.Items.Clear();
+            txttec.Clear();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -125,8 +125,8 @@ namespace Proyecto_NailsTime
 
         private void CargarUsuarios()
         {
-            var bll = new BLLusuario_750VR();
-            var lista = bll.leerEntidades_750VR();
+            var bll = new BLLServicio_750VR();
+            var lista = bll.LeerEntidades_750VR();
 
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = true;
@@ -196,7 +196,7 @@ namespace Proyecto_NailsTime
             string nombre = txtnombre.Text;
         
             int cel = int.Parse(txtduracion.Text);
-            string tecnica = cmbtec.Text;
+            string tecnica = txttec.Text;
 
             BLLCliente_750VR bll = new BLLCliente_750VR();
 
@@ -282,7 +282,7 @@ namespace Proyecto_NailsTime
             if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
        string.IsNullOrWhiteSpace(txtduracion.Text) ||
        string.IsNullOrWhiteSpace(txtprecio.Text) ||
-       string.IsNullOrWhiteSpace(cmbtec.Text))
+       string.IsNullOrWhiteSpace(txttec.Text))
                 return true; return false;
       
   
@@ -424,7 +424,7 @@ namespace Proyecto_NailsTime
         private void FormABMservicios_750VR_Load(object sender, EventArgs e)
         {
 
-            //CargarUsuarios(true);   // Mostrar activos
+            CargarUsuarios();
 
             // Deshabilitar botones Aplicar y Cancelar
             btnapli.Enabled = false;

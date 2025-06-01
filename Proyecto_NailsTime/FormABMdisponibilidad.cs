@@ -28,7 +28,6 @@ namespace Proyecto_NailsTime
         {
             
             var lista = bll.LeerDisponibilidades_750VR();
-
             dataGridView1.DataSource = lista;
             PintarFilasInactivas();
         }
@@ -59,6 +58,7 @@ namespace Proyecto_NailsTime
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             CargarManicuristas();
+            CargarDisponibilidad();
         }
 
         private void btnmod_Click(object sender, EventArgs e)
@@ -102,7 +102,6 @@ namespace Proyecto_NailsTime
 
         private void AplicarAlta()
         {
-
             try
             {
                 // Validamos primero
@@ -110,7 +109,7 @@ namespace Proyecto_NailsTime
                     return;
                 int dni = Convert.ToInt32(txtdnimanic.Text);
                 string nom = cmbmanic.Text;
-                string dia = cmbdia.Text;
+                DateTime dia = dateTimePicker1.MinDate;
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
 
@@ -120,9 +119,8 @@ namespace Proyecto_NailsTime
                 BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR
                 {
                     DNImanic_750VR = dni,
-                    //Nombremanic_750VR = nom,
                     HoraInicio_750VR = inicio,
-                    DiaSemana_750VR = dia,
+                    Fecha_750VR = dia,
                     HoraFin_750VR = fin,
                     activo_750VR = true,
                     estado_750VR = false
@@ -134,7 +132,7 @@ namespace Proyecto_NailsTime
                 LimpiarCampos();
                 //CargarUsuarios();
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("No se pudo");
 
@@ -148,7 +146,7 @@ namespace Proyecto_NailsTime
                 return false;
             }
 
-            if (cmbdia.SelectedItem == null)
+            if (dateTimePicker1.Text == null)
             {
                 MessageBox.Show("Debe seleccionar un día de la semana.");
                 return false;
@@ -179,7 +177,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                d.DiaSemana_750VR = cmbdia.Text;
+                d.Fecha_750VR = dateTimePicker1.MinDate;
                 d.HoraInicio_750VR = TimeSpan.Parse(txtinicio.Text);
                 d.HoraFin_750VR = TimeSpan.Parse(txtfin.Text);
                 bll.ModificarDisponibilidad_750VR(d);
@@ -206,7 +204,7 @@ namespace Proyecto_NailsTime
         }
         private void ActivarModoEdicion()
         {
-            cmbdia.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
+            dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
             //btnaplicar.Enabled = true;
             //btncancelar.Enabled = true;
             //btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = false;
@@ -224,7 +222,7 @@ namespace Proyecto_NailsTime
 
         private void LimpiarCampos()
         {
-            cmbdia.SelectedIndex = -1;
+            
             cmbmanic.SelectedIndex = -1;
             txtinicio.Clear();
             txtfin.Clear();

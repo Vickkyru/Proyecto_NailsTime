@@ -43,8 +43,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtnombre = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbtec = new System.Windows.Forms.ComboBox();
             this.lblmensaje = new System.Windows.Forms.Label();
+            this.txttec = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,7 +120,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(75, 335);
+            this.label7.Location = new System.Drawing.Point(75, 362);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 87;
@@ -129,7 +129,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(75, 281);
+            this.label6.Location = new System.Drawing.Point(75, 308);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(44, 13);
             this.label6.TabIndex = 86;
@@ -138,7 +138,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(75, 309);
+            this.label5.Location = new System.Drawing.Point(75, 336);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(46, 13);
             this.label5.TabIndex = 85;
@@ -146,7 +146,7 @@
             // 
             // txtduracion
             // 
-            this.txtduracion.Location = new System.Drawing.Point(133, 328);
+            this.txtduracion.Location = new System.Drawing.Point(133, 355);
             this.txtduracion.Name = "txtduracion";
             this.txtduracion.Size = new System.Drawing.Size(121, 20);
             this.txtduracion.TabIndex = 81;
@@ -154,7 +154,7 @@
             // 
             // txtprecio
             // 
-            this.txtprecio.Location = new System.Drawing.Point(133, 354);
+            this.txtprecio.Location = new System.Drawing.Point(133, 381);
             this.txtprecio.Name = "txtprecio";
             this.txtprecio.Size = new System.Drawing.Size(121, 20);
             this.txtprecio.TabIndex = 82;
@@ -163,7 +163,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(82, 361);
+            this.label4.Location = new System.Drawing.Point(82, 388);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 84;
@@ -171,7 +171,7 @@
             // 
             // txtnombre
             // 
-            this.txtnombre.Location = new System.Drawing.Point(133, 274);
+            this.txtnombre.Location = new System.Drawing.Point(133, 301);
             this.txtnombre.Name = "txtnombre";
             this.txtnombre.Size = new System.Drawing.Size(121, 20);
             this.txtnombre.TabIndex = 79;
@@ -187,15 +187,6 @@
             this.label2.TabIndex = 83;
             this.label2.Text = "Maestro de servicio";
             // 
-            // cmbtec
-            // 
-            this.cmbtec.FormattingEnabled = true;
-            this.cmbtec.Location = new System.Drawing.Point(133, 301);
-            this.cmbtec.Name = "cmbtec";
-            this.cmbtec.Size = new System.Drawing.Size(121, 21);
-            this.cmbtec.TabIndex = 99;
-            this.cmbtec.SelectedIndexChanged += new System.EventHandler(this.cmbtec_SelectedIndexChanged);
-            // 
             // lblmensaje
             // 
             this.lblmensaje.Cursor = System.Windows.Forms.Cursors.Default;
@@ -206,14 +197,21 @@
             this.lblmensaje.TabIndex = 100;
             this.lblmensaje.Click += new System.EventHandler(this.lblmensaje_Click);
             // 
+            // txttec
+            // 
+            this.txttec.Location = new System.Drawing.Point(133, 327);
+            this.txttec.Name = "txttec";
+            this.txttec.Size = new System.Drawing.Size(121, 20);
+            this.txttec.TabIndex = 101;
+            // 
             // FormABMservicios_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txttec);
             this.Controls.Add(this.lblmensaje);
-            this.Controls.Add(this.cmbtec);
             this.Controls.Add(this.btnapli);
             this.Controls.Add(this.btnelim);
             this.Controls.Add(this.btnmod);
@@ -255,7 +253,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtnombre;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbtec;
         private System.Windows.Forms.Label lblmensaje;
+        private System.Windows.Forms.TextBox txttec;
     }
 }

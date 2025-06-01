@@ -16,7 +16,7 @@ namespace Proyecto_NailsTime
     public partial class FormRegistrarReserva_750VR : Form
     {
         private List<BEServicio_750VR> listaServicios;
-        BLLServicio_750VR bllServicio = new BLLServicio_750VR();
+       
         public FormRegistrarReserva_750VR()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace Proyecto_NailsTime
 
         private void CargarServicios()
         {
-           
+            BLLServicio_750VR bllServicio = new BLLServicio_750VR();
             listaServicios = bllServicio.leerEntidadesActivas_750VR_750VR(); // Te lo muestro abajo
 
             var nombresServicio = listaServicios
@@ -37,6 +37,13 @@ namespace Proyecto_NailsTime
 
             cmbserv.DataSource = nombresServicio;
             cmbserv.SelectedIndex = 0; // ← se muestra en blanco
+        }
+
+        private void CargarDisponibilidad()
+        {
+            BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
+            var lista = bll.leerDisponibilidadesActivas_750VR();
+            dataGridView1.DataSource = lista;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -123,6 +130,7 @@ namespace Proyecto_NailsTime
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
             CargarServicios();
+            CargarDisponibilidad();
         }
     }
 }
