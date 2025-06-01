@@ -24,7 +24,7 @@ namespace DAL_VR750
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", disp.DNImanic_750VR);
-                cmd.Parameters.AddWithValue("@Nom", disp.Nombremanic_750VR);
+                //cmd.Parameters.AddWithValue("@Nom", disp.Nombremanic_750VR);
                 cmd.Parameters.AddWithValue("@Dia", disp.DiaSemana_750VR);
                 cmd.Parameters.AddWithValue("@Inicio", disp.HoraInicio_750VR);
                 cmd.Parameters.AddWithValue("@Fin", disp.HoraFin_750VR);
@@ -86,8 +86,8 @@ namespace DAL_VR750
                     {
                         IdDisponibilidad_750VR = Convert.ToInt32(reader["IdDisponibilidad_VR750"]),
                         DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
-                        Nombremanic_750VR = Convert.ToString(reader["NombreManic_VR750"]),
-                        DiaSemana_750VR = Convert.ToInt32(reader["DiaSemana_VR750"]),
+                        //Nombremanic_750VR = Convert.ToString(reader["NombreManic_VR750"]),
+                        DiaSemana_750VR = Convert.ToString(reader["DiaSemana_VR750"]),
                         HoraInicio_750VR = (TimeSpan)reader["HoraInicio_VR750"],
                         HoraFin_750VR = (TimeSpan)reader["HoraFin_VR750"],
                         activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),

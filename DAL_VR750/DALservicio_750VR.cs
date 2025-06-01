@@ -69,75 +69,41 @@ namespace DAL_VR750
             }
         }
 
-        //public List<BECliente_750VR> BuscarClientes_750VR(/*int id, */string nombre, string tecnica, int duracion, decimal precio)
-        //{
-        //    List<BECliente_750VR> lista = new List<BECliente_750VR>();
+        public List<BEServicio_750VR> leerEntidadesActivas_750VR_750VR()
+        {
+            var lista = LeerEntidades_750VR();
+            return lista.Where(u => u.activo_750VR).ToList();
+        }
 
-        //    using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-        //    {
-        //        conn.Open();
+        public List<BEServicio_750VR> LeerEntidades_750VR() //busca todos
+        {
+            List<BEServicio_750VR> lista = new List<BEServicio_750VR>();
 
-        //        string query = "SELECT * FROM Servicio_VR750 WHERE 1=1";
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Servicio_VR750 ";
 
-        //        //if (!string.IsNullOrEmpty(id))
-        //        //    query += " AND CAST(IdServicio_VR750 AS VARCHAR) LIKE @DNI";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
 
-        //        if (!string.IsNullOrEmpty(nombre))
-        //            query += " AND Nombre_VR750 LIKE @Nombre";
+                while (reader.Read())
+                {
+                    BEServicio_750VR user = new BEServicio_750VR
+                    {
+                        idServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
+                        nombre_750VR = reader["Nombre_VR750"].ToString(),
+                        tecnica_750VR = reader["Tecnica_VR750"].ToString(),
+                        duracion_750VR = Convert.ToInt32(reader["DuracionMinutos_VR750"]),
+                        precio_750VR = Convert.ToInt32(reader["Precio_VR750"]),
+                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"])
 
-        //        if (!string.IsNullOrEmpty(tecnica))
-        //            query += " AND Apellido_VR750 LIKE @Apellido";
+                    };
 
-        //        if (!string.IsNullOrEmpty(duracion))
-        //            query += " AND Email_VR750 LIKE @Email";
-
-        //        if (!string.IsNullOrEmpty(precio))
-        //            query += " AND Direccion_VR750 LIKE @Direccion";
-
-        //        if (!string.IsNullOrEmpty(celu))
-        //            query += " AND Celular_VR750 LIKE @Celular";
-
-        //        SqlCommand cmd = new SqlCommand(query, conn);
-
-        //        //if (!string.IsNullOrEmpty(dni))
-        //        //    cmd.Parameters.AddWithValue("@DNI", "%" + dni + "%");
-
-        //        if (!string.IsNullOrEmpty(nombre))
-        //            cmd.Parameters.AddWithValue("@Nombre", "%" + nombre + "%");
-
-        //        if (!string.IsNullOrEmpty(apellido))
-        //            cmd.Parameters.AddWithValue("@Apellido", "%" + apellido + "%");
-
-        //        if (!string.IsNullOrEmpty(email))
-        //            cmd.Parameters.AddWithValue("@Email", "%" + email + "%");
-
-        //        if (!string.IsNullOrEmpty(dire))
-        //            cmd.Parameters.AddWithValue("@Direccion", "%" + dire + "%");
-
-        //        if (!string.IsNullOrEmpty(celu))
-        //            cmd.Parameters.AddWithValue("@Celular", "%" + celu + "%");
-
-        //        SqlDataReader reader = cmd.ExecuteReader();
-
-        //        while (reader.Read())
-        //        {
-        //            BECliente_750VR userr = new BECliente_750VR
-        //            {
-        //                dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
-        //                nombre_750VR = reader["Nombre_VR750"].ToString(),
-        //                apellido_750VR = reader["Apellido_VR750"].ToString(),
-        //                gmail_750VR = reader["Email_VR750"].ToString(),
-        //                direccion_750VR = reader["Direccion_VR750"].ToString(),
-        //                celular_750VR = Convert.ToInt32(reader["Celular_VR750"]),
-        //                activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
-
-        //            };
-
-        //            lista.Add(userr);
-        //        }
-        //    }
-
-        //    return lista;
-        //}
+                    lista.Add(user);
+                }
+            }
+            return lista;
+        }
     }
 }

@@ -34,12 +34,12 @@ namespace DAL_VR750
                             IdServicio = Convert.ToInt32(reader["IdServicio_VR750"]),
                             Fecha = Convert.ToDateTime(reader["Fecha_VR750"]),
                             HoraInicio = (TimeSpan)reader["HoraInicio_VR750"],
-                            DuracionMinutos = Convert.ToInt32(reader["DuracionMinutos_VR750"]),
-                            Precio = Convert.ToDecimal(reader["Precio_VR750"]),
+                            //DuracionMinutos = Convert.ToInt32(reader["DuracionMinutos_VR750"]),
+                            //Precio = Convert.ToDecimal(reader["Precio_VR750"]),
                             Estado = Convert.ToBoolean(reader["Estado_VR750"]),
-                            NombreCliente = reader["NombreCliente_VR750"].ToString(),
-                            NombreManic = reader["NombreManicurista_VR750"].ToString(),
-                            NombreServicio = reader["NombreServicio_VR750"].ToString()
+                            //NombreCliente = reader["NombreCliente_VR750"].ToString(),
+                            //NombreManic = reader["NombreManicurista_VR750"].ToString(),
+                            //NombreServicio = reader["NombreServicio_VR750"].ToString()
                         };
                         lista.Add(reserva);
                     }
@@ -67,11 +67,11 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio);
                 cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha);
                 cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio);
-                cmd.Parameters.AddWithValue("@Duracion", reserva.DuracionMinutos);
-                cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
-                cmd.Parameters.AddWithValue("@NombreCliente", reserva.NombreCliente);
-                cmd.Parameters.AddWithValue("@NombreManicurista", reserva.NombreManic);
-                cmd.Parameters.AddWithValue("@NombreServicio", reserva.NombreServicio);
+                //cmd.Parameters.AddWithValue("@Duracion", reserva.DuracionMinutos);
+                //cmd.Parameters.AddWithValue("@Precio", reserva.Precio);
+                //cmd.Parameters.AddWithValue("@NombreCliente", reserva.NombreCliente);
+                //cmd.Parameters.AddWithValue("@NombreManicurista", reserva.NombreManic);
+                //cmd.Parameters.AddWithValue("@NombreServicio", reserva.NombreServicio);
 
                 cmd.ExecuteNonQuery();
             }

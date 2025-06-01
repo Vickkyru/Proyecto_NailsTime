@@ -142,9 +142,8 @@ namespace DAL_VR750
                     BEGIN
                         CREATE TABLE Disponibilidad_VR750 (
                             IdDisponibilidad_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                            DNIempleado_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
-                            NombreManic_VR750 VARCHAR(50) NOT NULL,
-                            DiaSemana_VR750 INT NOT NULL,
+                            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
+                            DiaSemana_VR750 varchar(50) NOT NULL,
                             HoraInicio_VR750 TIME NOT NULL,
                             HoraFin_VR750 TIME NOT NULL,
                             Activo_VR750 BIT DEFAULT 1,
@@ -167,9 +166,6 @@ namespace DAL_VR750
                             DuracionMinutos_VR750 INT NOT NULL,
                             Precio_VR750 DECIMAL(10,2) NOT NULL,
                             Estado_VR750 NVARCHAR(20) DEFAULT 'Pendiente',
- NombreCliente_VR750 NVARCHAR(100),
-    NombreManicurista_VR750 NVARCHAR(100),
-    NombreServicio_VR750 NVARCHAR(100)
 
                         );
                     END;
@@ -183,7 +179,65 @@ namespace DAL_VR750
         }
 
 
-        //hacer el script de datos
+        public void InsertarServiciosIniciales()
+        {
+            using (SqlConnection conn = new SqlConnection(cadena))
+            {
+                try
+                {
+                    conn.Open();
+                    string script = @"
+                IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)
+                BEGIN
+                    INSERT INTO Servicio_VR750 (Nombre_VR750, Tecnica_VR750, DuracionMinutos_VR750, Precio_VR750, Activo_VR750) VALUES
+                    ('Masajes', 'Relajantes', 60, 8000.00, 1),
+                    ('Masajes', 'Descontracturantes', 60, 9000.00, 1),
+
+                    ('Pedicura', 'Esmaltado tradicional', 20, 4000.00, 1),
+                    ('Pedicura', 'Esmaltado semi', 40, 5000.00, 1),
+                    ('Pedicura', 'Esmaltado tradicional + Spa', 60, 6000.00, 1),
+
+                    ('Manicura', 'Esmaltado tradicional', 30, 4000.00, 1),
+                    ('Manicura', 'Semipermanente', 45, 8000.00, 1),
+                    ('Manicura', 'Kapping con gel', 60, 10000.00, 1),
+                    ('Manicura', 'Uñas esculpidas acrílicas', 90, 12000.00, 1),
+
+                    ('Limpieza facial', 'Profunda', 60, 7000.00, 1),
+                    ('Limpieza facial', 'Express', 30, 4000.00, 1),
+                    ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
+                    ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1);
+//mejorar este script
+                IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
+                BEGIN
+                    INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) VALUES
+                    (46198750, 'Ana', 'López', 'ana.lopez@gmail.com', 'ana.lopez', 'abc123', 'salt1', 'Manicurista', 1, 0),
+                    (28282829, 'Sofía', 'Martínez', 'sofia.martinez@gmail.com', 'sofia.martinez', 'abc123', 'salt2', 'Manicurista', 1, 0),
+                    (30303030, 'Carla', 'Gómez', 'carla.gomez@gmail.com', 'carla.gomez', 'abc123', 'salt3', 'Manicurista', 1, 0);
+                END;
+
+                IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
+                BEGIN
+                    INSERT INTO Disponibilidad_VR750 (DNIempleado_VR750, DiaSemana_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
+                    (28282829, 'Lunes', '09:00', '13:00', 1, 'Desocupado'),
+                    (28282829, 'Miércoles', '14:00', '18:00', 1, 'Desocupado'),
+                    (30303030, 'Martes', '10:00', '14:00', 1, 'Desocupado'),
+                    (30303030, 'Jueves', '15:00', '19:00', 1, 'Desocupado'),
+                    (46168750, 'Viernes', '09:30', '12:30', 1, 'Desocupado'),
+                    (46168750, 'Sábado', '11:00', '15:00', 1, 'Desocupado');
+                END;
+            ";
+
+                    using (SqlCommand cmd = new SqlCommand(script, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al insertar servicios iniciales: " + ex.Message);
+                }
+            }
+        }
 
 
 

@@ -1,4 +1,6 @@
-﻿using BLL_VR750;
+﻿using BE_VR750;
+using BLL_VR750;
+using DAL_VR750;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +15,28 @@ namespace Proyecto_NailsTime
 {
     public partial class FormRegistrarReserva_750VR : Form
     {
+        private List<BEServicio_750VR> listaServicios;
+        BLLServicio_750VR bllServicio = new BLLServicio_750VR();
         public FormRegistrarReserva_750VR()
         {
             InitializeComponent();
+        }
+
+        private void CargarServicios()
+        {
+           
+            listaServicios = bllServicio.leerEntidadesActivas_750VR_750VR(); // Te lo muestro abajo
+
+            var nombresServicio = listaServicios
+                .Select(s => s.nombre_750VR)
+                .Distinct()
+                .ToList();
+
+
+            nombresServicio.Insert(0, ""); // ← esto agrega el valor vacío al principio
+
+            cmbserv.DataSource = nombresServicio;
+            cmbserv.SelectedIndex = 0; // ← se muestra en blanco
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -70,6 +91,38 @@ namespace Proyecto_NailsTime
         {
             FormCobrarServicio_750VR frm = new FormCobrarServicio_750VR();
             frm.ShowDialog();
+        }
+
+        private void cmbserv_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string nombre = cmbserv.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(nombre)) return;
+
+            var tecnicas = listaServicios
+                .Where(s => s.nombre_750VR == nombre)
+                .ToList();
+
+            // Insertar un objeto vacío al principio
+            tecnicas.Insert(0, new BEServicio_750VR { tecnica_750VR = "" });
+
+            cmbtec.DataSource = tecnicas;
+            cmbtec.DisplayMember = "tecnica_750VR";
+            cmbtec.SelectedIndex = 0;
+        }
+
+        private void txttec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbtec.SelectedItem is BEServicio_750VR servicioSeleccionado)
+            {
+                txtpre.Text = servicioSeleccionado.precio_750VR.ToString("C"); // con símbolo moneda
+                txthorest.Text = servicioSeleccionado.duracion_750VR + " min";
+            }
+       
+        }
+
+        private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
+        {
+            CargarServicios();
         }
     }
 }

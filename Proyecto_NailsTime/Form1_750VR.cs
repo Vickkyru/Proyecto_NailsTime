@@ -25,11 +25,9 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             db.VerificarOCrearBaseDeDatos();
             db.VerificarYCrearTablaUsuarios_750VR();
+            db.InsertarServiciosIniciales();
 
         }
-
-        
-
 
 
         private void AbrirForm(Form nuevoForm)

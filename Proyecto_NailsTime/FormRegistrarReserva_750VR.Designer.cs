@@ -49,7 +49,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.cmbserv = new System.Windows.Forms.ComboBox();
-            this.txttec = new System.Windows.Forms.ComboBox();
+            this.cmbtec = new System.Windows.Forms.ComboBox();
             this.txtmanic = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -245,14 +245,16 @@
             this.cmbserv.Name = "cmbserv";
             this.cmbserv.Size = new System.Drawing.Size(100, 21);
             this.cmbserv.TabIndex = 30;
+            this.cmbserv.SelectedIndexChanged += new System.EventHandler(this.cmbserv_SelectedIndexChanged);
             // 
-            // txttec
+            // cmbtec
             // 
-            this.txttec.FormattingEnabled = true;
-            this.txttec.Location = new System.Drawing.Point(292, 110);
-            this.txttec.Name = "txttec";
-            this.txttec.Size = new System.Drawing.Size(105, 21);
-            this.txttec.TabIndex = 31;
+            this.cmbtec.FormattingEnabled = true;
+            this.cmbtec.Location = new System.Drawing.Point(292, 110);
+            this.cmbtec.Name = "cmbtec";
+            this.cmbtec.Size = new System.Drawing.Size(105, 21);
+            this.cmbtec.TabIndex = 31;
+            this.cmbtec.SelectedIndexChanged += new System.EventHandler(this.txttec_SelectedIndexChanged);
             // 
             // txtmanic
             // 
@@ -267,9 +269,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(646, 117);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(75, 13);
+            this.label14.Size = new System.Drawing.Size(50, 13);
             this.label14.TabIndex = 33;
-            this.label14.Text = "Hora estimada";
+            this.label14.Text = "Duracion";
             // 
             // label15
             // 
@@ -385,7 +387,7 @@
             this.Controls.Add(this.txtdia);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.txtmanic);
-            this.Controls.Add(this.txttec);
+            this.Controls.Add(this.cmbtec);
             this.Controls.Add(this.cmbserv);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -409,6 +411,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormRegistrarReserva_750VR";
             this.Text = "FormGestionReserva_750VR";
+            this.Load += new System.EventHandler(this.FormRegistrarReserva_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
@@ -439,7 +442,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cmbserv;
-        private System.Windows.Forms.ComboBox txttec;
+        private System.Windows.Forms.ComboBox cmbtec;
         private System.Windows.Forms.ComboBox txtmanic;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;

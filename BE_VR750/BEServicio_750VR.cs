@@ -16,7 +16,10 @@ namespace BE_VR750
         public decimal precio_750VR { get;set;}
         public bool activo_750VR { get; set; }
 
-
+        public override string ToString()
+        {
+            return tecnica_750VR;
+        }
 
     }
 }

@@ -110,7 +110,7 @@ namespace Proyecto_NailsTime
                     return;
                 int dni = Convert.ToInt32(txtdnimanic.Text);
                 string nom = cmbmanic.Text;
-                int dia = cmbdia.SelectedIndex + 1;
+                string dia = cmbdia.Text;
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
 
@@ -120,7 +120,7 @@ namespace Proyecto_NailsTime
                 BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR
                 {
                     DNImanic_750VR = dni,
-                    Nombremanic_750VR = nom,
+                    //Nombremanic_750VR = nom,
                     HoraInicio_750VR = inicio,
                     DiaSemana_750VR = dia,
                     HoraFin_750VR = fin,
@@ -179,7 +179,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                d.DiaSemana_750VR = cmbdia.SelectedIndex + 1;
+                d.DiaSemana_750VR = cmbdia.Text;
                 d.HoraInicio_750VR = TimeSpan.Parse(txtinicio.Text);
                 d.HoraFin_750VR = TimeSpan.Parse(txtfin.Text);
                 bll.ModificarDisponibilidad_750VR(d);
@@ -234,8 +234,8 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                cmbmanic.SelectedValue = d.Nombremanic_750VR;
-                cmbdia.SelectedIndex = d.DiaSemana_750VR - 1;
+                //cmbmanic.SelectedValue = d.Nombremanic_750VR;
+                //cmbdia.SelectedIndex = d.DiaSemana_750VR - 1;
                 txtinicio.Text = d.HoraInicio_750VR.ToString();
                 txtfin.Text = d.HoraFin_750VR.ToString();
             }
