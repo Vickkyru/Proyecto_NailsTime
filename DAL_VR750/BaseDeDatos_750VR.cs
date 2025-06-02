@@ -209,21 +209,9 @@ namespace DAL_VR750
             IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
             BEGIN
                 INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) VALUES
-                (10011234, 'ana', 'lopez', 'ana@gmail.com', 'analopez',
-                 '0935ae7165a594bf172f79181e2f10e7610225e7c5e196491cfe2dfd5e019e43',
-                 'zT8@Lp!xKw#93vNa', 'Manicurista', 1, 0),
-                (10025678, 'sofia', 'martinez', 'sofia@gmail.com', 'sofiamartinez',
-                 '37449c166be0ceaf1f03b7d2f1e1b90efbdb0597287e2c6e74aa318ed20d37fb',
-                 'Wr!7Xp@Lm#93zQc2', 'Manicurista', 1, 0),
-                (10039876, 'carla', 'gomez', 'carla@gmail.com', 'carlagomez',
-                 'c3c41be16154e19e0f65ae70c62a420bb52c3b1ab92cd1f6378a00e87c6a4f60',
-                 'M@p7Qv#XL2!zTkw1', 'Manicurista', 1, 0),
-                (10041234, 'juan', 'perez', 'juan@gmail.com', 'juanperez',
-                 '3d6fd20799b61eb45822531cb62e920fc47ee68db7ed8f9d46033f2cf302ddee',
-                 'Az8#pZ!x7WvQLk23', 'Administrador', 1, 0),
-                (10055678, 'lucia', 'ramirez', 'lucia@gmail.com', 'luciaramirez',
-                 'cb803c98cb17321b5c6d7a9fbc8e4f1e1472a6f85cd7b66c28a5663e7e537b7f',
-                 'Lx1$Ma!Z#9vTpWq7', 'Recepcionista', 1, 0)
+               (10000001, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0),
+(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0),
+(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0);
             END
 
             IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
