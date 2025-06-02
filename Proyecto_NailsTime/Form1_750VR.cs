@@ -101,54 +101,65 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //    ActualizarLabels();
-            //    string rol = SessionManager_750VR.ObtenerInstancia.UsuarioActual.rol_750VR;
+            ActualizarLabels();
 
-            //    switch (rol.ToLower())
-            //    {
-            //        case "manicurista":
-            //            administradorToolStripMenuItem.Enabled = false;
-            //            maestrosToolStripMenuItem.Enabled = false;
-            //            usuarioToolStripMenuItem.Enabled = true;    // login/logout/cambiar clave
-            //            reservaToolStripMenuItem.Enabled = true;    // actualizar reserva
-            //            insumosToolStripMenuItem.Enabled = false;
-            //            reportesToolStripMenuItem.Enabled = false;
-            //            break;
+            if (!SessionManager_750VR.ObtenerInstancia.EstaLogueado_750VR())
+            {
+                
+                BloquearTodo(); // método que desactiva todo
+                return;
+            }
 
-            //        case "recepcionista":
-            //            administradorToolStripMenuItem.Enabled = false;
-            //            maestrosToolStripMenuItem.Enabled = false;
-            //            usuarioToolStripMenuItem.Enabled = true;
-            //            reservaToolStripMenuItem.Enabled = true;    // registrar reserva
-            //            insumosToolStripMenuItem.Enabled = false;
-            //            reportesToolStripMenuItem.Enabled = false;
-            //            break;
+            string rol = SessionManager_750VR.ObtenerInstancia.UsuarioActual.rol_750VR.ToLower();
 
-            //        case "administrador":
-            //            administradorToolStripMenuItem.Enabled = true;
-            //            maestrosToolStripMenuItem.Enabled = true;
-            //            usuarioToolStripMenuItem.Enabled = true;
-            //            reservaToolStripMenuItem.Enabled = true;
-            //            insumosToolStripMenuItem.Enabled = true;
-            //            reportesToolStripMenuItem.Enabled = true;
-            //            break;
+            switch (rol)
+            {
+                case "manicurista":
+                    administradorToolStripMenuItem.Enabled = false;
+                    maestrosToolStripMenuItem.Enabled = false;
+                    usuarioToolStripMenuItem.Enabled = true;
+                    reservaToolStripMenuItem.Enabled = true;
+                    insumosToolStripMenuItem.Enabled = false;
+                    reportesToolStripMenuItem.Enabled = false;
+                    break;
 
-            //        default:
-            //            MessageBox.Show("Rol no reconocido. Se bloquearán todos los accesos.");
-            //            administradorToolStripMenuItem.Enabled = false;
-            //            maestrosToolStripMenuItem.Enabled = false;
-            //            usuarioToolStripMenuItem.Enabled = false;
-            //            reservaToolStripMenuItem.Enabled = false;
-            //            insumosToolStripMenuItem.Enabled = false;
-            //            reportesToolStripMenuItem.Enabled = false;
-            //            break;
-            //    }
+                case "recepcionista":
+                    administradorToolStripMenuItem.Enabled = false;
+                    maestrosToolStripMenuItem.Enabled = false;
+                    usuarioToolStripMenuItem.Enabled = true;
+                    reservaToolStripMenuItem.Enabled = true;
+                    insumosToolStripMenuItem.Enabled = false;
+                    reportesToolStripMenuItem.Enabled = false;
+                    break;
+
+                case "administrador":
+                    administradorToolStripMenuItem.Enabled = true;
+                    maestrosToolStripMenuItem.Enabled = true;
+                    usuarioToolStripMenuItem.Enabled = true;
+                    reservaToolStripMenuItem.Enabled = true;
+                    insumosToolStripMenuItem.Enabled = true;
+                    reportesToolStripMenuItem.Enabled = true;
+                    break;
+
+                default:
+                    BloquearTodo();
+                    break;
+            }
 
         }
+        private void BloquearTodo()
+        {
+            administradorToolStripMenuItem.Enabled = false;
+            maestrosToolStripMenuItem.Enabled = false;
+            usuarioToolStripMenuItem.Enabled = true;
+            reservaToolStripMenuItem.Enabled = false;
+            insumosToolStripMenuItem.Enabled = false;
+            reportesToolStripMenuItem.Enabled = false;
+        }
 
-   
 
-    
+
+
         public void ActualizarLabels()
         {
             var usuario = SessionManager_750VR.ObtenerInstancia.user;
