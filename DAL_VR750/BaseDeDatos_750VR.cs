@@ -210,6 +210,9 @@ namespace DAL_VR750
             BEGIN
                 INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) VALUES
                (10000001, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0),
+(11000001, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0),
+(11100001, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0),
+
 (10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0),
 (10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0);
             END
@@ -217,12 +220,12 @@ namespace DAL_VR750
             IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
             BEGIN
                 INSERT INTO Disponibilidad_VR750 (DNImanic_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
-                (10011234, '2025-07-14', '09:00', '13:00', 1, 0),
-                (10011234, '2025-07-16', '14:00', '18:00', 1, 0),
-                (10025678, '2025-07-15', '10:00', '14:00', 1, 0),
-                (10025678, '2025-07-17', '15:00', '19:00', 1, 0),
-                (10039876, '2025-07-18', '09:30', '12:30', 1, 0),
-                (10039876, '2025-07-19', '11:00', '15:00', 1, 0)
+                (10000001, '2025-07-14', '09:00', '13:00', 1, 0),
+                (10000001, '2025-07-16', '14:00', '18:00', 1, 0),
+                (11000000, '2025-07-15', '10:00', '14:00', 1, 0),
+                (11000000, '2025-07-17', '15:00', '19:00', 1, 0),
+                (11100000, '2025-07-18', '09:30', '12:30', 1, 0),
+                (11100000, '2025-07-19', '11:00', '15:00', 1, 0)
             END
 
             IF NOT EXISTS (SELECT 1 FROM Cliente_VR750 WHERE DNI_VR750 = 33111222)
