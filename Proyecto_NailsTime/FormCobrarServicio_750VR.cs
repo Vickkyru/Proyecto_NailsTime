@@ -89,7 +89,7 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Ingresá la cantidad de cuotas.");
                 return;
             }
-
+            MessageBox.Show("ID que llega para cobrar: " + idReserva);
             // Marcar como cobrada
             BLLReserva_750VR bll = new BLLReserva_750VR();
             bool exito = bll.MarcarComoCobrado(idReserva); // método que ya deberías tener
@@ -104,6 +104,18 @@ namespace Proyecto_NailsTime
             {
                 MessageBox.Show("Error al registrar el pago.");
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK; // o Cancel según corresponda
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK; // o Cancel según corresponda
+            this.Close();
         }
     }
 }

@@ -150,12 +150,14 @@ namespace DAL_VR750
 
                 if (dr.Read())
                 {
-                    return new BEReserva_750VR
+                    var reserva = new BEReserva_750VR
                     {
                         IdReserva_750VR = (int)dr["IdReserva_VR750"],
                         Precio_750VR = Convert.ToDecimal(dr["Precio_VR750"])
-                        // completá lo que necesites
                     };
+
+                    dr.Close(); // ✅ CERRÁS ANTES DE SALIR
+                    return reserva;
                 }
                 return null;
             }

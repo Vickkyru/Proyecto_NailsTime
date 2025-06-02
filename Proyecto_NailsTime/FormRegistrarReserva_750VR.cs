@@ -208,8 +208,8 @@ namespace Proyecto_NailsTime
                     DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
 
                     MessageBox.Show("Reserva creada correctamente.");
-                    CargarReservas();           // si querés actualizar el DataGridView
-                    LimpiarCamposReserva();     // opcional
+                    CargarReservas();
+                    LimpiarCamposReserva();
                     CargarReservasDispo();
 
                     // Llamamos directamente al form de cobro
@@ -228,6 +228,7 @@ namespace Proyecto_NailsTime
 
                     CargarReservas();
                     LimpiarCamposReserva();
+                    CargarReservasDispo();
                 }
                 else
                 {

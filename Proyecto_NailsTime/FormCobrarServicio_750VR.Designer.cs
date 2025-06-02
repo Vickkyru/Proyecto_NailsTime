@@ -38,10 +38,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblimp = new System.Windows.Forms.Label();
+            this.importe = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.importe = new System.Windows.Forms.Label();
-            this.lblimp = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,23 +134,12 @@
             this.panel1.Size = new System.Drawing.Size(183, 64);
             this.panel1.TabIndex = 53;
             // 
-            // button3
+            // lblimp
             // 
-            this.button3.Location = new System.Drawing.Point(232, 312);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 54;
-            this.button3.Text = "Cancelar";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(326, 312);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 55;
-            this.button4.Text = "Salir";
-            this.button4.UseVisualStyleBackColor = true;
+            this.lblimp.Location = new System.Drawing.Point(36, 28);
+            this.lblimp.Name = "lblimp";
+            this.lblimp.Size = new System.Drawing.Size(106, 29);
+            this.lblimp.TabIndex = 56;
             // 
             // importe
             // 
@@ -160,12 +149,25 @@
             this.importe.Size = new System.Drawing.Size(0, 13);
             this.importe.TabIndex = 53;
             // 
-            // lblimp
+            // button3
             // 
-            this.lblimp.Location = new System.Drawing.Point(36, 28);
-            this.lblimp.Name = "lblimp";
-            this.lblimp.Size = new System.Drawing.Size(106, 29);
-            this.lblimp.TabIndex = 56;
+            this.button3.Location = new System.Drawing.Point(232, 312);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 54;
+            this.button3.Text = "Cancelar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(326, 312);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 55;
+            this.button4.Text = "Salir";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FormCobrarServicio_750VR
             // 
