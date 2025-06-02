@@ -114,7 +114,7 @@ namespace Proyecto_NailsTime
 
             switch (rol)
             {
-                case "manicurista":
+                case "Manicurista":
                     administradorToolStripMenuItem.Enabled = false;
                     maestrosToolStripMenuItem.Enabled = false;
                     usuarioToolStripMenuItem.Enabled = true;
@@ -123,7 +123,7 @@ namespace Proyecto_NailsTime
                     reportesToolStripMenuItem.Enabled = false;
                     break;
 
-                case "recepcionista":
+                case "Recepcionista":
                     administradorToolStripMenuItem.Enabled = false;
                     maestrosToolStripMenuItem.Enabled = false;
                     usuarioToolStripMenuItem.Enabled = true;
@@ -132,7 +132,7 @@ namespace Proyecto_NailsTime
                     reportesToolStripMenuItem.Enabled = false;
                     break;
 
-                case "administrador":
+                case "Administrador":
                     administradorToolStripMenuItem.Enabled = true;
                     maestrosToolStripMenuItem.Enabled = true;
                     usuarioToolStripMenuItem.Enabled = true;

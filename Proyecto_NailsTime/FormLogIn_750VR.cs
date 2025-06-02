@@ -44,7 +44,34 @@ namespace Proyecto_NailsTime
             try
             {
                 BLLusuario_750VR bll = new BLLusuario_750VR();
-                BEusuario_750VR usuario = bll.Login_750VR(login, password); // lanza excepción si hay error
+                BEusuario_750VR usuario = bll.ObtenerUsuarioPorLogin_750VR(login); // No valida aún
+
+                if (usuario == null)
+                    throw new Exception("Usuario no encontrado");
+
+                // Validación de contraseña
+                Encriptador_750VR encriptador = new Encriptador_750VR();
+
+                if (string.IsNullOrEmpty(usuario.salt_750VR))
+                {
+                    // Usuario de prueba sin salt
+                    if (usuario.contraseña_750VR != password)
+                        throw new Exception("Contraseña incorrecta (usuario prueba)");
+                }
+                else
+                {
+                    // Usuario real con hash + salt
+                    string hashCalculado = encriptador.HashearConSalt_750VR(password, usuario.salt_750VR);
+
+                    if (usuario.contraseña_750VR != hashCalculado)
+                        throw new Exception("Contraseña incorrecta");
+                }
+
+                if (!usuario.activo_750VR)
+                    throw new Exception("Usuario inactivo");
+
+                if (usuario.bloqueado_750VR)
+                    throw new Exception("Usuario bloqueado");
 
                 intentosFallidos = 0;
 
@@ -52,7 +79,6 @@ namespace Proyecto_NailsTime
                 {
                     MessageBox.Show("Ya hay una sesión activa.");
                     this.Close();
-
                 }
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
@@ -64,13 +90,13 @@ namespace Proyecto_NailsTime
                 string mensaje = ex.Message;
 
                 if (mensaje.Contains("Contraseña incorrecta"))
-                    {
+                {
                     intentosFallidos++;
 
                     if (intentosFallidos >= 3)
                     {
                         BLLusuario_750VR bll = new BLLusuario_750VR();
-                        bll.BloquearUsuario_750VR(login);
+                        bll.BloquearUsuario_750VR(txtuser.Text.Trim());
                         MessageBox.Show("Cuenta bloqueada tras 3 intentos fallidos.");
                     }
                     else
@@ -80,7 +106,6 @@ namespace Proyecto_NailsTime
                 }
                 else
                 {
-                    // Errores por usuario bloqueado, inactivo, etc.
                     MessageBox.Show(mensaje);
                 }
             }
