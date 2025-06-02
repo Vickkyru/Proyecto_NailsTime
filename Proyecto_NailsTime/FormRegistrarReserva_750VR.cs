@@ -211,6 +211,23 @@ namespace Proyecto_NailsTime
                     CargarReservas();           // si querés actualizar el DataGridView
                     LimpiarCamposReserva();     // opcional
                     CargarReservasDispo();
+
+                    // Llamamos directamente al form de cobro
+                    FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
+                    var resultado = frmCobro.ShowDialog();
+
+                    if (resultado == DialogResult.OK)
+                    {
+                        MessageBox.Show("Reserva cobrada correctamente.");
+                    }
+                    else
+                    {
+                        
+                        MessageBox.Show("La reserva quedó pendiente de cobro.");
+                    }
+
+                    CargarReservas();
+                    LimpiarCamposReserva();
                 }
                 else
                 {
@@ -222,6 +239,7 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Error al crear la reserva: " + ex.Message);
             }
         }
+
 
         private void CargarReservas()
         {
@@ -245,8 +263,8 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            FormCobrarServicio_750VR frm = new FormCobrarServicio_750VR();
-            frm.ShowDialog();
+            //FormCobrarServicio_750VR frm = new FormCobrarServicio_750VR();
+            //frm.ShowDialog();
         }
 
         private void cmbserv_SelectedIndexChanged(object sender, EventArgs e)

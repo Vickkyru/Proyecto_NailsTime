@@ -138,5 +138,42 @@ namespace DAL_VR750
     return lista;
         }
 
+        public BEReserva_750VR ObtenerReservaPorId(int id)
+        {
+            using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = "SELECT * FROM Reserva_VR750 WHERE IdReserva_VR750 = @id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", id);
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    return new BEReserva_750VR
+                    {
+                        IdReserva_750VR = (int)dr["IdReserva_VR750"],
+                        Precio_750VR = Convert.ToDecimal(dr["Precio_VR750"])
+                        // completá lo que necesites
+                    };
+                }
+                return null;
+            }
+        }
+
+
+        public bool MarcarComoCobrado(int id)
+        {
+            using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = "UPDATE Reserva_VR750 SET Cobrado_VR750 = 1 WHERE IdReserva_VR750 = @id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                con.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
     }
 }

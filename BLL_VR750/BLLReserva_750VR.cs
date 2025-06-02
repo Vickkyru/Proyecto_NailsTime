@@ -29,5 +29,13 @@ namespace BLL_VR750
         {
             return dal.leerEntidades_750VR();
         }
+        public BEReserva_750VR ObtenerReservaPorId(int id)
+        {
+            return dal.ObtenerReservaPorId(id);
+        }
+        public bool MarcarComoCobrado(int id)
+        {
+            return dal.MarcarComoCobrado(id);
+        }
     }
 }

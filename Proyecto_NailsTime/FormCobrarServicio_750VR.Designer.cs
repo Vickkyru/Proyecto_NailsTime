@@ -30,17 +30,18 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtcuot = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cmbmet = new System.Windows.Forms.ComboBox();
+            this.btnrealiz = new System.Windows.Forms.Button();
+            this.txtnum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.importe = new System.Windows.Forms.Label();
+            this.lblimp = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,12 +63,12 @@
             this.label6.TabIndex = 42;
             this.label6.Text = "Numero de tarjeta";
             // 
-            // textBox1
+            // txtcuot
             // 
-            this.textBox1.Location = new System.Drawing.Point(66, 286);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 41;
+            this.txtcuot.Location = new System.Drawing.Point(66, 286);
+            this.txtcuot.Name = "txtcuot";
+            this.txtcuot.Size = new System.Drawing.Size(100, 20);
+            this.txtcuot.TabIndex = 41;
             // 
             // label4
             // 
@@ -78,29 +79,31 @@
             this.label4.TabIndex = 40;
             this.label4.Text = "Metodo de pago";
             // 
-            // comboBox1
+            // cmbmet
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(66, 155);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 39;
+            this.cmbmet.FormattingEnabled = true;
+            this.cmbmet.Location = new System.Drawing.Point(66, 155);
+            this.cmbmet.Name = "cmbmet";
+            this.cmbmet.Size = new System.Drawing.Size(121, 21);
+            this.cmbmet.TabIndex = 39;
+            this.cmbmet.SelectedIndexChanged += new System.EventHandler(this.cmbmet_SelectedIndexChanged);
             // 
-            // button2
+            // btnrealiz
             // 
-            this.button2.Location = new System.Drawing.Point(232, 270);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 36;
-            this.button2.Text = "Realizar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnrealiz.Location = new System.Drawing.Point(232, 270);
+            this.btnrealiz.Name = "btnrealiz";
+            this.btnrealiz.Size = new System.Drawing.Size(75, 23);
+            this.btnrealiz.TabIndex = 36;
+            this.btnrealiz.Text = "Realizar";
+            this.btnrealiz.UseVisualStyleBackColor = true;
+            this.btnrealiz.Click += new System.EventHandler(this.btnrealiz_Click);
             // 
-            // textBox2
+            // txtnum
             // 
-            this.textBox2.Location = new System.Drawing.Point(66, 220);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 35;
+            this.txtnum.Location = new System.Drawing.Point(66, 220);
+            this.txtnum.Name = "txtnum";
+            this.txtnum.Size = new System.Drawing.Size(100, 20);
+            this.txtnum.TabIndex = 35;
             // 
             // label1
             // 
@@ -115,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 13);
+            this.label3.Location = new System.Drawing.Point(48, 13);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 52;
@@ -123,21 +126,13 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.lblimp);
+            this.panel1.Controls.Add(this.importe);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Location = new System.Drawing.Point(232, 176);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(183, 64);
             this.panel1.TabIndex = 53;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(105, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
-            this.label5.TabIndex = 53;
-            this.label5.Text = "num importe";
             // 
             // button3
             // 
@@ -157,6 +152,21 @@
             this.button4.Text = "Salir";
             this.button4.UseVisualStyleBackColor = true;
             // 
+            // importe
+            // 
+            this.importe.AutoSize = true;
+            this.importe.Location = new System.Drawing.Point(105, 13);
+            this.importe.Name = "importe";
+            this.importe.Size = new System.Drawing.Size(0, 13);
+            this.importe.TabIndex = 53;
+            // 
+            // lblimp
+            // 
+            this.lblimp.Location = new System.Drawing.Point(36, 28);
+            this.lblimp.Name = "lblimp";
+            this.lblimp.Size = new System.Drawing.Size(106, 29);
+            this.lblimp.TabIndex = 56;
+            // 
             // FormCobrarServicio_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,14 +178,15 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtcuot);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.cmbmet);
+            this.Controls.Add(this.btnrealiz);
+            this.Controls.Add(this.txtnum);
             this.Controls.Add(this.label1);
             this.Name = "FormCobrarServicio_750VR";
             this.Text = "CobrarReserva";
+            this.Load += new System.EventHandler(this.FormCobrarServicio_750VR_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -186,16 +197,17 @@
         #endregion
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtcuot;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.ComboBox cmbmet;
+        private System.Windows.Forms.Button btnrealiz;
+        private System.Windows.Forms.TextBox txtnum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label lblimp;
+        private System.Windows.Forms.Label importe;
     }
 }
