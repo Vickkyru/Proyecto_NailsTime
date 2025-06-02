@@ -101,24 +101,52 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ActualizarLabels();
-            //DeshabilitarMenus();
-            //MostrarDatosUsuario();
+            //    ActualizarLabels();
+            //    string rol = SessionManager_750VR.ObtenerInstancia.UsuarioActual.rol_750VR;
+
+            //    switch (rol.ToLower())
+            //    {
+            //        case "manicurista":
+            //            administradorToolStripMenuItem.Enabled = false;
+            //            maestrosToolStripMenuItem.Enabled = false;
+            //            usuarioToolStripMenuItem.Enabled = true;    // login/logout/cambiar clave
+            //            reservaToolStripMenuItem.Enabled = true;    // actualizar reserva
+            //            insumosToolStripMenuItem.Enabled = false;
+            //            reportesToolStripMenuItem.Enabled = false;
+            //            break;
+
+            //        case "recepcionista":
+            //            administradorToolStripMenuItem.Enabled = false;
+            //            maestrosToolStripMenuItem.Enabled = false;
+            //            usuarioToolStripMenuItem.Enabled = true;
+            //            reservaToolStripMenuItem.Enabled = true;    // registrar reserva
+            //            insumosToolStripMenuItem.Enabled = false;
+            //            reportesToolStripMenuItem.Enabled = false;
+            //            break;
+
+            //        case "administrador":
+            //            administradorToolStripMenuItem.Enabled = true;
+            //            maestrosToolStripMenuItem.Enabled = true;
+            //            usuarioToolStripMenuItem.Enabled = true;
+            //            reservaToolStripMenuItem.Enabled = true;
+            //            insumosToolStripMenuItem.Enabled = true;
+            //            reportesToolStripMenuItem.Enabled = true;
+            //            break;
+
+            //        default:
+            //            MessageBox.Show("Rol no reconocido. Se bloquearán todos los accesos.");
+            //            administradorToolStripMenuItem.Enabled = false;
+            //            maestrosToolStripMenuItem.Enabled = false;
+            //            usuarioToolStripMenuItem.Enabled = false;
+            //            reservaToolStripMenuItem.Enabled = false;
+            //            insumosToolStripMenuItem.Enabled = false;
+            //            reportesToolStripMenuItem.Enabled = false;
+            //            break;
+            //    }
+
         }
 
-        private void DeshabilitarMenus()
-        {
-            administradorToolStripMenuItem.Enabled = false;
-            maestrosToolStripMenuItem.Enabled = false;
-            reservaToolStripMenuItem.Enabled = false;
-            insumosToolStripMenuItem.Enabled = false;
-            reportesToolStripMenuItem.Enabled = false;
-            ayudaToolStripMenuItem.Enabled = false;
-            logoutToolStripMenuItem.Enabled = false;
-
-            loginToolStripMenuItem.Enabled = true;
-            usuariosToolStripMenuItem.Enabled = true;
-        }
+   
 
     
         public void ActualizarLabels()

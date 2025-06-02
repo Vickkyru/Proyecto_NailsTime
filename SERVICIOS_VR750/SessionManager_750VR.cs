@@ -56,12 +56,11 @@ namespace SERVICIOS_VR750
             }
         }
 
-        // ¿Está logueado?
-        //public bool EstaLogueado_750VR()
-        //{
-        //    return user != null;
-        //}
+        public bool EstaLogueado_750VR()
+        {
+            return user != null;
+        }
 
-        //public BEusuario_750VR UsuarioActual => user;
+        public BEusuario_750VR UsuarioActual => user;
     }
 }

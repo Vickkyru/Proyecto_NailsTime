@@ -202,7 +202,9 @@ namespace Proyecto_NailsTime
 
                     // Guardar la reserva
                     BLLReserva_750VR bllReserva = new BLLReserva_750VR();
-                    bllReserva.CrearReserva_750VR(nuevaReserva);
+                    //bllReserva.CrearReserva_750VR(nuevaReserva);
+                    int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);
+                    nuevaReserva.IdReserva_750VR = nuevoID;
 
                     // 🔥 ACÁ VA LA DIVISIÓN DE LA DISPONIBILIDAD
                     DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));

@@ -49,29 +49,31 @@ namespace DAL_VR750
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
 
-        public void CrearReserva_750VR(BEReserva_750VR reserva)
+        public int CrearReserva_750VR(BEReserva_750VR reserva)
         {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
-                conn.Open();
                 string query = @"
-                INSERT INTO Reserva_VR750 
-                (DNIcli_VR750, DNImanic_VR750, IdServicio_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Precio_VR750, Estado_VR750, Cobrado_VR750) 
-                VALUES (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @Duracion, @Precio, @Estado, @Cobrado)";
+            INSERT INTO Reserva_VR750 
+            (DNIcli_VR750, DNImanic_VR750, IdServicio_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Precio_VR750, Estado_VR750, Cobrado_VR750)
+            VALUES 
+            (@DNIcli, @DNImanic, @IdServicio, @Fecha, @HoraInicio, @HoraFin, @Precio, @Estado, @Cobrado);
+            SELECT SCOPE_IDENTITY();";  // <<< esto devuelve el ID generado
 
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli_750VR);
                 cmd.Parameters.AddWithValue("@DNImanic", reserva.DNImanic_750VR);
                 cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio_750VR);
                 cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha_750VR);
                 cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio_750VR);
-                cmd.Parameters.AddWithValue("@Duracion", reserva.HoraFin_750VR);
+                cmd.Parameters.AddWithValue("@HoraFin", reserva.HoraFin_750VR);
                 cmd.Parameters.AddWithValue("@Precio", reserva.Precio_750VR);
                 cmd.Parameters.AddWithValue("@Estado", reserva.Estado_750VR);
                 cmd.Parameters.AddWithValue("@Cobrado", reserva.Cobrado_750VR);
 
-
-                cmd.ExecuteNonQuery();
+                con.Open();
+                object result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result); // <<< retorna el ID a tu objeto
             }
         }
         public List<BEReserva_750VR> leerEntidades_750VR() //busca todos
