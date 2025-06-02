@@ -76,37 +76,66 @@ namespace DAL_VR750
         }
         public List<BEReserva_750VR> leerEntidades_750VR() //busca todos
         {
-            List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
+           List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
 
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+    using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
+    {
+        string query = @"
+        SELECT r.*, 
+               c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
+               u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
+               s.Tecnica_VR750 AS Tecnica, s.Precio_VR750 AS PrecioServ
+        FROM Reserva_VR750 r
+        LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
+        LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
+        LEFT JOIN Servicio_VR750 s ON r.IdServicio_VR750 = s.idServicio_VR750";
+
+        SqlCommand cmd = new SqlCommand(query, con);
+        con.Open();
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var reserva = new BEReserva_750VR
             {
-                conn.Open();
-                string query = "SELECT * FROM Reserva_VR750";
+                IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
+                DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
+                DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
+                IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
+                Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
+                HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
+                HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
+                Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
+                Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
+                Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
 
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                cliente = new BECliente_750VR
                 {
-                    BEReserva_750VR user = new BEReserva_750VR
-                    {
-                        IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
-                        DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
-                        DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
-                        IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
-                        Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
-                        HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
-                        HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
-                        Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
-                        Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
-                        Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
-                    };
+                    nombre_750VR = reader["NombreCliente"].ToString(),
+                    apellido_750VR = reader["ApellidoCliente"].ToString()
+                },
 
-                    lista.Add(user);
+                manic = new BEusuario_750VR
+                {
+                    nombre_750VR = reader["NombreManic"].ToString(),
+                    apellido_750VR = reader["ApellidoManic"].ToString()
+                },
+
+                serv = new BEServicio_750VR
+                {
+                    tecnica_750VR = reader["Tecnica"].ToString(),
+                    precio_750VR = Convert.ToDecimal(reader["PrecioServ"])
                 }
-            }
+            };
 
-            return lista;
+            lista.Add(reserva);
+        }
+
+        reader.Close();
+    }
+
+    return lista;
         }
 
     }

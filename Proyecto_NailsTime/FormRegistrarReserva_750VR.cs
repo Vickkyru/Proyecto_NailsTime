@@ -210,6 +210,7 @@ namespace Proyecto_NailsTime
                     MessageBox.Show("Reserva creada correctamente.");
                     CargarReservas();           // si querés actualizar el DataGridView
                     LimpiarCamposReserva();     // opcional
+                    CargarReservasDispo();
                 }
                 else
                 {
@@ -278,6 +279,7 @@ namespace Proyecto_NailsTime
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
             CargarServicios();
+            CargarReservasDispo();
         
             CargarManicuristas();
             CargarDisponibilidadesConNombre();
@@ -343,6 +345,48 @@ namespace Proyecto_NailsTime
 
             // 3. Eliminamos o marcamos como inactiva la original
             blldispo.CambiarEstado_750VR(dispo.IdDisponibilidad_750VR, false); // o inactivar lógica
+            CargarDisponibilidadesConNombre();
+        }
+
+        public void CargarReservasDispo()
+        {
+         
+
+            BLLReserva_750VR bll = new BLLReserva_750VR();
+            var lista = bll.leerEntidades(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
+
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("ID", typeof(int));
+            tabla.Columns.Add("Cliente", typeof(string));
+            tabla.Columns.Add("Manicurista", typeof(string));
+            tabla.Columns.Add("Servicio", typeof(string));
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Hora Inicio", typeof(string));
+            tabla.Columns.Add("Hora Fin", typeof(string));
+            tabla.Columns.Add("Precio", typeof(decimal));
+            tabla.Columns.Add("Cobrado", typeof(string));
+
+            foreach (var r in lista)
+            {
+                string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : "Desconocido";
+                string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : "Desconocido";
+                string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : "Sin servicio";
+
+                tabla.Rows.Add(
+                    r.IdReserva_750VR,
+                    cliente,
+                    manic,
+                    servicio,
+                    r.Fecha_750VR.Date,
+                    r.HoraInicio_750VR.ToString(@"hh\:mm"),
+                    r.HoraFin_750VR.ToString(@"hh\:mm"),
+                    r.Precio_750VR,
+                    r.Cobrado_750VR ? "Sí" : "No"
+                );
+            }
+
+            dataGridView2.DataSource = tabla;
+            dataGridView2.Columns["ID"].Visible = false; // opcional
         }
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
