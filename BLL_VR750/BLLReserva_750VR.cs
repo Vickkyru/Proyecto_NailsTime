@@ -37,5 +37,11 @@ namespace BLL_VR750
         {
             return dal.MarcarComoCobrado(id);
         }
+
+        public void ActualizarEstadoReserva(int idReserva, string nuevoEstado)
+        {
+            
+            dal.ActualizarEstadoReserva(idReserva, nuevoEstado);
+        }
     }
 }

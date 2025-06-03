@@ -25,7 +25,7 @@ namespace BE_VR750
         public TimeSpan HoraFin_750VR { get; set; }
         public decimal Precio_750VR { get; set; }
 
-        public bool Estado_750VR { get; set; } 
+        public string Estado_750VR { get; set; }  // "Pendiente", "Realizado", "Cancelado"
         public bool Cobrado_750VR { get; set; }
 
     }

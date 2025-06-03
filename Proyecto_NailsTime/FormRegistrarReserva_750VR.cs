@@ -44,15 +44,12 @@ namespace Proyecto_NailsTime
 
         private void CargarDisponibilidadesConNombre()
         {
-            // Instanciás las BLL
             BLLdisponibilidad_750VR bllDispo = new BLLdisponibilidad_750VR();
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
 
-            // Traés las listas
             var listaDispo = bllDispo.LeerDisponibilidades_750VR();
             var listaUsuarios = bllUsuario.leerEntidades_750VR();
 
-            // Armamos la tabla manual
             DataTable tabla = new DataTable();
             tabla.Columns.Add("IdDisponibilidad", typeof(int));
             tabla.Columns.Add("Manicurista", typeof(string));
@@ -62,7 +59,8 @@ namespace Proyecto_NailsTime
             tabla.Columns.Add("Hora Fin", typeof(string));
             tabla.Columns.Add("Estado", typeof(string));
 
-            foreach (var dispo in listaDispo.Where(d => d.activo_750VR))
+            // Filtra por activas y disponibles
+            foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false))
             {
                 var usu = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
                 string nombreCompleto = usu != null ? $"{usu.nombre_750VR} {usu.apellido_750VR}" : "Desconocido";
@@ -74,13 +72,12 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR.Date,
                     dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
                     dispo.HoraFin_750VR.ToString(@"hh\:mm"),
-                    dispo.estado_750VR ? "Ocupado" : "Disponible"
+                    "Disponible" // Ya estás filtrando por eso, no hace falta preguntar
                 );
             }
 
             dataGridView1.DataSource = tabla;
 
-            // Ocultamos columna ID
             if (dataGridView1.Columns.Contains("IdDisponibilidad"))
                 dataGridView1.Columns["IdDisponibilidad"].Visible = false;
         }
@@ -196,7 +193,7 @@ namespace Proyecto_NailsTime
                         HoraInicio_750VR = horaInicio,
                         HoraFin_750VR = horaFin,
                         Precio_750VR = servicio.precio_750VR,
-                        Estado_750VR = true,
+                        Estado_750VR = "Pendiente",
                         Cobrado_750VR = false
                     };
 

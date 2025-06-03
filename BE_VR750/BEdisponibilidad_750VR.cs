@@ -14,7 +14,7 @@ namespace BE_VR750
         public TimeSpan HoraInicio_750VR { get; set; }    // ✅ Hora desde
         public TimeSpan HoraFin_750VR { get; set; }       // ✅ Hora hasta
         public bool activo_750VR { get; set; }
-        public bool estado_750VR { get; set; }
+        public bool estado_750VR { get; set; } // "Pendiente", "Realizado", "Cancelado"
 
     }
 }

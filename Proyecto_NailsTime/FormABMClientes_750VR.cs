@@ -257,16 +257,15 @@ namespace Proyecto_NailsTime
                 }
 
 
-                BECliente_750VR nuevo = new BECliente_750VR
-                {
-                    dni_750VR = dni,
-                    nombre_750VR = nombre,
-                    apellido_750VR = apellido,
-                    gmail_750VR = mail,
-                    celular_750VR = cel,
-                    direccion_750VR = dire,
-                    activo_750VR = true,
-                };
+                BECliente_750VR nuevo = new BECliente_750VR(
+       dni: dni,
+       nom: nombre,
+       ape: apellido,
+       gmail: mail,
+       dire: dire,
+       celu: cel,
+       act: true
+   );
 
                 bll.CrearCliente_750VR(nuevo);
 

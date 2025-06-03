@@ -165,7 +165,7 @@ namespace DAL_VR750
                             HoraInicio_VR750 TIME NOT NULL,
                             HoraFin_VR750 TIME NOT NULL,
                             Precio_VR750 DECIMAL(10,2) NOT NULL,
-                            Estado_VR750 BIT DEFAULT 0,
+                            Estado_VR750 varchar(50) default 'Pendiente',
                             Cobrado_VR750 BIT DEFAULT 0
 
                         );

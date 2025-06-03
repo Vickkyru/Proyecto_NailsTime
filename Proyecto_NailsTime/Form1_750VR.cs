@@ -98,41 +98,44 @@ namespace Proyecto_NailsTime
         {
 
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        public void Actualizar()
         {
-            ActualizarLabels();
-
+            // Primero verificamos si hay sesión iniciada
             if (!SessionManager_750VR.ObtenerInstancia.EstaLogueado_750VR())
             {
-                
-                BloquearTodo(); // método que desactiva todo
+                BloquearTodo();
                 return;
             }
 
-            string rol = SessionManager_750VR.ObtenerInstancia.UsuarioActual.rol_750VR.ToLower();
+            // Ya sabemos que user no es null
+            string rol = SessionManager_750VR.ObtenerInstancia.user.rol_750VR.ToLower();
+            MessageBox.Show("Rol detectado: " + rol);
+
+
 
             switch (rol)
             {
-                case "Manicurista":
+                case "manicurista":
                     administradorToolStripMenuItem.Enabled = false;
                     maestrosToolStripMenuItem.Enabled = false;
                     usuarioToolStripMenuItem.Enabled = true;
                     reservaToolStripMenuItem.Enabled = true;
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
+                    verTurnosDisponiblesToolStripMenuItem.Enabled = false;
                     break;
 
-                case "Recepcionista":
+                case "recepcionista":
                     administradorToolStripMenuItem.Enabled = false;
                     maestrosToolStripMenuItem.Enabled = false;
                     usuarioToolStripMenuItem.Enabled = true;
                     reservaToolStripMenuItem.Enabled = true;
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
+                    verTurnosReservadosToolStripMenuItem.Enabled = false;
                     break;
 
-                case "Administrador":
+                case "administrador":
                     administradorToolStripMenuItem.Enabled = true;
                     maestrosToolStripMenuItem.Enabled = true;
                     usuarioToolStripMenuItem.Enabled = true;
@@ -145,6 +148,14 @@ namespace Proyecto_NailsTime
                     BloquearTodo();
                     break;
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ActualizarLabels();
+            Actualizar();
+          
 
         }
         private void BloquearTodo()

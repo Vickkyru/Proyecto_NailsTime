@@ -17,7 +17,16 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = "SELECT * FROM Reserva_VR750 WHERE DNImanic_VR750 = @DNI";
+                string query = @"
+        SELECT r.*, 
+               c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
+               u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
+               s.Nombre_VR750 AS NombreServicio, s.Tecnica_VR750 AS TecnicaServicio, s.Precio_VR750 AS PrecioServicio
+        FROM Reserva_VR750 r
+        LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
+        LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
+        LEFT JOIN Servicio_VR750 s ON r.IdServicio_VR750 = s.IdServicio_VR750
+        WHERE r.DNImanic_VR750 = @DNI";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -33,12 +42,45 @@ namespace DAL_VR750
                             DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
                             IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
                             Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
-                            HoraInicio_750VR = (TimeSpan)reader["HoraInicio_VR750"],
-                            HoraFin_750VR = (TimeSpan)reader["HoraFin_VR750"],
+                            HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
+                            HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
                             Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
-                            Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
-                            Cobrado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
+                            Estado_750VR = reader["Estado_VR750"].ToString(),
+                            Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
+
+                            cliente = new BECliente_750VR(
+                                dni: Convert.ToInt32(reader["DNIcli_VR750"]),
+                                nom: reader["NombreCliente"].ToString(),
+                                ape: reader["ApellidoCliente"].ToString(),
+                                gmail: "",
+                                dire: "",
+                                celu: 0,
+                                act: true
+                            ),
+
+                            manic = new BEusuario_750VR(
+                                dni: Convert.ToInt32(reader["DNImanic_VR750"]),
+                                nombre: reader["NombreManic"].ToString(),
+                                ape: reader["ApellidoManic"].ToString(),
+                                mail: "",
+                                user: "",
+                                contra: "",
+                                salt: "",
+                                rol: "",
+                                activo: true,
+                                bloqueado: false
+                            ),
+
+                            serv = new BEServicio_750VR(
+                                id: Convert.ToInt32(reader["IdServicio_VR750"]),
+                                nom: reader["NombreServicio"].ToString(),
+                                tec: reader["TecnicaServicio"].ToString(),
+                                dur: 0,
+                                pre: Convert.ToDecimal(reader["PrecioServicio"]),
+                                act: true
+                            )
                         };
+
                         lista.Add(reserva);
                     }
                 }
@@ -76,68 +118,81 @@ namespace DAL_VR750
                 return Convert.ToInt32(result); // <<< retorna el ID a tu objeto
             }
         }
-        public List<BEReserva_750VR> leerEntidades_750VR() //busca todos
+        public List<BEReserva_750VR> leerEntidades_750VR()
         {
-           List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
+            List<BEReserva_750VR> lista = new List<BEReserva_750VR>();
 
-    using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
-    {
-        string query = @"
-        SELECT r.*, 
-               c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
-               u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
-               s.Tecnica_VR750 AS Tecnica, s.Precio_VR750 AS PrecioServ
-        FROM Reserva_VR750 r
-        LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
-        LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
-        LEFT JOIN Servicio_VR750 s ON r.IdServicio_VR750 = s.idServicio_VR750";
-
-        SqlCommand cmd = new SqlCommand(query, con);
-        con.Open();
-
-        SqlDataReader reader = cmd.ExecuteReader();
-
-        while (reader.Read())
-        {
-            var reserva = new BEReserva_750VR
+            using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
-                IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
-                DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
-                DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
-                IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
-                Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
-                HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
-                HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
-                Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
-                Estado_750VR = Convert.ToBoolean(reader["Estado_VR750"]),
-                Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
+                string query = @"
+            SELECT r.*, 
+                   c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
+                   u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
+                   s.Nombre_VR750 AS NombreServicio, s.Tecnica_VR750 AS TecnicaServicio, s.Precio_VR750 AS PrecioServicio
+            FROM Reserva_VR750 r
+            LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
+            LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
+            LEFT JOIN Servicio_VR750 s ON r.IdServicio_VR750 = s.IdServicio_VR750";
 
-                cliente = new BECliente_750VR
-                {
-                    nombre_750VR = reader["NombreCliente"].ToString(),
-                    apellido_750VR = reader["ApellidoCliente"].ToString()
-                },
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
 
-                manic = new BEusuario_750VR
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    nombre_750VR = reader["NombreManic"].ToString(),
-                    apellido_750VR = reader["ApellidoManic"].ToString()
-                },
+                    var reserva = new BEReserva_750VR
+                    {
+                        IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]),
+                        DNIcli_750VR = Convert.ToInt32(reader["DNIcli_VR750"]),
+                        DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
+                        IdServicio_750VR = Convert.ToInt32(reader["IdServicio_VR750"]),
+                        Fecha_750VR = Convert.ToDateTime(reader["Fecha_VR750"]),
+                        HoraInicio_750VR = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString()),
+                        HoraFin_750VR = TimeSpan.Parse(reader["HoraFin_VR750"].ToString()),
+                        Precio_750VR = Convert.ToDecimal(reader["Precio_VR750"]),
+                        Estado_750VR = reader["Estado_VR750"].ToString(),
+                        Cobrado_750VR = Convert.ToBoolean(reader["Cobrado_VR750"]),
 
-                serv = new BEServicio_750VR
-                {
-                    tecnica_750VR = reader["Tecnica"].ToString(),
-                    precio_750VR = Convert.ToDecimal(reader["PrecioServ"])
+                        cliente = new BECliente_750VR(
+                            dni: Convert.ToInt32(reader["DNIcli_VR750"]),
+                            nom: reader["NombreCliente"].ToString(),
+                            ape: reader["ApellidoCliente"].ToString(),
+                            gmail: "", // opcional si no lo traés
+                            dire: "",
+                            celu: 0,
+                            act: true
+                        ),
+
+                        manic = new BEusuario_750VR(
+                            dni: Convert.ToInt32(reader["DNImanic_VR750"]),
+                            nombre: reader["NombreManic"].ToString(),
+                            ape: reader["ApellidoManic"].ToString(),
+                            mail: "",
+                            user: "",
+                            contra: "",
+                            salt: "",
+                            rol: "",
+                            activo: true,
+                            bloqueado: false
+                        ),
+
+                        serv = new BEServicio_750VR(
+                            id: Convert.ToInt32(reader["IdServicio_VR750"]),
+                            nom: reader["NombreServicio"].ToString(),
+                            tec: reader["TecnicaServicio"].ToString(),
+                            dur: 0,
+                            pre: Convert.ToDecimal(reader["PrecioServicio"]),
+                            act: true
+                        )
+                    };
+
+                    lista.Add(reserva);
                 }
-            };
 
-            lista.Add(reserva);
-        }
+                reader.Close();
+            }
 
-        reader.Close();
-    }
-
-    return lista;
+            return lista;
         }
 
         public BEReserva_750VR ObtenerReservaPorId(int id)
@@ -176,6 +231,21 @@ namespace DAL_VR750
 
                 con.Open();
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public void ActualizarEstadoReserva(int idReserva, string nuevoEstado)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = "UPDATE Reserva_VR750 SET Estado_VR750 = @estado WHERE IdReserva_VR750 = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@estado", nuevoEstado);
+                cmd.Parameters.AddWithValue("@id", idReserva);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
             }
         }
 

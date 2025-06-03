@@ -35,12 +35,6 @@ namespace BE_VR750
 
         }
 
-        public BEusuario_750VR()
-        {
-               
-            
-        }
-
         public BEusuario_750VR(int dni, string nombre, string ape, string mail,string salt, string rol, string user, bool activo, bool bloqueado)
         {
             this.dni_750VR = dni;

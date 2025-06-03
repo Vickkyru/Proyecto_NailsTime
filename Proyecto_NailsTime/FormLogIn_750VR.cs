@@ -21,11 +21,13 @@ namespace Proyecto_NailsTime
         BLLusuario_750VR bll = new BLLusuario_750VR();
 
         private Form1_750VR formPrincipal;
+        
 
         public FormLogIn_750VR(Form1_750VR principal)
         {
             InitializeComponent();
             formPrincipal = principal;
+
         }
         private int intentosFallidos = 0;
 
@@ -83,6 +85,7 @@ namespace Proyecto_NailsTime
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 MessageBox.Show("Login exitoso.");
+                formPrincipal.Actualizar();
                 this.Close();
             }
             catch (Exception ex)
@@ -120,7 +123,7 @@ namespace Proyecto_NailsTime
 
         private void FormLogIn_750VR_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void txtcontra_TextChanged(object sender, EventArgs e)

@@ -29,18 +29,18 @@ namespace DAL_VR750
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    return new BECliente_750VR
-                    {
-                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre_750VR = reader["Nombre_VR750"].ToString(),
-                        apellido_750VR = reader["Apellido_VR750"].ToString(),
-                        gmail_750VR = reader["Email_VR750"].ToString(),
-                        direccion_750VR = reader["Direccion_VR750"].ToString(),
-                        celular_750VR = Convert.ToInt32(reader["Celular_VR750"]),
-                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"])
-                    };
+                    return new BECliente_750VR(
+                        dni: Convert.ToInt32(reader["DNI_VR750"]),
+                        nom: reader["Nombre_VR750"].ToString(),
+                        ape: reader["Apellido_VR750"].ToString(),
+                        gmail: reader["Email_VR750"].ToString(),
+                        dire: reader["Direccion_VR750"].ToString(),
+                        celu: Convert.ToInt32(reader["Celular_VR750"]),
+                        act: Convert.ToBoolean(reader["Activo_VR750"])
+                    );
                 }
             }
+
             return null;
         }
 
@@ -155,19 +155,16 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    BECliente_750VR userr = new BECliente_750VR
-                    {
-                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre_750VR = reader["Nombre_VR750"].ToString(),
-                        apellido_750VR = reader["Apellido_VR750"].ToString(),
-                        gmail_750VR = reader["Email_VR750"].ToString(),
-                        direccion_750VR = reader["Direccion_VR750"].ToString(),
-                        celular_750VR = Convert.ToInt32(reader["Celular_VR750"]),
-                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
-
-                    };
-
-                    lista.Add(userr);
+                    BECliente_750VR cli = new BECliente_750VR(
+     dni: Convert.ToInt32(reader["DNI_VR750"]),
+     nom: reader["Nombre_VR750"].ToString(),
+     ape: reader["Apellido_VR750"].ToString(),
+     gmail: reader["Email_VR750"].ToString(),
+     dire: reader["Direccion_VR750"].ToString(),
+     celu: Convert.ToInt32(reader["Celular_VR750"]),
+     act: Convert.ToBoolean(reader["Activo_VR750"])
+ );
+                    lista.Add(cli);
                 }
             }
 
@@ -188,17 +185,15 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    BECliente_750VR cli = new BECliente_750VR
-                    {
-                        dni_750VR = Convert.ToInt32(reader["DNI_VR750"]),
-                        nombre_750VR = reader["Nombre_VR750"].ToString(),
-                        apellido_750VR = reader["Apellido_VR750"].ToString(),
-                        gmail_750VR = reader["Email_VR750"].ToString(),
-                        direccion_750VR = reader["Direccion_VR750"].ToString(),
-                        celular_750VR = Convert.ToInt32(reader["Celular_VR750"]),
-                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"])
-                    };
-
+                    BECliente_750VR cli = new BECliente_750VR(
+     dni: Convert.ToInt32(reader["DNI_VR750"]),
+     nom: reader["Nombre_VR750"].ToString(),
+     ape: reader["Apellido_VR750"].ToString(),
+     gmail: reader["Email_VR750"].ToString(),
+     dire: reader["Direccion_VR750"].ToString(),
+     celu: Convert.ToInt32(reader["Celular_VR750"]),
+     act: Convert.ToBoolean(reader["Activo_VR750"])
+ );
                     lista.Add(cli);
                 }
             }

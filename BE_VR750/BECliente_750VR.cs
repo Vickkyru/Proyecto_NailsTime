@@ -15,12 +15,20 @@ namespace BE_VR750
         public string gmail_750VR { get; set; }
         public string direccion_750VR { get; set; }
         public int celular_750VR { get; set; }
-
         public bool activo_750VR { get; set; }
-        public BECliente_750VR()
+
+        public BECliente_750VR(int dni, string nom, string ape, string gmail, string dire, int celu, bool act)
         {
-                
+                this.dni_750VR = dni;
+            this.nombre_750VR = nom;
+            this.apellido_750VR = ape;
+            this.gmail_750VR = gmail;
+            this.direccion_750VR = dire;
+            this.celular_750VR = celu;
+            this.activo_750VR = act;
+
         }
+   
 
     }
 }

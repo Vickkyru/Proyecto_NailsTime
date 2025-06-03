@@ -44,6 +44,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(513, 219);
             this.dataGridView1.TabIndex = 18;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // label1
             // 
@@ -73,6 +74,7 @@
             this.button3.TabIndex = 24;
             this.button3.Text = "Realizado";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -82,6 +84,7 @@
             this.button4.TabIndex = 25;
             this.button4.Text = "Cancelado";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FormActualizarAgenda_750VR
             // 
