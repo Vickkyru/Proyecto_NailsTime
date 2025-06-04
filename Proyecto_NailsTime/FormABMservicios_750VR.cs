@@ -32,25 +32,7 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (dataGridView1.SelectedRows.Count > 0)
-            //{
-            //    string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
-
-            //    BLLServicio_750VR bll = new BLLServicio_750VR();
-            //    var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
-
-            //    if (cliente != null)
-            //    {
-            //        txtprecio.Text = cliente.precio_750VR.ToString();
-            //        txtnombre.Text = cliente.nombre_750VR;
-            //        txtduracion.Text = cliente.apellido_750VR;
-            //        cmbtec.Text = cliente.gmail_750VR;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("No se encontró el cliente.");
-            //    }
-            //}
+         
         }
 
         private void btnañadir_Click(object sender, EventArgs e)
@@ -73,57 +55,30 @@ namespace Proyecto_NailsTime
 
         private void btnapli_Click(object sender, EventArgs e)
         {
-        //    // Si estamos en modo consulta, se hace la búsqueda
-        //    if (modoActual == "consulta")
-        //    {
-        //        BLLCliente_750VR bll = new BLLCliente_750VR();
-        //        var resultados = bll.BuscarClientes_750VR(
-        //    string.IsNullOrWhiteSpace(txtdni.Text) ? null : txtdni.Text,
-        //    string.IsNullOrWhiteSpace(txtnom.Text) ? null : txtnom.Text,
-        //    string.IsNullOrWhiteSpace(txtape.Text) ? null : txtape.Text,
-        //    string.IsNullOrWhiteSpace(txtemail.Text) ? null : txtemail.Text,
-        //    string.IsNullOrWhiteSpace(txtdire.Text) ? null : txtdire.Text,
-        //    string.IsNullOrWhiteSpace(txtcel.Text) ? null : txtcel.Text
-        //);
+            if (!ValidarCampos() && modoActual != "Activar/Desactivar")
+                return;
 
-        //        dataGridView1.DataSource = resultados;
+            switch (modoActual)
+            {
+                case "añadir":
+                    AplicarAlta();
+                    break;
+                case "modificar":
+                    AplicarModificacion();
+                    break;
+                case "Activar/Desactivar":
+                    AplicarActivarDesactivar();
+                    break;
+            }
 
-        //        btncance.Enabled = false;
-
-        //        //PintarUsuariosInactivos();
-        //        LimpiarCampos();
-        //        return;
-        //    }
-
-        //    // Validar campos solo si no estamos eliminando ni desbloqueando
-        //    if (!ValidarCampos() && modoActual != "Activar/Desactivar" && modoActual != "desbloquear")
-        //        return;
-
-        //    // Ejecutar la acción según el modo
-        //    switch (modoActual)
-        //    {
-        //        case "añadir":
-        //            AplicarAlta();
-        //            break;
-        //        case "modificar":
-        //            AplicarModificacion();
-        //            break;
-        //        case "Activar/Desactivar":
-        //            AplicarActivarDesactivar();
-        //            break;
-
-        //    }
-
-        //    // Volver al estado de consulta
-        //    modoActual = "consulta";
-        //    lblmensaje.Text = "Modo Consulta";
-        //    ResetearEstadoInterfaz();
-        //    CargarUsuarios(); // Refrescar grilla general
-        //    LimpiarCampos();
-
+            modoActual = "consulta";
+            lblmensaje.Text = "Modo Consulta";
+            ResetearEstadoInterfaz();
+            CargarServicios();
+            LimpiarCampos();
         }
 
-        private void CargarUsuarios()
+        private void CargarServicios()
         {
             var bll = new BLLServicio_750VR();
             var lista = bll.LeerEntidades_750VR();
@@ -132,11 +87,11 @@ namespace Proyecto_NailsTime
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = lista;
 
-
-            PintarUsuariosInactivos(); // si querés seguir resaltando inactivos en rojo
+            PintarServiciosInactivos();
         }
 
-        private void PintarUsuariosInactivos()
+
+        private void PintarServiciosInactivos()
         {
             foreach (DataGridViewRow fila in dataGridView1.Rows)
             {
@@ -149,145 +104,129 @@ namespace Proyecto_NailsTime
 
         private void AplicarActivarDesactivar()
         {
-            var item = dataGridView1.CurrentRow?.DataBoundItem as BEusuario_750VR;
-            if (item == null)
+            if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un usuario válido de la lista.");
+                MessageBox.Show("Seleccione un servicio válido de la lista.");
                 return;
             }
 
-            bool nuevoEstado = !item.activo_750VR;
+            BEServicio_750VR servicio = dataGridView1.CurrentRow.DataBoundItem as BEServicio_750VR;
+            bool nuevoEstado = !servicio.activo_750VR;
 
-            BLLusuario_750VR bll = new BLLusuario_750VR();
-            bool exito = bll.CambiarEstadoUsuario_750VR(item.dni_750VR, nuevoEstado);
+            BLLServicio_750VR bll = new BLLServicio_750VR();
+            bll.CambiarEstadoServicio_750VR(servicio.idServicio_750VR, nuevoEstado);
 
-            if (exito)
-            {
-                string mensaje = nuevoEstado ? "Usuario activado correctamente." : "Usuario desactivado correctamente.";
-                MessageBox.Show(mensaje);
-
-                if (!nuevoEstado)
-                {
-                    MessageBox.Show("Recuerde que el usuario no podrá iniciar sesión.");
-                }
-
-                CargarUsuarios();
-                ResetearEstadoInterfaz();
-                LimpiarCampos();
-            }
-            else
-            {
-                MessageBox.Show("Error al cambiar estado del usuario.");
-            }
+            MessageBox.Show(nuevoEstado ? "Servicio activado." : "Servicio desactivado.");
+            CargarServicios();
+            ResetearEstadoInterfaz();
+            LimpiarCampos();
+        
         }
 
         private void AplicarModificacion()
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un usuario de la lista.");
+                MessageBox.Show("Seleccione un servicio de la lista.");
                 return;
             }
 
             if (!ValidarCampos())
                 return;
 
-            int precio = int.Parse(txtprecio.Text);
-            string nombre = txtnombre.Text;
-        
-            int cel = int.Parse(txtduracion.Text);
-            string tecnica = txttec.Text;
+            var servicioSeleccionado = dataGridView1.CurrentRow.DataBoundItem as BEServicio_750VR;
+            if (servicioSeleccionado == null)
+            {
+                MessageBox.Show("Error al obtener el servicio seleccionado.");
+                return;
+            }
 
-            BLLCliente_750VR bll = new BLLCliente_750VR();
+            string nombre = txtnombre.Text.Trim();
+            string tecnica = txttec.Text.Trim();
+            int duracion;
+            decimal precio;
 
+            if (!int.TryParse(txtduracion.Text.Trim(), out duracion))
+            {
+                MessageBox.Show("Duración inválida. Ingrese un número entero.");
+                return;
+            }
 
-            //BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
+            if (!decimal.TryParse(txtprecio.Text.Trim(), out precio))
+            {
+                MessageBox.Show("Precio inválido. Ingrese un valor numérico válido.");
+                return;
+            }
 
+            BLLServicio_750VR bll = new BLLServicio_750VR();
+            bool exito = bll.ModificarServicio_750VR(servicioSeleccionado.idServicio_750VR, nombre, tecnica, duracion, precio);
 
-
-            //bool exito = bll.ModificarCliente_750VR(precio, nombre, tecnica, cel);
-
-            //if (exito)
-            //{
-            //    MessageBox.Show("Usuario modificado correctamente.");
-
-            //    CargarUsuarios();
-            //    ResetearEstadoInterfaz();
-            //    LimpiarCampos();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Error al modificar el usuario.");
-            //}
+            if (exito)
+            {
+                MessageBox.Show("Servicio modificado correctamente.");
+                CargarServicios();
+                ResetearEstadoInterfaz();
+                LimpiarCampos();
+            }
+            else
+            {
+                MessageBox.Show("Error al modificar el servicio.");
+            }
         }
 
         private void AplicarAlta()
         {
             try
             {
-                //// Validamos primero
-                //if (!ValidarCampos())
-                //    return;
-                //int dni = Convert.ToInt32(txtdni.Text);
-                //string nombre = txtnom.Text.Trim();
-                //string apellido = txtape.Text.Trim();
-                //string mail = txtemail.Text.Trim();
-                //int cel = int.Parse(txtcel.Text);
-                //string dire = txtdire.Text;
+                if (!ValidarCampos()) return;
 
-                //BLLCliente_750VR bll = new BLLCliente_750VR();
+                string nombre = txtnombre.Text.Trim();
+                string tecnica = txttec.Text.Trim();
+                int duracion = int.Parse(txtduracion.Text);
+                decimal precio = decimal.Parse(txtprecio.Text);
 
-                // Verificar existencia por DNI
-                //if (bll.ObtenerClientePorLogin_750VR(mail) != null)
-                //{
-                //    MessageBox.Show("Ya existe un usuario con ese mail.");
-                //    return;
-                //}
+                BEServicio_750VR nuevo = new BEServicio_750VR(nombre, tecnica, duracion, precio, true);
+                BLLServicio_750VR bll = new BLLServicio_750VR();
+                bll.CrearServicio_750VR(nuevo);
 
-                // Verificar existencia por mail/login
-                //if (bll.ObtenerClientePorDNI_750VR(dni) != null)
-                //{
-                //    MessageBox.Show("Ya existe un cliente con ese DNI.");
-                //    return;
-
-                //}
-
-
-                //BECliente_750VR nuevo = new BECliente_750VR
-                //{
-                //    dni_750VR = dni,
-                //    nombre_750VR = nombre,
-                //    apellido_750VR = apellido,
-                //    gmail_750VR = mail,
-                //    celular_750VR = cel,
-                //    direccion_750VR = dire,
-                //    activo_750VR = true,
-                //};
-
-                //bll.CrearCliente_750VR(nuevo);
-                //MessageBox.Show("Cliente creado correctamente.");
-
-
+                MessageBox.Show("Servicio creado correctamente.");
                 LimpiarCampos();
-                CargarUsuarios();
+                CargarServicios();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al crear servicio: " + ex.Message);
             }
         }
 
-        private bool ValidarCampos()
+       
+            private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
-       string.IsNullOrWhiteSpace(txtduracion.Text) ||
-       string.IsNullOrWhiteSpace(txtprecio.Text) ||
-       string.IsNullOrWhiteSpace(txttec.Text))
-                return true; return false;
-      
-  
+                string.IsNullOrWhiteSpace(txttec.Text) ||
+                string.IsNullOrWhiteSpace(txtduracion.Text) ||
+                string.IsNullOrWhiteSpace(txtprecio.Text))
+            {
+                MessageBox.Show("Todos los campos son obligatorios.");
+                return false;
+            }
 
+            if (!int.TryParse(txtduracion.Text, out _))
+            {
+                MessageBox.Show("Duración debe ser un número entero.");
+                return false;
+            }
+
+            if (!decimal.TryParse(txtprecio.Text, out _))
+            {
+                MessageBox.Show("Precio debe ser un valor decimal válido.");
+                return false;
+            }
+
+            return true;
         }
+
+        
 
         private void btnelim_Click(object sender, EventArgs e)
         {
@@ -312,7 +251,7 @@ namespace Proyecto_NailsTime
             LimpiarCampos();
 
             ResetearEstadoInterfaz();
-            CargarUsuarios();   // Mostrar todos
+            CargarServicios();   // Mostrar todos
         }
 
         private void ActivarModoEdicion()
@@ -322,28 +261,25 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = false;
             }
 
-            //if (modoActual == "añadir" || modoActual == "modificar")
-            //{
-            //    txtdni.Enabled = modoActual == "añadir";
-            //    txtnom.Enabled = true;
-            //    txtape.Enabled = true;
-            //    txtemail.Enabled = true;
-            //    txtcel.Enabled = true;
-            //    txtdire.Enabled = true;
-            //}
-            //else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
-            //{
-            //    dataGridView1.Enabled = true;
+            if (modoActual == "añadir" || modoActual == "modificar")
+            {
+                txtnombre.Enabled = modoActual == "añadir";
+                txttec.Enabled = true;
+                txtprecio.Enabled = true;
+                txtduracion.Enabled = true;
+            }
+            else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
+            {
+                dataGridView1.Enabled = true;
 
-            //    // Mostrar datos sin habilitar edición
-            //    txtdni.Enabled = false;
-            //    txtnom.Enabled = false;
-            //    txtape.Enabled = false;
-            //    txtemail.Enabled = false;
-            //    txtdire.Enabled = false;
-            //    txtcel.Enabled = false;
+                // Mostrar datos sin habilitar edición
+                txtnombre.Enabled = false;
+                txttec.Enabled = false;
+                txtprecio.Enabled = false;
+                txtduracion.Enabled = false;
+             
 
-            //}
+            }
 
             // Habilitar botones Aplicar y Cancelar
             btnapli.Enabled = true;
@@ -382,18 +318,18 @@ namespace Proyecto_NailsTime
         {
             if (modoActual != "consulta") return;
 
-            //// Verifica si al menos un campo está completo
-            //bool hayDatos = !string.IsNullOrWhiteSpace(txtdni.Text)
-            //             || !string.IsNullOrWhiteSpace(txtnom.Text)
-            //             || !string.IsNullOrWhiteSpace(txtape.Text)
-            //             || !string.IsNullOrWhiteSpace(txtemail.Text)
+            // Verifica si al menos un campo está completo
+            bool hayDatos = !string.IsNullOrWhiteSpace(txtnombre.Text)
+                         || !string.IsNullOrWhiteSpace(txttec.Text)
+                         || !string.IsNullOrWhiteSpace(txtduracion.Text)
+                         || !string.IsNullOrWhiteSpace(txtprecio.Text)
             //|| !string.IsNullOrWhiteSpace(txtcel.Text)
             //|| !string.IsNullOrWhiteSpace(txtdire.Text)
 
 
             ;
 
-            //btnapli.Enabled = hayDatos;
+            btnapli.Enabled = hayDatos;
         }
 
         private void txtnombre_TextChanged(object sender, EventArgs e)
@@ -423,8 +359,8 @@ namespace Proyecto_NailsTime
 
         private void FormABMservicios_750VR_Load(object sender, EventArgs e)
         {
-
-            CargarUsuarios();
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
+            CargarServicios();
 
             // Deshabilitar botones Aplicar y Cancelar
             btnapli.Enabled = false;
@@ -439,6 +375,21 @@ namespace Proyecto_NailsTime
             // Iniciar en modo consulta
             modoActual = "consulta";
             lblmensaje.Text = "Modo Consulta";
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var servicio = dataGridView1.SelectedRows[0].DataBoundItem as BEServicio_750VR;
+                if (servicio != null)
+                {
+                    txtnombre.Text = servicio.nombre_750VR;
+                    txttec.Text = servicio.tecnica_750VR;
+                    txtduracion.Text = servicio.duracion_750VR.ToString();
+                    txtprecio.Text = servicio.precio_750VR.ToString("0.00");
+                }
+            }
         }
     }
 }

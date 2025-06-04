@@ -118,6 +118,19 @@ namespace DAL_VR750
                 return Convert.ToInt32(result); // <<< retorna el ID a tu objeto
             }
         }
+        public string ObtenerEstadoReserva(int idReserva)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = "SELECT Estado_VR750 FROM Reserva_VR750 WHERE IdReserva_VR750 = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", idReserva);
+
+                conn.Open();
+                object estado = cmd.ExecuteScalar();
+                return estado != null ? estado.ToString() : null;
+            }
+        }
         public List<BEReserva_750VR> leerEntidades_750VR()
         {
             List<BEReserva_750VR> lista = new List<BEReserva_750VR>();

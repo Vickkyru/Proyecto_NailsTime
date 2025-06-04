@@ -254,6 +254,7 @@ namespace Proyecto_NailsTime
                 // Validamos primero
                 if (!ValidarCampos())
                     return;
+
                 int dni = Convert.ToInt32(txtDNI.Text);
                 string nombre = txtnom.Text.Trim();
                 string apellido = txtape.Text.Trim();
@@ -263,43 +264,42 @@ namespace Proyecto_NailsTime
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
 
-                // Verificar existencia por DNI
-                if (bll.ObtenerUsuarioPorLogin_750VR(mail) != null)
+                // Verificar existencia por mail/login
+                if (bll.ObtenerUsuarioPorLogin_750VR(user) != null)
                 {
-                    MessageBox.Show("Ya existe un usuario con ese mail.");
+                    MessageBox.Show("Ya existe un usuario con ese usuario.");
                     return;
                 }
 
-                // Verificar existencia por mail/login
+                // Verificar existencia por DNI
                 if (bll.ObtenerUsuarioPorDNI_750VR(dni) != null)
                 {
                     MessageBox.Show("Ya existe un usuario con ese DNI.");
                     return;
-                   
                 }
 
                 Encriptador_750VR encriptador = new Encriptador_750VR();
                 string contraseña = $"{dni}{nombre}";
                 string salt = encriptador.GenerarSalt_750VR();
+                string contraseñaHasheada = encriptador.HashearConSalt_750VR(contraseña, salt);
 
-                BEusuario_750VR nuevo = new BEusuario_750VR
-                {
-                    dni_750VR = dni,
-                    nombre_750VR = nombre,
-                    apellido_750VR = apellido,
-                    mail_750VR = mail,
-                    user_750VR = user,
-                    salt_750VR = salt,
-                    contraseña_750VR = encriptador.HashearConSalt_750VR(contraseña, salt),
-                    rol_750VR = rol,
-                    activo_750VR = true,
-                    bloqueado_750VR = false
-                };
+                // Crear usuario con constructor completo
+                BEusuario_750VR nuevo = new BEusuario_750VR(
+                    dni,
+                    nombre,
+                    apellido,
+                    mail,
+                    user,
+                    contraseñaHasheada,
+                    salt,
+                    rol,
+                    true,   // activo
+                    false   // bloqueado
+                );
 
                 bll.CrearUsuario_750VR(nuevo);
                 MessageBox.Show("Usuario creado correctamente.");
-                MessageBox.Show("Recuerde que usuario=nombre+apellido, contraseña=dni+nombre");
-
+                MessageBox.Show("Recuerde: Usuario = nombre+apellido, Contraseña = dni+nombre");
 
                 LimpiarCampos();
                 rbtnact.Checked = true;
@@ -309,9 +309,6 @@ namespace Proyecto_NailsTime
             {
                 MessageBox.Show($"Error al crear usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
-
         }
 
         private bool ValidarCampos()

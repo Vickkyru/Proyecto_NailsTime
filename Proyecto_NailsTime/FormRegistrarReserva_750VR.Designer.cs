@@ -53,10 +53,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txthorario = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -75,7 +76,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(384, 46);
+            this.button1.Location = new System.Drawing.Point(360, 71);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 23);
             this.button1.TabIndex = 5;
@@ -86,7 +87,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(268, 25);
+            this.dataGridView1.Location = new System.Drawing.Point(235, 25);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(538, 126);
             this.dataGridView1.TabIndex = 7;
@@ -96,7 +97,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(283, 9);
+            this.label2.Location = new System.Drawing.Point(252, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 8;
@@ -253,9 +254,9 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(17, 294);
+            this.dataGridView2.Location = new System.Drawing.Point(5, 294);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(779, 150);
+            this.dataGridView2.Size = new System.Drawing.Size(768, 150);
             this.dataGridView2.TabIndex = 42;
             // 
             // label7
@@ -269,7 +270,7 @@
             // 
             // txthorario
             // 
-            this.txthorario.Location = new System.Drawing.Point(377, 14);
+            this.txthorario.Location = new System.Drawing.Point(459, 14);
             this.txthorario.Name = "txthorario";
             this.txthorario.Size = new System.Drawing.Size(100, 20);
             this.txthorario.TabIndex = 44;
@@ -277,21 +278,11 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(320, 22);
+            this.label13.Location = new System.Drawing.Point(393, 21);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(41, 13);
             this.label13.TabIndex = 45;
             this.label13.Text = "Horario";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(384, 75);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(93, 23);
-            this.button4.TabIndex = 46;
-            this.button4.Text = "Cobrar";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // panel1
             // 
@@ -308,10 +299,11 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.dateTimePicker1);
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.cmbserv);
-            this.panel2.Controls.Add(this.button4);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.txthorario);
             this.panel2.Controls.Add(this.label13);
@@ -326,15 +318,35 @@
             this.panel2.Controls.Add(this.cmbmanic);
             this.panel2.Location = new System.Drawing.Point(29, 168);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(514, 107);
+            this.panel2.Size = new System.Drawing.Size(685, 107);
             this.panel2.TabIndex = 48;
             // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(233, 16);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(73, 20);
+            this.dateTimePicker1.Size = new System.Drawing.Size(142, 20);
             this.dateTimePicker1.TabIndex = 47;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(466, 71);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(93, 23);
+            this.button2.TabIndex = 48;
+            this.button2.Text = "Cancelar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(574, 71);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(93, 23);
+            this.button4.TabIndex = 49;
+            this.button4.Text = "Salir";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
             // FormRegistrarReserva_750VR
             // 
@@ -390,9 +402,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txthorario;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -29,9 +29,9 @@ namespace BLL_VR750
             return dal.ModificarServicio_750VR(id, nombre, tecnica, duracion, precio);
         }
 
-        public bool CambiarEstadoServicio_750VR(string nombre, bool nuevoEstado)
+        public bool CambiarEstadoServicio_750VR(int idServicio, bool nuevoEstado)
         {
-            return dal.CambiarEstadoServicio_750VR(nombre, nuevoEstado);
+            return dal.CambiarEstadoServicio_750VR(idServicio, nuevoEstado);
         }
 
         public List<BEServicio_750VR> LeerEntidades_750VR()
@@ -39,10 +39,10 @@ namespace BLL_VR750
             return dal.LeerEntidades_750VR();
         }
 
-        public List<BEServicio_750VR> leerEntidadesActivas_750VR_750VR()
+        public List<BEServicio_750VR> leerEntidadesActivas_750VR()
         {
            
-            return dal.leerEntidadesActivas_750VR_750VR();
+            return dal.leerEntidadesActivas_750VR();
         }
 
     }

@@ -24,6 +24,11 @@ namespace BLL_VR750
         {
             return dal.CrearReserva_750VR(reserva);
         }
+        public string ObtenerEstadoReserva(int idReserva)
+        {
+            
+            return dal.ObtenerEstadoReserva(idReserva);
+        }
 
         public List<BEReserva_750VR> leerEntidades()
         {

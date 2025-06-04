@@ -83,7 +83,7 @@ namespace BLL_VR750
         }
 
        
-        public BEusuario_750VR Login_750VR(string user, string contraseña)
+        public BEusuario_750VR recuperarUsuario_750VR(string user, string contraseña)
         {
             return dal.recuperarUsuario_750VR(user, contraseña);
         }

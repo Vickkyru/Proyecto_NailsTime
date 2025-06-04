@@ -109,7 +109,7 @@ namespace Proyecto_NailsTime
 
             // Ya sabemos que user no es null
             string rol = SessionManager_750VR.ObtenerInstancia.user.rol_750VR.ToLower();
-            MessageBox.Show("Rol detectado: " + rol);
+            //MessageBox.Show("Rol detectado: " + rol);
 
 
 

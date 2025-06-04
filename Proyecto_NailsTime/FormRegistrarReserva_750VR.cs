@@ -26,7 +26,7 @@ namespace Proyecto_NailsTime
         private void CargarServicios()
         {
             BLLServicio_750VR bllServicio = new BLLServicio_750VR();
-            listaServicios = bllServicio.leerEntidadesActivas_750VR_750VR(); // Te lo muestro abajo
+            listaServicios = bllServicio.leerEntidadesActivas_750VR(); // Te lo muestro abajo
 
             var nombresServicio = listaServicios
                 .Select(s => s.nombre_750VR)
@@ -80,6 +80,9 @@ namespace Proyecto_NailsTime
 
             if (dataGridView1.Columns.Contains("IdDisponibilidad"))
                 dataGridView1.Columns["IdDisponibilidad"].Visible = false;
+            if (dataGridView1.Columns.Contains("DNImanicurista"))
+                dataGridView1.Columns["DNImanicurista"].Visible = false;
+
         }
         private void CargarManicuristas()
         {
@@ -152,8 +155,8 @@ namespace Proyecto_NailsTime
                     MessageBox.Show("No se encontró el cliente.");
                     return;
                 }
-                var manic = cmbmanic.SelectedItem as BEusuario_750VR;
 
+                var manic = cmbmanic.SelectedItem as BEusuario_750VR;
                 var servicio = cmbtec.SelectedItem as BEServicio_750VR;
 
                 if (cliente == null || manic == null || servicio == null)
@@ -162,77 +165,80 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // Obtener disponibilidad seleccionada del DataGridView
-                if (dataGridView1.CurrentRow?.DataBoundItem is DataRowView row)
+                if (!(dataGridView1.CurrentRow?.DataBoundItem is DataRowView row))
                 {
-                    // Acá armás la disponibilidad original a partir del DataRow
-                    var disponibilidadSeleccionada = new BEdisponibilidad_750VR
-                    {
-                        IdDisponibilidad_750VR = Convert.ToInt32(row["IdDisponibilidad"]),
-                        DNImanic_750VR = Convert.ToInt32(row["DNImanicurista"]),
-                        Fecha_750VR = Convert.ToDateTime(row["Fecha"]),
-                        HoraInicio_750VR = TimeSpan.Parse(row["Hora Inicio"].ToString()),
-                        HoraFin_750VR = TimeSpan.Parse(row["Hora Fin"].ToString()),
-                        activo_750VR = true,
-                        estado_750VR = false
-                    };
+                    MessageBox.Show("Debés seleccionar una disponibilidad.");
+                    return;
+                }
 
-                    // Armar la reserva
-                    TimeSpan horaInicio = disponibilidadSeleccionada.HoraInicio_750VR;
-                    TimeSpan horaFin = horaInicio.Add(TimeSpan.FromMinutes(servicio.duracion_750VR));
+                // Obtenemos la disponibilidad seleccionada
+                var disponibilidadSeleccionada = new BEdisponibilidad_750VR(
+                    dni: Convert.ToInt32(row["DNImanicurista"]),
+                    fecha: Convert.ToDateTime(row["Fecha"]),
+                    ini: TimeSpan.Parse(row["Hora Inicio"].ToString()),
+                    fin: TimeSpan.Parse(row["Hora Fin"].ToString()),
+                    acr: true,   // activo
+                    est: false   // disponible
+                );
 
-                    BEReserva_750VR nuevaReserva = new BEReserva_750VR
-                    {
-                        DNIcli_750VR = cliente.dni_750VR,
-                        cliente = cliente,
-                        DNImanic_750VR = manic.dni_750VR,
-                        manic = manic,
-                        IdServicio_750VR = servicio.idServicio_750VR,
-                        serv = servicio,
-                        Fecha_750VR = disponibilidadSeleccionada.Fecha_750VR,
-                        HoraInicio_750VR = horaInicio,
-                        HoraFin_750VR = horaFin,
-                        Precio_750VR = servicio.precio_750VR,
-                        Estado_750VR = "Pendiente",
-                        Cobrado_750VR = false
-                    };
+                disponibilidadSeleccionada.IdDisponibilidad_750VR = Convert.ToInt32(row["IdDisponibilidad"]);
 
-                    // Guardar la reserva
-                    BLLReserva_750VR bllReserva = new BLLReserva_750VR();
-                    //bllReserva.CrearReserva_750VR(nuevaReserva);
-                    int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);
-                    nuevaReserva.IdReserva_750VR = nuevoID;
+                // Obtener la hora ingresada manualmente o usar la del rango
+                if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaManual))
+                {
+                    MessageBox.Show("El formato del horario ingresado es inválido.");
+                    return;
+                }
 
-                    // 🔥 ACÁ VA LA DIVISIÓN DE LA DISPONIBILIDAD
-                    DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
+                TimeSpan horaFin = horaManual.Add(TimeSpan.FromMinutes(servicio.duracion_750VR));
 
-                    MessageBox.Show("Reserva creada correctamente.");
-                    CargarReservas();
-                    LimpiarCamposReserva();
-                    CargarReservasDispo();
+                if (horaManual < disponibilidadSeleccionada.HoraInicio_750VR || horaFin > disponibilidadSeleccionada.HoraFin_750VR)
+                {
+                    MessageBox.Show("La hora ingresada está fuera del rango disponible seleccionado.");
+                    return;
+                }
 
-                    // Llamamos directamente al form de cobro
-                    FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
-                    var resultado = frmCobro.ShowDialog();
+                // Crear reserva
+                BEReserva_750VR nuevaReserva = new BEReserva_750VR
+                {
+                    DNIcli_750VR = cliente.dni_750VR,
+                    cliente = cliente,
+                    DNImanic_750VR = manic.dni_750VR,
+                    manic = manic,
+                    IdServicio_750VR = servicio.idServicio_750VR,
+                    serv = servicio,
+                    Fecha_750VR = disponibilidadSeleccionada.Fecha_750VR,
+                    HoraInicio_750VR = horaManual,
+                    HoraFin_750VR = horaFin,
+                    Precio_750VR = servicio.precio_750VR,
+                    Estado_750VR = "Pendiente",
+                    Cobrado_750VR = false
+                };
 
-                    if (resultado == DialogResult.OK)
-                    {
-                        MessageBox.Show("Reserva cobrada correctamente.");
-                    }
-                    else
-                    {
-                        
-                        MessageBox.Show("La reserva quedó pendiente de cobro.");
-                    }
+                BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+                int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);
+                nuevaReserva.IdReserva_750VR = nuevoID;
 
-                    CargarReservas();
-                    LimpiarCamposReserva();
-                    CargarReservasDispo();
+                // Dividir disponibilidad
+                DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
+
+                MessageBox.Show("Reserva creada correctamente.");
+
+                // Cobro
+                FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
+                var resultado = frmCobro.ShowDialog();
+                if (resultado == DialogResult.OK)
+                {
+                    MessageBox.Show("Reserva cobrada correctamente.");
                 }
                 else
                 {
-                    MessageBox.Show("Debés seleccionar una disponibilidad.");
+                    MessageBox.Show("La reserva quedó pendiente de cobro.");
                 }
+
+                CargarReservas();
+                LimpiarCamposReserva();
+                CargarReservasDispo();
             }
             catch (Exception ex)
             {
@@ -259,6 +265,8 @@ namespace Proyecto_NailsTime
             txthorest.Clear();
             txtpre.Clear();
             dateTimePicker1.Value = DateTime.Today;
+            dateTimePicker1.Enabled = true;
+            cmbmanic.Enabled = true;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -269,18 +277,21 @@ namespace Proyecto_NailsTime
 
         private void cmbserv_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string nombre = cmbserv.SelectedItem?.ToString();
-            if (string.IsNullOrEmpty(nombre)) return;
+            if (cmbserv.SelectedItem == null) return;
+
+            string nombre = cmbserv.SelectedItem.ToString();
 
             var tecnicas = listaServicios
                 .Where(s => s.nombre_750VR == nombre)
+                .Select(s => new BEServicio_750VR(s.idServicio_750VR, s.nombre_750VR, s.tecnica_750VR, s.duracion_750VR, s.precio_750VR, s.activo_750VR))
                 .ToList();
 
-            // Insertar un objeto vacío al principio
-            tecnicas.Insert(0, new BEServicio_750VR { tecnica_750VR = "" });
+            // Insertar una opción vacía al principio
+            tecnicas.Insert(0, new BEServicio_750VR(nombre, "", 0, 0, true));
 
             cmbtec.DataSource = tecnicas;
             cmbtec.DisplayMember = "tecnica_750VR";
+            cmbtec.ValueMember = "idServicio_750VR";
             cmbtec.SelectedIndex = 0;
         }
 
@@ -296,9 +307,13 @@ namespace Proyecto_NailsTime
 
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
+
             CargarServicios();
             CargarReservasDispo();
-        
+
+            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            listaUsuarios = bllUsuario.leerEntidades_750VR(); // <== Carga global correcta
+
             CargarManicuristas();
             CargarDisponibilidadesConNombre();
         }
@@ -315,54 +330,74 @@ namespace Proyecto_NailsTime
                 DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
                 int dniManic = Convert.ToInt32(fila.Cells["DNImanicurista"].Value);
                 DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
+                string horaInicioStr = fila.Cells["Hora Inicio"].Value.ToString();
 
-                // Buscamos el usuario
-                var manic = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dniManic);
-                if (manic != null)
+                // Selecciona al manicurista
+                var manicSeleccionado = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dniManic);
+                if (manicSeleccionado != null)
                 {
-                    cmbmanic.SelectedItem = manic;
+                    cmbmanic.SelectedValue = manicSeleccionado.dni_750VR;
                 }
 
+                // Cargar fecha y hora, y bloquear el DateTimePicker
                 dateTimePicker1.Value = fecha;
-                txthorario.Text = fila.Cells["Hora Inicio"]?.Value?.ToString(); // o txtHoraInicio según cómo lo tengas
+                dateTimePicker1.Enabled = false;
+                cmbmanic.Enabled = false;
+
+                txthorario.Text = horaInicioStr;
             }
         }
 
         public void DividirDisponibilidad(BEdisponibilidad_750VR dispo, TimeSpan duracion)
         {
-            TimeSpan inicioReserva = dispo.HoraInicio_750VR;
-            TimeSpan finReserva = inicioReserva.Add(duracion);
+            TimeSpan horaInicioReserva = TimeSpan.Parse(txthorario.Text);
+            TimeSpan horaFinReserva = horaInicioReserva.Add(duracion);
 
-            // 1. Marcamos la franja usada como ocupada
-            BEdisponibilidad_750VR ocupado = new BEdisponibilidad_750VR
-            {
-                DNImanic_750VR = dispo.DNImanic_750VR,
-                Fecha_750VR = dispo.Fecha_750VR,
-                HoraInicio_750VR = inicioReserva,
-                HoraFin_750VR = finReserva,
-                activo_750VR = true,
-                estado_750VR = true // ocupado
-            };
             BLLdisponibilidad_750VR blldispo = new BLLdisponibilidad_750VR();
-            blldispo.CrearDisponibilidad_750VR(ocupado);
 
-            // 2. Creamos la parte restante si existe
-            if (finReserva < dispo.HoraFin_750VR)
+            // 1. Crear bloque anterior si corresponde (disponible antes de la reserva)
+            if (horaInicioReserva > dispo.HoraInicio_750VR)
             {
-                BEdisponibilidad_750VR restante = new BEdisponibilidad_750VR
-                {
-                    DNImanic_750VR = dispo.DNImanic_750VR,
-                    Fecha_750VR = dispo.Fecha_750VR,
-                    HoraInicio_750VR = finReserva,
-                    HoraFin_750VR = dispo.HoraFin_750VR,
-                    activo_750VR = true,
-                    estado_750VR = false // disponible
-                };
-                blldispo.CrearDisponibilidad_750VR(restante);
+                var bloqueAnterior = new BEdisponibilidad_750VR(
+                    dispo.DNImanic_750VR,
+                    dispo.Fecha_750VR,
+                    dispo.HoraInicio_750VR,
+                    horaInicioReserva,
+                    true,  // activo
+                    false  // disponible
+                );
+                blldispo.CrearDisponibilidad_750VR(bloqueAnterior);
             }
 
-            // 3. Eliminamos o marcamos como inactiva la original
-            blldispo.CambiarEstado_750VR(dispo.IdDisponibilidad_750VR, false); // o inactivar lógica
+            // 2. Crear bloque ocupado (la reserva)
+            var bloqueReserva = new BEdisponibilidad_750VR(
+                dispo.DNImanic_750VR,
+                dispo.Fecha_750VR,
+                horaInicioReserva,
+                horaFinReserva,
+                true,  // activo
+                true   // ocupado
+            );
+            blldispo.CrearDisponibilidad_750VR(bloqueReserva);
+
+            // 3. Crear bloque restante si hay tiempo después de la reserva
+            if (horaFinReserva < dispo.HoraFin_750VR)
+            {
+                var bloqueRestante = new BEdisponibilidad_750VR(
+                    dispo.DNImanic_750VR,
+                    dispo.Fecha_750VR,
+                    horaFinReserva,
+                    dispo.HoraFin_750VR,
+                    true,  // activo
+                    false  // disponible
+                );
+                blldispo.CrearDisponibilidad_750VR(bloqueRestante);
+            }
+
+            // 4. Inactivar la disponibilidad original
+            blldispo.CambiarEstado_750VR(dispo.IdDisponibilidad_750VR, false);
+
+            // 5. Refrescar disponibilidad
             CargarDisponibilidadesConNombre();
         }
 
@@ -409,7 +444,18 @@ namespace Proyecto_NailsTime
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cmbmanic.DisplayMember = "nombre_750VR"; // o mostrar nombre + apellido
+            cmbmanic.ValueMember = "dni_750VR";
+        }
 
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LimpiarCamposReserva();
         }
     }
 }

@@ -108,8 +108,9 @@ namespace Proyecto_NailsTime
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK; // o Cancel según corresponda
-            this.Close();
+            cmbmet.SelectedIndex = -1;
+            txtcuot.Clear();
+            txtnum.Clear();
         }
 
         private void button4_Click(object sender, EventArgs e)

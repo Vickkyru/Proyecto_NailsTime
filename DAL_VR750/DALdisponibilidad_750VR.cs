@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL_VR750
 {
-    public  class DALdisponibilidad_750VR
+    public class DALdisponibilidad_750VR
     {
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
@@ -87,20 +87,25 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    lista.Add(new BEdisponibilidad_750VR
+                    int id = Convert.ToInt32(reader["IdDisponibilidad_VR750"]);
+                    int dni = Convert.ToInt32(reader["DNImanic_VR750"]);
+                    DateTime fecha = (DateTime)reader["Fecha_VR750"];
+                    TimeSpan inicio = (TimeSpan)reader["HoraInicio_VR750"];
+                    TimeSpan fin = (TimeSpan)reader["HoraFin_VR750"];
+                    bool activo = Convert.ToBoolean(reader["Activo_VR750"]);
+                    bool estado = Convert.ToBoolean(reader["Estado_VR750"]);
+
+                    var disponibilidad = new BEdisponibilidad_750VR(dni, fecha, inicio, fin, activo, estado)
                     {
-                        IdDisponibilidad_750VR = Convert.ToInt32(reader["IdDisponibilidad_VR750"]),
-                        DNImanic_750VR = Convert.ToInt32(reader["DNImanic_VR750"]),
-                        Fecha_750VR = (DateTime)reader["Fecha_VR750"],
-                        HoraInicio_750VR = (TimeSpan)reader["HoraInicio_VR750"],
-                        HoraFin_750VR = (TimeSpan)reader["HoraFin_VR750"],
-                        activo_750VR = Convert.ToBoolean(reader["Activo_VR750"]),
-                        estado_750VR = Convert.ToBoolean(reader["Estado_VR750"])
-                    });
+                        IdDisponibilidad_750VR = id
+                    };
+
+                    lista.Add(disponibilidad);
                 }
             }
-            return lista;
-        }
 
+            return lista;
+
+        }
     }
 }

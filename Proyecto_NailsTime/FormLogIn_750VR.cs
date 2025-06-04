@@ -19,6 +19,7 @@ namespace Proyecto_NailsTime
     {
         public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
         BLLusuario_750VR bll = new BLLusuario_750VR();
+        private Dictionary<string, int> intentosFallidosPorUsuario = new Dictionary<string, int>();
 
         private Form1_750VR formPrincipal;
         
@@ -29,7 +30,7 @@ namespace Proyecto_NailsTime
             formPrincipal = principal;
 
         }
-        private int intentosFallidos = 0;
+        //private int intentosFallidos = 0;
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,40 +43,9 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Complete los campos.");
                 return;
             }
-
             try
             {
-                BLLusuario_750VR bll = new BLLusuario_750VR();
-                BEusuario_750VR usuario = bll.ObtenerUsuarioPorLogin_750VR(login); // No valida aún
-
-                if (usuario == null)
-                    throw new Exception("Usuario no encontrado");
-
-                // Validación de contraseña
-                Encriptador_750VR encriptador = new Encriptador_750VR();
-
-                if (string.IsNullOrEmpty(usuario.salt_750VR))
-                {
-                    // Usuario de prueba sin salt
-                    if (usuario.contraseña_750VR != password)
-                        throw new Exception("Contraseña incorrecta (usuario prueba)");
-                }
-                else
-                {
-                    // Usuario real con hash + salt
-                    string hashCalculado = encriptador.HashearConSalt_750VR(password, usuario.salt_750VR);
-
-                    if (usuario.contraseña_750VR != hashCalculado)
-                        throw new Exception("Contraseña incorrecta");
-                }
-
-                if (!usuario.activo_750VR)
-                    throw new Exception("Usuario inactivo");
-
-                if (usuario.bloqueado_750VR)
-                    throw new Exception("Usuario bloqueado");
-
-                intentosFallidos = 0;
+                BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
 
                 if (!SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario))
                 {
@@ -84,7 +54,9 @@ namespace Proyecto_NailsTime
                 }
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
-                MessageBox.Show("Login exitoso.");
+                //MessageBox.Show("Login exitoso.");
+                if (intentosFallidosPorUsuario.ContainsKey(login))
+                    intentosFallidosPorUsuario.Remove(login);
                 formPrincipal.Actualizar();
                 this.Close();
             }
@@ -94,17 +66,19 @@ namespace Proyecto_NailsTime
 
                 if (mensaje.Contains("Contraseña incorrecta"))
                 {
-                    intentosFallidos++;
+                    if (!intentosFallidosPorUsuario.ContainsKey(login))
+                        intentosFallidosPorUsuario[login] = 0;
 
-                    if (intentosFallidos >= 3)
+                    intentosFallidosPorUsuario[login]++;
+
+                    if (intentosFallidosPorUsuario[login] >= 3)
                     {
-                        BLLusuario_750VR bll = new BLLusuario_750VR();
-                        bll.BloquearUsuario_750VR(txtuser.Text.Trim());
+                        bll.BloquearUsuario_750VR(login);
                         MessageBox.Show("Cuenta bloqueada tras 3 intentos fallidos.");
                     }
                     else
                     {
-                        MessageBox.Show($"{mensaje}. Intentos fallidos: {intentosFallidos}");
+                        MessageBox.Show($"Contraseña incorrecta. Intentos fallidos: {intentosFallidosPorUsuario[login]}");
                     }
                 }
                 else

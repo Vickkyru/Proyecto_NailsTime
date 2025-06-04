@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace Proyecto_NailsTime
 {
 
-    //hacerlo mejor, voy a buscar el nombre del manicurista por el combobox y ahi se me va a mostrar su dni y ahi me va a crear la disponibilidad
+    
     public partial class FormABMdisponibilidad : Form
     {
         public FormABMdisponibilidad()
@@ -57,6 +57,7 @@ namespace Proyecto_NailsTime
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarManicuristas();
             CargarDisponibilidad();
         }
@@ -104,38 +105,23 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                // Validamos primero
-                if (!ValidarCampos())
-                    return;
+                if (!ValidarCampos()) return;
+
                 int dni = Convert.ToInt32(txtdnimanic.Text);
-                string nom = cmbmanic.Text;
-                DateTime dia = dateTimePicker1.MinDate;
+                DateTime dia = dateTimePicker1.Value.Date;
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
 
-
-                // me falta verificar existencia
-
-                BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR
-                {
-                    DNImanic_750VR = dni,
-                    HoraInicio_750VR = inicio,
-                    Fecha_750VR = dia,
-                    HoraFin_750VR = fin,
-                    activo_750VR = true,
-                    estado_750VR = false
-                };
+                BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR(dni, dia, inicio, fin, true, false);
 
                 bll.CrearDisponibilidad_750VR(nuevo);
                 MessageBox.Show("Disponibilidad creada correctamente.");
-
                 LimpiarCampos();
-                //CargarUsuarios();
+                ResetearInterfaz();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo");
-
+                MessageBox.Show("Error al crear disponibilidad: " + ex.Message);
             }
         }
             private bool ValidarCampos()
@@ -182,6 +168,8 @@ namespace Proyecto_NailsTime
                 d.HoraFin_750VR = TimeSpan.Parse(txtfin.Text);
                 bll.ModificarDisponibilidad_750VR(d);
                 MessageBox.Show("Disponibilidad modificada correctamente.");
+                ResetearInterfaz();
+                LimpiarCampos();
             }
         }
 
@@ -192,6 +180,8 @@ namespace Proyecto_NailsTime
                 bll.CambiarEstado_750VR(d.IdDisponibilidad_750VR, !d.activo_750VR);
                 string msg = d.activo_750VR ? "Disponibilidad desactivada." : "Disponibilidad activada.";
                 MessageBox.Show(msg);
+                ResetearInterfaz();
+                LimpiarCampos();
             }
         }
 
@@ -243,6 +233,30 @@ namespace Proyecto_NailsTime
         private void lblmensaje_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                var d = dataGridView1.SelectedRows[0].DataBoundItem as BEdisponibilidad_750VR;
+                if (d != null)
+                {
+                    cmbmanic.SelectedValue = d.DNImanic_750VR;
+                    txtdnimanic.Text = d.DNImanic_750VR.ToString();
+                    dateTimePicker1.Value = d.Fecha_750VR;
+                    txtinicio.Text = d.HoraInicio_750VR.ToString();
+                    txtfin.Text = d.HoraFin_750VR.ToString();
+                }
+            }
+        }
+
+        private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbmanic.SelectedValue != null)
+            {
+                txtdnimanic.Text = cmbmanic.SelectedValue.ToString();
+            }
         }
     }
 }

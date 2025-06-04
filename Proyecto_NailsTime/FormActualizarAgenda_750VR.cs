@@ -103,9 +103,17 @@ namespace Proyecto_NailsTime
             }
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
+            string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
+
+            if (estadoActual != "Pendiente")
+            {
+                MessageBox.Show("No se puede modificar una reserva que ya fue cancelada o realizada.");
+                return;
+            }
+
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
             MessageBox.Show("Reserva marcada como realizada.");
-            Valida(); // vuelve a refrescar el DGV
+            Valida();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -117,9 +125,23 @@ namespace Proyecto_NailsTime
             }
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
+            string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
+
+            if (estadoActual != "Pendiente")
+            {
+                MessageBox.Show("No se puede cancelar una reserva que ya fue realizada o cancelada.");
+                return;
+            }
+
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Cancelado");
             MessageBox.Show("Reserva cancelada.");
-            CargarReservas();
+            Valida();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
     

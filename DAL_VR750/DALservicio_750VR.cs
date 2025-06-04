@@ -35,10 +35,12 @@ namespace DAL_VR750
             {
                 conn.Open();
                 string query = @"
-                UPDATE Servicio_VR750 
-                SET Nombre_VR750 = @Nombre, Tecnica_VR750 = @Tecnica, 
-                    DuracionMinutos_VR750 = @Duracion, Precio_VR750 = @Precio
-                WHERE IdServicio_VR750 = @ID";
+        UPDATE Servicio_VR750
+        SET Nombre_VR750 = @Nombre,
+            Tecnica_VR750 = @Tecnica,
+            DuracionMinutos_VR750 = @Duracion,
+            Precio_VR750 = @Precio
+        WHERE IdServicio_VR750 = @ID";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", nombre);

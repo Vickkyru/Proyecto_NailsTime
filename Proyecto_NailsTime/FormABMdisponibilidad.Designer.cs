@@ -127,6 +127,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(702, 172);
             this.dataGridView1.TabIndex = 89;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // label7
             // 
@@ -211,6 +212,7 @@
             this.cmbmanic.Name = "cmbmanic";
             this.cmbmanic.Size = new System.Drawing.Size(121, 21);
             this.cmbmanic.TabIndex = 106;
+            this.cmbmanic.SelectedIndexChanged += new System.EventHandler(this.cmbmanic_SelectedIndexChanged);
             // 
             // dateTimePicker1
             // 

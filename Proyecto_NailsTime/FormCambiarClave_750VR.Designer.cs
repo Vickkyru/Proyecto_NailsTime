@@ -118,7 +118,7 @@
             // 
             this.label1.Cursor = System.Windows.Forms.Cursors.Default;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(110, 39);
+            this.label1.Location = new System.Drawing.Point(137, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(254, 45);
             this.label1.TabIndex = 17;
