@@ -47,7 +47,7 @@ namespace Proyecto_NailsTime
         {
             modoActual = "añadir";
             ActivarModoEdicion();
-            lblmensaje.Text = modoActual;
+            lblmensaje.Text = "Modo Añadir";
         }
 
         private void FormABMdisponibilidad_Load(object sender, EventArgs e)
@@ -60,6 +60,7 @@ namespace Proyecto_NailsTime
             cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarManicuristas();
             CargarDisponibilidad();
+            PintarFilasInactivas();
         }
 
         private void btnmod_Click(object sender, EventArgs e)
@@ -71,8 +72,9 @@ namespace Proyecto_NailsTime
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = modoActual;
-            modoActual = "Modo Activar/Desactivar";
+            modoActual = "cambiarEstado";
+            lblmensaje.Text = "Modo Activar/Desactivar";
+           
             ActivarModoEdicion();
         }
 
@@ -96,9 +98,26 @@ namespace Proyecto_NailsTime
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
             var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
 
+            // Insertamos un "item vacío" al principio usando el constructor completo
+            var vacio = new BEusuario_750VR(
+                dni: 0,
+                nombre: "-- Seleccione --",
+                ape: "",
+                mail: "",
+                user: "",
+                contra: "",
+                salt: "",
+                rol: "manicurista",
+                activo: true,
+                bloqueado: false
+            );
+
+            manicuristas.Insert(0, vacio);
+
             cmbmanic.DataSource = manicuristas;
-            cmbmanic.DisplayMember = "nombre_750VR";   // o $"{nombre} {apellido}" si querés mostrar ambos
+            cmbmanic.DisplayMember = "nombre_750VR";
             cmbmanic.ValueMember = "dni_750VR";
+            cmbmanic.SelectedIndex = 0;
         }
 
         private void AplicarAlta()
@@ -111,6 +130,22 @@ namespace Proyecto_NailsTime
                 DateTime dia = dateTimePicker1.Value.Date;
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
+
+                // Buscar si ya existe una disponibilidad con ese mismo manicurista, fecha y hora
+                var existentes = bll.LeerDisponibilidades_750VR();
+                bool yaExiste = existentes.Any(d =>
+                    d.DNImanic_750VR == dni &&
+                    d.Fecha_750VR.Date == dia.Date &&
+                    d.HoraInicio_750VR == inicio &&
+                    d.HoraFin_750VR == fin &&
+                    d.activo_750VR // solo verificamos entre las activas
+                );
+
+                if (yaExiste)
+                {
+                    MessageBox.Show("Ya existe una disponibilidad para ese manicurista, fecha y horario.");
+                    return;
+                }
 
                 BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR(dni, dia, inicio, fin, true, false);
 
@@ -163,13 +198,57 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                d.Fecha_750VR = dateTimePicker1.MinDate;
-                d.HoraInicio_750VR = TimeSpan.Parse(txtinicio.Text);
-                d.HoraFin_750VR = TimeSpan.Parse(txtfin.Text);
-                bll.ModificarDisponibilidad_750VR(d);
-                MessageBox.Show("Disponibilidad modificada correctamente.");
-                ResetearInterfaz();
-                LimpiarCampos();
+                // Validación de selección de manicurista
+                if (cmbmanic.SelectedItem is BEusuario_750VR manicuristaSeleccionado)
+                {
+                    // Validar horas
+                    if (!TimeSpan.TryParse(txtinicio.Text, out TimeSpan nuevaHoraInicio))
+                    {
+                        MessageBox.Show("Hora de inicio inválida.");
+                        return;
+                    }
+
+                    if (!TimeSpan.TryParse(txtfin.Text, out TimeSpan nuevaHoraFin))
+                    {
+                        MessageBox.Show("Hora de fin inválida.");
+                        return;
+                    }
+
+                    if (nuevaHoraInicio >= nuevaHoraFin)
+                    {
+                        MessageBox.Show("La hora de inicio debe ser anterior a la hora de fin.");
+                        return;
+                    }
+
+                    // Obtener nuevos valores desde los controles
+                    d.DNImanic_750VR = manicuristaSeleccionado.dni_750VR; // ← esto asegura que cambia el DNI
+                    d.Fecha_750VR = dateTimePicker1.Value.Date;
+                    d.HoraInicio_750VR = nuevaHoraInicio;
+                    d.HoraFin_750VR = nuevaHoraFin;
+
+                    // Ejecutar modificación
+                    bool modificado = bll.ModificarDisponibilidad_750VR(d);
+
+                    if (modificado)
+                    {
+                        MessageBox.Show("Disponibilidad modificada correctamente.");
+                        CargarDisponibilidad();
+                        ResetearInterfaz();
+                        LimpiarCampos();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo modificar la disponibilidad.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Seleccione un manicurista válido.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una disponibilidad de la grilla.");
             }
         }
 
@@ -195,24 +274,24 @@ namespace Proyecto_NailsTime
         private void ActivarModoEdicion()
         {
             dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
-            //btnaplicar.Enabled = true;
-            //btncancelar.Enabled = true;
-            //btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = false;
+            btnapli.Enabled = true;
+            btncance.Enabled = true;
+            btnañadir.Enabled = btnmod.Enabled = btnelim.Enabled = false;
             dataGridView1.Enabled = true;
         }
 
         private void ResetearInterfaz()
         {
-            //btnaplicar.Enabled = false;
-            //btncancelar.Enabled = false;
-            //btncrear.Enabled = btnmodificar.Enabled = btnestado.Enabled = true;
-            //cmbdia.Enabled = txthoraInicio.Enabled = txthoraFin.Enabled = cmbmanicurista.Enabled = false;
+            btnapli.Enabled = false;
+            btncance.Enabled = false;
+            btnañadir.Enabled = btnmod.Enabled = btnelim.Enabled = true;
+            txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
             dataGridView1.Enabled = true;
         }
 
         private void LimpiarCampos()
         {
-            
+            txtdnimanic.Clear();
             cmbmanic.SelectedIndex = -1;
             txtinicio.Clear();
             txtfin.Clear();
@@ -222,10 +301,10 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                //cmbmanic.SelectedValue = d.Nombremanic_750VR;
-                //cmbdia.SelectedIndex = d.DiaSemana_750VR - 1;
-                txtinicio.Text = d.HoraInicio_750VR.ToString();
-                txtfin.Text = d.HoraFin_750VR.ToString();
+                cmbmanic.SelectedValue = d.DNImanic_750VR;                 // ✅ Selecciona al manicurista por DNI
+                dateTimePicker1.Value = d.Fecha_750VR;                     // ✅ Asigna la fecha completa
+                txtinicio.Text = d.HoraInicio_750VR.ToString(@"hh\:mm");  // ✅ Formato claro
+                txtfin.Text = d.HoraFin_750VR.ToString(@"hh\:mm");
             }
         }
    
@@ -253,9 +332,13 @@ namespace Proyecto_NailsTime
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbmanic.SelectedValue != null)
+            if (cmbmanic.SelectedIndex > 0 && cmbmanic.SelectedItem is BEusuario_750VR manicurista)
             {
-                txtdnimanic.Text = cmbmanic.SelectedValue.ToString();
+                txtdnimanic.Text = manicurista.dni_750VR.ToString();
+            }
+            else
+            {
+                txtdnimanic.Text = ""; // o podrías dejarlo en blanco
             }
         }
     }

@@ -159,27 +159,22 @@ namespace Proyecto_NailsTime
 
         private void AplicarActivarDesactivar()
         {
-            var item = dataGridView1.CurrentRow?.DataBoundItem as BEusuario_750VR;
+            var item = dataGridView1.CurrentRow?.DataBoundItem as BECliente_750VR;
             if (item == null)
             {
-                MessageBox.Show("Seleccione un usuario válido de la lista.");
+                MessageBox.Show("Seleccione un Cliente válido de la lista.");
                 return;
             }
 
             bool nuevoEstado = !item.activo_750VR;
 
-            BLLusuario_750VR bll = new BLLusuario_750VR();
-            bool exito = bll.CambiarEstadoUsuario_750VR(item.dni_750VR, nuevoEstado);
+            BLLCliente_750VR bll = new BLLCliente_750VR();
+            bool exito = bll.CambiarEstadoCliente_750VR(item.dni_750VR, nuevoEstado);
 
             if (exito)
             {
-                string mensaje = nuevoEstado ? "Usuario activado correctamente." : "Usuario desactivado correctamente.";
+                string mensaje = nuevoEstado ? "Cliente activado correctamente." : "Cliente desactivado correctamente.";
                 MessageBox.Show(mensaje);
-
-                if (!nuevoEstado)
-                {
-                    MessageBox.Show("Recuerde que el usuario no podrá iniciar sesión.");
-                }
 
                 CargarUsuarios();
                 ResetearEstadoInterfaz();
@@ -187,7 +182,7 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al cambiar estado del usuario.");
+                MessageBox.Show("Error al cambiar estado del Cliente.");
             }
         }
 
@@ -195,7 +190,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un usuario de la lista.");
+                MessageBox.Show("Seleccione un Cliente de la lista.");
                 return;
             }
 
@@ -220,7 +215,7 @@ namespace Proyecto_NailsTime
 
             if (exito)
             {
-                MessageBox.Show("Usuario modificado correctamente.");
+                MessageBox.Show("Cliente modificado correctamente.");
 
                 CargarUsuarios();
                 ResetearEstadoInterfaz();
@@ -228,7 +223,7 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al modificar el usuario.");
+                MessageBox.Show("Error al modificar el Cliente.");
             }
         }
 

@@ -38,16 +38,19 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = @"UPDATE Disponibilidad_VR750 SET 
-                            HoraInicio_VR750 = @Inicio, 
-                            HoraFin_VR750 = @Fin ,
-                            Fecha_VR750 = @Dia
-                            WHERE IdDisponibilidad_VR750 = @ID";
+                string query = @"
+            UPDATE Disponibilidad_VR750
+            SET DNImanic_VR750 = @DNI,
+                Fecha_VR750 = @Fecha,
+                HoraInicio_VR750 = @HoraInicio,
+                HoraFin_VR750 = @HoraFin
+            WHERE IdDisponibilidad_VR750 = @ID";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Inicio", dispo.HoraInicio_750VR);
-                cmd.Parameters.AddWithValue("@Fin", dispo.HoraFin_750VR);
-                cmd.Parameters.AddWithValue("@Dia", dispo.Fecha_750VR);
+                cmd.Parameters.AddWithValue("@DNI", dispo.DNImanic_750VR);
+                cmd.Parameters.AddWithValue("@Fecha", dispo.Fecha_750VR);
+                cmd.Parameters.AddWithValue("@HoraInicio", dispo.HoraInicio_750VR);
+                cmd.Parameters.AddWithValue("@HoraFin", dispo.HoraFin_750VR);
                 cmd.Parameters.AddWithValue("@ID", dispo.IdDisponibilidad_750VR);
 
                 return cmd.ExecuteNonQuery() > 0;
