@@ -98,6 +98,7 @@
             this.btnsalir.TabIndex = 92;
             this.btnsalir.Text = "Salir";
             this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
             // 
             // btncance
             // 

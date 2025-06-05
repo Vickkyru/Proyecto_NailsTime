@@ -341,5 +341,10 @@ namespace Proyecto_NailsTime
                 txtdnimanic.Text = ""; // o podrías dejarlo en blanco
             }
         }
+
+        private void btnsalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
