@@ -54,7 +54,7 @@ namespace DAL_VR750
                                 ape: reader["ApellidoCliente"].ToString(),
                                 gmail: "",
                                 dire: "",
-                                celu: 0,
+                                celu: "",
                                 act: true
                             ),
 
@@ -172,7 +172,7 @@ namespace DAL_VR750
                             ape: reader["ApellidoCliente"].ToString(),
                             gmail: "", // opcional si no lo traés
                             dire: "",
-                            celu: 0,
+                            celu: "",
                             act: true
                         ),
 

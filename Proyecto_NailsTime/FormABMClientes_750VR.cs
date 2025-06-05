@@ -238,7 +238,7 @@ namespace Proyecto_NailsTime
                 string nombre = txtnom.Text.Trim();
                 string apellido = txtape.Text.Trim();
                 string mail = txtemail.Text.Trim();
-                int cel = int.Parse(txtcel.Text);
+                string cel = txtcel.Text.Trim();
                 string dire = txtdire.Text;
 
                 BLLCliente_750VR bll = new BLLCliente_750VR();
@@ -258,7 +258,7 @@ namespace Proyecto_NailsTime
        ape: apellido,
        gmail: mail,
        dire: dire,
-       celu: cel,
+       celu:  cel,
        act: true
    );
 

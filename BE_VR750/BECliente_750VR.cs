@@ -14,10 +14,10 @@ namespace BE_VR750
         public string apellido_750VR { get; set; }
         public string gmail_750VR { get; set; }
         public string direccion_750VR { get; set; }
-        public int celular_750VR { get; set; }
+        public string celular_750VR { get; set; }
         public bool activo_750VR { get; set; }
 
-        public BECliente_750VR(int dni, string nom, string ape, string gmail, string dire, int celu, bool act)
+        public BECliente_750VR(int dni, string nom, string ape, string gmail, string dire, string celu, bool act)
         {
                 this.dni_750VR = dni;
             this.nombre_750VR = nom;

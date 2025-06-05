@@ -114,8 +114,8 @@ namespace DAL_VR750
                             Nombre_VR750 NVARCHAR(50) NOT NULL,
                             Apellido_VR750 NVARCHAR(50) NOT NULL,
                             Email_VR750 NVARCHAR(100) NOT NULL,
-                            Direccion_VR750 NVARCHAR(100) NOT NULL,
-                            Celular_VR750 INT NOT NULL,
+                            Direccion_VR750 NVARCHAR(200) NOT NULL,
+                            Celular_VR750 NVARCHAR(100) NOT NULL,
                             Activo_VR750 BIT DEFAULT 1
                         );
                     END;

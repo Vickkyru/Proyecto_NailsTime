@@ -1,4 +1,5 @@
 ﻿using BE_VR750;
+using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -26,16 +27,30 @@ namespace DAL_VR750
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", dni);
 
+                var encriptador = new Encriptador_750VR();
+
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
+                    string emailLeido = reader["Email_VR750"].ToString();
+                    string emailDescifrado;
+
+                    try
+                    {
+                        emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
+                    }
+                    catch
+                    {
+                        emailDescifrado = "[Email no válido]";
+                    }
+
                     return new BECliente_750VR(
                         dni: Convert.ToInt32(reader["DNI_VR750"]),
                         nom: reader["Nombre_VR750"].ToString(),
                         ape: reader["Apellido_VR750"].ToString(),
-                        gmail: reader["Email_VR750"].ToString(),
+                        gmail: emailDescifrado,
                         dire: reader["Direccion_VR750"].ToString(),
-                        celu: Convert.ToInt32(reader["Celular_VR750"]),
+                        celu: reader["Celular_VR750"].ToString(),
                         act: Convert.ToBoolean(reader["Activo_VR750"])
                     );
                 }
@@ -54,13 +69,17 @@ namespace DAL_VR750
         VALUES (@DNI, @Nombre, @Apellido, @Email, @Direccion, @Celular, @Activo)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
+                var encriptador = new Encriptador_750VR();
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre_750VR);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido_750VR);
-                cmd.Parameters.AddWithValue("@Email", usuario.gmail_750VR);
+                cmd.Parameters.AddWithValue("@Email", encriptador.EncriptarAES_750VR(usuario.gmail_750VR));
+                //cmd.Parameters.AddWithValue("@Email", usuario.gmail_750VR);
                 cmd.Parameters.AddWithValue("@Direccion", usuario.direccion_750VR);
                 cmd.Parameters.AddWithValue("@Celular", usuario.celular_750VR);
                 cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
+                
+                
 
 
                 cmd.ExecuteNonQuery();
@@ -80,10 +99,12 @@ namespace DAL_VR750
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", nombre);
                 cmd.Parameters.AddWithValue("@Apellido", apellido);
-                cmd.Parameters.AddWithValue("@Mail", mail);
+                //cmd.Parameters.AddWithValue("@Mail", mail);
                 cmd.Parameters.AddWithValue("@Direccion", dire);
                 cmd.Parameters.AddWithValue("@Celular", celu);
                 cmd.Parameters.AddWithValue("@DNI", dni);
+                var encriptador = new Encriptador_750VR();
+                cmd.Parameters.AddWithValue("@Mail", encriptador.EncriptarAES_750VR(mail));
 
                 return cmd.ExecuteNonQuery() > 0;
             }
@@ -152,6 +173,8 @@ namespace DAL_VR750
                     cmd.Parameters.AddWithValue("@Celular", "%" + celu + "%");
 
                 SqlDataReader reader = cmd.ExecuteReader();
+                var encriptador = new Encriptador_750VR();
+
 
                 while (reader.Read())
                 {
@@ -159,10 +182,12 @@ namespace DAL_VR750
      dni: Convert.ToInt32(reader["DNI_VR750"]),
      nom: reader["Nombre_VR750"].ToString(),
      ape: reader["Apellido_VR750"].ToString(),
-     gmail: reader["Email_VR750"].ToString(),
+     //gmail: reader["Email_VR750"].ToString(),
      dire: reader["Direccion_VR750"].ToString(),
-     celu: Convert.ToInt32(reader["Celular_VR750"]),
-     act: Convert.ToBoolean(reader["Activo_VR750"])
+     celu: reader["Celular_VR750"].ToString(),
+     act: Convert.ToBoolean(reader["Activo_VR750"]),
+     gmail: encriptador.DesencriptarAES_750VR(reader["Email_VR750"].ToString())
+
  );
                     lista.Add(cli);
                 }
@@ -171,7 +196,7 @@ namespace DAL_VR750
             return lista;
         }
 
-        public List<BECliente_750VR> leerEntidades_750VR() //busca todos
+        public List<BECliente_750VR> leerEntidades_750VR()
         {
             List<BECliente_750VR> lista = new List<BECliente_750VR>();
 
@@ -182,18 +207,30 @@ namespace DAL_VR750
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
+                var encriptador = new Encriptador_750VR();
 
                 while (reader.Read())
                 {
+                    string emailLeido = reader["Email_VR750"].ToString();
+                    string emailDescifrado;
+                    try
+                    {
+                        emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
+                    }
+                    catch
+                    {
+                        emailDescifrado = "[ERROR Base64]";
+                    }
+
                     BECliente_750VR cli = new BECliente_750VR(
-     dni: Convert.ToInt32(reader["DNI_VR750"]),
-     nom: reader["Nombre_VR750"].ToString(),
-     ape: reader["Apellido_VR750"].ToString(),
-     gmail: reader["Email_VR750"].ToString(),
-     dire: reader["Direccion_VR750"].ToString(),
-     celu: Convert.ToInt32(reader["Celular_VR750"]),
-     act: Convert.ToBoolean(reader["Activo_VR750"])
- );
+                        dni: Convert.ToInt32(reader["DNI_VR750"]),
+                        nom: reader["Nombre_VR750"].ToString(),
+                        ape: reader["Apellido_VR750"].ToString(),
+                        gmail: emailDescifrado,
+                        dire: reader["Direccion_VR750"].ToString(),
+                        celu: reader["Celular_VR750"].ToString(), // CAMBIO: int ➝ string
+                        act: Convert.ToBoolean(reader["Activo_VR750"])
+                    );
                     lista.Add(cli);
                 }
             }
