@@ -27,28 +27,28 @@ namespace DAL_VR750
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", dni);
 
-                var encriptador = new Encriptador_750VR();
+                //var encriptador = new Encriptador_750VR();
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    string emailLeido = reader["Email_VR750"].ToString();
-                    string emailDescifrado;
+                    //string emailLeido = reader["Email_VR750"].ToString();
+                    //string emailDescifrado;
 
-                    try
-                    {
-                        emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
-                    }
-                    catch
-                    {
-                        emailDescifrado = "[Email no válido]";
-                    }
+                    //try
+                    //{
+                    //    emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
+                    //}
+                    //catch
+                    //{
+                    //    emailDescifrado = "[Email no válido]";
+                    //}
 
                     return new BECliente_750VR(
                         dni: Convert.ToInt32(reader["DNI_VR750"]),
                         nom: reader["Nombre_VR750"].ToString(),
                         ape: reader["Apellido_VR750"].ToString(),
-                        gmail: emailDescifrado,
+                        gmail: reader["Email_VR750"].ToString(), // SIN desencriptar acá
                         dire: reader["Direccion_VR750"].ToString(),
                         celu: reader["Celular_VR750"].ToString(),
                         act: Convert.ToBoolean(reader["Activo_VR750"])
@@ -64,23 +64,23 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
+
                 string query = @"INSERT INTO Cliente_VR750 
-        (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Direccion_VR750, Celular_VR750,Activo_VR750) 
+        (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Direccion_VR750, Celular_VR750, Activo_VR750) 
         VALUES (@DNI, @Nombre, @Apellido, @Email, @Direccion, @Celular, @Activo)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
+
                 var encriptador = new Encriptador_750VR();
+                string emailCifrado = encriptador.EncriptarAES_750VR(usuario.gmail_750VR); // 👈 ASEGURAR ESTA LÍNEA
+
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.nombre_750VR);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.apellido_750VR);
-                cmd.Parameters.AddWithValue("@Email", encriptador.EncriptarAES_750VR(usuario.gmail_750VR));
-                //cmd.Parameters.AddWithValue("@Email", usuario.gmail_750VR);
+                cmd.Parameters.AddWithValue("@Email", emailCifrado); // 👈 ACÁ VA EL CIFRADO
                 cmd.Parameters.AddWithValue("@Direccion", usuario.direccion_750VR);
                 cmd.Parameters.AddWithValue("@Celular", usuario.celular_750VR);
                 cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
-                
-                
-
 
                 cmd.ExecuteNonQuery();
             }
@@ -173,7 +173,7 @@ namespace DAL_VR750
                     cmd.Parameters.AddWithValue("@Celular", "%" + celu + "%");
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                var encriptador = new Encriptador_750VR();
+                //var encriptador = new Encriptador_750VR();
 
 
                 while (reader.Read())
@@ -182,11 +182,11 @@ namespace DAL_VR750
      dni: Convert.ToInt32(reader["DNI_VR750"]),
      nom: reader["Nombre_VR750"].ToString(),
      ape: reader["Apellido_VR750"].ToString(),
-     //gmail: reader["Email_VR750"].ToString(),
+     gmail: reader["Email_VR750"].ToString(),
      dire: reader["Direccion_VR750"].ToString(),
      celu: reader["Celular_VR750"].ToString(),
-     act: Convert.ToBoolean(reader["Activo_VR750"]),
-     gmail: encriptador.DesencriptarAES_750VR(reader["Email_VR750"].ToString())
+     act: Convert.ToBoolean(reader["Activo_VR750"])
+     //gmail: encriptador.DesencriptarAES_750VR(reader["Email_VR750"].ToString())
 
  );
                     lista.Add(cli);
@@ -207,26 +207,27 @@ namespace DAL_VR750
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
-                var encriptador = new Encriptador_750VR();
+                //var encriptador = new Encriptador_750VR();
 
                 while (reader.Read())
                 {
-                    string emailLeido = reader["Email_VR750"].ToString();
-                    string emailDescifrado;
-                    try
-                    {
-                        emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
-                    }
-                    catch
-                    {
-                        emailDescifrado = "[ERROR Base64]";
-                    }
+                    //string emailLeido = reader["Email_VR750"].ToString();
+                    //string emailDescifrado;
+                    //try
+                    //{
+                    //    emailDescifrado = encriptador.DesencriptarAES_750VR(emailLeido);
+                    //}
+                    //catch
+                    //{
+                    //    emailDescifrado = "[ERROR Base64]";
+                    //}
 
                     BECliente_750VR cli = new BECliente_750VR(
                         dni: Convert.ToInt32(reader["DNI_VR750"]),
                         nom: reader["Nombre_VR750"].ToString(),
                         ape: reader["Apellido_VR750"].ToString(),
-                        gmail: emailDescifrado,
+                        //gmail: emailDescifrado,
+                        gmail: reader["Email_VR750"].ToString(), // ← email encriptado
                         dire: reader["Direccion_VR750"].ToString(),
                         celu: reader["Celular_VR750"].ToString(), // CAMBIO: int ➝ string
                         act: Convert.ToBoolean(reader["Activo_VR750"])

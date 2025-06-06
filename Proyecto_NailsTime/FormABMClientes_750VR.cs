@@ -37,13 +37,31 @@ namespace Proyecto_NailsTime
             txtcel.Clear();
 
         }
+        private string emailCifrado = "";
+
+        private string ocultarEmailSiEsNecesario(string texto)
+        {
+            return checkBox1.Checked ? desencriptarEmail(texto) : "[Email protegido]";
+        }
+
+        private string desencriptarEmail(string texto)
+        {
+            try
+            {
+                var enc = new Encriptador_750VR();
+                return enc.DesencriptarAES_750VR(texto);
+            }
+            catch
+            {
+                return "[Error al desencriptar]";
+            }
+        }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
-
                 BLLCliente_750VR bll = new BLLCliente_750VR();
                 var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
 
@@ -52,7 +70,10 @@ namespace Proyecto_NailsTime
                     txtdni.Text = cliente.dni_750VR.ToString();
                     txtnom.Text = cliente.nombre_750VR;
                     txtape.Text = cliente.apellido_750VR;
-                    txtemail.Text = cliente.gmail_750VR;
+
+                    emailCifradoActual = cliente.gmail_750VR;
+                    txtemail.Text = checkBox1.Checked ? DesencriptarEmail(emailCifradoActual) : "[Email protegido]";
+
                     txtcel.Text = cliente.celular_750VR.ToString();
                     txtdire.Text = cliente.direccion_750VR;
                 }
@@ -231,51 +252,47 @@ namespace Proyecto_NailsTime
         {
             try
             {
-                // Validamos primero
                 if (!ValidarCampos())
                     return;
+
                 int dni = Convert.ToInt32(txtdni.Text);
                 string nombre = txtnom.Text.Trim();
                 string apellido = txtape.Text.Trim();
-                string mail = txtemail.Text.Trim();
+                string dire = txtdire.Text.Trim();
                 string cel = txtcel.Text.Trim();
-                string dire = txtdire.Text;
+
+                // 🔐 En modo AÑADIR se debe usar directamente el txtemail
+                string mail = txtemail.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(mail) || mail.StartsWith("["))
+                {
+                    MessageBox.Show("Email inválido.");
+                    return;
+                }
 
                 BLLCliente_750VR bll = new BLLCliente_750VR();
 
-              //falta validar el resto
                 if (bll.ObtenerClientePorDNI_750VR(dni) != null)
                 {
                     MessageBox.Show("Ya existe un cliente con ese DNI.");
                     return;
-
                 }
-
 
                 BECliente_750VR nuevo = new BECliente_750VR(
-       dni: dni,
-       nom: nombre,
-       ape: apellido,
-       gmail: mail,
-       dire: dire,
-       celu:  cel,
-       act: true
-   );
+                    dni: dni,
+                    nom: nombre,
+                    ape: apellido,
+                    gmail: mail,
+                    dire: dire,
+                    celu: cel,
+                    act: true
+                );
 
-                bll.CrearCliente_750VR(nuevo);
+                bll.CrearCliente_750VR(nuevo); // La DAL lo encripta correctamente
 
-                if (InvocadoDesdeReserva && FormularioReserva != null)
-                {
-                    FormularioReserva.CompletarCamposCliente(txtdni.Text, txtnom.Text);
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Cliente creado correctamente.");
-                    LimpiarCampos();
-                    CargarUsuarios(); 
-                }
-
+                MessageBox.Show("Cliente creado correctamente.");
+                LimpiarCampos();
+                CargarUsuarios();
             }
             catch (Exception ex)
             {
@@ -489,5 +506,30 @@ namespace Proyecto_NailsTime
             modoActual = "consulta";
             lblmensaje.Text = "Modo Consulta";
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtemail.Text = checkBox1.Checked ? DesencriptarEmail(emailCifradoActual) : "[Email protegido]";
+        }
+
+        private string emailCifradoActual = "";
+        private string DesencriptarEmail(string texto)
+        {
+            try
+            {
+                var encriptador = new Encriptador_750VR();
+                return encriptador.DesencriptarAES_750VR(texto);
+            }
+            catch
+            {
+                return "[ERROR AL DESENCRIPTAR]";
+            }
+        }
+
     }
 }

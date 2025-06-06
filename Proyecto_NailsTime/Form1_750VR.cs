@@ -23,9 +23,9 @@ namespace Proyecto_NailsTime
         public Form1_750VR()
         {
             InitializeComponent();
-            db.VerificarOCrearBaseDeDatos();
-            db.VerificarYCrearTablaUsuarios_750VR();
-            db.InsertarServiciosIniciales();
+            //db.VerificarOCrearBaseDeDatos();
+            //db.VerificarYCrearTablaUsuarios_750VR();
+            //db.InsertarServiciosIniciales();
 
         }
 

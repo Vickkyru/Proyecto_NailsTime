@@ -10,8 +10,8 @@ namespace SERVICIOS_VR750
 {
     public class Encriptador_750VR
     {
-        private readonly string clave = "1234567890ABCDEF"; // 16 chars ASCII
-        private readonly string iv = "ABCDEF1234567890";   // 16 chars ASCII
+        //private readonly string clave = "1234567890ABCDEF"; // 16 chars ASCII
+        //private readonly string iv = "ABCDEF1234567890";   // 16 chars ASCII
 
 
         public string HashearSHA256_750VR(string texto)
@@ -43,21 +43,23 @@ namespace SERVICIOS_VR750
             return Convert.ToBase64String(saltBytes).Substring(0, 24);
         }
 
-        // 🔐 Encriptación reversible AES
+        private readonly string claveMaestra = "CLAVE-SEGURA-VR750"; // Puede ser cualquier texto
+
         public string EncriptarAES_750VR(string textoPlano)
         {
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(clave);
-                aes.IV = Encoding.UTF8.GetBytes(iv);
+                var pdb = new Rfc2898DeriveBytes(claveMaestra, Encoding.UTF8.GetBytes("SALT-VR750"));
+                aes.Key = pdb.GetBytes(16); // AES-128
+                aes.IV = pdb.GetBytes(16);
 
-                using (var encryptor = aes.CreateEncryptor())
                 using (var ms = new MemoryStream())
+                using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                using (var sw = new StreamWriter(cs))
                 {
-                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-                    using (var sw = new StreamWriter(cs))
-                        sw.Write(textoPlano);
-
+                    sw.Write(textoPlano);
+                    sw.Flush();
+                    cs.FlushFinalBlock();
                     return Convert.ToBase64String(ms.ToArray());
                 }
             }
@@ -65,27 +67,18 @@ namespace SERVICIOS_VR750
 
         public string DesencriptarAES_750VR(string textoCifrado)
         {
-            try
+            using (Aes aes = Aes.Create())
             {
-                using (Aes aes = Aes.Create())
-                {
-                    aes.Key = Encoding.ASCII.GetBytes(clave);
-                    aes.IV = Encoding.ASCII.GetBytes(iv);
+                var pdb = new Rfc2898DeriveBytes(claveMaestra, Encoding.UTF8.GetBytes("SALT-VR750"));
+                aes.Key = pdb.GetBytes(16); // AES-128
+                aes.IV = pdb.GetBytes(16);
 
-                    using (var decryptor = aes.CreateDecryptor())
-                    using (var ms = new MemoryStream(Convert.FromBase64String(textoCifrado)))
-                    using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-                    using (var sr = new StreamReader(cs))
-                        return sr.ReadToEnd();
+                using (var ms = new MemoryStream(Convert.FromBase64String(textoCifrado)))
+                using (var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs))
+                {
+                    return sr.ReadToEnd();
                 }
-            }
-            catch (FormatException ex)
-            {
-                return $"[ERROR Base64] {ex.Message}";
-            }
-            catch (Exception ex)
-            {
-                return $"[ERROR General] {ex.Message}";
             }
         }
     }
