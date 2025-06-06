@@ -95,7 +95,7 @@ namespace Proyecto_NailsTime
         {
             foreach (DataGridViewRow fila in dataGridView1.Rows)
             {
-                if (fila.DataBoundItem is BECliente_750VR usuario && !usuario.activo_750VR)
+                if (fila.DataBoundItem is BEServicio_750VR usuario && !usuario.activo_750VR)
                 {
                     fila.DefaultCellStyle.BackColor = Color.Red;
                 }
@@ -182,11 +182,24 @@ namespace Proyecto_NailsTime
 
                 string nombre = txtnombre.Text.Trim();
                 string tecnica = txttec.Text.Trim();
+
+                // Verificar si ya existe uno igual
+                var bll = new BLLServicio_750VR();
+                var existentes = bll.LeerEntidades_750VR();
+                bool yaExiste = existentes.Any(s =>
+                    s.nombre_750VR.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
+                    s.tecnica_750VR.Equals(tecnica, StringComparison.OrdinalIgnoreCase));
+
+                if (yaExiste)
+                {
+                    MessageBox.Show("Ya existe un servicio con ese nombre y técnica.");
+                    return;
+                }
+
                 int duracion = int.Parse(txtduracion.Text);
                 decimal precio = decimal.Parse(txtprecio.Text);
 
                 BEServicio_750VR nuevo = new BEServicio_750VR(nombre, tecnica, duracion, precio, true);
-                BLLServicio_750VR bll = new BLLServicio_750VR();
                 bll.CrearServicio_750VR(nuevo);
 
                 MessageBox.Show("Servicio creado correctamente.");
@@ -199,8 +212,8 @@ namespace Proyecto_NailsTime
             }
         }
 
-       
-            private bool ValidarCampos()
+
+        private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
                 string.IsNullOrWhiteSpace(txttec.Text) ||
@@ -263,7 +276,7 @@ namespace Proyecto_NailsTime
 
             if (modoActual == "añadir" || modoActual == "modificar")
             {
-                txtnombre.Enabled = modoActual == "añadir";
+                txtnombre.Enabled = true;
                 txttec.Enabled = true;
                 txtprecio.Enabled = true;
                 txtduracion.Enabled = true;
