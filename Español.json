@@ -47,11 +47,87 @@
 
 
   "FormCobrarServicio_750VR.Text": "Form cobrar servicio",
-  "FormCobrarServicio_750VR.label1": "Form cobrar servicio"
+  "FormCobrarServicio_750VR.label1": "Form cobrar servicio",
+
+
+  "FormRegistrarReserva_750VR.Text": "Form registrar reserva",
+  "FormRegistrarReserva_750VR.label8": "DNI cliente",
+  "FormRegistrarReserva_750VR.label9": "Nombre cliente",
+  "FormRegistrarReserva_750VR.label12": "manicurista",
+  "FormRegistrarReserva_750VR.label11": "Servicio",
+  "FormRegistrarReserva_750VR.label10": "Tecnica",
+  "FormRegistrarReserva_750VR.label15": "Dia",
+  "FormRegistrarReserva_750VR.label16": "Precio",
+  "FormRegistrarReserva_750VR.label14": "Duracion",
+  "FormRegistrarReserva_750VR.label13": "Horario",
+  "FormRegistrarReserva_750VR.label2": "Disponibilidad horaria",
+  "FormRegistrarReserva_750VR.label7": "Reservas",
+  "FormRegistrarReserva_750VR.label1": "Registro Reserva",
+  "FormRegistrarReserva_750VR.button3": "Buscar",
+  "FormRegistrarReserva_750VR.button5": "Crear Cliente",
+  "FormRegistrarReserva_750VR.button1": "Crear Reserva",
+  "FormRegistrarReserva_750VR.button2": "Cancelar",
+  "FormRegistrarReserva_750VR.button4": "Salir",
 
 
 
 
+  "FormActualizarAgenda_750VR.Text": "Form actualizar agenda",
+  "FormActualizarAgenda_750VR.label1": "Turnos manicurista",
+  "FormActualizarAgenda_750VR.button1": "Salir",
+  "FormActualizarAgenda_750VR.button3": "Realizado",
+  "FormActualizarAgenda_750VR.button4": "Cancelado",
+
+
+
+
+
+  "FormABMservicios_750VR.Text": "Form ABM servicios",
+  "FormABMservicios_750VR.label2": "Maestro de servicios",
+  "FormABMservicios_750VR.label6": "Nombre",
+  "FormABMservicios_750VR.label5": "Tecnica",
+  "FormABMservicios_750VR.label7": "Duracion",
+  "FormABMservicios_750VR.label4": "Precio",
+  "FormABMservicios_750VR.btnañadir": "Añadir",
+  "FormABMservicios_750VR.btnmod": "Modificar",
+  "FormABMservicios_750VR.btnelim": "Eliminar",
+  "FormABMservicios_750VR.btnapli": "Aplicar",
+  "FormABMservicios_750VR.btncance": "Cancelar",
+  "FormABMservicios_750VR.btnsalir": "Salir",
+
+
+
+  "FormABMdisponibilidad_750VR.Text": "Form ABM disponibilidad",
+  "FormABMdisponibilidad_750VR.label2": "ABM disponibilidad",
+  "FormABMdisponibilidad_750VR.label1": "DNI manicurista",
+  "FormABMdisponibilidad_750VR.label4": "Manicurista",
+  "FormABMdisponibilidad_750VR.fecha": "Fecha",
+  "FormABMdisponibilidad_750VR.label6": "Hora inicio",
+  "FormABMdisponibilidad_750VR.label7": "Hora fin",
+  "FormABMdisponibilidad_750VR.btnañadir": "Añadir",
+  "FormABMdisponibilidad_750VR.btnmod": "Modificar",
+  "FormABMdisponibilidad_750VR.btnelim": "Eliminar",
+  "FormABMdisponibilidad_750VR.btnapli": "Aplicar",
+  "FormABMdisponibilidad_750VR.btncance": "Cancelar",
+  "FormABMdisponibilidad_750VR.btnsalir": "Salir",
+
+
+
+  "FormABMClientes_750VR.Text": "Form ABM clientes",
+  "FormABMClientes_750VR.label2": "ABM clientes",
+  "FormABMClientes_750VR.label4": "DNI",
+  "FormABMClientes_750VR.label5": "Apellido",
+  "FormABMClientes_750VR.label6": "Nombre",
+  "FormABMClientes_750VR.label7": "Email",
+  "FormABMClientes_750VR.label3": "Celular",
+  "FormABMClientes_750VR.label1": "Direccion",
+  "FormABMClientes_750VR.checkbox1": "Ver",
+  "FormABMClientes_750VR.btnañadir": "Añadir",
+  "FormABMClientes_750VR.btnmod": "Modificar",
+  "FormABMClientes_750VR.btnelim": "Eliminar",
+  "FormABMClientes_750VR.btnapli": "Aplicar",
+  "FormABMClientes_750VR.btncance": "Cancelar",
+  "FormABMClientes_750VR.btnsalir": "Salir"
 
 
 

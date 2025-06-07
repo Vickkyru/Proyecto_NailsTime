@@ -90,12 +90,15 @@
             // 
             // btnrealiz
             // 
-            this.btnrealiz.Location = new System.Drawing.Point(232, 270);
+            this.btnrealiz.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnrealiz.FlatAppearance.BorderSize = 0;
+            this.btnrealiz.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnrealiz.Location = new System.Drawing.Point(232, 283);
             this.btnrealiz.Name = "btnrealiz";
             this.btnrealiz.Size = new System.Drawing.Size(75, 23);
             this.btnrealiz.TabIndex = 36;
             this.btnrealiz.Text = "Realizar";
-            this.btnrealiz.UseVisualStyleBackColor = true;
+            this.btnrealiz.UseVisualStyleBackColor = false;
             this.btnrealiz.Click += new System.EventHandler(this.btnrealiz_Click);
             // 
             // txtnum
@@ -151,22 +154,28 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.RosyBrown;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Location = new System.Drawing.Point(232, 312);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 54;
             this.button3.Text = "Cancelar";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(326, 312);
+            this.button4.BackColor = System.Drawing.Color.RosyBrown;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(232, 341);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 55;
             this.button4.Text = "Salir";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // FormCobrarServicio_750VR

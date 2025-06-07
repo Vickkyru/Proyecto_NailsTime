@@ -261,12 +261,15 @@
             // 
             // btncrear
             // 
+            this.btncrear.BackColor = System.Drawing.Color.RosyBrown;
+            this.btncrear.FlatAppearance.BorderSize = 0;
+            this.btncrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btncrear.Location = new System.Drawing.Point(18, 17);
             this.btncrear.Name = "btncrear";
             this.btncrear.Size = new System.Drawing.Size(75, 23);
             this.btncrear.TabIndex = 1;
             this.btncrear.Text = "Crear";
-            this.btncrear.UseVisualStyleBackColor = true;
+            this.btncrear.UseVisualStyleBackColor = false;
             this.btncrear.Click += new System.EventHandler(this.button1_Click);
             // 
             // label8
@@ -280,62 +283,80 @@
             // 
             // btndesb
             // 
+            this.btndesb.BackColor = System.Drawing.Color.RosyBrown;
+            this.btndesb.FlatAppearance.BorderSize = 0;
+            this.btndesb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btndesb.Location = new System.Drawing.Point(107, 17);
             this.btndesb.Name = "btndesb";
             this.btndesb.Size = new System.Drawing.Size(75, 23);
             this.btndesb.TabIndex = 3;
             this.btndesb.Text = "Desbloquear";
-            this.btndesb.UseVisualStyleBackColor = true;
+            this.btndesb.UseVisualStyleBackColor = false;
             this.btndesb.Click += new System.EventHandler(this.btndesb_Click);
             // 
             // btnmod
             // 
+            this.btnmod.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnmod.FlatAppearance.BorderSize = 0;
+            this.btnmod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnmod.Location = new System.Drawing.Point(107, 65);
             this.btnmod.Name = "btnmod";
             this.btnmod.Size = new System.Drawing.Size(75, 23);
             this.btnmod.TabIndex = 4;
             this.btnmod.Text = "Modificar";
-            this.btnmod.UseVisualStyleBackColor = true;
+            this.btnmod.UseVisualStyleBackColor = false;
             this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
             // 
             // btnact
             // 
+            this.btnact.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnact.FlatAppearance.BorderSize = 0;
+            this.btnact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnact.Location = new System.Drawing.Point(18, 65);
             this.btnact.Name = "btnact";
             this.btnact.Size = new System.Drawing.Size(75, 23);
             this.btnact.TabIndex = 2;
             this.btnact.Text = "Act/Desact";
-            this.btnact.UseVisualStyleBackColor = true;
+            this.btnact.UseVisualStyleBackColor = false;
             this.btnact.Click += new System.EventHandler(this.btnact_Click);
             // 
             // btnaplicar
             // 
+            this.btnaplicar.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnaplicar.FlatAppearance.BorderSize = 0;
+            this.btnaplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnaplicar.Location = new System.Drawing.Point(59, 113);
             this.btnaplicar.Name = "btnaplicar";
             this.btnaplicar.Size = new System.Drawing.Size(75, 23);
             this.btnaplicar.TabIndex = 0;
             this.btnaplicar.Text = "Aplicar";
-            this.btnaplicar.UseVisualStyleBackColor = true;
+            this.btnaplicar.UseVisualStyleBackColor = false;
             this.btnaplicar.Click += new System.EventHandler(this.btnaplicar_Click);
             // 
             // btncancelar
             // 
+            this.btncancelar.BackColor = System.Drawing.Color.RosyBrown;
+            this.btncancelar.FlatAppearance.BorderSize = 0;
+            this.btncancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btncancelar.Location = new System.Drawing.Point(651, 322);
             this.btncancelar.Name = "btncancelar";
             this.btncancelar.Size = new System.Drawing.Size(75, 23);
             this.btncancelar.TabIndex = 6;
             this.btncancelar.Text = "Cancelar";
-            this.btncancelar.UseVisualStyleBackColor = true;
+            this.btncancelar.UseVisualStyleBackColor = false;
             this.btncancelar.Click += new System.EventHandler(this.btncancelar_Click);
             // 
             // btnsalir
             // 
+            this.btnsalir.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnsalir.FlatAppearance.BorderSize = 0;
+            this.btnsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnsalir.Location = new System.Drawing.Point(651, 372);
             this.btnsalir.Name = "btnsalir";
             this.btnsalir.Size = new System.Drawing.Size(75, 23);
             this.btnsalir.TabIndex = 7;
             this.btnsalir.Text = "Salir";
-            this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.UseVisualStyleBackColor = false;
             this.btnsalir.Click += new System.EventHandler(this.button7_Click);
             // 
             // panel1

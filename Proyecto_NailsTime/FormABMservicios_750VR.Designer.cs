@@ -50,62 +50,80 @@
             // 
             // btnapli
             // 
-            this.btnapli.Location = new System.Drawing.Point(511, 351);
+            this.btnapli.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnapli.FlatAppearance.BorderSize = 0;
+            this.btnapli.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnapli.Location = new System.Drawing.Point(501, 325);
             this.btnapli.Name = "btnapli";
             this.btnapli.Size = new System.Drawing.Size(75, 23);
             this.btnapli.TabIndex = 98;
             this.btnapli.Text = "Aplicar";
-            this.btnapli.UseVisualStyleBackColor = true;
+            this.btnapli.UseVisualStyleBackColor = false;
             this.btnapli.Click += new System.EventHandler(this.btnapli_Click);
             // 
             // btnelim
             // 
-            this.btnelim.Location = new System.Drawing.Point(405, 413);
+            this.btnelim.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelim.FlatAppearance.BorderSize = 0;
+            this.btnelim.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelim.Location = new System.Drawing.Point(395, 387);
             this.btnelim.Name = "btnelim";
             this.btnelim.Size = new System.Drawing.Size(75, 23);
             this.btnelim.TabIndex = 97;
             this.btnelim.Text = "Eliminar";
-            this.btnelim.UseVisualStyleBackColor = true;
+            this.btnelim.UseVisualStyleBackColor = false;
             this.btnelim.Click += new System.EventHandler(this.btnelim_Click);
             // 
             // btnmod
             // 
-            this.btnmod.Location = new System.Drawing.Point(405, 382);
+            this.btnmod.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnmod.FlatAppearance.BorderSize = 0;
+            this.btnmod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnmod.Location = new System.Drawing.Point(395, 356);
             this.btnmod.Name = "btnmod";
             this.btnmod.Size = new System.Drawing.Size(75, 23);
             this.btnmod.TabIndex = 96;
             this.btnmod.Text = "Modificar";
-            this.btnmod.UseVisualStyleBackColor = true;
+            this.btnmod.UseVisualStyleBackColor = false;
             this.btnmod.Click += new System.EventHandler(this.btnmod_Click);
             // 
             // btnsalir
             // 
-            this.btnsalir.Location = new System.Drawing.Point(511, 413);
+            this.btnsalir.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnsalir.FlatAppearance.BorderSize = 0;
+            this.btnsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnsalir.Location = new System.Drawing.Point(501, 387);
             this.btnsalir.Name = "btnsalir";
             this.btnsalir.Size = new System.Drawing.Size(75, 23);
             this.btnsalir.TabIndex = 91;
             this.btnsalir.Text = "Salir";
-            this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.UseVisualStyleBackColor = false;
             this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
             // 
             // btncance
             // 
-            this.btncance.Location = new System.Drawing.Point(511, 382);
+            this.btncance.BackColor = System.Drawing.Color.RosyBrown;
+            this.btncance.FlatAppearance.BorderSize = 0;
+            this.btncance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btncance.Location = new System.Drawing.Point(501, 356);
             this.btncance.Name = "btncance";
             this.btncance.Size = new System.Drawing.Size(75, 23);
             this.btncance.TabIndex = 90;
             this.btncance.Text = "Cancelar";
-            this.btncance.UseVisualStyleBackColor = true;
+            this.btncance.UseVisualStyleBackColor = false;
             this.btncance.Click += new System.EventHandler(this.btncance_Click);
             // 
             // btnañadir
             // 
-            this.btnañadir.Location = new System.Drawing.Point(405, 351);
+            this.btnañadir.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnañadir.FlatAppearance.BorderSize = 0;
+            this.btnañadir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnañadir.Location = new System.Drawing.Point(395, 325);
             this.btnañadir.Name = "btnañadir";
             this.btnañadir.Size = new System.Drawing.Size(75, 23);
             this.btnañadir.TabIndex = 89;
             this.btnañadir.Text = "Añadir";
-            this.btnañadir.UseVisualStyleBackColor = true;
+            this.btnañadir.UseVisualStyleBackColor = false;
             this.btnañadir.Click += new System.EventHandler(this.btnañadir_Click);
             // 
             // dataGridView1
