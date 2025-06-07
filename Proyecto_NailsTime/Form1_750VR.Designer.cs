@@ -34,14 +34,14 @@
             this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.personalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.horariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarClaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.verTurnosDisponiblesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.verTurnosReservadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.regReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actAgendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +96,7 @@
             this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clientesToolStripMenuItem,
             this.serviciosToolStripMenuItem,
-            this.personalToolStripMenuItem});
+            this.horariosToolStripMenuItem});
             this.maestrosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
             this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
@@ -116,12 +116,12 @@
             this.serviciosToolStripMenuItem.Text = "Servicios";
             this.serviciosToolStripMenuItem.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
-            // personalToolStripMenuItem
+            // horariosToolStripMenuItem
             // 
-            this.personalToolStripMenuItem.Name = "personalToolStripMenuItem";
-            this.personalToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.personalToolStripMenuItem.Text = "Horarios";
-            this.personalToolStripMenuItem.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
+            this.horariosToolStripMenuItem.Name = "horariosToolStripMenuItem";
+            this.horariosToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.horariosToolStripMenuItem.Text = "Horarios";
+            this.horariosToolStripMenuItem.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
             // 
             // usuarioToolStripMenuItem
             // 
@@ -158,26 +158,26 @@
             // reservaToolStripMenuItem
             // 
             this.reservaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.verTurnosDisponiblesToolStripMenuItem,
-            this.verTurnosReservadosToolStripMenuItem});
+            this.regReservaToolStripMenuItem,
+            this.actAgendaToolStripMenuItem});
             this.reservaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.reservaToolStripMenuItem.Name = "reservaToolStripMenuItem";
             this.reservaToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
             this.reservaToolStripMenuItem.Text = "Reserva";
             // 
-            // verTurnosDisponiblesToolStripMenuItem
+            // regReservaToolStripMenuItem
             // 
-            this.verTurnosDisponiblesToolStripMenuItem.Name = "verTurnosDisponiblesToolStripMenuItem";
-            this.verTurnosDisponiblesToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.verTurnosDisponiblesToolStripMenuItem.Text = "Registrar Reserva";
-            this.verTurnosDisponiblesToolStripMenuItem.Click += new System.EventHandler(this.verTurnosDisponiblesToolStripMenuItem_Click);
+            this.regReservaToolStripMenuItem.Name = "regReservaToolStripMenuItem";
+            this.regReservaToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.regReservaToolStripMenuItem.Text = "Registrar Reserva";
+            this.regReservaToolStripMenuItem.Click += new System.EventHandler(this.verTurnosDisponiblesToolStripMenuItem_Click);
             // 
-            // verTurnosReservadosToolStripMenuItem
+            // actAgendaToolStripMenuItem
             // 
-            this.verTurnosReservadosToolStripMenuItem.Name = "verTurnosReservadosToolStripMenuItem";
-            this.verTurnosReservadosToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.verTurnosReservadosToolStripMenuItem.Text = "Actualizar Agenda";
-            this.verTurnosReservadosToolStripMenuItem.Click += new System.EventHandler(this.verTurnosReservadosToolStripMenuItem_Click);
+            this.actAgendaToolStripMenuItem.Name = "actAgendaToolStripMenuItem";
+            this.actAgendaToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.actAgendaToolStripMenuItem.Text = "Actualizar Agenda";
+            this.actAgendaToolStripMenuItem.Click += new System.EventHandler(this.verTurnosReservadosToolStripMenuItem_Click);
             // 
             // insumosToolStripMenuItem
             // 
@@ -279,8 +279,8 @@
         private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem verTurnosDisponiblesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem verTurnosReservadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem regReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem actAgendaToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
@@ -288,7 +288,7 @@
         private System.Windows.Forms.Label lblrol;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem personalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem horariosToolStripMenuItem;
     }
 }
 

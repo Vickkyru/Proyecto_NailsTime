@@ -122,7 +122,7 @@ namespace Proyecto_NailsTime
                     reservaToolStripMenuItem.Enabled = true;
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
-                    verTurnosDisponiblesToolStripMenuItem.Enabled = false;
+                    regReservaToolStripMenuItem.Enabled = false;
                     break;
 
                 case "recepcionista":
@@ -132,7 +132,7 @@ namespace Proyecto_NailsTime
                     reservaToolStripMenuItem.Enabled = true;
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
-                    verTurnosReservadosToolStripMenuItem.Enabled = false;
+                    actAgendaToolStripMenuItem.Enabled = false;
                     break;
 
                 case "administrador":

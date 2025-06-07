@@ -113,7 +113,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(329, 45);
             this.label1.TabIndex = 34;
-            this.label1.Text = "Cobrar Reserva";
+            this.label1.Text = "Cobrar ";
             // 
             // label3
             // 

@@ -1,17 +1,61 @@
 {
-  "Administrador": "Administrador",
-  "Usuario": "Usuario",
-  "Reserva": "Reserva",
-  "Insumos": "Insumos",
-  "Reportes": "Reportes",
-  "Ayuda": "Ayuda",
-  "Bienvenido": "Bienvenido",
-  "Maestros": "",
-  "Clientes":,
-  "Servicios":,
-  "Horarios":,
-  "Inicio Sesion":,
-  "Cambiar clave":,
-  "Cerrar Sesion": ,
+  "Form1_750VR.Text": "Form prinipal",
+  "Form1_750VR.administradorToolStripMenuItem": "Administrador",
+  "Form1_750VR.maestrosToolStripMenuItem": "Maestros",
+  "Form1_750VR.usuarioToolStripMenuItem": "Usuario",
+  "Form1_750VR.reservaToolStripMenuItem": "Reserva",
+  "Form1_750VR.insumosToolStripMenuItem": "Insumos",
+  "Form1_750VR.reportesToolStripMenuItem": "Reportes",
+  "Form1_750VR.ayudaToolStripMenuItem": "Ayuda",
+  "Form1_750VR.usuariosToolStripMenuItem": "Usuarios",
+  "Form1_750VR.clientesToolStripMenuItem": "Clientes",
+  "Form1_750VR.serviciosToolStripMenuItem": "Servicios",
+  "Form1_750VR.horariosToolStripMenuItem": "Horarios",
+  "Form1_750VR.loginToolStripMenuItem": "Iniciar Sesion",
+  "Form1_750VR.cambiarClaveToolStripMenuItem": "Cambiar Clave",
+  "Form1_750VR.logoutToolStripMenuItem": "Cerrar Sesion",
+  "Form1_750VR.regReservaToolStripMenuItem": "Registrar Reserva",
+  "Form1_750VR.actAgendaToolStripMenuItem": "Actualizar Agenda",
+  "Form1_750VR.label1": "Bienvenido",
+  "Form1_750VR.label4": "Rol",
+
+
+
+
+  "FormLogIn_750VR.Text": "Form inicio sesion",
+  "FormLogIn_750VR.label2": "Usuario",
+  "FormLogIn_750VR.label3": "Contraseña",
+  "FormLogIn_750VR.label1": "Inicio Sesion",
+  "FormLogIn_750VR.button1": "Ingresar",
+  "FormLogIn_750VR.button2": "Cancelar",
+
+
+
+
+  "FormLogOut_750VR.Text": "Form cierre sesion",
+  "FormLogOut_750VR.label2": "Confirme el cierre de sesion",
+  "FormLogOut_750VR.button1": "Confirmar",
+  "FormLogOut_750VR.button2": "Cancelar",
+
+
+  "FormCambiarClave_750VR.Text": "Form cambiar clave",
+  "FormCambiarClave_750VR.label1": "Cambiar Clave",
+  "FormCambiarClave_750VR.label2": "Contraseña",
+  "FormCambiarClave_750VR.label3": "Nueva Contraseña",
+  "FormCambiarClave_750VR.label4": "Confirmar Contraseña",
+  "FormCambiarClave_750VR.button1": "Cambiar Contraseña",
+
+
+  "FormCobrarServicio_750VR.Text": "Form cobrar servicio",
+  "FormCobrarServicio_750VR.label1": "Form cobrar servicio"
+
+
+
+
+
+
+
+
+
 
 }
