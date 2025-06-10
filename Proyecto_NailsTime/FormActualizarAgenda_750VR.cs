@@ -38,7 +38,7 @@ namespace Proyecto_NailsTime
         private void CargarReservas()
         {
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            var lista = bll.leerEntidades();
+            var lista = bll.leerEntidades_750VR();
         }
 
         public void Valida()

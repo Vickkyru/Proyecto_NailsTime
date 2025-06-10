@@ -30,7 +30,7 @@ namespace BLL_VR750
             return dal.ObtenerEstadoReserva(idReserva);
         }
 
-        public List<BEReserva_750VR> leerEntidades()
+        public List<BEReserva_750VR> leerEntidades_750VR()
         {
             return dal.leerEntidades_750VR();
         }

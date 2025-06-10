@@ -37,25 +37,25 @@ namespace Proyecto_NailsTime
             txtcel.Clear();
 
         }
-        private string emailCifrado = "";
+        //private string emailCifrado = "";
 
-        private string ocultarEmailSiEsNecesario(string texto)
-        {
-            return checkBox1.Checked ? desencriptarEmail(texto) : "[Email protegido]";
-        }
+        //private string ocultarEmailSiEsNecesario(string texto)
+        //{
+        //    return checkBox1.Checked ? desencriptarEmail(texto) : "[Email protegido]";
+        //}
 
-        private string desencriptarEmail(string texto)
-        {
-            try
-            {
-                var enc = new Encriptador_750VR();
-                return enc.DesencriptarAES_750VR(texto);
-            }
-            catch
-            {
-                return "[Error al desencriptar]";
-            }
-        }
+        //private string desencriptarEmail(string texto)
+        //{
+        //    try
+        //    {
+        //        var enc = new Encriptador_750VR();
+        //        return enc.DesencriptarAES_750VR(texto);
+        //    }
+        //    catch
+        //    {
+        //        return "[Error al desencriptar]";
+        //    }
+        //}
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {

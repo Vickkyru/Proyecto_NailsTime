@@ -87,11 +87,12 @@ namespace Proyecto_NailsTime
         private void CargarManicuristas()
         {
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
-            var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
+            listaUsuarios = bllUsuario.ObtenerManicuristasActivos_750VR();
 
-            cmbmanic.DataSource = manicuristas;
-            cmbmanic.DisplayMember = "nombre_750VR";   // o $"{nombre} {apellido}" si querés mostrar ambos
+            cmbmanic.DataSource = listaUsuarios;
+            cmbmanic.DisplayMember = "nombre_750VR"; // Podés usar $"{u.nombre_750VR} {u.apellido_750VR}" si lo modificás
             cmbmanic.ValueMember = "dni_750VR";
+            cmbmanic.SelectedIndex = -1;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -107,17 +108,11 @@ namespace Proyecto_NailsTime
         //boton buscar cliente
         private void button3_Click(object sender, EventArgs e)
         {
-            string dni = txtdni.Text;
-            var bllcliente = new BLLCliente_750VR();
-            var cliente = bllcliente.ObtenerClientePorDNI_750VR(Convert.ToInt32(dni));
-
+            var cliente = ObtenerClienteDesdeFormulario();
             if (cliente != null)
             {
+                clienteSeleccionado = cliente;
                 txtnom.Text = cliente.nombre_750VR;
-            }
-            else
-            {
-                MessageBox.Show("Cliente no encontrado. Puede crearlo desde el botón correspondiente.");
             }
         }
 
@@ -136,32 +131,49 @@ namespace Proyecto_NailsTime
             txtdni.Text = dni;
             txtnom.Text = nombre;
         }
+        private BECliente_750VR clienteSeleccionado;
+        private BECliente_750VR ObtenerClienteDesdeFormulario()
+        {
+            if (string.IsNullOrWhiteSpace(txtdni.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un DNI.");
+                return null;
+            }
+
+            if (!int.TryParse(txtdni.Text, out int dni))
+            {
+                MessageBox.Show("El DNI ingresado no es válido.");
+                return null;
+            }
+
+            var bllcli = new BLLCliente_750VR();
+            var cliente = bllcli.ObtenerClientePorDNI_750VR(dni);
+
+            if (cliente == null)
+            {
+                MessageBox.Show("Cliente no encontrado. Puede crearlo desde el botón correspondiente.");
+                return null;
+            }
+
+            return cliente;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                // Validaciones mínimas
-                if (cmbmanic.SelectedItem == null || cmbtec.SelectedItem == null || string.IsNullOrEmpty(txtdni.Text))
+                if (cmbmanic.SelectedItem == null || cmbtec.SelectedItem == null || clienteSeleccionado == null)
                 {
-                    MessageBox.Show("Faltan datos obligatorios.");
-                    return;
-                }
-
-                BLLCliente_750VR bllcli = new BLLCliente_750VR();
-                var cliente = bllcli.ObtenerClientePorDNI_750VR(Convert.ToInt32(txtdni.Text));
-                if (cliente == null)
-                {
-                    MessageBox.Show("No se encontró el cliente.");
+                    MessageBox.Show("Faltan datos obligatorios o no seleccionaste un cliente.");
                     return;
                 }
 
                 var manic = cmbmanic.SelectedItem as BEusuario_750VR;
                 var servicio = cmbtec.SelectedItem as BEServicio_750VR;
 
-                if (cliente == null || manic == null || servicio == null)
+                if (manic == null || servicio == null)
                 {
-                    MessageBox.Show("Error al obtener los datos del cliente, manicurista o servicio.");
+                    MessageBox.Show("Error al obtener manicurista o servicio.");
                     return;
                 }
 
@@ -171,19 +183,17 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // Obtenemos la disponibilidad seleccionada
                 var disponibilidadSeleccionada = new BEdisponibilidad_750VR(
                     dni: Convert.ToInt32(row["DNImanicurista"]),
                     fecha: Convert.ToDateTime(row["Fecha"]),
                     ini: TimeSpan.Parse(row["Hora Inicio"].ToString()),
                     fin: TimeSpan.Parse(row["Hora Fin"].ToString()),
-                    acr: true,   // activo
-                    est: false   // disponible
+                    acr: true,
+                    est: false
                 );
 
                 disponibilidadSeleccionada.IdDisponibilidad_750VR = Convert.ToInt32(row["IdDisponibilidad"]);
 
-                // Obtener la hora ingresada manualmente o usar la del rango
                 if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaManual))
                 {
                     MessageBox.Show("El formato del horario ingresado es inválido.");
@@ -198,11 +208,10 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // Crear reserva
                 BEReserva_750VR nuevaReserva = new BEReserva_750VR
                 {
-                    DNIcli_750VR = cliente.dni_750VR,
-                    cliente = cliente,
+                    DNIcli_750VR = clienteSeleccionado.dni_750VR,
+                    cliente = clienteSeleccionado,
                     DNImanic_750VR = manic.dni_750VR,
                     manic = manic,
                     IdServicio_750VR = servicio.idServicio_750VR,
@@ -215,16 +224,14 @@ namespace Proyecto_NailsTime
                     Cobrado_750VR = false
                 };
 
-                BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+                var bllReserva = new BLLReserva_750VR();
                 int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);
                 nuevaReserva.IdReserva_750VR = nuevoID;
 
-                // Dividir disponibilidad
                 DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
 
                 MessageBox.Show("Reserva creada correctamente.");
 
-                // Cobro
                 FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
                 var resultado = frmCobro.ShowDialog();
                 if (resultado == DialogResult.OK)
@@ -250,7 +257,7 @@ namespace Proyecto_NailsTime
         private void CargarReservas()
         {
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            var lista = bll.leerEntidades();
+            var lista = bll.leerEntidades_750VR();
         }
 
         private void LimpiarCamposReserva()
@@ -311,9 +318,6 @@ namespace Proyecto_NailsTime
             CargarServicios();
             CargarReservasDispo();
 
-            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
-            listaUsuarios = bllUsuario.leerEntidades_750VR(); // <== Carga global correcta
-
             CargarManicuristas();
             CargarDisponibilidadesConNombre();
         }
@@ -332,18 +336,17 @@ namespace Proyecto_NailsTime
                 DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
                 string horaInicioStr = fila.Cells["Hora Inicio"].Value.ToString();
 
-                // Selecciona al manicurista
+                // Selecciona al manicurista en el ComboBox
                 var manicSeleccionado = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dniManic);
                 if (manicSeleccionado != null)
                 {
                     cmbmanic.SelectedValue = manicSeleccionado.dni_750VR;
                 }
 
-                // Cargar fecha y hora, y bloquear el DateTimePicker
+                // Bloquear y completar campos
                 dateTimePicker1.Value = fecha;
                 dateTimePicker1.Enabled = false;
                 cmbmanic.Enabled = false;
-
                 txthorario.Text = horaInicioStr;
             }
         }
@@ -406,7 +409,7 @@ namespace Proyecto_NailsTime
          
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            var lista = bll.leerEntidades(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
+            var lista = bll.leerEntidades_750VR(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
 
             DataTable tabla = new DataTable();
             tabla.Columns.Add("ID", typeof(int));
@@ -444,8 +447,7 @@ namespace Proyecto_NailsTime
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cmbmanic.DisplayMember = "nombre_750VR"; // o mostrar nombre + apellido
-            cmbmanic.ValueMember = "dni_750VR";
+            
         }
 
         private void button4_Click_1(object sender, EventArgs e)
