@@ -26,7 +26,7 @@ namespace Proyecto_NailsTime
         }
         // Propiedades para comunicación con el formulario de reserva
         public bool InvocadoDesdeReserva { get; set; } = false;
-        public FormRegistrarReserva_750VR FormularioReserva { get; set; } = null;
+        public FormRegistrarReserva_750VR FormularioReserva { get; set; }
         public void LimpiarCampos()
         {
             txtdni.Clear();
@@ -489,22 +489,41 @@ namespace Proyecto_NailsTime
 
         private void FormABMClientes_750VR_Load(object sender, EventArgs e)
         {
+           
 
+            if (InvocadoDesdeReserva)
+            {
+                btnmod.Enabled = false;
+                btnelim.Enabled = false;
+                btnañadir.Enabled = true;
+                //btn.Enabled = false;
+                //btndesb.Enabled = false;
+                dataGridView1.Enabled = false;
+
+                modoActual = "añadir";
+                lblmensaje.Text = "Alta desde Reserva";
+                MessageBox.Show("Unicamente debe poner los datos y dar a aplicar");
+                ActivarModoEdicion();
+            }
+            else
+            {
+                // Deshabilitar botones Aplicar y Cancelar
+                btnapli.Enabled = false;
+                btncance.Enabled = false;
+
+                // Habilitar grilla solo para selección (no edición)
+                dataGridView1.ReadOnly = true;
+                dataGridView1.AllowUserToAddRows = false;
+                dataGridView1.AllowUserToDeleteRows = false;
+
+
+                // Iniciar en modo consulta
+                modoActual = "consulta";
+                lblmensaje.Text = "Modo Consulta";
+            }
+        
             CargarUsuarios();
 
-            // Deshabilitar botones Aplicar y Cancelar
-            btnapli.Enabled = false;
-            btncance.Enabled = false;
-
-            // Habilitar grilla solo para selección (no edición)
-            dataGridView1.ReadOnly = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-
-
-            // Iniciar en modo consulta
-            modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
