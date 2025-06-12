@@ -8,9 +8,9 @@ namespace SERVICIOS_VR750
 {
     public interface Isubject_750VR
     {
-        //void Agregar(Iobserver_750VR observer);
-        //void Quitar(Iobserver_750VR observer);
+        void Agregar(Iobserver_750VR observer);
+        void Quitar(Iobserver_750VR observer);
 
-        //void Notificar();
+        void Notificar();
     }
 }

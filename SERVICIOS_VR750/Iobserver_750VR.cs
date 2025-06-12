@@ -8,6 +8,6 @@ namespace SERVICIOS_VR750
 {
     public interface Iobserver_750VR
     {
-        //void ActualizarIdioma();
+        void ActualizarIdioma();
     }
 }

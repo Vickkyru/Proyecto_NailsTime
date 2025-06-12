@@ -42,13 +42,17 @@
             this.importe = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtvenc = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtcvc = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(63, 270);
+            this.label2.Location = new System.Drawing.Point(63, 241);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 44;
@@ -57,7 +61,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(63, 204);
+            this.label6.Location = new System.Drawing.Point(63, 189);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(91, 13);
             this.label6.TabIndex = 42;
@@ -65,7 +69,7 @@
             // 
             // txtcuot
             // 
-            this.txtcuot.Location = new System.Drawing.Point(66, 286);
+            this.txtcuot.Location = new System.Drawing.Point(66, 257);
             this.txtcuot.Name = "txtcuot";
             this.txtcuot.Size = new System.Drawing.Size(100, 20);
             this.txtcuot.TabIndex = 41;
@@ -103,7 +107,7 @@
             // 
             // txtnum
             // 
-            this.txtnum.Location = new System.Drawing.Point(66, 220);
+            this.txtnum.Location = new System.Drawing.Point(66, 205);
             this.txtnum.Name = "txtnum";
             this.txtnum.Size = new System.Drawing.Size(100, 20);
             this.txtnum.TabIndex = 35;
@@ -178,12 +182,48 @@
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(63, 346);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 57;
+            this.label5.Text = "Vencimiento";
+            // 
+            // txtvenc
+            // 
+            this.txtvenc.Location = new System.Drawing.Point(66, 362);
+            this.txtvenc.Name = "txtvenc";
+            this.txtvenc.Size = new System.Drawing.Size(100, 20);
+            this.txtvenc.TabIndex = 56;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(63, 293);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(26, 13);
+            this.label7.TabIndex = 59;
+            this.label7.Text = "Cvc";
+            // 
+            // txtcvc
+            // 
+            this.txtcvc.Location = new System.Drawing.Point(66, 309);
+            this.txtcvc.Name = "txtcvc";
+            this.txtcvc.Size = new System.Drawing.Size(100, 20);
+            this.txtcvc.TabIndex = 58;
+            // 
             // FormCobrarServicio_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(504, 426);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtcvc);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtvenc);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.panel1);
@@ -220,5 +260,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label lblimp;
         private System.Windows.Forms.Label importe;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtvenc;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtcvc;
     }
 }

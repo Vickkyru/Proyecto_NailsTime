@@ -52,16 +52,22 @@ namespace Proyecto_NailsTime
                 case "Efectivo":
                     txtnum.Enabled = false;
                     txtcuot.Enabled = false;
+                    txtvenc.Enabled = false;
+                    txtcvc.Enabled = false;
                     break;
 
                 case "Débito":
                     txtnum.Enabled = true;
                     txtcuot.Enabled = false;
+                    txtvenc.Enabled = true;
+                    txtcvc.Enabled = true;
                     break;
 
                 case "Crédito":
                     txtnum.Enabled = true;
                     txtcuot.Enabled = true;
+                    txtvenc.Enabled = true;
+                    txtcvc.Enabled = true;
                     break;
             }
 
@@ -81,6 +87,18 @@ namespace Proyecto_NailsTime
             if ((cmbmet.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
             {
                 MessageBox.Show("Ingresá el número de tarjeta.");
+                return;
+            }
+
+            if ((txtcvc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            {
+                MessageBox.Show("Ingresá el número de cvc.");
+                return;
+            }
+
+            if ((txtvenc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            {
+                MessageBox.Show("Ingresá el número de vencimiento.");
                 return;
             }
 
