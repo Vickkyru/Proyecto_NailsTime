@@ -34,18 +34,30 @@ namespace SERVICIOS_VR750
         // Iniciar sesión
         public bool IniciarSesion_750VR(BEusuario_750VR userNuevo)
         {
-            if (user != null)
+            if (this.user != null)
                 return false; // Ya hay sesión iniciada
 
-            user = userNuevo;
+            this.user = userNuevo;
+
             MessageBox.Show($"Sesión iniciada para: {user.nombre_750VR} {user.apellido_750VR}");
+
+            // ✅ Setear el idioma del usuario
+            if (!string.IsNullOrEmpty(userNuevo.idioma_750VR))
+            {
+                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = userNuevo.idioma_750VR;
+            }
+            else
+            {
+                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
+            }
+
             return true;
         }
 
         // Cerrar sesión
         public void CerrarSesion_750VR()
         {
-            if (user != null)
+            if (this.user != null)
             {
                 MessageBox.Show($"Sesión cerrada para: {user.nombre_750VR} {user.apellido_750VR}");
                 user = null;

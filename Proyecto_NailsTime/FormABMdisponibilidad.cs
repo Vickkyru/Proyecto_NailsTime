@@ -15,11 +15,16 @@ namespace Proyecto_NailsTime
 {
 
     
-    public partial class FormABMdisponibilidad : Form
+    public partial class FormABMdisponibilidad : Form, Iobserver_750VR
     {
         public FormABMdisponibilidad()
         {
             InitializeComponent();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
         private string modoActual = "consulta";
         BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();

@@ -19,6 +19,7 @@ namespace BE_VR750
         public bool activo_750VR { get; set; }
         public bool bloqueado_750VR { get; set; }
 
+        public string idioma_750VR { get; set; }
 
         public BEusuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado)
         {

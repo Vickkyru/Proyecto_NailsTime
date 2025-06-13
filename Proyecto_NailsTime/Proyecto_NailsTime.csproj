@@ -87,6 +87,12 @@
     <Compile Include="FormActualizarAgenda_750VR.Designer.cs">
       <DependentUpon>FormActualizarAgenda_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCambioIdioma_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCambioIdioma_750VR.Designer.cs">
+      <DependentUpon>FormCambioIdioma_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCobrarServicio_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCambiarClave_750VR.resx">
       <DependentUpon>FormCambiarClave_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCambioIdioma_750VR.resx">
+      <DependentUpon>FormCambioIdioma_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCobrarServicio_750VR.resx">
       <DependentUpon>FormCobrarServicio_750VR.cs</DependentUpon>

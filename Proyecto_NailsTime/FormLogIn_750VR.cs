@@ -15,7 +15,7 @@ using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormLogIn_750VR : Form
+    public partial class FormLogIn_750VR : Form, Iobserver_750VR
     {
         public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
         BLLusuario_750VR bll = new BLLusuario_750VR();
@@ -28,9 +28,13 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             formPrincipal = principal;
-
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
         }
-        //private int intentosFallidos = 0;
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+        }
+
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -43,21 +47,33 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Complete los campos.");
                 return;
             }
+
             try
             {
                 BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
 
-                if (!SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario))
+                // Iniciar sesión
+                bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
+
+                if (!sesionOK)
                 {
                     MessageBox.Show("Ya hay una sesión activa.");
                     this.Close();
+                    return;
                 }
 
+                // ✅ Establecer el idioma del usuario
+                string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
+                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
+
+                // ✅ Actualizar la interfaz principal
                 formPrincipal.MostrarDatosUsuarioLogueado();
-                //MessageBox.Show("Login exitoso.");
+                formPrincipal.Actualizar();
+
+                // ✅ Limpiar intentos fallidos
                 if (intentosFallidosPorUsuario.ContainsKey(login))
                     intentosFallidosPorUsuario.Remove(login);
-                formPrincipal.Actualizar();
+
                 this.Close();
             }
             catch (Exception ex)

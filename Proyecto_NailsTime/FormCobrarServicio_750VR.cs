@@ -1,4 +1,5 @@
 ﻿using BLL_VR750;
+using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormCobrarServicio_750VR : Form
+    public partial class FormCobrarServicio_750VR : Form, Iobserver_750VR
     {
         private int idReserva; // este campo almacena el ID recibido
         public FormCobrarServicio_750VR(int idReservaRecibido)
@@ -21,6 +22,11 @@ namespace Proyecto_NailsTime
 
             // Podés cargar la reserva si querés mostrar el importe:
             CargarDatosReserva();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         private void CargarDatosReserva()

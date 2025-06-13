@@ -12,51 +12,43 @@ namespace SERVICIOS_VR750
 {
     public class Lenguaje_750VR : Isubject_750VR
     {
-        private List<Iobserver_750VR> ListaForms = new List<Iobserver_750VR>();
-        private Dictionary<string, string> Diccionario = new Dictionary<string, string>(); // Inicializa con un diccionario vacío
-        private string idiomaActual;
         private static Lenguaje_750VR instance;
+        private List<Iobserver_750VR> ListaForms = new List<Iobserver_750VR>();
+        private Dictionary<string, string> Diccionario = new Dictionary<string, string>();
+        private string idiomaActual;
 
-        // Constructor privado para patrón Singleton
         private Lenguaje_750VR() { }
 
-        // Método para obtener la instancia única de Lenguaje
         public static Lenguaje_750VR ObtenerInstancia()
         {
             if (instance == null)
-            {
                 instance = new Lenguaje_750VR();
-            }
             return instance;
         }
 
-        // Métodos para agregar y quitar observadores
-        public void Agregar(Iobserver_750VR observer)
+        public void Agregar(Iobserver_750VR obs)
         {
-            ListaForms.Add(observer);
+            if (!ListaForms.Contains(obs))
+                ListaForms.Add(obs);
         }
 
-        public void Quitar(Iobserver_750VR observer)
+        public void Quitar(Iobserver_750VR obs)
         {
-            ListaForms.Remove(observer);
+            if (ListaForms.Contains(obs))
+                ListaForms.Remove(obs);
         }
 
-        // Notificación a los observadores para actualizar el idioma
         public void Notificar()
         {
-            foreach (Iobserver_750VR observer in ListaForms)
+            foreach (Iobserver_750VR obs in ListaForms)
             {
-                observer.ActualizarIdioma();
+                obs.ActualizarIdioma();
             }
         }
 
-        // Propiedad para establecer y obtener el idioma actual
         public string IdiomaActual
         {
-            get
-            {
-                return idiomaActual;
-            }
+            get { return idiomaActual; }
             set
             {
                 idiomaActual = value;
@@ -65,43 +57,42 @@ namespace SERVICIOS_VR750
             }
         }
 
-        // Método para cargar el archivo de idioma
         public void CargarIdioma()
         {
             try
             {
-                // Determina el archivo JSON de acuerdo al idioma
-                string idioma = idiomaActual == "ES" ? "Español" : "Inglés";
-                var NombreArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Idiomas", $"{idioma}.json");
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Idiomas", idiomaActual + ".json");
 
-
-                // Verifica si el archivo existe
-                if (!File.Exists(NombreArchivo))
+                if (!File.Exists(path))
                 {
-                    Console.WriteLine($"El archivo de idioma '{NombreArchivo}' no existe.");
-                    Diccionario = new Dictionary<string, string>(); // Evita errores posteriores
+                    MessageBox.Show("No se encontró el archivo: " + path, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Diccionario = new Dictionary<string, string>();
                     return;
                 }
 
-                // Lee el contenido del archivo JSON y deserializa
-                var jsonString = File.ReadAllText(NombreArchivo);
-                Diccionario = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString)
-              ?? new Dictionary<string, string>();
+                string json = File.ReadAllText(path);
+                Diccionario = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+
+                if (Diccionario == null)
+                    Diccionario = new Dictionary<string, string>();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al cargar el archivo de idioma: {ex.Message}");
-                Diccionario = new Dictionary<string, string>(); // Inicializa un diccionario vacío para evitar errores
+                MessageBox.Show("Error al cargar idioma: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Diccionario = new Dictionary<string, string>();
             }
         }
 
-        // Método para obtener el texto traducido
-        public string ObtenerTexto(string key)
+        public string ObtenerTexto(string clave)
         {
-            return Diccionario != null && Diccionario.ContainsKey(key) ? Diccionario[key] : key;
+            return Diccionario.ContainsKey(clave) ? Diccionario[clave] : clave;
         }
 
-        // Método para cambiar el idioma de todos los controles en un formulario
+        public static string ObtenerEtiqueta(string clave)
+        {
+            return ObtenerInstancia().ObtenerTexto(clave);
+        }
+
         public void CambiarIdiomaControles(Control frm)
         {
             try
@@ -110,13 +101,12 @@ namespace SERVICIOS_VR750
 
                 foreach (Control c in frm.Controls)
                 {
-                    if (c is Button || c is Label)
-                    {
+                    if (c is Label || c is Button || c is CheckBox || c is GroupBox)
                         c.Text = ObtenerTexto(frm.Name + "." + c.Name);
-                    }
 
-                    if (c is MenuStrip m)
+                    if (c is MenuStrip)
                     {
+                        MenuStrip m = (MenuStrip)c;
                         foreach (ToolStripMenuItem item in m.Items)
                         {
                             item.Text = ObtenerTexto(frm.Name + "." + item.Name);
@@ -124,35 +114,27 @@ namespace SERVICIOS_VR750
                         }
                     }
 
-                    if (c.Controls.Count > 0)
-                    {
+                    if (c.HasChildren)
                         CambiarIdiomaControles(c);
-                    }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al cambiar el idioma de los controles: {ex.Message}");
+                MessageBox.Show("Error al traducir controles: " + ex.Message, "Idioma", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-        // Método recursivo para cambiar el idioma de los elementos de un menú
         private void CambiarIdiomaMenuStrip(ToolStripItemCollection items, Control frm)
         {
             foreach (ToolStripItem item in items)
             {
-                if (item is ToolStripMenuItem item1)
+                if (item is ToolStripMenuItem)
                 {
-                    item.Text = ObtenerTexto(frm.Name + "." + item.Name);
-                    CambiarIdiomaMenuStrip(item1.DropDownItems, frm);
+                    ToolStripMenuItem subItem = (ToolStripMenuItem)item;
+                    subItem.Text = ObtenerTexto(frm.Name + "." + subItem.Name);
+                    CambiarIdiomaMenuStrip(subItem.DropDownItems, frm);
                 }
             }
-        }
-
-        // Método auxiliar para obtener etiquetas de texto desde fuera de la clase
-        public static string ObtenerEtiqueta(string NombreControl)
-        {
-            return ObtenerInstancia().ObtenerTexto(NombreControl);
         }
     }
 }

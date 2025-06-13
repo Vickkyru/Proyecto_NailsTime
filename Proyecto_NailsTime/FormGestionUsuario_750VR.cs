@@ -17,13 +17,17 @@ using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormGestionUsuario_750VR : Form
+    public partial class FormGestionUsuario_750VR : Form, Iobserver_750VR
     {
         private string modoActual = "consulta";
         public FormGestionUsuario_750VR()
         {
             InitializeComponent();
- 
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         public void LimpiarCampos()

@@ -1,4 +1,5 @@
 ﻿using BLL_VR750;
+using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +12,17 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormLogOut_750VR : Form
+    public partial class FormLogOut_750VR : Form, Iobserver_750VR
     {
         public FormLogOut_750VR()
         {
             InitializeComponent();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+        }
+
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         private void button1_Click(object sender, EventArgs e)

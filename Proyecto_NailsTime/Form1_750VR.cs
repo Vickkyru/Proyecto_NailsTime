@@ -14,19 +14,25 @@ using DAL_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class Form1_750VR : Form
+    public partial class Form1_750VR : Form, Iobserver_750VR
     {
         private Form formActivo = null;
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
 
+
         public Form1_750VR()
         {
             InitializeComponent();
-            //db.VerificarOCrearBaseDeDatos();
-            //db.VerificarYCrearTablaUsuarios_750VR();
-            //db.InsertarServiciosIniciales();
+            db.VerificarOCrearBaseDeDatos();
+            db.VerificarYCrearTablaUsuarios_750VR();
+            db.InsertarServiciosIniciales();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
 
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
 
@@ -225,6 +231,11 @@ namespace Proyecto_NailsTime
         private void verTurnosReservadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirForm(new FormActualizarAgenda_750VR());
+        }
+
+        private void cambiarIdiomaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormCambioIdioma_750VR());
         }
     }
 }

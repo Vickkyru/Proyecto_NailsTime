@@ -13,16 +13,21 @@ using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormActualizarAgenda_750VR : Form
+    public partial class FormActualizarAgenda_750VR : Form, Iobserver_750VR
     {
         public FormActualizarAgenda_750VR()
         {
             InitializeComponent();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
