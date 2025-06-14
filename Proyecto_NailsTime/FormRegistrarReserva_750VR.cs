@@ -23,16 +23,18 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
         public void ActualizarIdioma()
         {
+            //MessageBox.Show("Me estoy traduciendo...");
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         private void CargarServicios()
         {
             BLLServicio_750VR bllServicio = new BLLServicio_750VR();
-            listaServicios = bllServicio.leerEntidadesActivas_750VR(); // Te lo muestro abajo
+            listaServicios = bllServicio.leerEntidadesActivas_750VR(); 
 
             var nombresServicio = listaServicios
                 .Select(s => s.nombre_750VR)
@@ -40,10 +42,10 @@ namespace Proyecto_NailsTime
                 .ToList();
 
 
-            nombresServicio.Insert(0, ""); // ← esto agrega el valor vacío al principio
+            nombresServicio.Insert(0, ""); 
 
             cmbserv.DataSource = nombresServicio;
-            cmbserv.SelectedIndex = 0; // ← se muestra en blanco
+            cmbserv.SelectedIndex = 0; 
         }
 
        
@@ -65,7 +67,7 @@ namespace Proyecto_NailsTime
             tabla.Columns.Add("Hora Fin", typeof(string));
             tabla.Columns.Add("Estado", typeof(string));
 
-            // Filtra por activas y disponibles
+            
             foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false))
             {
                 var usu = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
@@ -78,7 +80,7 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR.Date,
                     dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
                     dispo.HoraFin_750VR.ToString(@"hh\:mm"),
-                    "Disponible" // Ya estás filtrando por eso, no hace falta preguntar
+                    "Disponible" 
                 );
             }
 
@@ -96,7 +98,7 @@ namespace Proyecto_NailsTime
             listaUsuarios = bllUsuario.ObtenerManicuristasActivos_750VR();
 
             cmbmanic.DataSource = listaUsuarios;
-            cmbmanic.DisplayMember = "nombre_750VR"; // Podés usar $"{u.nombre_750VR} {u.apellido_750VR}" si lo modificás
+            cmbmanic.DisplayMember = "nombre_750VR"; 
             cmbmanic.ValueMember = "dni_750VR";
             cmbmanic.SelectedIndex = -1;
         }
@@ -142,13 +144,15 @@ namespace Proyecto_NailsTime
         {
             if (string.IsNullOrWhiteSpace(txtdni.Text))
             {
-                MessageBox.Show("Por favor, ingrese un DNI.");
+                //MessageBox.Show("Por favor, ingrese un DNI.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIRequerido"));
                 return null;
             }
 
             if (!int.TryParse(txtdni.Text, out int dni))
             {
-                MessageBox.Show("El DNI ingresado no es válido.");
+                //MessageBox.Show("El DNI ingresado no es válido.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIinvalido"));
                 return null;
             }
 
@@ -157,7 +161,8 @@ namespace Proyecto_NailsTime
 
             if (cliente == null)
             {
-                MessageBox.Show("Cliente no encontrado. Puede crearlo desde el botón correspondiente.");
+                //MessageBox.Show("Cliente no encontrado. Puede crearlo desde el botón correspondiente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNInoencontrado"));
                 return null;
             }
 
@@ -170,7 +175,8 @@ namespace Proyecto_NailsTime
             {
                 if (cmbmanic.SelectedItem == null || cmbtec.SelectedItem == null || clienteSeleccionado == null)
                 {
-                    MessageBox.Show("Faltan datos obligatorios o no seleccionaste un cliente.");
+                    //MessageBox.Show("Faltan datos obligatorios o no seleccionaste un cliente.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIfaltan"));
                     return;
                 }
 
@@ -179,13 +185,15 @@ namespace Proyecto_NailsTime
 
                 if (manic == null || servicio == null)
                 {
-                    MessageBox.Show("Error al obtener manicurista o servicio.");
+                    //MessageBox.Show("Error al obtener manicurista o servicio.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIerror"));
                     return;
                 }
 
                 if (!(dataGridView1.CurrentRow?.DataBoundItem is DataRowView row))
                 {
-                    MessageBox.Show("Debés seleccionar una disponibilidad.");
+                    //MessageBox.Show("Debés seleccionar una disponibilidad.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIseleccion"));
                     return;
                 }
 
@@ -202,7 +210,8 @@ namespace Proyecto_NailsTime
 
                 if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaManual))
                 {
-                    MessageBox.Show("El formato del horario ingresado es inválido.");
+                    //MessageBox.Show("El formato del horario ingresado es inválido.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIformato"));
                     return;
                 }
 
@@ -210,7 +219,8 @@ namespace Proyecto_NailsTime
 
                 if (horaManual < disponibilidadSeleccionada.HoraInicio_750VR || horaFin > disponibilidadSeleccionada.HoraFin_750VR)
                 {
-                    MessageBox.Show("La hora ingresada está fuera del rango disponible seleccionado.");
+                    //MessageBox.Show("La hora ingresada está fuera del rango disponible seleccionado.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIhora"));
                     return;
                 }
 
@@ -236,17 +246,20 @@ namespace Proyecto_NailsTime
 
                 DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
 
-                MessageBox.Show("Reserva creada correctamente.");
+                //MessageBox.Show("Reserva creada correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcreada"));
 
                 FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
                 var resultado = frmCobro.ShowDialog();
                 if (resultado == DialogResult.OK)
                 {
-                    MessageBox.Show("Reserva cobrada correctamente.");
+                    //MessageBox.Show("Reserva cobrada correctamente.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcobrada"));
                 }
                 else
                 {
-                    MessageBox.Show("La reserva quedó pendiente de cobro.");
+                    //MessageBox.Show("La reserva quedó pendiente de cobro.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIpendiente"));
                 }
 
                 CargarReservas();
@@ -255,7 +268,8 @@ namespace Proyecto_NailsTime
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear la reserva: " + ex.Message);
+                //MessageBox.Show("Error al crear la reserva: " + ex.Message);
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIerrorr"));
             }
         }
 
@@ -284,8 +298,7 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //FormCobrarServicio_750VR frm = new FormCobrarServicio_750VR();
-            //frm.ShowDialog();
+            
         }
 
         private void cmbserv_SelectedIndexChanged(object sender, EventArgs e)
@@ -299,7 +312,7 @@ namespace Proyecto_NailsTime
                 .Select(s => new BEServicio_750VR(s.idServicio_750VR, s.nombre_750VR, s.tecnica_750VR, s.duracion_750VR, s.precio_750VR, s.activo_750VR))
                 .ToList();
 
-            // Insertar una opción vacía al principio
+            
             tecnicas.Insert(0, new BEServicio_750VR(nombre, "", 0, 0, true));
 
             cmbtec.DataSource = tecnicas;
@@ -312,7 +325,7 @@ namespace Proyecto_NailsTime
         {
             if (cmbtec.SelectedItem is BEServicio_750VR servicioSeleccionado)
             {
-                txtpre.Text = servicioSeleccionado.precio_750VR.ToString("C"); // con símbolo moneda
+                txtpre.Text = servicioSeleccionado.precio_750VR.ToString("C"); 
                 txthorest.Text = servicioSeleccionado.duracion_750VR + " min";
             }
        
@@ -342,14 +355,14 @@ namespace Proyecto_NailsTime
                 DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
                 string horaInicioStr = fila.Cells["Hora Inicio"].Value.ToString();
 
-                // Selecciona al manicurista en el ComboBox
+                
                 var manicSeleccionado = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dniManic);
                 if (manicSeleccionado != null)
                 {
                     cmbmanic.SelectedValue = manicSeleccionado.dni_750VR;
                 }
 
-                // Bloquear y completar campos
+                
                 dateTimePicker1.Value = fecha;
                 dateTimePicker1.Enabled = false;
                 cmbmanic.Enabled = false;
@@ -364,7 +377,7 @@ namespace Proyecto_NailsTime
 
             BLLdisponibilidad_750VR blldispo = new BLLdisponibilidad_750VR();
 
-            // 1. Crear bloque anterior si corresponde (disponible antes de la reserva)
+            
             if (horaInicioReserva > dispo.HoraInicio_750VR)
             {
                 var bloqueAnterior = new BEdisponibilidad_750VR(
@@ -372,24 +385,24 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR,
                     dispo.HoraInicio_750VR,
                     horaInicioReserva,
-                    true,  // activo
-                    false  // disponible
+                    true,  
+                    false  
                 );
                 blldispo.CrearDisponibilidad_750VR(bloqueAnterior);
             }
 
-            // 2. Crear bloque ocupado (la reserva)
+          
             var bloqueReserva = new BEdisponibilidad_750VR(
                 dispo.DNImanic_750VR,
                 dispo.Fecha_750VR,
                 horaInicioReserva,
                 horaFinReserva,
-                true,  // activo
-                true   // ocupado
+                true, 
+                true   
             );
             blldispo.CrearDisponibilidad_750VR(bloqueReserva);
 
-            // 3. Crear bloque restante si hay tiempo después de la reserva
+            
             if (horaFinReserva < dispo.HoraFin_750VR)
             {
                 var bloqueRestante = new BEdisponibilidad_750VR(
@@ -397,16 +410,16 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR,
                     horaFinReserva,
                     dispo.HoraFin_750VR,
-                    true,  // activo
-                    false  // disponible
+                    true,  
+                    false  
                 );
                 blldispo.CrearDisponibilidad_750VR(bloqueRestante);
             }
 
-            // 4. Inactivar la disponibilidad original
+            
             blldispo.CambiarEstado_750VR(dispo.IdDisponibilidad_750VR, false);
 
-            // 5. Refrescar disponibilidad
+           
             CargarDisponibilidadesConNombre();
         }
 
@@ -448,7 +461,7 @@ namespace Proyecto_NailsTime
             }
 
             dataGridView2.DataSource = tabla;
-            dataGridView2.Columns["ID"].Visible = false; // opcional
+            dataGridView2.Columns["ID"].Visible = false; 
         }
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)

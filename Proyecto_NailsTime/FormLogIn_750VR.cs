@@ -29,6 +29,7 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             formPrincipal = principal;
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
         }
         public void ActualizarIdioma()
         {
@@ -52,7 +53,7 @@ namespace Proyecto_NailsTime
             {
                 BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
 
-                // Iniciar sesión
+                // Iniciar sesión y guardar usuario
                 bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
 
                 if (!sesionOK)
@@ -62,17 +63,18 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // ✅ Establecer el idioma del usuario
+                // ✅ Cambiar idioma según usuario
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
 
-                // ✅ Actualizar la interfaz principal
+                // ✅ Actualizar interfaz
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 formPrincipal.Actualizar();
 
-                // ✅ Limpiar intentos fallidos
-                if (intentosFallidosPorUsuario.ContainsKey(login))
-                    intentosFallidosPorUsuario.Remove(login);
+                // ✅ El resto de los formularios se actualizarán automáticamente gracias al patrón Observer
+
+                // Limpiar intentos fallidos
+                intentosFallidosPorUsuario.Remove(login);
 
                 this.Close();
             }

@@ -21,7 +21,7 @@ namespace BE_VR750
 
         public string idioma_750VR { get; set; }
 
-        public BEusuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado)
+        public BEusuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado,string idiom)
         {
             this.dni_750VR = dni;
             this.nombre_750VR = nombre;
@@ -33,20 +33,21 @@ namespace BE_VR750
             this.rol_750VR = rol;
             this.activo_750VR = activo;
             this.bloqueado_750VR = bloqueado;
+            this.idioma_750VR = idiom;
 
         }
 
-        public BEusuario_750VR(int dni, string nombre, string ape, string mail,string salt, string rol, string user, bool activo, bool bloqueado)
-        {
-            this.dni_750VR = dni;
-            this.nombre_750VR = nombre;
-            this.apellido_750VR = ape;
-            this.mail_750VR = mail;
-            this.user_750VR = user;
-            this.rol_750VR = rol;
-            this.activo_750VR = activo;
-            this.bloqueado_750VR = bloqueado;
-        }
+        //public BEusuario_750VR(int dni, string nombre, string ape, string mail,string rol, string user, bool activo, bool bloqueado)
+        //{
+        //    this.dni_750VR = dni;
+        //    this.nombre_750VR = nombre;
+        //    this.apellido_750VR = ape;
+        //    this.mail_750VR = mail;
+        //    this.user_750VR = user;
+        //    this.rol_750VR = rol;
+        //    this.activo_750VR = activo;
+        //    this.bloqueado_750VR = bloqueado;
+        //}
 
 
     }

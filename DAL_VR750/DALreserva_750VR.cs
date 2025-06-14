@@ -59,17 +59,18 @@ namespace DAL_VR750
                             ),
 
                             manic = new BEusuario_750VR(
-                                dni: Convert.ToInt32(reader["DNImanic_VR750"]),
-                                nombre: reader["NombreManic"].ToString(),
-                                ape: reader["ApellidoManic"].ToString(),
-                                mail: "",
-                                user: "",
-                                contra: "",
-                                salt: "",
-                                rol: "",
-                                activo: true,
-                                bloqueado: false
-                            ),
+                                    dni: Convert.ToInt32(reader["DNImanic_VR750"]),
+                                    nombre: reader["NombreManic"].ToString(),
+                                    ape: reader["ApellidoManic"].ToString(),
+                                    mail: "",
+                                     user: "",
+                                   contra: "",
+                                     salt: "",
+                                     rol: "",
+                                        activo: true,
+                                       bloqueado: false,
+                                      idiom: "Español" 
+                                   ),
 
                             serv = new BEServicio_750VR(
                                 id: Convert.ToInt32(reader["IdServicio_VR750"]),
@@ -186,7 +187,8 @@ namespace DAL_VR750
                             salt: "",
                             rol: "",
                             activo: true,
-                            bloqueado: false
+                            bloqueado: false,
+                            idiom: "Español"
                         ),
 
                         serv = new BEServicio_750VR(

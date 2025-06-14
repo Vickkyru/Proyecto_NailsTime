@@ -136,16 +136,18 @@ namespace DAL_VR750
                     while (reader.Read())
                     {
                         BEusuario_750VR userr = new BEusuario_750VR(
-                            Convert.ToInt32(reader["DNI_VR750"]),
-                            reader["Nombre_VR750"].ToString(),
-                            reader["Apellido_VR750"].ToString(),
-                            reader["Email_VR750"].ToString(),
-                            reader["Salt_VR750"].ToString(),
-                            reader["Rol_VR750"].ToString(),
-                            reader["Usuario_VR750"].ToString(),
-                            Convert.ToBoolean(reader["Activo_VR750"]),
-                            Convert.ToBoolean(reader["Bloqueado_VR750"])
-                        );
+     Convert.ToInt32(reader["DNI_VR750"]),
+     reader["Nombre_VR750"].ToString(),
+     reader["Apellido_VR750"].ToString(),
+     reader["Email_VR750"].ToString(),
+     reader["Usuario_VR750"].ToString(),
+     reader["Contra_VR750"].ToString(),
+     reader["Salt_VR750"].ToString(),
+     reader["Rol_VR750"].ToString(),
+     Convert.ToBoolean(reader["Activo_VR750"]),
+     Convert.ToBoolean(reader["Bloqueado_VR750"]),
+     reader["Idioma_VR750"].ToString()
+ );
                         lista.Add(userr);
                     }
                 }
@@ -175,8 +177,8 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
-                        //agregar idioma
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
+                        idiom: reader["Idioma_VR750"].ToString()
                     );
 
                     lista.Add(usuario);
@@ -199,17 +201,18 @@ namespace DAL_VR750
                     if (reader.Read())
                     {
                         return new BEusuario_750VR(
-                            Convert.ToInt32(reader["DNI_VR750"]),
-                            reader["Nombre_VR750"].ToString(),
-                            reader["Apellido_VR750"].ToString(),
-                            reader["Email_VR750"].ToString(),
-                            reader["Salt_VR750"].ToString(),
-                            reader["Rol_VR750"].ToString(),
-                            reader["Usuario_VR750"].ToString(),
-                            Convert.ToBoolean(reader["Activo_VR750"]),
-                            Convert.ToBoolean(reader["Bloqueado_VR750"])
-                            //agregar idioma
-                        );
+      Convert.ToInt32(reader["DNI_VR750"]),
+      reader["Nombre_VR750"].ToString(),
+      reader["Apellido_VR750"].ToString(),
+      reader["Email_VR750"].ToString(),
+      reader["Usuario_VR750"].ToString(),
+      reader["Contra_VR750"].ToString(),
+      reader["Salt_VR750"].ToString(),
+      reader["Rol_VR750"].ToString(),
+      Convert.ToBoolean(reader["Activo_VR750"]),
+      Convert.ToBoolean(reader["Bloqueado_VR750"]),
+      reader["Idioma_VR750"].ToString()
+  );
                     }
                 }
             }
@@ -238,8 +241,9 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
-                        //agregar idioma
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
+                        idiom: reader["Idioma_VR750"].ToString()
+                    //agregar idioma
                     );
                 }
             }
@@ -290,7 +294,8 @@ namespace DAL_VR750
                             string rol = lector.GetString(7);
                             bool activo = lector.GetBoolean(8);
                             bool bloqueado = lector.GetBoolean(9);
-                            //agregar idioma
+                            string idioma = lector["Idioma_VR750"].ToString();
+
 
                             if (!activo) throw new Exception("El usuario está inactivo.");
                             if (bloqueado) throw new Exception("El usuario está bloqueado.");
@@ -312,7 +317,7 @@ namespace DAL_VR750
                             if (!contraseñaValida)
                                 throw new Exception("Contraseña incorrecta");
 
-                            return new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado);
+                            return new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado,idioma);
                         }
                     }
                 }

@@ -114,7 +114,8 @@ namespace Proyecto_NailsTime
                 salt: "",
                 rol: "manicurista",
                 activo: true,
-                bloqueado: false
+                bloqueado: false,
+                idiom: "Español"
             );
 
             manicuristas.Insert(0, vacio);

@@ -124,6 +124,7 @@ namespace SERVICIOS_VR750
             }
         }
 
+       
         private void CambiarIdiomaMenuStrip(ToolStripItemCollection items, Control frm)
         {
             foreach (ToolStripItem item in items)

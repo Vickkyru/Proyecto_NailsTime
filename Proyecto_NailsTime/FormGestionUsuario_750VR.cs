@@ -298,7 +298,8 @@ namespace Proyecto_NailsTime
                     salt,
                     rol,
                     true,   // activo
-                    false   // bloqueado
+                    false ,  // bloqueado
+                    idiom: "Español"
                 );
 
                 bll.CrearUsuario_750VR(nuevo);
