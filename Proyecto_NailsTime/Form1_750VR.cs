@@ -28,7 +28,7 @@ namespace Proyecto_NailsTime
             //db.VerificarYCrearTablaUsuarios_750VR();
             //db.InsertarServiciosIniciales();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
+            //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 
         }
         public void ActualizarIdioma()

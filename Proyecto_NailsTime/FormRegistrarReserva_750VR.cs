@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Threading;
 
 namespace Proyecto_NailsTime
 {
@@ -24,11 +26,41 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ConfigurarDateTimePicker();  // <- añadí esta línea
         }
+
+        private void ConfigurarDateTimePicker()
+        {
+            string idioma = Lenguaje_750VR.ObtenerInstancia().IdiomaActual;
+
+            if (idioma == "Español")
+            {
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-AR");
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-AR");
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = "dddd, dd 'de' MMMM"; // Ej: sábado, 14 de junio
+            }
+            else if (idioma == "Ingles")
+            {
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = "dddd, MMMM dd"; // Ej: Saturday, June 14
+            }
+            else if (idioma == "Portugues")
+            {
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-BR");
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = "dddd, dd 'de' MMMM"; // Ex: sábado, 14 de junho
+            }
+        }
+       
         public void ActualizarIdioma()
         {
             //MessageBox.Show("Me estoy traduciendo...");
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ConfigurarDateTimePicker();
         }
 
         private void CargarServicios()
@@ -80,7 +112,8 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR.Date,
                     dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
                     dispo.HoraFin_750VR.ToString(@"hh\:mm"),
-                    "Disponible" 
+                     //"Disponible" 
+                     Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
                 );
             }
 
@@ -90,7 +123,12 @@ namespace Proyecto_NailsTime
                 dataGridView1.Columns["IdDisponibilidad"].Visible = false;
             if (dataGridView1.Columns.Contains("DNImanicurista"))
                 dataGridView1.Columns["DNImanicurista"].Visible = false;
-
+            // 🔤 Traducción de encabezados
+            dataGridView1.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Manicurista");
+            dataGridView1.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Fecha");
+            dataGridView1.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraInicio");
+            dataGridView1.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraFin");
+            dataGridView1.Columns["Estado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Estado");
         }
         private void CargarManicuristas()
         {
@@ -266,7 +304,7 @@ namespace Proyecto_NailsTime
                 LimpiarCamposReserva();
                 CargarReservasDispo();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Error al crear la reserva: " + ex.Message);
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIerrorr"));
@@ -333,7 +371,7 @@ namespace Proyecto_NailsTime
 
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
-
+            ConfigurarDateTimePicker();
             CargarServicios();
             CargarReservasDispo();
 
@@ -443,9 +481,13 @@ namespace Proyecto_NailsTime
 
             foreach (var r in lista)
             {
-                string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : "Desconocido";
-                string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : "Desconocido";
-                string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : "Sin servicio";
+                string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+                string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+                string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_SinServicio");
+
+                string cobrado = r.Cobrado_750VR
+                    ? Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Si")
+                    : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
 
                 tabla.Rows.Add(
                     r.IdReserva_750VR,
@@ -456,12 +498,21 @@ namespace Proyecto_NailsTime
                     r.HoraInicio_750VR.ToString(@"hh\:mm"),
                     r.HoraFin_750VR.ToString(@"hh\:mm"),
                     r.Precio_750VR,
-                    r.Cobrado_750VR ? "Sí" : "No"
-                );
+                    cobrado
+                        );
             }
 
             dataGridView2.DataSource = tabla;
-            dataGridView2.Columns["ID"].Visible = false; 
+            dataGridView2.Columns["ID"].Visible = false;
+            // 🔤 Traducción de encabezados
+            dataGridView2.Columns["Cliente"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cliente");
+            dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Manicurista");
+            dataGridView2.Columns["Servicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Servicio");
+            dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Fecha");
+            dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraInicio");
+            dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraFin");
+            dataGridView2.Columns["Precio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Precio");
+            dataGridView2.Columns["Cobrado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cobrado");
         }
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)

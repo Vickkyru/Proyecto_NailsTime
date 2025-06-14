@@ -504,12 +504,14 @@ namespace Proyecto_NailsTime
                 btnañadir.Enabled = true;
                 //btn.Enabled = false;
                 //btndesb.Enabled = false;
+                
                 dataGridView1.Enabled = false;
 
                 modoActual = "añadir";
                 lblmensaje.Text = "Alta desde Reserva";
                 MessageBox.Show("Unicamente debe poner los datos y dar a aplicar");
                 ActivarModoEdicion();
+                btncance.Enabled = false;
             }
             else
             {
