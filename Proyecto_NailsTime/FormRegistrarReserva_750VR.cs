@@ -25,43 +25,15 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
-            ConfigurarDateTimePicker();  // <- añadí esta línea
+            ActualizarIdioma();
+            
         }
-
-        private void ConfigurarDateTimePicker()
-        {
-            string idioma = Lenguaje_750VR.ObtenerInstancia().IdiomaActual;
-
-            if (idioma == "Español")
-            {
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-AR");
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-AR");
-                dateTimePicker1.Format = DateTimePickerFormat.Custom;
-                dateTimePicker1.CustomFormat = "dddd, dd 'de' MMMM"; // Ej: sábado, 14 de junio
-            }
-            else if (idioma == "Ingles")
-            {
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-                dateTimePicker1.Format = DateTimePickerFormat.Custom;
-                dateTimePicker1.CustomFormat = "dddd, MMMM dd"; // Ej: Saturday, June 14
-            }
-            else if (idioma == "Portugues")
-            {
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pt-BR");
-                dateTimePicker1.Format = DateTimePickerFormat.Custom;
-                dateTimePicker1.CustomFormat = "dddd, dd 'de' MMMM"; // Ex: sábado, 14 de junho
-            }
-        }
-       
+      
         public void ActualizarIdioma()
         {
-            //MessageBox.Show("Me estoy traduciendo...");
-            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
-            ConfigurarDateTimePicker();
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);          
         }
+
 
         private void CargarServicios()
         {
@@ -371,7 +343,6 @@ namespace Proyecto_NailsTime
 
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
-            ConfigurarDateTimePicker();
             CargarServicios();
             CargarReservasDispo();
 

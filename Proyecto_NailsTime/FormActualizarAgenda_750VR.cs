@@ -19,6 +19,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -37,16 +38,10 @@ namespace Proyecto_NailsTime
 
         private void FormActualizarAgenda_750VR_Load(object sender, EventArgs e)
         {
-            Valida();
+            //Valida();
             CargarReservas();
         }
         private void CargarReservas()
-        {
-            BLLReserva_750VR bll = new BLLReserva_750VR();
-            var lista = bll.leerEntidades_750VR();
-        }
-
-        public void Valida()
         {
             var sesion = SessionManager_750VR.ObtenerInstancia;
             int dniManicurista = sesion.user.dni_750VR;
@@ -55,16 +50,16 @@ namespace Proyecto_NailsTime
             var reservas = bll.ObtenerReservasPorManicurista(dniManicurista);
 
             DataTable tabla = new DataTable();
-            tabla.Columns.Add("DNI Cliente", typeof(int));
-            tabla.Columns.Add("Nombre Cliente", typeof(string));
-            tabla.Columns.Add("Nombre Manicurista", typeof(string));
-            tabla.Columns.Add("Nombre Servicio", typeof(string));
-            tabla.Columns.Add("Técnica", typeof(string));
-            tabla.Columns.Add("Fecha Reserva", typeof(DateTime));
-            tabla.Columns.Add("Hora Inicio", typeof(string));
-            tabla.Columns.Add("Hora Fin", typeof(string));
-            tabla.Columns.Add("Estado", typeof(string));
-            tabla.Columns.Add("IdReserva", typeof(int)); // ocultable, para selección
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.DNICliente"), typeof(int));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.NombreCliente"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.NombreManic"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.Servicio"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.Tecnica"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.FechaReserva"), typeof(DateTime));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.HoraInicio"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.HoraFin"), typeof(string));
+            tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.Estado"), typeof(string));
+            tabla.Columns.Add("IdReserva", typeof(int)); // oculta
 
             foreach (var r in reservas)
             {
@@ -86,9 +81,8 @@ namespace Proyecto_NailsTime
 
             if (dataGridView1.Columns.Contains("IdReserva"))
                 dataGridView1.Columns["IdReserva"].Visible = false;
-
-
         }
+
         private int idReservaSeleccionada = -1;
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -103,44 +97,77 @@ namespace Proyecto_NailsTime
         {
             if (idReservaSeleccionada == -1)
             {
-                MessageBox.Show("Seleccioná una reserva.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
             string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
 
-            if (estadoActual != "Pendiente")
+            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("No se puede modificar una reserva que ya fue cancelada o realizada.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoModificable"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
                 return;
             }
 
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
-            MessageBox.Show("Reserva marcada como realizada.");
-            Valida();
+
+            MessageBox.Show(
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaRealizada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            CargarReservas();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             if (idReservaSeleccionada == -1)
             {
-                MessageBox.Show("Seleccioná una reserva.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
             string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
 
-            if (estadoActual != "Pendiente")
+            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("No se puede cancelar una reserva que ya fue realizada o cancelada.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoCancelable"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
                 return;
             }
 
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Cancelado");
-            MessageBox.Show("Reserva cancelada.");
-            Valida();
+
+            MessageBox.Show(
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaCancelada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+            CargarReservas();
 
         }
 

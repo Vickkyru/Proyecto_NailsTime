@@ -20,7 +20,7 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             idReserva = idReservaRecibido;
 
-            // Podés cargar la reserva si querés mostrar el importe:
+            
             CargarDatosReserva();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
         }

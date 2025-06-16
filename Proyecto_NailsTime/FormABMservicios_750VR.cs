@@ -21,11 +21,19 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ActualizarMensajeModo();
         }
+        private void ActualizarMensajeModo()
+        {
+            string clave = "FormABMdisponibilidad.Mensaje." + modoActual;
+            lblmensaje.Text = Lenguaje_750VR.ObtenerEtiqueta(clave);
+        }
+
 
 
         public void LimpiarCampos()
@@ -43,17 +51,18 @@ namespace Proyecto_NailsTime
 
         private void btnañadir_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Añadir";
+            //lblmensaje.Text = "Modo Añadir";
             modoActual = "añadir";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
         private void btnsalir_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("¿Está seguro que desea salir? Se perderán los cambios no guardados.",
-                             "Confirmar salida",
-                             MessageBoxButtons.YesNo,
-                             MessageBoxIcon.Warning);
+            var mensaje = Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ConfirmarSalidaMensaje");
+            var titulo = Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ConfirmarSalidaTitulo");
+
+            var result = MessageBox.Show(mensaje, titulo, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
                 this.Close();
@@ -78,7 +87,8 @@ namespace Proyecto_NailsTime
             }
 
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            //lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
             ResetearEstadoInterfaz();
             CargarServicios();
             LimpiarCampos();
@@ -90,11 +100,48 @@ namespace Proyecto_NailsTime
             var lista = bll.LeerEntidades_750VR();
 
             dataGridView1.Columns.Clear();
-            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = lista;
+
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "nombre_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Nombre"),
+                Name = "colNombre"
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "tecnica_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Tecnica"),
+                Name = "colTecnica"
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "duracion_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Duracion"),
+                Name = "colDuracion"
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "precio_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Precio"),
+                Name = "colPrecio"
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                DataPropertyName = "activo_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Estado"),
+                Name = "colEstado"
+            });
 
             PintarServiciosInactivos();
         }
+
 
 
         private void PintarServiciosInactivos()
@@ -112,7 +159,12 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un servicio válido de la lista.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.SeleccioneServicio"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
@@ -122,18 +174,27 @@ namespace Proyecto_NailsTime
             BLLServicio_750VR bll = new BLLServicio_750VR();
             bll.CambiarEstadoServicio_750VR(servicio.idServicio_750VR, nuevoEstado);
 
-            MessageBox.Show(nuevoEstado ? "Servicio activado." : "Servicio desactivado.");
+            string mensaje = nuevoEstado
+                ? Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioActivado")
+                : Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioDesactivado");
+
+            MessageBox.Show(mensaje);
             CargarServicios();
             ResetearEstadoInterfaz();
             LimpiarCampos();
-        
         }
+
 
         private void AplicarModificacion()
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un servicio de la lista.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.SeleccioneServicio"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
@@ -143,7 +204,10 @@ namespace Proyecto_NailsTime
             var servicioSeleccionado = dataGridView1.CurrentRow.DataBoundItem as BEServicio_750VR;
             if (servicioSeleccionado == null)
             {
-                MessageBox.Show("Error al obtener el servicio seleccionado.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ErrorObtenerServicio"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError")
+                );
                 return;
             }
 
@@ -154,13 +218,19 @@ namespace Proyecto_NailsTime
 
             if (!int.TryParse(txtduracion.Text.Trim(), out duracion))
             {
-                MessageBox.Show("Duración inválida. Ingrese un número entero.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.DuracionInvalida"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError")
+                );
                 return;
             }
 
             if (!decimal.TryParse(txtprecio.Text.Trim(), out precio))
             {
-                MessageBox.Show("Precio inválido. Ingrese un valor numérico válido.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.PrecioInvalido"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError")
+                );
                 return;
             }
 
@@ -169,16 +239,22 @@ namespace Proyecto_NailsTime
 
             if (exito)
             {
-                MessageBox.Show("Servicio modificado correctamente.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioModificado")
+                );
                 CargarServicios();
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
             else
             {
-                MessageBox.Show("Error al modificar el servicio.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ErrorModificarServicio"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError")
+                );
             }
         }
+
 
         private void AplicarAlta()
         {
@@ -189,7 +265,6 @@ namespace Proyecto_NailsTime
                 string nombre = txtnombre.Text.Trim();
                 string tecnica = txttec.Text.Trim();
 
-                // Verificar si ya existe uno igual
                 var bll = new BLLServicio_750VR();
                 var existentes = bll.LeerEntidades_750VR();
                 bool yaExiste = existentes.Any(s =>
@@ -198,7 +273,12 @@ namespace Proyecto_NailsTime
 
                 if (yaExiste)
                 {
-                    MessageBox.Show("Ya existe un servicio con ese nombre y técnica.");
+                    MessageBox.Show(
+                        Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioDuplicado"),
+                        Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloAdvertencia"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
                     return;
                 }
 
@@ -208,15 +288,26 @@ namespace Proyecto_NailsTime
                 BEServicio_750VR nuevo = new BEServicio_750VR(nombre, tecnica, duracion, precio, true);
                 bll.CrearServicio_750VR(nuevo);
 
-                MessageBox.Show("Servicio creado correctamente.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioCreado"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloInfo"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
                 LimpiarCampos();
                 CargarServicios();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear servicio: " + ex.Message);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ErrorCrearServicio") + ": " + ex.Message,
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
 
 
         private bool ValidarCampos()
@@ -226,31 +317,48 @@ namespace Proyecto_NailsTime
                 string.IsNullOrWhiteSpace(txtduracion.Text) ||
                 string.IsNullOrWhiteSpace(txtprecio.Text))
             {
-                MessageBox.Show("Todos los campos son obligatorios.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.CamposObligatorios"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloAdvertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return false;
             }
 
             if (!int.TryParse(txtduracion.Text, out _))
             {
-                MessageBox.Show("Duración debe ser un número entero.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.DuracionInvalida"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloAdvertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return false;
             }
 
             if (!decimal.TryParse(txtprecio.Text, out _))
             {
-                MessageBox.Show("Precio debe ser un valor decimal válido.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.PrecioInvalido"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.TituloAdvertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return false;
             }
 
             return true;
         }
 
-        
+
+
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Activar/Desactivar";
+            //lblmensaje.Text = "Modo Activar/Desactivar";
             modoActual = "Activar/Desactivar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
@@ -258,13 +366,15 @@ namespace Proyecto_NailsTime
         {
             modoActual = "modificar";
             ActivarModoEdicion();
-            lblmensaje.Text = "Modo Modificar";
+
+            ActualizarMensajeModo();
         }
 
         private void btncance_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Consulta";
+            //lblmensaje.Text = "Modo Consulta";
             modoActual = "consulta";
+            ActualizarMensajeModo();
 
             // Limpiar todos los campos
             LimpiarCampos();
@@ -393,7 +503,8 @@ namespace Proyecto_NailsTime
 
             // Iniciar en modo consulta
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            //lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

@@ -215,7 +215,7 @@ namespace DAL_VR750
 (11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español'),
 
 (10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Ingles'),
-(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Portugues');
+(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Ingles')
             END
 
             IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)

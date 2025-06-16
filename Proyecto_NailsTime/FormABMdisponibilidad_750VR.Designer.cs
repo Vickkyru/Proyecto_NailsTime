@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormABMdisponibilidad
+    partial class FormABMdisponibilidad_750VR
     {
         /// <summary>
         /// Required designer variable.

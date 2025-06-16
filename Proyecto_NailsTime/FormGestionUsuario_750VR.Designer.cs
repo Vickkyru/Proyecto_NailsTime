@@ -54,14 +54,12 @@
             this.btnaplicar = new System.Windows.Forms.Button();
             this.btncancelar = new System.Windows.Forms.Button();
             this.btnsalir = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.lblmensaje = new System.Windows.Forms.Label();
             this.txtuser = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -73,7 +71,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(23, 6);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(371, 45);
+            this.label2.Size = new System.Drawing.Size(257, 45);
             this.label2.TabIndex = 7;
             this.label2.Text = "Gestion de usuarios";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -264,7 +262,7 @@
             this.btncrear.BackColor = System.Drawing.Color.RosyBrown;
             this.btncrear.FlatAppearance.BorderSize = 0;
             this.btncrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btncrear.Location = new System.Drawing.Point(18, 17);
+            this.btncrear.Location = new System.Drawing.Point(440, 302);
             this.btncrear.Name = "btncrear";
             this.btncrear.Size = new System.Drawing.Size(75, 23);
             this.btncrear.TabIndex = 1;
@@ -286,7 +284,7 @@
             this.btndesb.BackColor = System.Drawing.Color.RosyBrown;
             this.btndesb.FlatAppearance.BorderSize = 0;
             this.btndesb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btndesb.Location = new System.Drawing.Point(107, 17);
+            this.btndesb.Location = new System.Drawing.Point(529, 302);
             this.btndesb.Name = "btndesb";
             this.btndesb.Size = new System.Drawing.Size(75, 23);
             this.btndesb.TabIndex = 3;
@@ -299,7 +297,7 @@
             this.btnmod.BackColor = System.Drawing.Color.RosyBrown;
             this.btnmod.FlatAppearance.BorderSize = 0;
             this.btnmod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnmod.Location = new System.Drawing.Point(107, 65);
+            this.btnmod.Location = new System.Drawing.Point(529, 350);
             this.btnmod.Name = "btnmod";
             this.btnmod.Size = new System.Drawing.Size(75, 23);
             this.btnmod.TabIndex = 4;
@@ -312,7 +310,7 @@
             this.btnact.BackColor = System.Drawing.Color.RosyBrown;
             this.btnact.FlatAppearance.BorderSize = 0;
             this.btnact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnact.Location = new System.Drawing.Point(18, 65);
+            this.btnact.Location = new System.Drawing.Point(440, 350);
             this.btnact.Name = "btnact";
             this.btnact.Size = new System.Drawing.Size(75, 23);
             this.btnact.TabIndex = 2;
@@ -325,7 +323,7 @@
             this.btnaplicar.BackColor = System.Drawing.Color.RosyBrown;
             this.btnaplicar.FlatAppearance.BorderSize = 0;
             this.btnaplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnaplicar.Location = new System.Drawing.Point(59, 113);
+            this.btnaplicar.Location = new System.Drawing.Point(481, 398);
             this.btnaplicar.Name = "btnaplicar";
             this.btnaplicar.Size = new System.Drawing.Size(75, 23);
             this.btnaplicar.TabIndex = 0;
@@ -351,25 +349,13 @@
             this.btnsalir.BackColor = System.Drawing.Color.RosyBrown;
             this.btnsalir.FlatAppearance.BorderSize = 0;
             this.btnsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnsalir.Location = new System.Drawing.Point(651, 372);
+            this.btnsalir.Location = new System.Drawing.Point(651, 351);
             this.btnsalir.Name = "btnsalir";
             this.btnsalir.Size = new System.Drawing.Size(75, 23);
             this.btnsalir.TabIndex = 7;
             this.btnsalir.Text = "Salir";
             this.btnsalir.UseVisualStyleBackColor = false;
             this.btnsalir.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btndesb);
-            this.panel1.Controls.Add(this.btncrear);
-            this.panel1.Controls.Add(this.btnmod);
-            this.panel1.Controls.Add(this.btnaplicar);
-            this.panel1.Controls.Add(this.btnact);
-            this.panel1.Location = new System.Drawing.Point(416, 248);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 175);
-            this.panel1.TabIndex = 38;
             // 
             // lblmensaje
             // 
@@ -436,13 +422,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btndesb);
+            this.Controls.Add(this.btncrear);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.btnmod);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.btnaplicar);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnact);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtuser);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btncancelar);
             this.Controls.Add(this.label8);
@@ -463,7 +453,6 @@
             this.Name = "FormGestionUsuario_750VR";
             this.Text = "FormAgregarUsuario_750VR";
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
-            this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -502,7 +491,6 @@
         private System.Windows.Forms.Button btnaplicar;
         private System.Windows.Forms.Button btncancelar;
         private System.Windows.Forms.Button btnsalir;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox txtuser;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblmensaje;

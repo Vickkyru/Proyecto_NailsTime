@@ -18,6 +18,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
 
         public void ActualizarIdioma()
@@ -30,13 +31,14 @@ namespace Proyecto_NailsTime
             try
             {
                 SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
-                Application.Restart(); // reinicia la app para forzar el login de nuevo
+                Application.Restart();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al cerrar sesión");
+                MessageBox.Show(ex.Message, Lenguaje_750VR.ObtenerEtiqueta("Logout.Mensaje.ErrorCerrarSesion"));
             }
         }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {

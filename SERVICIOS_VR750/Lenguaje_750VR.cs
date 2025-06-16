@@ -101,7 +101,7 @@ namespace SERVICIOS_VR750
 
                 foreach (Control c in frm.Controls)
                 {
-                    if (c is Label || c is Button || c is CheckBox || c is GroupBox)
+                    if (c is Label || c is Button || c is CheckBox || c is GroupBox || c is RadioButton)
                         c.Text = ObtenerTexto(frm.Name + "." + c.Name);
 
                     if (c is MenuStrip)

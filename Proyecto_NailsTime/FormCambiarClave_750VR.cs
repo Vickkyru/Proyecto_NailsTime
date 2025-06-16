@@ -18,7 +18,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-
+            ActualizarIdioma();
         }
 
         public void ActualizarIdioma()
@@ -33,7 +33,6 @@ namespace Proyecto_NailsTime
 
         }
 
-        //hacer lo de los intentos 
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -41,7 +40,12 @@ namespace Proyecto_NailsTime
 
             if (usuario == null)
             {
-                MessageBox.Show("No hay sesión activa.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeSinSesion"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
@@ -52,38 +56,60 @@ namespace Proyecto_NailsTime
             string hashActual = encriptador.HashearConSalt_750VR(actual, usuario.salt_750VR);
             if (hashActual != usuario.contraseña_750VR)
             {
-                MessageBox.Show("La contraseña actual es incorrecta.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeClaveIncorrecta"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
 
             if (nueva != confirmar)
             {
-                MessageBox.Show("Las contraseñas no coinciden.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeNoCoinciden"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
             if (nueva.Length < 10 || !nueva.Any(char.IsUpper) || !nueva.Any(char.IsDigit))
             {
-                MessageBox.Show("La contraseña debe tener al menos 10 caracteres, una mayúscula y un número.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeRequisitos"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
             if (nueva == usuario.contraseña_750VR)
             {
-                MessageBox.Show("Las contraseña nueva no puede ser la contraseña actual.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeClaveIgual"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
- 
             BLLusuario_750VR bll = new BLLusuario_750VR();
-            bll.CambiarContraseña_750VR(usuario,nueva);
-
-
+            bll.CambiarContraseña_750VR(usuario, nueva);
 
             SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
-            MessageBox.Show("Contraseña actualizada exitosamente. Se cerro la sesion, vuelva a inciar sesion con su nueva contraseña");
-            Application.Restart();
+            MessageBox.Show(
+                Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeClaveCambiada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloInformacion"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
 
+            Application.Restart();
         }
     }
 }

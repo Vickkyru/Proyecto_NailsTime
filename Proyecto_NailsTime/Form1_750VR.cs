@@ -28,7 +28,7 @@ namespace Proyecto_NailsTime
             //db.VerificarYCrearTablaUsuarios_750VR();
             //db.InsertarServiciosIniciales();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
+            Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 
         }
         public void ActualizarIdioma()
@@ -226,7 +226,7 @@ namespace Proyecto_NailsTime
 
         private void personalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormABMdisponibilidad());
+            AbrirForm(new FormABMdisponibilidad_750VR());
         }
 
         private void verTurnosReservadosToolStripMenuItem_Click(object sender, EventArgs e)

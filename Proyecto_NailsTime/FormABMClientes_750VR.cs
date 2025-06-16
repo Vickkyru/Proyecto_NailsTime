@@ -23,14 +23,24 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
+            
         }
 
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ActualizarMensajeModo();
         }
 
-        // Propiedades para comunicación con el formulario de reserva
+        private void ActualizarMensajeModo()
+        {
+            string clave = "FormABMClientes_750VR.Mensaje." + modoActual;
+            lblmensaje.Text = Lenguaje_750VR.ObtenerEtiqueta(clave);
+        }
+
+
+        
         public bool InvocadoDesdeReserva { get; set; } = false;
         public FormRegistrarReserva_750VR FormularioReserva { get; set; }
         public void LimpiarCampos()
@@ -43,25 +53,7 @@ namespace Proyecto_NailsTime
             txtcel.Clear();
 
         }
-        //private string emailCifrado = "";
 
-        //private string ocultarEmailSiEsNecesario(string texto)
-        //{
-        //    return checkBox1.Checked ? desencriptarEmail(texto) : "[Email protegido]";
-        //}
-
-        //private string desencriptarEmail(string texto)
-        //{
-        //    try
-        //    {
-        //        var enc = new Encriptador_750VR();
-        //        return enc.DesencriptarAES_750VR(texto);
-        //    }
-        //    catch
-        //    {
-        //        return "[Error al desencriptar]";
-        //    }
-        //}
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
@@ -85,24 +77,29 @@ namespace Proyecto_NailsTime
                 }
                 else
                 {
-                    MessageBox.Show("No se encontró el cliente.");
+                    //MessageBox.Show("No se encontró el cliente.");
+                    Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.NoClienteEncontrado");
                 }
             }
         }
 
         private void btnañadir_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Añadir";
+            
             modoActual = "añadir";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
         private void btnsalir_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("¿Está seguro que desea salir? Se perderán los cambios no guardados.",
-                              "Confirmar salida",
-                              MessageBoxButtons.YesNo,
-                              MessageBoxIcon.Warning);
+            var result = MessageBox.Show(
+    Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ConfirmarSalidaMensaje"),
+    Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ConfirmarSalidaTitulo"),
+    MessageBoxButtons.YesNo,
+    MessageBoxIcon.Warning
+);
+
 
             if (result == DialogResult.Yes)
                 this.Close();
@@ -153,7 +150,10 @@ namespace Proyecto_NailsTime
 
             // Volver al estado de consulta
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
+            ActivarModoEdicion();
+            
+            //lblmensaje.Text = "Modo Consulta";
             ResetearEstadoInterfaz();
             CargarUsuarios(); // Refrescar grilla general
             LimpiarCampos();
@@ -170,8 +170,32 @@ namespace Proyecto_NailsTime
             dataGridView1.DataSource = lista;
 
 
-            PintarUsuariosInactivos(); // si querés seguir resaltando inactivos en rojo
+            PintarUsuariosInactivos();
+            TraducirEncabezadosDataGrid();
+
         }
+        private void TraducirEncabezadosDataGrid()
+        {
+            Dictionary<string, string> columnasTraducidas = new Dictionary<string, string>
+    {
+        { "dni_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.DNI") },
+        { "nombre_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Nombre") },
+        { "apellido_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Apellido") },
+        { "gmail_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Email") },
+        { "direccion_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Direccion") },
+        { "celular_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Celular") },
+        { "activo_750VR", Lenguaje_750VR.ObtenerEtiqueta("Grid.Cliente.Estado") }
+    };
+
+            foreach (DataGridViewColumn col in dataGridView1.Columns)
+            {
+                if (columnasTraducidas.ContainsKey(col.DataPropertyName))
+                {
+                    col.HeaderText = columnasTraducidas[col.DataPropertyName];
+                }
+            }
+        }
+
 
         private void PintarUsuariosInactivos()
         {
@@ -189,7 +213,7 @@ namespace Proyecto_NailsTime
             var item = dataGridView1.CurrentRow?.DataBoundItem as BECliente_750VR;
             if (item == null)
             {
-                MessageBox.Show("Seleccione un Cliente válido de la lista.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.SeleccioneClienteValido"));
                 return;
             }
 
@@ -200,8 +224,11 @@ namespace Proyecto_NailsTime
 
             if (exito)
             {
-                string mensaje = nuevoEstado ? "Cliente activado correctamente." : "Cliente desactivado correctamente.";
-                MessageBox.Show(mensaje);
+                string clave = nuevoEstado
+                    ? "FormABMClientes_750VR.ClienteActivado"
+                    : "FormABMClientes_750VR.ClienteDesactivado";
+
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta(clave));
 
                 CargarUsuarios();
                 ResetearEstadoInterfaz();
@@ -209,7 +236,7 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al cambiar estado del Cliente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ErrorCambiarEstado"));
             }
         }
 
@@ -217,7 +244,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un Cliente de la lista.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.SeleccioneCliente"));
                 return;
             }
 
@@ -233,16 +260,11 @@ namespace Proyecto_NailsTime
 
             BLLCliente_750VR bll = new BLLCliente_750VR();
 
-
-            //BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
-
-           
-
             bool exito = bll.ModificarCliente_750VR(dni, nombre, apellido, mail, dire, cel);
 
             if (exito)
             {
-                MessageBox.Show("Cliente modificado correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteModificado"));
 
                 CargarUsuarios();
                 ResetearEstadoInterfaz();
@@ -250,7 +272,7 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al modificar el Cliente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ErrorModificarCliente"));
             }
         }
 
@@ -266,13 +288,11 @@ namespace Proyecto_NailsTime
                 string apellido = txtape.Text.Trim();
                 string dire = txtdire.Text.Trim();
                 string cel = txtcel.Text.Trim();
-
-                // 🔐 En modo AÑADIR se debe usar directamente el txtemail
                 string mail = txtemail.Text.Trim();
 
                 if (string.IsNullOrWhiteSpace(mail) || mail.StartsWith("["))
                 {
-                    MessageBox.Show("Email inválido.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.EmailInvalido"));
                     return;
                 }
 
@@ -280,7 +300,7 @@ namespace Proyecto_NailsTime
 
                 if (bll.ObtenerClientePorDNI_750VR(dni) != null)
                 {
-                    MessageBox.Show("Ya existe un cliente con ese DNI.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteYaExiste"));
                     return;
                 }
 
@@ -294,50 +314,52 @@ namespace Proyecto_NailsTime
                     act: true
                 );
 
-                bll.CrearCliente_750VR(nuevo); // La DAL lo encripta correctamente
+                bll.CrearCliente_750VR(nuevo);
 
-                MessageBox.Show("Cliente creado correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteCreado"));
                 LimpiarCampos();
                 CargarUsuarios();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ErrorCrearCliente") + ex.Message,
+                                Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.TituloError"),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
+
 
         private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtdni.Text) ||
-       string.IsNullOrWhiteSpace(txtnom.Text) ||
-       string.IsNullOrWhiteSpace(txtape.Text) ||
-       string.IsNullOrWhiteSpace(txtemail.Text) ||
-       string.IsNullOrWhiteSpace(txtdire.Text) ||
-     string.IsNullOrWhiteSpace(txtcel.Text))
-
-            //falta el resto
+                string.IsNullOrWhiteSpace(txtnom.Text) ||
+                string.IsNullOrWhiteSpace(txtape.Text) ||
+                string.IsNullOrWhiteSpace(txtemail.Text) ||
+                string.IsNullOrWhiteSpace(txtdire.Text) ||
+                string.IsNullOrWhiteSpace(txtcel.Text))
             {
-                MessageBox.Show("Por favor, complete todos los campos obligatorios.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.CamposObligatorios"));
                 return false;
             }
-            // 2.2) DNI: 7–8 dígitos, con o sin puntos (12.345.678 o 12345678)
+
             string dniPattern = @"^(\d{7,8}|\d{2}\.\d{3}\.\d{3})$";
             if (!Regex.IsMatch(txtdni.Text.Trim(), dniPattern))
             {
-                MessageBox.Show("Debe ingresar un DNI válido (7–8 dígitos, con o sin puntos).");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.DNIInvalido"));
                 return false;
             }
 
-            // 2.3) E-mail
             if (!EsEmailValido(txtemail.Text.Trim()))
             {
-                MessageBox.Show("Debe ingresar un e-mail válido.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.EmailInvalido"));
                 return false;
             }
 
             return true;
         }
-        // 1) Valida formato de e-mail
+
+        
         private bool EsEmailValido(string email)
         {
             try
@@ -353,8 +375,10 @@ namespace Proyecto_NailsTime
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Activar/Desactivar";
+           
+            //lblmensaje.Text = "Modo Activar/Desactivar";
             modoActual = "Activar/Desactivar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
@@ -362,19 +386,21 @@ namespace Proyecto_NailsTime
         {
             modoActual = "modificar";
             ActivarModoEdicion();
-            lblmensaje.Text = "Modo Modificar";
+            //lblmensaje.Text = "Modo Modificar";
         }
 
         private void btncance_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Consulta";
+           
             modoActual = "consulta";
+            ActualizarMensajeModo();
+            ActivarModoEdicion();
+            
 
-            // Limpiar todos los campos
             LimpiarCampos();
 
             ResetearEstadoInterfaz();
-            CargarUsuarios();   // Mostrar todos
+            CargarUsuarios();  
         }
 
         private void ActivarModoEdicion()
@@ -397,7 +423,6 @@ namespace Proyecto_NailsTime
             {
                 dataGridView1.Enabled = true;
 
-                // Mostrar datos sin habilitar edición
                 txtdni.Enabled = false;
                 txtnom.Enabled = false;
                 txtape.Enabled = false;
@@ -407,44 +432,42 @@ namespace Proyecto_NailsTime
      
             }
 
-            // Habilitar botones Aplicar y Cancelar
-            btnapli.Enabled = true;
-            btncance.Enabled = true;
+           
+            btnapli.Enabled = false;
+            btncance.Enabled = false;
 
-            // Deshabilitar botones de navegación
-            btnañadir.Enabled = false;
-            btnmod.Enabled = false;
-            //btnelim.Enabled = false;
-
-            btnelim.Enabled = false;
+            
+            btnañadir.Enabled = true;
+            btnmod.Enabled = true;
+            btnelim.Enabled = true;
 
         }
 
         private void ResetearEstadoInterfaz()
         {
-            // Campos de texto deshabilitados
+            
             txtdni.Enabled = txtnom.Enabled = txtape.Enabled = txtemail.Enabled = true;
             txtdire.Enabled = txtcel.Enabled = true;
 
-            // CRUD y filtros habilitados
+            
             btnañadir.Enabled = btnmod.Enabled = /*btnelim.Enabled =*/ true;
  
             btnelim.Enabled = true;
 
-            // Aplicar/Cancelar deshabilitados
+           
             btnapli.Enabled = false;
             btncance.Enabled = false;
 
-            // Grilla habilitada para seleccionar
+           
             dataGridView1.Enabled = true;
 
         }
 
-        private void VerificarCamposBusqueda() //hasta q no se implementen los campos no se aplica
+        private void VerificarCamposBusqueda() 
         {
             if (modoActual != "consulta") return;
 
-            // Verifica si al menos un campo está completo
+            
             bool hayDatos = !string.IsNullOrWhiteSpace(txtdni.Text)
                          || !string.IsNullOrWhiteSpace(txtnom.Text)
                          || !string.IsNullOrWhiteSpace(txtape.Text)
@@ -508,29 +531,37 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = false;
 
                 modoActual = "añadir";
-                lblmensaje.Text = "Alta desde Reserva";
-                MessageBox.Show("Unicamente debe poner los datos y dar a aplicar");
+                //lblmensaje.Text = "Alta desde Reserva";
+                ActualizarMensajeModo();
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.MensajeAltaDesdeReserva"));
+
                 ActivarModoEdicion();
                 btncance.Enabled = false;
             }
             else
             {
-                // Deshabilitar botones Aplicar y Cancelar
+                
                 btnapli.Enabled = false;
                 btncance.Enabled = false;
 
-                // Habilitar grilla solo para selección (no edición)
+               
                 dataGridView1.ReadOnly = true;
                 dataGridView1.AllowUserToAddRows = false;
                 dataGridView1.AllowUserToDeleteRows = false;
 
 
-                // Iniciar en modo consulta
-                modoActual = "consulta";
-                lblmensaje.Text = "Modo Consulta";
+
+               
+                    modoActual = "consulta";           // 🔁 PRIMERO asignás el modo correcto
+                    ActualizarMensajeModo();           // ✅ Luego actualizás el label según ese modo
+                    ActivarModoEdicion();
+                
+
+
             }
-        
+
             CargarUsuarios();
+            ActualizarIdioma();
 
         }
 

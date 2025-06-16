@@ -24,12 +24,18 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ActualizarMensajeModo();
         }
-
+        private void ActualizarMensajeModo()
+        {
+            string clave = "FormABMdisponibilidad.Mensaje." + modoActual;
+            lblmensaje.Text = Lenguaje_750VR.ObtenerEtiqueta(clave);
+        }
         public void LimpiarCampos()
         {
             txtDNI.Clear();
@@ -55,6 +61,15 @@ namespace Proyecto_NailsTime
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = lista;
+            // Traducción de encabezados
+            dataGridView1.Columns["dni_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.DNI");
+            dataGridView1.Columns["nombre_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Nombre");
+            dataGridView1.Columns["apellido_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Apellido");
+            dataGridView1.Columns["mail_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Email");
+            dataGridView1.Columns["user_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Login");
+            dataGridView1.Columns["rol_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Rol");
+            dataGridView1.Columns["activo_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Activo");
+            dataGridView1.Columns["bloqueado_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Usuario.Bloqueado");
             dataGridView1.Columns["contraseña_750VR"].Visible = false;
             dataGridView1.Columns["salt_750VR"].Visible = false;
             PintarUsuariosInactivos();
@@ -77,10 +92,14 @@ namespace Proyecto_NailsTime
         //boton salir
         private void button7_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("¿Está seguro que desea salir? Se perderán los cambios no guardados.",
-                               "Confirmar salida",
-                               MessageBoxButtons.YesNo,
-                               MessageBoxIcon.Warning);
+            string mensaje = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ConfirmarSalidaMensaje");
+            string titulo = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ConfirmarSalidaTitulo");
+
+            var result = MessageBox.Show(
+                mensaje,
+                titulo,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
                 this.Close();
@@ -136,42 +155,52 @@ namespace Proyecto_NailsTime
 
             // Volver al estado de consulta
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
             ResetearEstadoInterfaz();
-            CargarUsuarios(true); // Refrescar grilla general
+            CargarUsuarios(true); 
             MostrarCantidadUsuarios();
             LimpiarCampos();
 
 
         }
 
-        private void AplicarDesbloqueo() //falta
+        private void AplicarDesbloqueo()
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
             {
                 if (!usuario.bloqueado_750VR)
                 {
-                    MessageBox.Show("El usuario ya está desbloqueado. Por favor seleccione uno que esté bloqueado.");
+                    MessageBox.Show(
+                        Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioYaDesbloqueado"),
+                        Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloAdvertencia")
+                    );
                     return;
                 }
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
                 bll.DesbloquearUsuario_750VR(usuario.dni_750VR);
 
-                MessageBox.Show("Usuario desbloqueado correctamente.", "Éxito");
-                CargarUsuarios(true); // refresca la lista
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioDesbloqueado"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloExito")
+                );
+
+                CargarUsuarios(true);
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
-
         }
+
 
         private void AplicarActivarDesactivar()
         {
             var item = dataGridView1.CurrentRow?.DataBoundItem as BEusuario_750VR;
             if (item == null)
             {
-                MessageBox.Show("Seleccione un usuario válido de la lista.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.SeleccioneUsuario"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloAdvertencia")
+                );
                 return;
             }
 
@@ -182,12 +211,18 @@ namespace Proyecto_NailsTime
 
             if (exito)
             {
-                string mensaje = nuevoEstado ? "Usuario activado correctamente." : "Usuario desactivado correctamente.";
-                MessageBox.Show(mensaje);
+                string mensaje = nuevoEstado
+                    ? Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioActivado")
+                    : Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioDesactivado");
+
+                MessageBox.Show(mensaje, Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloExito"));
 
                 if (!nuevoEstado)
                 {
-                    MessageBox.Show("Recuerde que el usuario no podrá iniciar sesión.");
+                    MessageBox.Show(
+                        Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.AdvertenciaDesactivado"),
+                        Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloAdvertencia")
+                    );
                 }
 
                 CargarUsuarios(true);
@@ -196,15 +231,22 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al cambiar estado del usuario.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ErrorCambioEstado"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloError")
+                );
             }
         }
+
 
         private void AplicarModificacion()
         {
             if (dataGridView1.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un usuario de la lista.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.SeleccioneUsuario"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloAdvertencia")
+                );
                 return;
             }
 
@@ -219,24 +261,27 @@ namespace Proyecto_NailsTime
             string usuario = $"{nombre}{apellido}";
 
             BLLusuario_750VR bll = new BLLusuario_750VR();
-
-            
-            //BEusuario_750VR original = bll.ObtenerUsuarioPorLogin_750VR(mail);
-           
             BEusuario_750VR original = bll.ObtenerUsuarioPorDNI_750VR(dni);
-
             bool seModificoApellido = original.apellido_750VR != apellido;
 
             bool exito = bll.ModificarUsuario_750VR(dni, nombre, apellido, mail, rol, usuario);
 
             if (exito)
             {
-                MessageBox.Show("Usuario modificado correctamente.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ModificacionExitosa"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloExito")
+                );
 
-                // 🔔 Mostrar mensaje solo si se modificó el user
                 if (seModificoApellido)
                 {
-                    MessageBox.Show($"Recuerde que ahora su nombre de usuario es {usuario}.");
+                    MessageBox.Show(
+                        string.Format(
+                            Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.NuevoUsuario"),
+                            usuario
+                        ),
+                        Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloInfo")
+                    );
                 }
 
                 CargarUsuarios(true);
@@ -245,17 +290,20 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                MessageBox.Show("Error al modificar el usuario.");
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ErrorModificacion"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloError")
+                );
             }
-
         }
-       
+
+
+
 
         private void AplicarAlta()
         {
             try
             {
-                // Validamos primero
                 if (!ValidarCampos())
                     return;
 
@@ -266,19 +314,19 @@ namespace Proyecto_NailsTime
                 string rol = cmbrol.SelectedItem?.ToString();
                 string user = $"{nombre}{apellido}";
 
+               
+
                 BLLusuario_750VR bll = new BLLusuario_750VR();
 
-                // Verificar existencia por mail/login
                 if (bll.ObtenerUsuarioPorLogin_750VR(user) != null)
                 {
-                    MessageBox.Show("Ya existe un usuario con ese usuario.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioExistente"));
                     return;
                 }
 
-                // Verificar existencia por DNI
                 if (bll.ObtenerUsuarioPorDNI_750VR(dni) != null)
                 {
-                    MessageBox.Show("Ya existe un usuario con ese DNI.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.DNIExistente"));
                     return;
                 }
 
@@ -287,7 +335,6 @@ namespace Proyecto_NailsTime
                 string salt = encriptador.GenerarSalt_750VR();
                 string contraseñaHasheada = encriptador.HashearConSalt_750VR(contraseña, salt);
 
-                // Crear usuario con constructor completo
                 BEusuario_750VR nuevo = new BEusuario_750VR(
                     dni,
                     nombre,
@@ -297,14 +344,18 @@ namespace Proyecto_NailsTime
                     contraseñaHasheada,
                     salt,
                     rol,
-                    true,   // activo
-                    false ,  // bloqueado
-                    idiom: "Español"
+                    true,
+                    false,
+                    idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
                 );
 
                 bll.CrearUsuario_750VR(nuevo);
-                MessageBox.Show("Usuario creado correctamente.");
-                MessageBox.Show("Recuerde: Usuario = nombre+apellido, Contraseña = dni+nombre");
+
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.AltaExitosa"));
+                MessageBox.Show(string.Format(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.CredencialesGeneradas"),
+                    user, contraseña
+                ));
 
                 LimpiarCampos();
                 rbtnact.Checked = true;
@@ -312,40 +363,45 @@ namespace Proyecto_NailsTime
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ErrorAlta") + ": " + ex.Message,
+                    Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
 
         private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtDNI.Text) ||
-       string.IsNullOrWhiteSpace(txtnom.Text) ||
-       string.IsNullOrWhiteSpace(txtape.Text) ||
-       string.IsNullOrWhiteSpace(txtemail.Text) ||
-       string.IsNullOrWhiteSpace(cmbrol.Text))
-            //falta el resto
+                string.IsNullOrWhiteSpace(txtnom.Text) ||
+                string.IsNullOrWhiteSpace(txtape.Text) ||
+                string.IsNullOrWhiteSpace(txtemail.Text) ||
+                string.IsNullOrWhiteSpace(cmbrol.Text))
             {
-                MessageBox.Show("Por favor, complete todos los campos obligatorios.");
-                return false;
-            }
-            // 2.2) DNI: 7–8 dígitos, con o sin puntos (12.345.678 o 12345678)
-            string dniPattern = @"^(\d{7,8}|\d{2}\.\d{3}\.\d{3})$";
-            if (!Regex.IsMatch(txtDNI.Text.Trim(), dniPattern))
-            {
-                MessageBox.Show("Debe ingresar un DNI válido (7–8 dígitos, con o sin puntos).");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.CamposObligatorios"));
                 return false;
             }
 
-            // 2.3) E-mail
+            string dniPattern = @"^(\d{7,8}|\d{2}\.\d{3}\.\d{3})$";
+            if (!Regex.IsMatch(txtDNI.Text.Trim(), dniPattern))
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.DNIInvalido"));
+                return false;
+            }
+
             if (!EsEmailValido(txtemail.Text.Trim()))
             {
-                MessageBox.Show("Debe ingresar un e-mail válido.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.EmailInvalido"));
                 return false;
             }
 
             return true;
         }
-        // 1) Valida formato de e-mail
+
+        
         private bool EsEmailValido(string email)
         {
             try
@@ -363,8 +419,8 @@ namespace Proyecto_NailsTime
         {
             modoActual = "desbloquear";
             ActivarModoEdicion();
-            lblmensaje.Text = "Modo desbloqueo";
-  
+            ActualizarMensajeModo();
+
         }
 
         private void btnelim_Click(object sender, EventArgs e)
@@ -410,8 +466,9 @@ namespace Proyecto_NailsTime
         //boton cancelar
         private void btncancelar_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Consulta";
+            
             modoActual = "consulta";
+            ActualizarMensajeModo();
 
             // Limpiar todos los campos
             LimpiarCampos();
@@ -580,6 +637,12 @@ namespace Proyecto_NailsTime
         }
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
+            groupBox1.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.groupBox1");
+            groupBox2.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.groupBox2");
+            actsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.actsi");
+            actno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.actno");
+            bloqsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.bloqsi");
+            bloqno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.bloqno");
             rbtnact.Checked = true; // Marcar por defecto
             //CargarUsuarios(true);   // Mostrar activos
 
@@ -603,7 +666,7 @@ namespace Proyecto_NailsTime
 
             // Iniciar en modo consulta
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
 
         }
 
@@ -611,14 +674,15 @@ namespace Proyecto_NailsTime
         {
             modoActual = "modificar";
             ActivarModoEdicion();
-            lblmensaje.Text = "Modo Modificar";
-  
+            ActualizarMensajeModo();
+
         }
 
         private void btnact_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Activar/Desactivar";
+            
             modoActual = "Activar/Desactivar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
 
         }
@@ -645,49 +709,7 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            //if (dataGridView1.SelectedRows.Count > 0)
-            //{
-            //    string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
-            //    // Llamar al BLL para recuperar el usuario por DNI
-            //    BLLusuario_750VR bll = new BLLusuario_750VR();
-            //    var resultado = bll.ObtenerUsuarioPorDNI_750VR(int.Parse(dniSeleccionado));
-
-                //if (dataGridView1.CurrentRow?.DataBoundItem is BEusuario_750VR usuario)
-                //{
-                //    txtDNI.Text = usuario.dni_750VR.ToString();
-                //    txtnom.Text = usuario.nombre_750VR;
-                //    txtape.Text = usuario.apellido_750VR;
-                //    txtemail.Text = usuario.mail_750VR;
-                //    cmbrol.Text = usuario.rol_750VR;
-                //    txtuser.Text = usuario.user_750VR;
-
-                //    bloqsi.Checked = usuario.bloqueado_750VR;
-                //    bloqno.Checked = !usuario.bloqueado_750VR;
-                //    actsi.Checked = usuario.activo_750VR;
-                //    actno.Checked = !usuario.activo_750VR;
-
-                //    btncancelar.Enabled = true;
-                //    btncrear.Enabled = false;
-
-                //    if (modoActual == "modificar" || modoActual == "desbloquear")
-                //    {
-                //        txtDNI.Text = usuario.dni_750VR.ToString();
-                //        txtnom.Text = usuario.nombre_750VR;
-                //        txtape.Text = usuario.apellido_750VR;
-                //        txtemail.Text = usuario.mail_750VR;
-                //        cmbrol.Text = usuario.rol_750VR;
-                //        txtuser.Text = usuario.user_750VR;
-
-                //        bloqsi.Checked = usuario.bloqueado_750VR;
-                //        bloqno.Checked = !usuario.bloqueado_750VR;
-                //        actsi.Checked = usuario.activo_750VR;
-                //        actno.Checked = !usuario.activo_750VR;
-
-                //        btncancelar.Enabled = true;
-                //        btncrear.Enabled = false;
-                //    }
-
-            //}
+          
         }
 
         private void dataGridView1_CurrentCellChanged(object sender, EventArgs e)
@@ -727,7 +749,7 @@ namespace Proyecto_NailsTime
                 }
                 else
                 {
-                    MessageBox.Show("Error al recuperar los datos del usuario.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ErrorRecuperarDatos"));
                 }
             }
         }

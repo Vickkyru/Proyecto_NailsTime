@@ -30,6 +30,7 @@ namespace Proyecto_NailsTime
             formPrincipal = principal;
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
@@ -45,7 +46,7 @@ namespace Proyecto_NailsTime
 
             if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Complete los campos.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.CamposVacios"));
                 return;
             }
 
@@ -53,27 +54,25 @@ namespace Proyecto_NailsTime
             {
                 BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
 
-                // Iniciar sesión y guardar usuario
+                
                 bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
 
                 if (!sesionOK)
                 {
-                    MessageBox.Show("Ya hay una sesión activa.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.SesionActiva"));
                     this.Close();
                     return;
                 }
 
-                // ✅ Cambiar idioma según usuario
+               
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
 
-                // ✅ Actualizar interfaz
+               
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 formPrincipal.Actualizar();
 
-                // ✅ El resto de los formularios se actualizarán automáticamente gracias al patrón Observer
-
-                // Limpiar intentos fallidos
+              
                 intentosFallidosPorUsuario.Remove(login);
 
                 this.Close();
@@ -92,11 +91,15 @@ namespace Proyecto_NailsTime
                     if (intentosFallidosPorUsuario[login] >= 3)
                     {
                         bll.BloquearUsuario_750VR(login);
-                        MessageBox.Show("Cuenta bloqueada tras 3 intentos fallidos.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.Bloqueado"));
                     }
                     else
                     {
-                        MessageBox.Show($"Contraseña incorrecta. Intentos fallidos: {intentosFallidosPorUsuario[login]}");
+                        string texto = string.Format(
+                     Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.IntentoFallido"),
+                     intentosFallidosPorUsuario[login]);
+
+                        MessageBox.Show(texto);
                     }
                 }
                 else

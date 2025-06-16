@@ -15,25 +15,87 @@ namespace Proyecto_NailsTime
 {
 
     
-    public partial class FormABMdisponibilidad : Form, Iobserver_750VR
+    public partial class FormABMdisponibilidad_750VR : Form, Iobserver_750VR
     {
-        public FormABMdisponibilidad()
+        private string modoActual = "consulta";
+        BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
+        public FormABMdisponibilidad_750VR()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            ActualizarMensajeModo();
         }
-        private string modoActual = "consulta";
-        BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
+        private void ActualizarMensajeModo()
+        {
+            string clave = "FormABMdisponibilidad.Mensaje." + modoActual;
+            lblmensaje.Text = Lenguaje_750VR.ObtenerEtiqueta(clave);
+        }
+
 
         private void CargarDisponibilidad()
         {
-            
             var lista = bll.LeerDisponibilidades_750VR();
+
+            dataGridView1.DataSource = null;
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = false;
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "IdDisponibilidad_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.Id"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DNImanic_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.DNI"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Fecha_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.Fecha"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "HoraInicio_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.HoraInicio"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "HoraFin_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.HoraFin"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                DataPropertyName = "activo_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.Activo"),
+                ReadOnly = true
+            });
+
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                DataPropertyName = "estado_750VR",
+                HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.Estado"),
+                ReadOnly = true
+            });
+
             dataGridView1.DataSource = lista;
+
             PintarFilasInactivas();
         }
 
@@ -52,13 +114,15 @@ namespace Proyecto_NailsTime
         {
             modoActual = "añadir";
             ActivarModoEdicion();
-            lblmensaje.Text = "Modo Añadir";
+            //lblmensaje.Text = "Modo Añadir";
+            ActualizarMensajeModo();
         }
 
         private void FormABMdisponibilidad_Load(object sender, EventArgs e)
         {
-            modoActual = "Consulta";
-            lblmensaje.Text = modoActual;
+            modoActual = "consulta";
+            //lblmensaje.Text = modoActual;
+            ActualizarMensajeModo();
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
@@ -66,20 +130,22 @@ namespace Proyecto_NailsTime
             CargarManicuristas();
             CargarDisponibilidad();
             PintarFilasInactivas();
+            
         }
 
         private void btnmod_Click(object sender, EventArgs e)
         {
-            lblmensaje.Text = "Modo Modificar";
+            //lblmensaje.Text = "Modo Modificar";
             modoActual = "modificar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
         private void btnelim_Click(object sender, EventArgs e)
         {
             modoActual = "cambiarEstado";
-            lblmensaje.Text = "Modo Activar/Desactivar";
-           
+            //lblmensaje.Text = "Modo Activar/Desactivar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
         }
 
@@ -92,7 +158,8 @@ namespace Proyecto_NailsTime
                 case "cambiarEstado": AplicarCambioEstado(); break;
             }
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            //lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
             ResetearInterfaz();
             CargarDisponibilidad();
             LimpiarCampos();
@@ -103,10 +170,13 @@ namespace Proyecto_NailsTime
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
             var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
 
-            // Insertamos un "item vacío" al principio usando el constructor completo
+            // Traduce el texto "-- Seleccione --" con el sistema de idiomas
+            string textoSeleccion = Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione");
+
+            // Insertamos un "item vacío" al principio usando el idioma actual
             var vacio = new BEusuario_750VR(
                 dni: 0,
-                nombre: "-- Seleccione --",
+                nombre: textoSeleccion,
                 ape: "",
                 mail: "",
                 user: "",
@@ -115,7 +185,7 @@ namespace Proyecto_NailsTime
                 rol: "manicurista",
                 activo: true,
                 bloqueado: false,
-                idiom: "Español"
+                idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
             );
 
             manicuristas.Insert(0, vacio);
@@ -137,63 +207,62 @@ namespace Proyecto_NailsTime
                 TimeSpan inicio = TimeSpan.Parse(txtinicio.Text);
                 TimeSpan fin = TimeSpan.Parse(txtfin.Text);
 
-                // Buscar si ya existe una disponibilidad con ese mismo manicurista, fecha y hora
                 var existentes = bll.LeerDisponibilidades_750VR();
                 bool yaExiste = existentes.Any(d =>
                     d.DNImanic_750VR == dni &&
                     d.Fecha_750VR.Date == dia.Date &&
                     d.HoraInicio_750VR == inicio &&
                     d.HoraFin_750VR == fin &&
-                    d.activo_750VR // solo verificamos entre las activas
+                    d.activo_750VR
                 );
 
                 if (yaExiste)
                 {
-                    MessageBox.Show("Ya existe una disponibilidad para ese manicurista, fecha y horario.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadYaExiste"));
                     return;
                 }
 
                 BEdisponibilidad_750VR nuevo = new BEdisponibilidad_750VR(dni, dia, inicio, fin, true, false);
 
                 bll.CrearDisponibilidad_750VR(nuevo);
-                MessageBox.Show("Disponibilidad creada correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadCreada"));
                 LimpiarCampos();
                 ResetearInterfaz();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear disponibilidad: " + ex.Message);
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ErrorCrearDisponibilidad") + ": " + ex.Message);
             }
         }
-            private bool ValidarCampos()
+        private bool ValidarCampos()
         {
             if (cmbmanic.SelectedItem == null)
             {
-                MessageBox.Show("Debe seleccionar un manicurista.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ManicuristaNoSeleccionado"));
                 return false;
             }
 
-            if (dateTimePicker1.Text == null)
+            if (string.IsNullOrWhiteSpace(dateTimePicker1.Text))
             {
-                MessageBox.Show("Debe seleccionar un día de la semana.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.FechaNoSeleccionada"));
                 return false;
             }
 
             if (!TimeSpan.TryParse(txtinicio.Text.Trim(), out TimeSpan horaInicio))
             {
-                MessageBox.Show("La hora de inicio no es válida. Formato esperado: HH:mm");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraInicioInvalida"));
                 return false;
             }
 
             if (!TimeSpan.TryParse(txtfin.Text.Trim(), out TimeSpan horaFin))
             {
-                MessageBox.Show("La hora de fin no es válida. Formato esperado: HH:mm");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraFinInvalida"));
                 return false;
             }
 
             if (horaInicio >= horaFin)
             {
-                MessageBox.Show("La hora de inicio debe ser anterior a la hora de fin.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraInicioMayor"));
                 return false;
             }
 
@@ -204,76 +273,80 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                // Validación de selección de manicurista
                 if (cmbmanic.SelectedItem is BEusuario_750VR manicuristaSeleccionado)
                 {
-                    // Validar horas
                     if (!TimeSpan.TryParse(txtinicio.Text, out TimeSpan nuevaHoraInicio))
                     {
-                        MessageBox.Show("Hora de inicio inválida.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraInicioInvalida"));
                         return;
                     }
 
                     if (!TimeSpan.TryParse(txtfin.Text, out TimeSpan nuevaHoraFin))
                     {
-                        MessageBox.Show("Hora de fin inválida.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraFinInvalida"));
                         return;
                     }
 
                     if (nuevaHoraInicio >= nuevaHoraFin)
                     {
-                        MessageBox.Show("La hora de inicio debe ser anterior a la hora de fin.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.HoraInicioMayor"));
                         return;
                     }
 
-                    // Obtener nuevos valores desde los controles
-                    d.DNImanic_750VR = manicuristaSeleccionado.dni_750VR; // ← esto asegura que cambia el DNI
+                    d.DNImanic_750VR = manicuristaSeleccionado.dni_750VR;
                     d.Fecha_750VR = dateTimePicker1.Value.Date;
                     d.HoraInicio_750VR = nuevaHoraInicio;
                     d.HoraFin_750VR = nuevaHoraFin;
 
-                    // Ejecutar modificación
                     bool modificado = bll.ModificarDisponibilidad_750VR(d);
 
                     if (modificado)
                     {
-                        MessageBox.Show("Disponibilidad modificada correctamente.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadModificada"));
                         CargarDisponibilidad();
                         ResetearInterfaz();
                         LimpiarCampos();
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo modificar la disponibilidad.");
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ModificacionFallida"));
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Seleccione un manicurista válido.");
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ManicuristaNoValido"));
                 }
             }
             else
             {
-                MessageBox.Show("Seleccione una disponibilidad de la grilla.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadNoSeleccionada"));
             }
         }
+
 
         private void AplicarCambioEstado()
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
                 bll.CambiarEstado_750VR(d.IdDisponibilidad_750VR, !d.activo_750VR);
-                string msg = d.activo_750VR ? "Disponibilidad desactivada." : "Disponibilidad activada.";
-                MessageBox.Show(msg);
+
+                string clave = d.activo_750VR
+                    ? "FormABMdisponibilidad_750VR.MensajeDesactivada"
+                    : "FormABMdisponibilidad_750VR.MensajeActivada";
+
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta(clave));
+
                 ResetearInterfaz();
                 LimpiarCampos();
             }
         }
 
+
         private void btncance_Click(object sender, EventArgs e)
         {
             modoActual = "consulta";
-            lblmensaje.Text = "Modo Consulta";
+            //lblmensaje.Text = "Modo Consulta";
+            ActualizarMensajeModo();
             ResetearInterfaz();
             LimpiarCampos();
         }
