@@ -19,7 +19,7 @@ namespace BE_VR750
 
         public BECliente_750VR(int dni, string nom, string ape, string gmail, string dire, string celu, bool act)
         {
-                this.dni_750VR = dni;
+            this.dni_750VR = dni;
             this.nombre_750VR = nom;
             this.apellido_750VR = ape;
             this.gmail_750VR = gmail;

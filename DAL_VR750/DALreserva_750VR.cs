@@ -19,9 +19,29 @@ namespace DAL_VR750
                 conn.Open();
                 string query = @"
         SELECT r.*, 
-               c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
-               u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
-               s.Nombre_VR750 AS NombreServicio, s.Tecnica_VR750 AS TecnicaServicio, s.Precio_VR750 AS PrecioServicio
+               c.Nombre_VR750 AS NombreCliente, 
+               c.Apellido_VR750 AS ApellidoCliente,
+               c.Email_VR750 AS EmailCliente,
+               c.Direccion_VR750 AS DireccionCliente,
+               c.Celular_VR750 AS CelularCliente,
+               c.Activo_VR750 AS ClienteActivo,
+
+               u.Nombre_VR750 AS NombreManic, 
+               u.Apellido_VR750 AS ApellidoManic,
+               u.Email_VR750 AS EmailManic,
+               u.Usuario_VR750 AS LoginManic,
+               u.Contra_VR750 AS ContraManic,
+               u.Salt_VR750 AS SaltManic,
+               u.Rol_VR750 AS RolManic,
+               u.Activo_VR750 AS ActivoManic,
+               u.Bloqueado_VR750 AS BloqueadoManic,
+               u.Idioma_VR750 AS IdiomaManic,
+
+               s.Nombre_VR750 AS NombreServicio, 
+               s.Tecnica_VR750 AS TecnicaServicio, 
+               s.DuracionMinutos_VR750 AS DuracionServicio,
+               s.Precio_VR750 AS PrecioServicio,
+               s.Activo_VR750 AS ServicioActivo
         FROM Reserva_VR750 r
         LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
         LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
@@ -39,33 +59,33 @@ namespace DAL_VR750
                             dni: Convert.ToInt32(reader["DNIcli_VR750"]),
                             nom: reader["NombreCliente"].ToString(),
                             ape: reader["ApellidoCliente"].ToString(),
-                            gmail: "",
-                            dire: "",
-                            celu: "",
-                            act: true
+                            gmail: reader["EmailCliente"].ToString(),
+                            dire: reader["DireccionCliente"].ToString(),
+                            celu: reader["CelularCliente"].ToString(),
+                            act: Convert.ToBoolean(reader["ClienteActivo"])
                         );
 
                         var manic = new BEusuario_750VR(
                             dni: Convert.ToInt32(reader["DNImanic_VR750"]),
                             nombre: reader["NombreManic"].ToString(),
                             ape: reader["ApellidoManic"].ToString(),
-                            mail: "",
-                            user: "",
-                            contra: "",
-                            salt: "",
-                            rol: "",
-                            activo: true,
-                            bloqueado: false,
-                            idiom: "Español"
+                            mail: reader["EmailManic"].ToString(),
+                            user: reader["LoginManic"].ToString(),
+                            contra: reader["ContraManic"].ToString(),
+                            salt: reader["SaltManic"].ToString(),
+                            rol: reader["RolManic"].ToString(),
+                            activo: Convert.ToBoolean(reader["ActivoManic"]),
+                            bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
+                            idiom: reader["IdiomaManic"].ToString()
                         );
 
                         var serv = new BEServicio_750VR(
                             id: Convert.ToInt32(reader["IdServicio_VR750"]),
                             nom: reader["NombreServicio"].ToString(),
                             tec: reader["TecnicaServicio"].ToString(),
-                            dur: 0,
+                            dur: Convert.ToInt32(reader["DuracionServicio"]),
                             pre: Convert.ToDecimal(reader["PrecioServicio"]),
-                            act: true
+                            act: Convert.ToBoolean(reader["ServicioActivo"])
                         );
 
                         var reserva = new BEReserva_750VR(
@@ -83,8 +103,7 @@ namespace DAL_VR750
                             cobrado: Convert.ToBoolean(reader["Cobrado_VR750"])
                         );
 
-                        reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]); // si tenés esta propiedad
-
+                        reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]);
                         lista.Add(reserva);
                     }
                 }
@@ -143,10 +162,32 @@ namespace DAL_VR750
             using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 string query = @"
-        SELECT r.*, 
-               c.Nombre_VR750 AS NombreCliente, c.Apellido_VR750 AS ApellidoCliente,
-               u.Nombre_VR750 AS NombreManic, u.Apellido_VR750 AS ApellidoManic,
-               s.Nombre_VR750 AS NombreServicio, s.Tecnica_VR750 AS TecnicaServicio, s.Precio_VR750 AS PrecioServicio
+        SELECT 
+            r.*, 
+            c.Nombre_VR750 AS NombreCliente, 
+            c.Apellido_VR750 AS ApellidoCliente,
+            c.Email_VR750 AS EmailCliente,
+            c.Direccion_VR750 AS DireccionCliente,
+            c.Celular_VR750 AS CelularCliente,
+            c.Activo_VR750 AS ClienteActivo,
+
+            u.Nombre_VR750 AS NombreManic, 
+            u.Apellido_VR750 AS ApellidoManic,
+            u.Email_VR750 AS EmailManic,
+            u.Usuario_VR750 AS LoginManic,
+            u.Contra_VR750 AS ContraManic,
+            u.Salt_VR750 AS SaltManic,
+            u.Rol_VR750 AS RolManic,
+            u.Activo_VR750 AS ActivoManic,
+            u.Bloqueado_VR750 AS BloqueadoManic,
+            u.Idioma_VR750 AS IdiomaManic,
+
+            s.Nombre_VR750 AS NombreServicio, 
+            s.Tecnica_VR750 AS TecnicaServicio, 
+            s.DuracionMinutos_VR750 AS DuracionServicio,
+            s.Precio_VR750 AS PrecioServicio,
+            s.Activo_VR750 AS ServicioActivo
+
         FROM Reserva_VR750 r
         LEFT JOIN Cliente_VR750 c ON r.DNIcli_VR750 = c.DNI_VR750
         LEFT JOIN Usuario_VR750 u ON r.DNImanic_VR750 = u.DNI_VR750
@@ -162,33 +203,33 @@ namespace DAL_VR750
                         dni: Convert.ToInt32(reader["DNIcli_VR750"]),
                         nom: reader["NombreCliente"].ToString(),
                         ape: reader["ApellidoCliente"].ToString(),
-                        gmail: "",
-                        dire: "",
-                        celu: "",
-                        act: true
+                        gmail: reader["EmailCliente"].ToString(),
+                        dire: reader["DireccionCliente"].ToString(),
+                        celu: reader["CelularCliente"].ToString(),
+                        act: Convert.ToBoolean(reader["ClienteActivo"])
                     );
 
                     var manic = new BEusuario_750VR(
                         dni: Convert.ToInt32(reader["DNImanic_VR750"]),
                         nombre: reader["NombreManic"].ToString(),
                         ape: reader["ApellidoManic"].ToString(),
-                        mail: "",
-                        user: "",
-                        contra: "",
-                        salt: "",
-                        rol: "",
-                        activo: true,
-                        bloqueado: false,
-                        idiom: "Español"
+                        mail: reader["EmailManic"].ToString(),
+                        user: reader["LoginManic"].ToString(),
+                        contra: reader["ContraManic"].ToString(),
+                        salt: reader["SaltManic"].ToString(),
+                        rol: reader["RolManic"].ToString(),
+                        activo: Convert.ToBoolean(reader["ActivoManic"]),
+                        bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
+                        idiom: reader["IdiomaManic"].ToString()
                     );
 
                     var serv = new BEServicio_750VR(
                         id: Convert.ToInt32(reader["IdServicio_VR750"]),
                         nom: reader["NombreServicio"].ToString(),
                         tec: reader["TecnicaServicio"].ToString(),
-                        dur: 0,
+                        dur: Convert.ToInt32(reader["DuracionServicio"]),
                         pre: Convert.ToDecimal(reader["PrecioServicio"]),
-                        act: true
+                        act: Convert.ToBoolean(reader["ServicioActivo"])
                     );
 
                     var reserva = new BEReserva_750VR(
@@ -206,7 +247,7 @@ namespace DAL_VR750
                         cobrado: Convert.ToBoolean(reader["Cobrado_VR750"])
                     );
 
-                    reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]); // si tenés setter público
+                    reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]);
 
                     lista.Add(reserva);
                 }
@@ -216,6 +257,7 @@ namespace DAL_VR750
 
             return lista;
         }
+
 
 
         public BEReserva_750VR ObtenerReservaPorId(int id)

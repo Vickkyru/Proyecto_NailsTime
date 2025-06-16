@@ -8,17 +8,10 @@ namespace BE_VR750
 {
     public class BEfactura_750VR
     {
-
-        // id reserva
+        //id factura
+        // id reserva --> monto/nombre cliente/ dni cliente
         //fecha emision
-        //cuotas
-        //num tarjeta
-        //nom titular
-        //met pago
-        //cvc
-        //vencimiento
-
-
-
+        //hora emision
+  
     }
 }

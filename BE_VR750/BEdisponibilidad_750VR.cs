@@ -21,7 +21,7 @@ namespace BE_VR750
         //cambiar estos 
         public BEdisponibilidad_750VR( int dni, DateTime fecha, TimeSpan ini, TimeSpan fin, bool acr, bool est)
         {
-                this.DNImanic_750VR = dni;
+            this.DNImanic_750VR = dni;
             this.Fecha_750VR = fecha;
             this.HoraInicio_750VR = ini;
             this.HoraFin_750VR = fin;
