@@ -234,21 +234,21 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                BEReserva_750VR nuevaReserva = new BEReserva_750VR
-                {
-                    DNIcli_750VR = clienteSeleccionado.dni_750VR,
-                    cliente = clienteSeleccionado,
-                    DNImanic_750VR = manic.dni_750VR,
-                    manic = manic,
-                    IdServicio_750VR = servicio.idServicio_750VR,
-                    serv = servicio,
-                    Fecha_750VR = disponibilidadSeleccionada.Fecha_750VR,
-                    HoraInicio_750VR = horaManual,
-                    HoraFin_750VR = horaFin,
-                    Precio_750VR = servicio.precio_750VR,
-                    Estado_750VR = "Pendiente",
-                    Cobrado_750VR = false
-                };
+                BEReserva_750VR nuevaReserva = new BEReserva_750VR(
+        dnicli: clienteSeleccionado.dni_750VR,
+        cli: clienteSeleccionado,
+        dnimanic: manic.dni_750VR,
+        manic: manic,
+        idserv: servicio.idServicio_750VR,
+        serv: servicio,
+        fecha: disponibilidadSeleccionada.Fecha_750VR,
+        ini: horaManual,
+        fin: horaFin,
+        pre: servicio.precio_750VR,
+        estado: "Pendiente",
+        cobrado: false
+    );
+
 
                 var bllReserva = new BLLReserva_750VR();
                 int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);

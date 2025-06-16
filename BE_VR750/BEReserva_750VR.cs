@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,25 @@ namespace BE_VR750
 
         public string Estado_750VR { get; set; }  // "Pendiente", "Realizado", "Cancelado"
         public bool Cobrado_750VR { get; set; }
+
+
+        public BEReserva_750VR(int dnicli, BECliente_750VR cli, int dnimanic,BEusuario_750VR manic, int idserv, BEServicio_750VR serv, DateTime fecha, TimeSpan ini, TimeSpan fin, decimal pre, string estado, bool cobrado)
+        {
+            this.DNIcli_750VR = dnicli;
+            this.cliente = cli;
+            this.DNImanic_750VR = dnimanic;
+            this.manic = manic; 
+            this.IdServicio_750VR = idserv;
+            this.serv = serv;
+            this.Fecha_750VR = fecha;
+            this.HoraInicio_750VR = ini;
+            this.HoraFin_750VR = fin;
+            this.Precio_750VR= pre;
+            this.Estado_750VR = estado;
+            this.Cobrado_750VR=cobrado;
+        }
+
+
 
     }
 }

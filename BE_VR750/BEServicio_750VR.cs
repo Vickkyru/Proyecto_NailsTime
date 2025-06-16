@@ -17,6 +17,8 @@ namespace BE_VR750
         public bool activo_750VR { get; set; }
 
 
+
+        //cambiar estos constructores
         public BEServicio_750VR(string nom, string tec, int dur, decimal pre, bool act)
         {
             this.nombre_750VR = nom;
