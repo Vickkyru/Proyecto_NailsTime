@@ -89,7 +89,8 @@ namespace DAL_VR750
                         );
 
                         var reserva = new BEReserva_750VR(
-                            dnicli: Convert.ToInt32(reader["DNIcli_VR750"]),
+                            cod: Convert.ToInt32(reader["IdReserva_VR750"]),
+                    dnicli: Convert.ToInt32(reader["DNIcli_VR750"]),
                             cli: cliente,
                             dnimanic: Convert.ToInt32(reader["DNImanic_VR750"]),
                             manic: manic,
@@ -103,7 +104,7 @@ namespace DAL_VR750
                             cobrado: Convert.ToBoolean(reader["Cobrado_VR750"])
                         );
 
-                        reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]);
+                       
                         lista.Add(reserva);
                     }
                 }
@@ -129,7 +130,7 @@ namespace DAL_VR750
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@DNIcli", reserva.DNIcli_750VR);
                 cmd.Parameters.AddWithValue("@DNImanic", reserva.DNImanic_750VR);
-                cmd.Parameters.AddWithValue("@IdServicio", reserva.IdServicio_750VR);
+                cmd.Parameters.AddWithValue("@IdServicio", reserva.CodServicio_750VR);
                 cmd.Parameters.AddWithValue("@Fecha", reserva.Fecha_750VR);
                 cmd.Parameters.AddWithValue("@HoraInicio", reserva.HoraInicio_750VR);
                 cmd.Parameters.AddWithValue("@HoraFin", reserva.HoraFin_750VR);
@@ -233,6 +234,7 @@ namespace DAL_VR750
                     );
 
                     var reserva = new BEReserva_750VR(
+                        cod: Convert.ToInt32(reader["IdReserva_VR750"]),
                         dnicli: Convert.ToInt32(reader["DNIcli_VR750"]),
                         cli: cliente,
                         dnimanic: Convert.ToInt32(reader["DNImanic_VR750"]),
@@ -247,7 +249,6 @@ namespace DAL_VR750
                         cobrado: Convert.ToBoolean(reader["Cobrado_VR750"])
                     );
 
-                    reserva.IdReserva_750VR = Convert.ToInt32(reader["IdReserva_VR750"]);
 
                     lista.Add(reserva);
                 }
@@ -274,6 +275,7 @@ namespace DAL_VR750
                 {
                     // Se crea la reserva con campos mínimos requeridos, el resto con valores por defecto
                     var reserva = new BEReserva_750VR(
+                        cod: Convert.ToInt32(dr["IdReserva_VR750"]),
                         dnicli: Convert.ToInt32(dr["DNIcli_VR750"]),
                         cli: null,
                         dnimanic: Convert.ToInt32(dr["DNImanic_VR750"]),
@@ -288,7 +290,7 @@ namespace DAL_VR750
                         cobrado: Convert.ToBoolean(dr["Cobrado_VR750"])
                     );
 
-                    reserva.IdReserva_750VR = Convert.ToInt32(dr["IdReserva_VR750"]); // si tu clase lo permite
+                    
 
                     dr.Close();
                     return reserva;

@@ -206,8 +206,8 @@ namespace Proyecto_NailsTime
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIseleccion"));
                     return;
                 }
-
                 var disponibilidadSeleccionada = new BEdisponibilidad_750VR(
+                    id: Convert.ToInt32(row["IdDisponibilidad"]),
                     dni: Convert.ToInt32(row["DNImanicurista"]),
                     fecha: Convert.ToDateTime(row["Fecha"]),
                     ini: TimeSpan.Parse(row["Hora Inicio"].ToString()),
@@ -215,8 +215,6 @@ namespace Proyecto_NailsTime
                     acr: true,
                     est: false
                 );
-
-                disponibilidadSeleccionada.IdDisponibilidad_750VR = Convert.ToInt32(row["IdDisponibilidad"]);
 
                 if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaManual))
                 {
@@ -239,7 +237,7 @@ namespace Proyecto_NailsTime
         cli: clienteSeleccionado,
         dnimanic: manic.dni_750VR,
         manic: manic,
-        idserv: servicio.idServicio_750VR,
+        idserv: servicio.CodServicio_750VR,
         serv: servicio,
         fecha: disponibilidadSeleccionada.Fecha_750VR,
         ini: horaManual,
@@ -252,14 +250,14 @@ namespace Proyecto_NailsTime
 
                 var bllReserva = new BLLReserva_750VR();
                 int nuevoID = bllReserva.CrearReserva_750VR(nuevaReserva);
-                nuevaReserva.IdReserva_750VR = nuevoID;
+                nuevaReserva.CodReserva_750VR = nuevoID;
 
                 DividirDisponibilidad(disponibilidadSeleccionada, TimeSpan.FromMinutes(servicio.duracion_750VR));
 
                 //MessageBox.Show("Reserva creada correctamente.");
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcreada"));
 
-                FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.IdReserva_750VR);
+                FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.CodReserva_750VR);
                 var resultado = frmCobro.ShowDialog();
                 if (resultado == DialogResult.OK)
                 {
@@ -319,7 +317,7 @@ namespace Proyecto_NailsTime
 
             var tecnicas = listaServicios
                 .Where(s => s.nombre_750VR == nombre)
-                .Select(s => new BEServicio_750VR(s.idServicio_750VR, s.nombre_750VR, s.tecnica_750VR, s.duracion_750VR, s.precio_750VR, s.activo_750VR))
+                .Select(s => new BEServicio_750VR(s.CodServicio_750VR, s.nombre_750VR, s.tecnica_750VR, s.duracion_750VR, s.precio_750VR, s.activo_750VR))
                 .ToList();
 
             
@@ -461,7 +459,7 @@ namespace Proyecto_NailsTime
                     : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
 
                 tabla.Rows.Add(
-                    r.IdReserva_750VR,
+                    r.CodReserva_750VR,
                     cliente,
                     manic,
                     servicio,

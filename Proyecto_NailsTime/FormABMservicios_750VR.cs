@@ -172,7 +172,7 @@ namespace Proyecto_NailsTime
             bool nuevoEstado = !servicio.activo_750VR;
 
             BLLServicio_750VR bll = new BLLServicio_750VR();
-            bll.CambiarEstadoServicio_750VR(servicio.idServicio_750VR, nuevoEstado);
+            bll.CambiarEstadoServicio_750VR(servicio.CodServicio_750VR, nuevoEstado);
 
             string mensaje = nuevoEstado
                 ? Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioActivado")
@@ -235,7 +235,7 @@ namespace Proyecto_NailsTime
             }
 
             BLLServicio_750VR bll = new BLLServicio_750VR();
-            bool exito = bll.ModificarServicio_750VR(servicioSeleccionado.idServicio_750VR, nombre, tecnica, duracion, precio);
+            bool exito = bll.ModificarServicio_750VR(servicioSeleccionado.CodServicio_750VR, nombre, tecnica, duracion, precio);
 
             if (exito)
             {

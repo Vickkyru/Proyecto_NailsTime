@@ -8,7 +8,7 @@ namespace BE_VR750
 {
     public class BEdisponibilidad_750VR
     {
-        public int IdDisponibilidad_750VR { get; set; }
+        public int CodDisponibilidad_750VR { get; set; }
         public int DNImanic_750VR { get; set; }
         public DateTime Fecha_750VR { get; set; }         
         public TimeSpan HoraInicio_750VR { get; set; }    
@@ -18,8 +18,8 @@ namespace BE_VR750
 
 
 
-        //cambiar estos 
-        public BEdisponibilidad_750VR( int dni, DateTime fecha, TimeSpan ini, TimeSpan fin, bool acr, bool est)
+       
+        public BEdisponibilidad_750VR(int dni, DateTime fecha, TimeSpan ini, TimeSpan fin, bool acr, bool est)
         {
             this.DNImanic_750VR = dni;
             this.Fecha_750VR = fecha;
@@ -32,7 +32,7 @@ namespace BE_VR750
 
         public BEdisponibilidad_750VR(int id,int dni, DateTime fecha, TimeSpan ini, TimeSpan fin, bool acr, bool est)
         {
-            this.IdDisponibilidad_750VR = id;
+            this.CodDisponibilidad_750VR = id;
             this.DNImanic_750VR = dni;
             this.Fecha_750VR = fecha;
             this.HoraInicio_750VR = ini;

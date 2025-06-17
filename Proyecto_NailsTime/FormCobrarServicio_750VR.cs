@@ -113,10 +113,11 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Ingresá la cantidad de cuotas.");
                 return;
             }
-            MessageBox.Show("ID que llega para cobrar: " + idReserva);
+            //MessageBox.Show("ID que llega para cobrar: " + idReserva);
             // Marcar como cobrada
+
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            bool exito = bll.MarcarComoCobrado(idReserva); // método que ya deberías tener
+            bool exito = bll.MarcarComoCobrado(idReserva); 
 
             if (exito)
             {

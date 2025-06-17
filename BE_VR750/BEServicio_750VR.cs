@@ -8,7 +8,7 @@ namespace BE_VR750
 {
     public class BEServicio_750VR
     {
-        public int idServicio_750VR { get;set;}
+        public int CodServicio_750VR { get;set;}
         public string nombre_750VR { get;set;}
         public string tecnica_750VR { get;set;}
         
@@ -17,8 +17,6 @@ namespace BE_VR750
         public bool activo_750VR { get; set; }
 
 
-
-        //cambiar estos constructores
         public BEServicio_750VR(string nom, string tec, int dur, decimal pre, bool act)
         {
             this.nombre_750VR = nom;
@@ -29,7 +27,7 @@ namespace BE_VR750
         }
         public BEServicio_750VR(int id, string nom, string tec, int dur, decimal pre, bool act)
         {
-            this.idServicio_750VR = id;
+            this.CodServicio_750VR = id;
             this.nombre_750VR = nom;
             this.tecnica_750VR = tec;
             this.duracion_750VR = dur;

@@ -92,23 +92,18 @@ namespace DAL_VR750
                 {
                     int id = Convert.ToInt32(reader["IdDisponibilidad_VR750"]);
                     int dni = Convert.ToInt32(reader["DNImanic_VR750"]);
-                    DateTime fecha = (DateTime)reader["Fecha_VR750"];
-                    TimeSpan inicio = (TimeSpan)reader["HoraInicio_VR750"];
-                    TimeSpan fin = (TimeSpan)reader["HoraFin_VR750"];
+                    DateTime fecha = Convert.ToDateTime(reader["Fecha_VR750"]);
+                    TimeSpan inicio = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString());
+                    TimeSpan fin = TimeSpan.Parse(reader["HoraFin_VR750"].ToString());
                     bool activo = Convert.ToBoolean(reader["Activo_VR750"]);
                     bool estado = Convert.ToBoolean(reader["Estado_VR750"]);
 
-                    var disponibilidad = new BEdisponibilidad_750VR(dni, fecha, inicio, fin, activo, estado)
-                    {
-                        IdDisponibilidad_750VR = id
-                    };
-
+                    var disponibilidad = new BEdisponibilidad_750VR(id, dni, fecha, inicio, fin, activo, estado);
                     lista.Add(disponibilidad);
                 }
             }
 
             return lista;
-
         }
     }
 }
