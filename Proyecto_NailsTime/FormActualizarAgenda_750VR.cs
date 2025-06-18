@@ -40,6 +40,13 @@ namespace Proyecto_NailsTime
         {
             //Valida();
             CargarReservas();
+            Disponibilidad();
+        }
+
+        private void Disponibilidad()
+        {
+            var bll = new BLLdisponibilidad_750VR();
+            var dispo = bll.LeerDisponibilidades_750VR();
         }
         private void CargarReservas()
         {
@@ -73,7 +80,7 @@ namespace Proyecto_NailsTime
                     r.HoraInicio_750VR.ToString(@"hh\:mm"),
                     r.HoraFin_750VR.ToString(@"hh\:mm"),
                     r.Estado_750VR,
-                    r.IdReserva_750VR
+                    r.CodReserva_750VR
                 );
             }
 
@@ -130,9 +137,80 @@ namespace Proyecto_NailsTime
             );
 
             CargarReservas();
+            Disponibilidad();
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+            if (idReservaSeleccionada == -1)
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
+
+            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoCancelable"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                return;
+            }
+
+            // Obtener la reserva completa
+            var reserva = bllReserva.ObtenerReservaPorId(idReservaSeleccionada);
+
+            if (reserva == null)
+            {
+                MessageBox.Show("No se encontró la reserva.");
+                return;
+            }
+
+            // Cambiar estado de reserva
+            bllReserva.ActualizarEstadoReserva(reserva.CodReserva_750VR, "Cancelado");
+
+            // Reactivar disponibilidad correspondiente
+            var bllDispo = new BLLdisponibilidad_750VR();
+
+            var nuevaDispo = new BEdisponibilidad_750VR(
+                dni: reserva.DNImanic_750VR,
+                fecha: reserva.Fecha_750VR,
+                ini: reserva.HoraInicio_750VR,
+                fin: reserva.HoraFin_750VR,
+                acr: true,
+                est: false
+            );
+
+            bllDispo.CrearDisponibilidad_750VR(nuevaDispo);
+
+            MessageBox.Show(
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaCancelada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            CargarReservas();
+            Disponibilidad();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
             if (idReservaSeleccionada == -1)
             {
@@ -151,7 +229,7 @@ namespace Proyecto_NailsTime
             if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoCancelable"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoModificable"),
                     Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -159,21 +237,17 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            bll.ActualizarEstadoReserva(idReservaSeleccionada, "Cancelado");
+            bll.ActualizarEstadoReserva(idReservaSeleccionada, "Ausente");
 
             MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaCancelada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaRealizada"),
                 Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
+
             CargarReservas();
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
+            Disponibilidad();
         }
     }
     

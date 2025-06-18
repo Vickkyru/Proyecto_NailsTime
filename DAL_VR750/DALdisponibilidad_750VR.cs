@@ -51,7 +51,7 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@Fecha", dispo.Fecha_750VR);
                 cmd.Parameters.AddWithValue("@HoraInicio", dispo.HoraInicio_750VR);
                 cmd.Parameters.AddWithValue("@HoraFin", dispo.HoraFin_750VR);
-                cmd.Parameters.AddWithValue("@ID", dispo.IdDisponibilidad_750VR);
+                cmd.Parameters.AddWithValue("@ID", dispo.CodDisponibilidad_750VR);
 
                 return cmd.ExecuteNonQuery() > 0;
             }

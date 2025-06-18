@@ -78,7 +78,7 @@ namespace Proyecto_NailsTime
                 string nombreCompleto = usu != null ? $"{usu.nombre_750VR} {usu.apellido_750VR}" : "Desconocido";
 
                 tabla.Rows.Add(
-                    dispo.IdDisponibilidad_750VR,
+                    dispo.CodDisponibilidad_750VR,
                     nombreCompleto,
                     dispo.DNImanic_750VR,
                     dispo.Fecha_750VR.Date,
@@ -424,7 +424,7 @@ namespace Proyecto_NailsTime
             }
 
             
-            blldispo.CambiarEstado_750VR(dispo.IdDisponibilidad_750VR, false);
+            blldispo.CambiarEstado_750VR(dispo.CodDisponibilidad_750VR, false);
 
            
             CargarDisponibilidadesConNombre();

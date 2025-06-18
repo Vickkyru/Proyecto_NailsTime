@@ -328,7 +328,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
             {
-                bll.CambiarEstado_750VR(d.IdDisponibilidad_750VR, !d.activo_750VR);
+                bll.CambiarEstado_750VR(d.CodDisponibilidad_750VR, !d.activo_750VR);
 
                 string clave = d.activo_750VR
                     ? "FormABMdisponibilidad_750VR.MensajeDesactivada"
