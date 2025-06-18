@@ -35,8 +35,6 @@
             this.txtnom = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbmanic = new System.Windows.Forms.ComboBox();
@@ -95,6 +93,7 @@
             this.txtdni.Name = "txtdni";
             this.txtdni.Size = new System.Drawing.Size(100, 20);
             this.txtdni.TabIndex = 16;
+            this.txtdni.Leave += new System.EventHandler(this.txtdni_Leave);
             // 
             // txtnom
             // 
@@ -120,32 +119,6 @@
             this.label9.Size = new System.Drawing.Size(79, 13);
             this.label9.TabIndex = 23;
             this.label9.Text = "Nombre Cliente";
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.RosyBrown;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(110, 109);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 40;
-            this.button5.Text = "Crear Cliente";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.RosyBrown;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(29, 109);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 41;
-            this.button3.Text = "Buscar";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // dataGridView2
             // 
@@ -340,11 +313,9 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txthorario);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.cmbtec);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtpre);
@@ -375,8 +346,6 @@
         private System.Windows.Forms.TextBox txtnom;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbmanic;

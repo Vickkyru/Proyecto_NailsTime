@@ -105,5 +105,36 @@ namespace DAL_VR750
 
             return lista;
         }
+
+        public List<BEdisponibilidad_750VR> ObtenerDisponibilidadesPorManicurista(int dniManicurista)
+        {
+            List<BEdisponibilidad_750VR> lista = new List<BEdisponibilidad_750VR>();
+            string query = "SELECT * FROM Disponibilidad_VR750 WHERE DNImanic_VR750 = @DNI";
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DNI", dniManicurista);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int id = Convert.ToInt32(reader["IdDisponibilidad_VR750"]);
+                    int dni = Convert.ToInt32(reader["DNImanic_VR750"]);
+                    DateTime fecha = Convert.ToDateTime(reader["Fecha_VR750"]);
+                    TimeSpan inicio = TimeSpan.Parse(reader["HoraInicio_VR750"].ToString());
+                    TimeSpan fin = TimeSpan.Parse(reader["HoraFin_VR750"].ToString());
+                    bool activo = Convert.ToBoolean(reader["Activo_VR750"]);
+                    bool estado = Convert.ToBoolean(reader["Estado_VR750"]);
+
+                    var disponibilidad = new BEdisponibilidad_750VR(id, dni, fecha, inicio, fin, activo, estado);
+                    lista.Add(disponibilidad);
+                }
+            }
+
+            return lista;
+        }
+
     }
 }

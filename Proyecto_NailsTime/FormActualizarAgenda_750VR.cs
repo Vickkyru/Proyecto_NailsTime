@@ -45,8 +45,54 @@ namespace Proyecto_NailsTime
 
         private void Disponibilidad()
         {
-            var bll = new BLLdisponibilidad_750VR();
-            var dispo = bll.LeerDisponibilidades_750VR();
+
+            BLLdisponibilidad_750VR bllDispo = new BLLdisponibilidad_750VR();
+            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            var sesion = SessionManager_750VR.ObtenerInstancia;
+            int dniManicurista = sesion.user.dni_750VR;
+
+            var listaDispo = bllDispo.ObtenerDisponibilidadesPorManicurista(dniManicurista);
+            var listaUsuarios = bllUsuario.leerEntidades_750VR();
+
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("IdDisponibilidad", typeof(int));
+            tabla.Columns.Add("Manicurista", typeof(string));
+            tabla.Columns.Add("DNImanicurista", typeof(int));
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Hora Inicio", typeof(string));
+            tabla.Columns.Add("Hora Fin", typeof(string));
+            tabla.Columns.Add("Estado", typeof(string));
+
+
+            foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false))
+            {
+                var usu = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
+                string nombreCompleto = usu != null ? $"{usu.nombre_750VR} {usu.apellido_750VR}" : "Desconocido";
+
+                tabla.Rows.Add(
+                    dispo.CodDisponibilidad_750VR,
+                    nombreCompleto,
+                    dispo.DNImanic_750VR,
+                    dispo.Fecha_750VR.Date,
+                    dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
+                    dispo.HoraFin_750VR.ToString(@"hh\:mm"),
+                     //"Disponible" 
+                     Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
+                );
+            }
+
+            dataGridView2.DataSource = tabla;
+
+            if (dataGridView2.Columns.Contains("IdDisponibilidad"))
+                dataGridView2.Columns["IdDisponibilidad"].Visible = false;
+            if (dataGridView2.Columns.Contains("DNImanicurista"))
+                dataGridView2.Columns["DNImanicurista"].Visible = false;
+            // 🔤 Traducción de encabezados
+            dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Manicurista");
+            dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Fecha");
+            dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraInicio");
+            dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraFin");
+            dataGridView2.Columns["Estado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Estado");
         }
         private void CargarReservas()
         {

@@ -16,6 +16,10 @@ namespace BLL_VR750
         {
             dal.CrearDisponibilidad_750VR(disp);
         }
+        public List<BEdisponibilidad_750VR> ObtenerDisponibilidadesPorManicurista(int dniManicurista)
+        {
+            return dal.ObtenerDisponibilidadesPorManicurista(dniManicurista);
+        }
 
         public bool ModificarDisponibilidad_750VR (BEdisponibilidad_750VR dispo)
         {

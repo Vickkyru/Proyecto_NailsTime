@@ -124,26 +124,27 @@ namespace Proyecto_NailsTime
         }
 
         //boton buscar cliente
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var cliente = ObtenerClienteDesdeFormulario();
-            if (cliente != null)
-            {
-                clienteSeleccionado = cliente;
-                txtnom.Text = cliente.nombre_750VR;
-            }
-        }
+        //private void button3_Click(object sender, EventArgs e)
+        //{
+        //    //var cliente = ObtenerClienteDesdeFormulario();
+        //    //if (cliente != null)
+        //    //{
+        //    //    clienteSeleccionado = cliente;
+        //    //    txtnom.Text = cliente.nombre_750VR;
+        //    //}
+        
+        //}
 
 
         //crea cliente
-        private void button5_Click(object sender, EventArgs e)
-        {
+        //private void button5_Click(object sender, EventArgs e)
+        //{
 
-            FormABMClientes_750VR frm = new FormABMClientes_750VR();
-            frm.InvocadoDesdeReserva = true;
-            frm.FormularioReserva = this;
-            frm.ShowDialog(); 
-        }
+        //    //FormABMClientes_750VR frm = new FormABMClientes_750VR();
+        //    //frm.InvocadoDesdeReserva = true;
+        //    //frm.FormularioReserva = this;
+        //    //frm.ShowDialog(); 
+        //}
         public void CompletarCamposCliente(string dni, string nombre)
         {
             txtdni.Text = dni;
@@ -325,7 +326,7 @@ namespace Proyecto_NailsTime
 
             cmbtec.DataSource = tecnicas;
             cmbtec.DisplayMember = "tecnica_750VR";
-            cmbtec.ValueMember = "idServicio_750VR";
+            cmbtec.ValueMember = "CodServicio_750VR";
             cmbtec.SelectedIndex = 0;
         }
 
@@ -497,6 +498,33 @@ namespace Proyecto_NailsTime
         private void button2_Click(object sender, EventArgs e)
         {
             LimpiarCamposReserva();
+        }
+
+        private void txtdni_Leave(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtdni.Text.Trim(), out _))
+            {
+                BuscarOCrearCliente();
+            }
+        }
+
+        private void BuscarOCrearCliente()
+        {
+            var cliente = ObtenerClienteDesdeFormulario();
+
+            if (cliente != null)
+            {
+                clienteSeleccionado = cliente;
+                txtnom.Text = cliente.nombre_750VR;
+            }
+            else
+            {
+                // Cliente no existe → se abre directamente el formulario para crearlo
+                FormABMClientes_750VR frm = new FormABMClientes_750VR();
+                frm.InvocadoDesdeReserva = true;
+                frm.FormularioReserva = this;
+                frm.ShowDialog();
+            }
         }
     }
 }

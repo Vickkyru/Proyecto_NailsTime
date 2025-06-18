@@ -117,7 +117,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(12, 260);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(741, 142);
+            this.dataGridView2.Size = new System.Drawing.Size(527, 142);
             this.dataGridView2.TabIndex = 27;
             // 
             // FormActualizarAgenda_750VR
