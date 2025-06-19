@@ -333,11 +333,14 @@ namespace Proyecto_NailsTime
         {
             cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarServicios();
-            CargarReservasDispo();
+            
 
             CargarManicuristas();
-           
+            CargarReservasDispo();
+
             CargarDisponibilidadesConNombre();
+
+           
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -516,6 +519,184 @@ namespace Proyecto_NailsTime
                 frm.InvocadoDesdeReserva = true;
                 frm.FormularioReserva = this;
                 frm.ShowDialog();
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (idReservaSeleccionada == -1)
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.MensajeSeleccionaReserva"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
+
+            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.MensajeReservaNoCancelable"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                return;
+            }
+
+            var reserva = bllReserva.ObtenerReservaPorId(idReservaSeleccionada);
+
+            if (reserva == null)
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.MensajeReservaNoEncontrada"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.TituloError"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
+            bllReserva.ActualizarEstadoReserva(idReservaSeleccionada, "Cancelado");
+
+            var bllDispo = new BLLdisponibilidad_750VR();
+
+            var nuevaDispo = new BEdisponibilidad_750VR(
+                dni: reserva.DNImanic_750VR,
+                fecha: reserva.Fecha_750VR,
+                ini: reserva.HoraInicio_750VR,
+                fin: reserva.HoraFin_750VR,
+                acr: true,
+                est: false
+            );
+
+            bllDispo.CrearDisponibilidad_750VR(nuevaDispo);
+
+            MessageBox.Show(
+                Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.MensajeReservaCancelada"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.TituloConfirmacion"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            CargarReservasDispo();
+            CargarDisponibilidadesConNombre();
+            idReservaSeleccionada = -1;
+        }
+
+        private int idReservaSeleccionada = -1;
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow fila = dataGridView2.Rows[e.RowIndex];
+                idReservaSeleccionada = Convert.ToInt32(fila.Cells["ID"].Value);
+
+                // Obtener cliente
+                string nombreCompletoCliente = fila.Cells["Cliente"].Value.ToString();
+                txtnom.Text = nombreCompletoCliente;
+
+                // Obtener y setear manicurista
+                string nombreManic = fila.Cells["Manicurista"].Value.ToString();
+                int indexManic = cmbmanic.FindStringExact(nombreManic);
+                if (indexManic >= 0)
+                    cmbmanic.SelectedIndex = indexManic;
+
+                // Obtener y setear servicio y técnica
+                string tecnica = fila.Cells["Servicio"].Value.ToString();
+
+                // Buscar el servicio en la lista
+                var servicioSeleccionado = listaServicios.FirstOrDefault(s => s.tecnica_750VR == tecnica);
+                if (servicioSeleccionado != null)
+                {
+                    // Buscar y setear el nombre general del servicio (para el combo de categoría)
+                    string nombreServicio = servicioSeleccionado.nombre_750VR;
+                    int indexServicio = cmbserv.FindStringExact(nombreServicio);
+                    if (indexServicio >= 0)
+                        cmbserv.SelectedIndex = indexServicio;
+
+                    // Luego setear técnica
+                    cmbtec.SelectedValue = servicioSeleccionado.CodServicio_750VR;
+
+                    // Cargar duración y precio
+                    txtpre.Text = servicioSeleccionado.precio_750VR.ToString("C");
+                    txthorest.Text = servicioSeleccionado.duracion_750VR + " min";
+                }
+
+                // Fecha y horario
+                dateTimePicker1.Value = Convert.ToDateTime(fila.Cells["Fecha"].Value);
+                txthorario.Text = fila.Cells["Hora Inicio"].Value.ToString();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione una reserva para modificar.");
+                return;
+            }
+
+            int idReserva = Convert.ToInt32(dataGridView2.SelectedRows[0].Cells["ID"].Value);
+            BEReserva_750VR reservaExistente = new BLLReserva_750VR().ObtenerReservaPorId(idReserva);
+
+            if (reservaExistente == null)
+            {
+                MessageBox.Show("No se encontró la reserva.");
+                return;
+            }
+
+            // Validar y armar nueva reserva modificada
+            var cliente = ObtenerClienteDesdeFormulario();
+            var manic = cmbmanic.SelectedItem as BEusuario_750VR;
+            var servicio = cmbtec.SelectedItem as BEServicio_750VR;
+
+            if (cliente == null || manic == null || servicio == null)
+            {
+                MessageBox.Show("Complete todos los campos.");
+                return;
+            }
+
+            if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaInicio))
+            {
+                MessageBox.Show("Hora inválida.");
+                return;
+            }
+
+            TimeSpan horaFin = horaInicio.Add(TimeSpan.FromMinutes(servicio.duracion_750VR));
+
+            BEReserva_750VR nueva = new BEReserva_750VR(
+                cod: idReserva,
+                dnicli: cliente.dni_750VR,
+                cli: cliente,
+                dnimanic: manic.dni_750VR,
+                manic: manic,
+                idserv: servicio.CodServicio_750VR,
+                serv: servicio,
+                fecha: dateTimePicker1.Value.Date,
+                ini: horaInicio,
+                fin: horaFin,
+                pre: servicio.precio_750VR,
+                estado: reservaExistente.Estado_750VR,
+                cobrado: reservaExistente.Cobrado_750VR
+            );
+
+            bool actualizado = new BLLReserva_750VR().ModificarReserva_750VR(nueva);
+
+            if (actualizado)
+            {
+                MessageBox.Show("Reserva modificada correctamente.");
+                CargarReservasDispo(); // recargar grilla
+            }
+            else
+            {
+                MessageBox.Show("Error al modificar la reserva.");
             }
         }
     }

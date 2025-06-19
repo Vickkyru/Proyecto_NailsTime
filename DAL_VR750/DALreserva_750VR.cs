@@ -143,6 +143,39 @@ namespace DAL_VR750
                 return Convert.ToInt32(result); // <<< retorna el ID a tu objeto
             }
         }
+        public bool ModificarReserva(BEReserva_750VR reservaModificada)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = @"
+            UPDATE Reserva_VR750
+            SET DNIcli_VR750 = @DNIcli,
+                DNImanic_VR750 = @DNImanic,
+                IdServicio_VR750 = @IdServicio,
+                Fecha_VR750 = @Fecha,
+                HoraInicio_VR750 = @HoraInicio,
+                HoraFin_VR750 = @HoraFin,
+                Precio_VR750 = @Precio,
+                Estado_VR750 = @Estado,
+                Cobrado_VR750 = @Cobrado
+            WHERE IdReserva_VR750 = @Id";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DNIcli", reservaModificada.DNIcli_750VR);
+                cmd.Parameters.AddWithValue("@DNImanic", reservaModificada.DNImanic_750VR);
+                cmd.Parameters.AddWithValue("@IdServicio", reservaModificada.CodServicio_750VR);
+                cmd.Parameters.AddWithValue("@Fecha", reservaModificada.Fecha_750VR);
+                cmd.Parameters.AddWithValue("@HoraInicio", reservaModificada.HoraInicio_750VR);
+                cmd.Parameters.AddWithValue("@HoraFin", reservaModificada.HoraFin_750VR);
+                cmd.Parameters.AddWithValue("@Precio", reservaModificada.Precio_750VR);
+                cmd.Parameters.AddWithValue("@Estado", reservaModificada.Estado_750VR);
+                cmd.Parameters.AddWithValue("@Cobrado", reservaModificada.Cobrado_750VR);
+                cmd.Parameters.AddWithValue("@Id", reservaModificada.CodReserva_750VR);
+
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
         public string ObtenerEstadoReserva(int idReserva)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))

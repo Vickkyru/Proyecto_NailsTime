@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SERVICIOS_VR750;
+using DAL_VR750;
 
 namespace Proyecto_NailsTime
 {
@@ -19,7 +20,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            ActualizarIdioma();
+            //ActualizarIdioma();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -41,6 +42,16 @@ namespace Proyecto_NailsTime
             //Valida();
             CargarReservas();
             Disponibilidad();
+            CargarInsumos();
+        }
+        private void CargarInsumos()
+        {
+            BLLinsumos_750VR bllInsumo = new BLLinsumos_750VR();
+            var listaInsumos = bllInsumo.ObtenerInsumosActivos();
+
+            comboBox1.DataSource = listaInsumos;
+            comboBox1.DisplayMember = "nombre_750VR";
+            comboBox1.ValueMember = "codinsumo_750VR";
         }
 
         private void Disponibilidad()
@@ -143,7 +154,10 @@ namespace Proyecto_NailsTime
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 idReservaSeleccionada = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IdReserva"].Value);
+                textBox1.Text = idReservaSeleccionada.ToString(); 
             }
+
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -173,6 +187,15 @@ namespace Proyecto_NailsTime
                 return;
             }
 
+            // ✅ Validar que se hayan cargado insumos
+            BLLreservaInsumo_750VR bllInsumo = new BLLreservaInsumo_750VR();
+            if (!bllInsumo.TieneInsumosRegistrados(idReservaSeleccionada))
+            {
+                MessageBox.Show("Debes registrar al menos un insumo utilizado antes de marcar como 'Realizado'.");
+                return;
+            }
+
+            // ✅ Actualizar estado si pasó validación
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
 
             MessageBox.Show(
@@ -294,6 +317,46 @@ namespace Proyecto_NailsTime
 
             CargarReservas();
             Disponibilidad();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text) || comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Completa todos los campos");
+                return;
+            }
+
+            int idReserva = Convert.ToInt32(textBox1.Text);
+            int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
+            int cantidad;
+
+            if (!int.TryParse(textBox2.Text, out cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show("Cantidad inválida");
+                return;
+            }
+
+            BLLreservaInsumo_750VR bll = new BLLreservaInsumo_750VR();
+
+            if (bll.InsumoYaAgregado(idReserva, idInsumo))
+            {
+                MessageBox.Show("Este insumo ya fue cargado para esta reserva.");
+                return;
+            }
+
+            try
+            {
+                bll.RegistrarInsumoUsado(idReserva, idInsumo, cantidad);
+                MessageBox.Show("Insumo registrado correctamente");
+
+                textBox2.Clear();
+                comboBox1.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al registrar insumo: " + ex.Message);
+            }
         }
     }
     

@@ -105,6 +105,22 @@ namespace DAL_VR750
                         );
                     END;
 
+IF NOT EXISTS (
+                SELECT * FROM INFORMATION_SCHEMA.TABLES 
+                WHERE TABLE_NAME = 'Insumo_VR750'
+            )
+            BEGIN
+                CREATE TABLE Insumo_VR750 (
+                    CodInsumo_VR750 INT PRIMARY KEY IDENTITY(1,1),
+                    Nombre_VR750 NVARCHAR(100) NOT NULL,
+                    Descripcion_VR750 NVARCHAR(255),
+                    CantidadActual_VR750 INT NOT NULL,
+                    StockMinimo_VR750 INT NOT NULL,
+                    UnidadMedida_VR750 NVARCHAR(50) NOT NULL,
+                    Activo_VR750 BIT NOT NULL DEFAULT 1
+                );
+            END;
+
                     IF NOT EXISTS (
                         SELECT * FROM INFORMATION_SCHEMA.TABLES 
                         WHERE TABLE_NAME = 'Cliente_VR750'
@@ -171,6 +187,19 @@ namespace DAL_VR750
 
                         );
                     END;
+
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'ReservaInsumo_VR750'
+)
+BEGIN
+    CREATE TABLE ReservaInsumo_VR750 (
+        IdReserva_VR750 INT NOT NULL FOREIGN KEY REFERENCES Reserva_VR750(IdReserva_VR750),
+        CodInsumo_VR750 INT NOT NULL FOREIGN KEY REFERENCES Insumo_VR750(CodInsumo_VR750),
+        CantidadUsada_VR750 INT NOT NULL,
+        PRIMARY KEY (IdReserva_VR750, CodInsumo_VR750)
+    );
+END;
                 ";
 
                 using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
@@ -205,6 +234,20 @@ namespace DAL_VR750
                 ('Limpieza facial', 'Express', 30, 4000.00, 1),
                 ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
                 ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1)
+            END
+
+   IF NOT EXISTS (SELECT 1 FROM Insumo_VR750)
+            BEGIN
+                INSERT INTO Insumo_VR750 (Nombre_VR750, Descripcion_VR750, CantidadActual_VR750, StockMinimo_VR750, UnidadMedida_VR750, Activo_VR750) VALUES
+                ('Esmalte rojo clásico', 'Esmalte rojo clásico', 50, 10, 'unidad', 1),
+                ('Quitaesmalte','Removedor universal de esmalte', 100, 20, 'ml', 1),
+                ('Algodón', 'Bolsita de algodón', 200, 50, 'unidad', 1),
+                ('Lima desechable', 'Lima de uso único', 150, 30, 'unidad', 1),
+                ('Base fortalecedora', 'Base antes del esmaltado', 60, 10, 'unidad', 1),
+                ('Esmalte semi permanente rosa', 'Para técnica semipermanente', 40, 8, 'unidad', 1),
+                ('Gel constructor', 'Gel para uñas esculpidas', 30, 5, 'ml', 1),
+                ('Mascarilla facial hidratante', 'Aplicación post limpieza facial', 20, 5, 'unidad', 1),
+                ('Crema exfoliante', 'Para limpieza facial profunda', 25, 5, 'ml', 1)
             END
 
             IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
