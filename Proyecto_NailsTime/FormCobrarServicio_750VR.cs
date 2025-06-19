@@ -60,6 +60,7 @@ namespace Proyecto_NailsTime
                     txtcuot.Enabled = false;
                     txtvenc.Enabled = false;
                     txtcvc.Enabled = false;
+                    textBox1.Enabled = false;
                     break;
 
                 case "Débito":
@@ -67,6 +68,7 @@ namespace Proyecto_NailsTime
                     txtcuot.Enabled = false;
                     txtvenc.Enabled = true;
                     txtcvc.Enabled = true;
+                    textBox1.Enabled = true;
                     break;
 
                 case "Crédito":
@@ -74,6 +76,7 @@ namespace Proyecto_NailsTime
                     txtcuot.Enabled = true;
                     txtvenc.Enabled = true;
                     txtcvc.Enabled = true;
+                    textBox1.Enabled = false;
                     break;
             }
 
@@ -113,8 +116,14 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Ingresá la cantidad de cuotas.");
                 return;
             }
-            //MessageBox.Show("ID que llega para cobrar: " + idReserva);
-            // Marcar como cobrada
+            if ((txtvenc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            {
+                MessageBox.Show("Seleccione el nombre del titular.");
+                return;
+            }
+
+         
+     
 
             BLLReserva_750VR bll = new BLLReserva_750VR();
             bool exito = bll.MarcarComoCobrado(idReserva); 
@@ -136,6 +145,9 @@ namespace Proyecto_NailsTime
             cmbmet.SelectedIndex = -1;
             txtcuot.Clear();
             txtnum.Clear();
+            textBox1.Clear();
+            txtcvc.Clear();
+            txtvenc.Clear();
         }
 
         private void button4_Click(object sender, EventArgs e)

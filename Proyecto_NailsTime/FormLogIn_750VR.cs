@@ -67,8 +67,9 @@ namespace Proyecto_NailsTime
                
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
+                usuario.idioma_750VR = idioma;
 
-               
+
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 formPrincipal.Actualizar();
 

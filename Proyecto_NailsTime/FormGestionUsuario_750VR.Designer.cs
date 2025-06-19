@@ -363,7 +363,7 @@
             this.lblmensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblmensaje.Location = new System.Drawing.Point(25, 230);
             this.lblmensaje.Name = "lblmensaje";
-            this.lblmensaje.Size = new System.Drawing.Size(161, 30);
+            this.lblmensaje.Size = new System.Drawing.Size(317, 30);
             this.lblmensaje.TabIndex = 42;
             // 
             // txtuser
@@ -407,7 +407,10 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.Location = new System.Drawing.Point(12, 54);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(762, 150);
@@ -450,6 +453,7 @@
             this.Controls.Add(this.rbtntodos);
             this.Controls.Add(this.rbtnact);
             this.Controls.Add(this.label2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormGestionUsuario_750VR";
             this.Text = "FormAgregarUsuario_750VR";
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);

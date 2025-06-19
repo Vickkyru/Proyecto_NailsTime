@@ -37,9 +37,7 @@
             this.txtnum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.lblimp = new System.Windows.Forms.Label();
-            this.importe = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -48,7 +46,6 @@
             this.txtcvc = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -120,43 +117,25 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(35, 84);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(329, 45);
+            this.label1.Size = new System.Drawing.Size(113, 45);
             this.label1.TabIndex = 34;
             this.label1.Text = "Cobrar ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(48, 13);
+            this.label3.Location = new System.Drawing.Point(230, 221);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 52;
             this.label3.Text = "Importe a pagar:";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lblimp);
-            this.panel1.Controls.Add(this.importe);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(232, 176);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(183, 64);
-            this.panel1.TabIndex = 53;
-            // 
             // lblimp
             // 
-            this.lblimp.Location = new System.Drawing.Point(36, 28);
+            this.lblimp.Location = new System.Drawing.Point(331, 205);
             this.lblimp.Name = "lblimp";
             this.lblimp.Size = new System.Drawing.Size(106, 29);
             this.lblimp.TabIndex = 56;
-            // 
-            // importe
-            // 
-            this.importe.AutoSize = true;
-            this.importe.Location = new System.Drawing.Point(105, 13);
-            this.importe.Name = "importe";
-            this.importe.Size = new System.Drawing.Size(0, 13);
-            this.importe.TabIndex = 53;
             // 
             // button3
             // 
@@ -219,7 +198,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(246, 116);
+            this.label8.Location = new System.Drawing.Point(242, 139);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 13);
             this.label8.TabIndex = 61;
@@ -227,7 +206,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(249, 132);
+            this.textBox1.Location = new System.Drawing.Point(245, 155);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 60;
@@ -238,6 +217,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(504, 426);
+            this.Controls.Add(this.lblimp);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label7);
@@ -246,7 +227,6 @@
             this.Controls.Add(this.txtvenc);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtcuot);
@@ -258,8 +238,6 @@
             this.Name = "FormCobrarServicio_750VR";
             this.Text = "CobrarReserva";
             this.Load += new System.EventHandler(this.FormCobrarServicio_750VR_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,11 +253,9 @@
         private System.Windows.Forms.TextBox txtnum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label lblimp;
-        private System.Windows.Forms.Label importe;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtvenc;
         private System.Windows.Forms.Label label7;

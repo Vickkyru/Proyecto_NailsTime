@@ -26,6 +26,17 @@ namespace DAL_VR750
             var lista = leerEntidades_750VR();
             return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
         }
+        public void ActualizarIdiomaUsuario(int dni, string idioma)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE Usuario_VR750 SET Idioma_VR750 = @idioma WHERE DNI_VR750 = @dni", conn);
+                cmd.Parameters.AddWithValue("@idioma", idioma);
+                cmd.Parameters.AddWithValue("@dni", dni);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
         public void CrearUsuario_750VR(BEusuario_750VR usuario) //alta user
         {

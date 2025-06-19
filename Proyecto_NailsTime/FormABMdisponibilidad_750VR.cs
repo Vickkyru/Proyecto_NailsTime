@@ -41,6 +41,14 @@ namespace Proyecto_NailsTime
         {
             var lista = bll.LeerDisponibilidades_750VR();
 
+            // Trae solo manicuristas activos
+            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            var manicuristasActivos = bllUsuario.ObtenerManicuristasActivos_750VR();
+            var dniActivos = manicuristasActivos.Select(m => m.dni_750VR).ToList();
+
+            // Filtramos disponibilidades de manicuristas activos
+            var filtradas = lista.Where(d => dniActivos.Contains(d.DNImanic_750VR)).ToList();
+
             dataGridView1.DataSource = null;
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
@@ -49,7 +57,8 @@ namespace Proyecto_NailsTime
             {
                 DataPropertyName = "IdDisponibilidad_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Disponibilidad.Id"),
-                ReadOnly = true
+                ReadOnly = true,
+                Visible = false
             });
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
@@ -94,8 +103,7 @@ namespace Proyecto_NailsTime
                 ReadOnly = true
             });
 
-            dataGridView1.DataSource = lista;
-
+            dataGridView1.DataSource = filtradas;
             PintarFilasInactivas();
         }
 
@@ -113,6 +121,7 @@ namespace Proyecto_NailsTime
         private void btnañadir_Click(object sender, EventArgs e)
         {
             modoActual = "añadir";
+            
             ActivarModoEdicion();
             //lblmensaje.Text = "Modo Añadir";
             ActualizarMensajeModo();
@@ -120,9 +129,12 @@ namespace Proyecto_NailsTime
 
         private void FormABMdisponibilidad_Load(object sender, EventArgs e)
         {
+            
             modoActual = "consulta";
             //lblmensaje.Text = modoActual;
-            ActualizarMensajeModo();
+            //ActualizarMensajeModo();
+            btnapli.Enabled = false;
+            btncance.Enabled = false;
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
@@ -194,6 +206,22 @@ namespace Proyecto_NailsTime
             cmbmanic.DisplayMember = "nombre_750VR";
             cmbmanic.ValueMember = "dni_750VR";
             cmbmanic.SelectedIndex = 0;
+        }
+        private void CargarManicuristaEnCombo(int dni)
+        {
+            var lista = (List<BEusuario_750VR>)cmbmanic.DataSource;
+            var existe = lista.Any(m => m.dni_750VR == dni);
+
+            if (existe)
+            {
+                cmbmanic.SelectedValue = dni;
+            }
+            else
+            {
+                // Mostrar solo el DNI en el textbox
+                txtdnimanic.Text = dni.ToString();
+                cmbmanic.SelectedIndex = 0; // "-- Seleccione --"
+            }
         }
 
         private void AplicarAlta()
@@ -352,11 +380,43 @@ namespace Proyecto_NailsTime
         }
         private void ActivarModoEdicion()
         {
-            dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
-            btnapli.Enabled = true;
-            btncance.Enabled = true;
-            btnañadir.Enabled = btnmod.Enabled = btnelim.Enabled = false;
-            dataGridView1.Enabled = true;
+            if (modoActual == "añadir")
+            {
+                dataGridView1.Enabled = false;
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
+                btnelim.Enabled = false;
+                btnmod.Enabled = false;
+            }
+
+            if (modoActual == "añadir" || modoActual == "modificar")
+            {
+                dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
+            }
+            else if (modoActual == "cambiarEstado")
+            {
+                dataGridView1.Enabled = true;
+
+                dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
+
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
+                btnañadir.Enabled = false;
+                btnmod.Enabled = false;
+            }
+
+
+            //btnapli.Enabled = false;
+            //btncance.Enabled = false;
+
+
+            btnañadir.Enabled = true;
+            btnmod.Enabled = true;
+            btnelim.Enabled = true;
+
+
         }
 
         private void ResetearInterfaz()
@@ -378,12 +438,18 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentRow?.DataBoundItem is BEdisponibilidad_750VR d)
+           
+
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                cmbmanic.SelectedValue = d.DNImanic_750VR;                 // ✅ Selecciona al manicurista por DNI
-                dateTimePicker1.Value = d.Fecha_750VR;                     // ✅ Asigna la fecha completa
-                txtinicio.Text = d.HoraInicio_750VR.ToString(@"hh\:mm");  // ✅ Formato claro
-                txtfin.Text = d.HoraFin_750VR.ToString(@"hh\:mm");
+                var d = dataGridView1.SelectedRows[0].DataBoundItem as BEdisponibilidad_750VR;
+                if (d != null)
+                {
+                    CargarManicuristaEnCombo(d.DNImanic_750VR);
+                    dateTimePicker1.Value = d.Fecha_750VR;
+                    txtinicio.Text = d.HoraInicio_750VR.ToString(@"hh\:mm");
+                    txtfin.Text = d.HoraFin_750VR.ToString(@"hh\:mm");
+                }
             }
         }
    

@@ -408,6 +408,8 @@ namespace Proyecto_NailsTime
             if (modoActual == "añadir")
             {
                 dataGridView1.Enabled = false;
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
             }
 
             if (modoActual == "añadir" || modoActual == "modificar")
@@ -418,6 +420,9 @@ namespace Proyecto_NailsTime
                 txtemail.Enabled = true;
                 txtcel.Enabled = true;
                 txtdire.Enabled = true;
+
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
             }
             else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
             {
@@ -429,12 +434,15 @@ namespace Proyecto_NailsTime
                 txtemail.Enabled = false;
                 txtdire.Enabled = false;
                 txtcel.Enabled = false;
-     
+
+                btnapli.Enabled = true;
+                btncance.Enabled = true;
+
             }
 
            
-            btnapli.Enabled = false;
-            btncance.Enabled = false;
+            //btnapli.Enabled = false;
+            //btncance.Enabled = false;
 
             
             btnañadir.Enabled = true;

@@ -20,6 +20,7 @@ namespace Proyecto_NailsTime
     {
         private List<BEServicio_750VR> listaServicios;
         private List<BEusuario_750VR> listaUsuarios = new List<BEusuario_750VR>();
+        private BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
 
         public FormRegistrarReserva_750VR()
         {
@@ -52,15 +53,19 @@ namespace Proyecto_NailsTime
             cmbserv.SelectedIndex = 0; 
         }
 
-       
+
 
         private void CargarDisponibilidadesConNombre()
         {
             BLLdisponibilidad_750VR bllDispo = new BLLdisponibilidad_750VR();
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
 
+            // Obtener manicuristas activos
+            var manicuristasActivos = bllUsuario.ObtenerManicuristasActivos_750VR();
+            var dnisActivos = manicuristasActivos.Select(u => u.dni_750VR).ToList();
+
+            // Obtener todas las disponibilidades
             var listaDispo = bllDispo.LeerDisponibilidades_750VR();
-            var listaUsuarios = bllUsuario.leerEntidades_750VR();
 
             DataTable tabla = new DataTable();
             tabla.Columns.Add("IdDisponibilidad", typeof(int));
@@ -71,10 +76,10 @@ namespace Proyecto_NailsTime
             tabla.Columns.Add("Hora Fin", typeof(string));
             tabla.Columns.Add("Estado", typeof(string));
 
-            
-            foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false))
+            // Cargar solo las disponibilidades activas y desocupadas de manicuristas activos
+            foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false && dnisActivos.Contains(d.DNImanic_750VR)))
             {
-                var usu = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
+                var usu = manicuristasActivos.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
                 string nombreCompleto = usu != null ? $"{usu.nombre_750VR} {usu.apellido_750VR}" : "Desconocido";
 
                 tabla.Rows.Add(
@@ -84,18 +89,19 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR.Date,
                     dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
                     dispo.HoraFin_750VR.ToString(@"hh\:mm"),
-                     //"Disponible" 
-                     Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
                 );
             }
 
             dataGridView1.DataSource = tabla;
 
+            // Ocultar columnas internas
             if (dataGridView1.Columns.Contains("IdDisponibilidad"))
                 dataGridView1.Columns["IdDisponibilidad"].Visible = false;
             if (dataGridView1.Columns.Contains("DNImanicurista"))
                 dataGridView1.Columns["DNImanicurista"].Visible = false;
-            // 🔤 Traducción de encabezados
+
+            // Encabezados traducidos
             dataGridView1.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Manicurista");
             dataGridView1.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Fecha");
             dataGridView1.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraInicio");
@@ -104,13 +110,18 @@ namespace Proyecto_NailsTime
         }
         private void CargarManicuristas()
         {
-            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
-            listaUsuarios = bllUsuario.ObtenerManicuristasActivos_750VR();
 
-            cmbmanic.DataSource = listaUsuarios;
-            cmbmanic.DisplayMember = "nombre_750VR"; 
+            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
+
+            // Agrego opción "--Seleccione--"
+            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false, "Español");
+            manicuristas.Insert(0, vacio);
+
+            cmbmanic.DataSource = manicuristas;
+            cmbmanic.DisplayMember = "nombre_750VR";
             cmbmanic.ValueMember = "dni_750VR";
-            cmbmanic.SelectedIndex = -1;
+            cmbmanic.SelectedIndex = 0;
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -123,28 +134,6 @@ namespace Proyecto_NailsTime
 
         }
 
-        //boton buscar cliente
-        //private void button3_Click(object sender, EventArgs e)
-        //{
-        //    //var cliente = ObtenerClienteDesdeFormulario();
-        //    //if (cliente != null)
-        //    //{
-        //    //    clienteSeleccionado = cliente;
-        //    //    txtnom.Text = cliente.nombre_750VR;
-        //    //}
-        
-        //}
-
-
-        //crea cliente
-        //private void button5_Click(object sender, EventArgs e)
-        //{
-
-        //    //FormABMClientes_750VR frm = new FormABMClientes_750VR();
-        //    //frm.InvocadoDesdeReserva = true;
-        //    //frm.FormularioReserva = this;
-        //    //frm.ShowDialog(); 
-        //}
         public void CompletarCamposCliente(string dni, string nombre)
         {
             txtdni.Text = dni;
@@ -342,10 +331,12 @@ namespace Proyecto_NailsTime
 
         private void FormRegistrarReserva_750VR_Load(object sender, EventArgs e)
         {
+            cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarServicios();
             CargarReservasDispo();
 
             CargarManicuristas();
+           
             CargarDisponibilidadesConNombre();
         }
 
@@ -487,9 +478,10 @@ namespace Proyecto_NailsTime
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
+         
             
         }
-
+ 
         private void button4_Click_1(object sender, EventArgs e)
         {
             this.Close();
