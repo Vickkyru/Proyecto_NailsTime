@@ -123,8 +123,6 @@ namespace Proyecto_NailsTime
             }
 
          
-     
-
             BLLReserva_750VR bll = new BLLReserva_750VR();
             bool exito = bll.MarcarComoCobrado(idReserva); 
 

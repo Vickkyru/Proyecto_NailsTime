@@ -95,6 +95,7 @@
             this.txtdni.Name = "txtdni";
             this.txtdni.Size = new System.Drawing.Size(100, 20);
             this.txtdni.TabIndex = 16;
+            this.txtdni.TextChanged += new System.EventHandler(this.txtdni_TextChanged);
             this.txtdni.Leave += new System.EventHandler(this.txtdni_Leave);
             // 
             // txtnom

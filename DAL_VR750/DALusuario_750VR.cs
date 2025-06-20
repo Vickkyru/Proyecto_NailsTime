@@ -198,36 +198,19 @@ namespace DAL_VR750
             return lista;
         }
 
-        public BEusuario_750VR ObtenerUsuarioPorLogin_750VR(string usuarioLogin)
+        public bool ExisteUsuarioPorLoginYDNI(string usuarioLogin, int dni)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
-                conn.Open();
-                string query = "SELECT * FROM Usuario_VR750 WHERE Usuario_VR750 = @Usuario";
+                string query = "SELECT COUNT(*) FROM Usuario_VR750 WHERE Usuario_VR750 = @Usuario OR DNI_VR750 = @DNI";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Usuario", usuarioLogin);
+                cmd.Parameters.AddWithValue("@DNI", dni);
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new BEusuario_750VR(
-      Convert.ToInt32(reader["DNI_VR750"]),
-      reader["Nombre_VR750"].ToString(),
-      reader["Apellido_VR750"].ToString(),
-      reader["Email_VR750"].ToString(),
-      reader["Usuario_VR750"].ToString(),
-      reader["Contra_VR750"].ToString(),
-      reader["Salt_VR750"].ToString(),
-      reader["Rol_VR750"].ToString(),
-      Convert.ToBoolean(reader["Activo_VR750"]),
-      Convert.ToBoolean(reader["Bloqueado_VR750"]),
-      reader["Idioma_VR750"].ToString()
-  );
-                    }
-                }
+                conn.Open();
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
             }
-            return null;
         }
 
         public BEusuario_750VR ObtenerUsuarioPorDNI_750VR(int dni)

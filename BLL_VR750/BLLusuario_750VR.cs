@@ -70,12 +70,14 @@ namespace BLL_VR750
             return dal.leerEntidades_750VR();
         }
 
-        public BEusuario_750VR ObtenerUsuarioPorLogin_750VR(string login)
+        public bool ExisteUsuarioConLoginODNI(string usuarioLogin, int dni)
         {
-            return dal.ObtenerUsuarioPorLogin_750VR(login);
+            
+            return dal.ExisteUsuarioPorLoginYDNI(usuarioLogin, dni);
         }
 
-    
+
+
         public void CambiarContraseña_750VR(BEusuario_750VR usuario, string NuevaContraseña)
         {
             dal.CambiarContraseña_750VR(usuario,NuevaContraseña);

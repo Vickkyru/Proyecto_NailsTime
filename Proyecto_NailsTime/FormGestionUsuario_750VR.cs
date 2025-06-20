@@ -318,17 +318,12 @@ namespace Proyecto_NailsTime
 
                 BLLusuario_750VR bll = new BLLusuario_750VR();
 
-                if (bll.ObtenerUsuarioPorLogin_750VR(user) != null)
+                if (bll.ExisteUsuarioConLoginODNI(user, dni))
                 {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioExistente"));
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.UsuarioODNIExistente"));
                     return;
                 }
 
-                if (bll.ObtenerUsuarioPorDNI_750VR(dni) != null)
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.DNIExistente"));
-                    return;
-                }
 
                 Encriptador_750VR encriptador = new Encriptador_750VR();
                 string contraseña = $"{dni}{nombre}";

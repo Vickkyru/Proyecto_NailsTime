@@ -55,7 +55,7 @@ namespace Proyecto_NailsTime
 
 
 
-        private void CargarDisponibilidadesConNombre()
+        private void CargarDisponibilidades()
         {
             BLLdisponibilidad_750VR bllDispo = new BLLdisponibilidad_750VR();
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
@@ -333,12 +333,11 @@ namespace Proyecto_NailsTime
         {
             cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarServicios();
-            
 
             CargarManicuristas();
             CargarReservasDispo();
 
-            CargarDisponibilidadesConNombre();
+            CargarDisponibilidades();
 
            
         }
@@ -379,7 +378,7 @@ namespace Proyecto_NailsTime
 
             BLLdisponibilidad_750VR blldispo = new BLLdisponibilidad_750VR();
 
-            
+
             if (horaInicioReserva > dispo.HoraInicio_750VR)
             {
                 var bloqueAnterior = new BEdisponibilidad_750VR(
@@ -387,24 +386,24 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR,
                     dispo.HoraInicio_750VR,
                     horaInicioReserva,
-                    true,  
-                    false  
+                    true,
+                    false
                 );
                 blldispo.CrearDisponibilidad_750VR(bloqueAnterior);
             }
 
-          
+
             var bloqueReserva = new BEdisponibilidad_750VR(
                 dispo.DNImanic_750VR,
                 dispo.Fecha_750VR,
                 horaInicioReserva,
                 horaFinReserva,
-                true, 
-                true   
+                true,
+                true
             );
             blldispo.CrearDisponibilidad_750VR(bloqueReserva);
 
-            
+
             if (horaFinReserva < dispo.HoraFin_750VR)
             {
                 var bloqueRestante = new BEdisponibilidad_750VR(
@@ -412,17 +411,17 @@ namespace Proyecto_NailsTime
                     dispo.Fecha_750VR,
                     horaFinReserva,
                     dispo.HoraFin_750VR,
-                    true,  
-                    false  
+                    true,
+                    false
                 );
                 blldispo.CrearDisponibilidad_750VR(bloqueRestante);
             }
 
-            
+
             blldispo.CambiarEstado_750VR(dispo.CodDisponibilidad_750VR, false);
 
-           
-            CargarDisponibilidadesConNombre();
+
+            CargarDisponibilidades ();
         }
 
         public void CargarReservasDispo()
@@ -585,7 +584,7 @@ namespace Proyecto_NailsTime
             );
 
             CargarReservasDispo();
-            CargarDisponibilidadesConNombre();
+            CargarDisponibilidades();
             idReservaSeleccionada = -1;
         }
 
@@ -698,6 +697,11 @@ namespace Proyecto_NailsTime
             {
                 MessageBox.Show("Error al modificar la reserva.");
             }
+        }
+
+        private void txtdni_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
