@@ -24,6 +24,7 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             ActualizarIdioma();
+            ActivarModoEdicion();
 
         }
 
@@ -107,7 +108,7 @@ namespace Proyecto_NailsTime
 
         private void btnapli_Click(object sender, EventArgs e)
         {
-            // Si estamos en modo consulta, se hace la búsqueda
+           
             if (modoActual == "consulta")
             {
                 BLLCliente_750VR bll = new BLLCliente_750VR();
@@ -558,6 +559,7 @@ namespace Proyecto_NailsTime
                 ActualizarMensajeModo();
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.MensajeAltaDesdeReserva"));
 
+                PintarUsuariosInactivos();
                 ActivarModoEdicion();
                 btncance.Enabled = false;
             }
@@ -575,16 +577,18 @@ namespace Proyecto_NailsTime
 
 
                
-                    modoActual = "consulta";
+                modoActual = "consulta";
                 ActualizarMensajeModo();
-                ActivarModoEdicion();
-                
+                //ActivarModoEdicion();
+                PintarUsuariosInactivos();
 
 
             }
 
             CargarUsuarios();
             ActualizarIdioma();
+            ActivarModoEdicion();
+            PintarUsuariosInactivos();
 
         }
 

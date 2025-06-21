@@ -130,6 +130,8 @@ namespace Proyecto_NailsTime
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
                     regReservaToolStripMenuItem.Enabled = false;
+                    cambiarClaveToolStripMenuItem.Enabled = true;
+                    cambiarIdiomaToolStripMenuItem.Enabled = true;
                     break;
 
                 case "recepcionista":
@@ -140,6 +142,8 @@ namespace Proyecto_NailsTime
                     insumosToolStripMenuItem.Enabled = false;
                     reportesToolStripMenuItem.Enabled = false;
                     actAgendaToolStripMenuItem.Enabled = false;
+                    cambiarClaveToolStripMenuItem.Enabled = true;
+                    cambiarIdiomaToolStripMenuItem.Enabled = true;
                     break;
 
                 case "administrador":
@@ -149,6 +153,8 @@ namespace Proyecto_NailsTime
                     reservaToolStripMenuItem.Enabled = true;
                     insumosToolStripMenuItem.Enabled = true;
                     reportesToolStripMenuItem.Enabled = true;
+                    cambiarClaveToolStripMenuItem.Enabled = true;
+                    cambiarIdiomaToolStripMenuItem.Enabled = true;
                     break;
 
                 default:
