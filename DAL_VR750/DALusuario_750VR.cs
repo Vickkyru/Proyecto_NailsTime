@@ -237,7 +237,7 @@ namespace DAL_VR750
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
                         bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
                         idiom: reader["Idioma_VR750"].ToString()
-                    //agregar idioma
+                    
                     );
                 }
             }
