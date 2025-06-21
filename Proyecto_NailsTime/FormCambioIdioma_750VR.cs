@@ -17,8 +17,8 @@ namespace Proyecto_NailsTime
         public FormCambioIdioma_750VR()
         {
             InitializeComponent();
-            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            ActualizarIdioma();
+            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            //ActualizarIdioma();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

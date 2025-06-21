@@ -20,8 +20,8 @@ namespace Proyecto_NailsTime
         public FormABMservicios_750VR()
         {
             InitializeComponent();
-            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            ActualizarIdioma();
+            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            //ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {

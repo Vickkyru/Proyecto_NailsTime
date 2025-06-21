@@ -24,11 +24,11 @@ namespace Proyecto_NailsTime
         public Form1_750VR()
         {
             InitializeComponent();
-            db.VerificarOCrearBaseDeDatos();
-            db.VerificarYCrearTablaUsuarios_750VR();
-            db.InsertarServiciosIniciales();
-            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
+            //db.VerificarOCrearBaseDeDatos();
+            //db.VerificarYCrearTablaUsuarios_750VR();
+            //db.InsertarServiciosIniciales();
+            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 
         }
         public void ActualizarIdioma()
@@ -39,23 +39,23 @@ namespace Proyecto_NailsTime
 
         private void AbrirForm(Form nuevoForm)
         {
-            // Si ya está abierto el mismo tipo de formulario, no hacemos nada
+            
             if (formActivo != null && formActivo.GetType() == nuevoForm.GetType())
                 return;
 
-            // Cerrar y eliminar el anterior si existe
+            
             if (formActivo != null)
             {
                 if (!formActivo.IsDisposed)
                 {
                     this.Controls.Remove(formActivo);
-                    formActivo.Dispose();   // Cierra
+                    formActivo.Dispose();   
                 }
 
-                formActivo = null; // Limpia referencia
+                formActivo = null; 
             }
 
-            // Configurar el nuevo formulario
+            
             formActivo = nuevoForm;
             nuevoForm.TopLevel = false;
             nuevoForm.FormBorderStyle = FormBorderStyle.None;
@@ -86,7 +86,7 @@ namespace Proyecto_NailsTime
         {
             //AbrirForm(new FormLogIn_750VR());
 
-            FormLogIn_750VR login = new FormLogIn_750VR(this); // PASÁS EL PRINCIPAL
+            FormLogIn_750VR login = new FormLogIn_750VR(this); 
             AbrirForm(login);
 
         }
@@ -107,16 +107,16 @@ namespace Proyecto_NailsTime
         }
         public void Actualizar()
         {
-            // Primero verificamos si hay sesión iniciada
+            
             if (!SessionManager_750VR.ObtenerInstancia.EstaLogueado_750VR())
             {
                 BloquearTodo();
                 return;
             }
 
-            // Ya sabemos que user no es null
+            
             string rol = SessionManager_750VR.ObtenerInstancia.user.rol_750VR.ToLower();
-            //MessageBox.Show("Rol detectado: " + rol);
+            
 
 
 
@@ -173,6 +173,8 @@ namespace Proyecto_NailsTime
             reservaToolStripMenuItem.Enabled = false;
             insumosToolStripMenuItem.Enabled = false;
             reportesToolStripMenuItem.Enabled = false;
+            cambiarClaveToolStripMenuItem.Enabled = false;
+            cambiarIdiomaToolStripMenuItem.Enabled = false;
         }
 
 

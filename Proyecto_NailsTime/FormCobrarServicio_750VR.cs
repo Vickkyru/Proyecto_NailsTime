@@ -22,7 +22,7 @@ namespace Proyecto_NailsTime
 
             
             CargarDatosReserva();
-            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
         }
         public void ActualizarIdioma()
         {

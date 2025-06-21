@@ -24,7 +24,7 @@ namespace Proyecto_NailsTime
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             ActualizarIdioma();
-            
+
         }
 
         public void ActualizarIdioma()
@@ -385,6 +385,7 @@ namespace Proyecto_NailsTime
         private void btnmod_Click(object sender, EventArgs e)
         {
             modoActual = "modificar";
+            ActualizarMensajeModo();
             ActivarModoEdicion();
             //lblmensaje.Text = "Modo Modificar";
         }
@@ -410,10 +411,9 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = false;
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
-            }
+                btnelim.Enabled = false;
+                btnmod.Enabled = false;
 
-            if (modoActual == "añadir" || modoActual == "modificar")
-            {
                 txtdni.Enabled = modoActual == "añadir";
                 txtnom.Enabled = true;
                 txtape.Enabled = true;
@@ -421,11 +421,28 @@ namespace Proyecto_NailsTime
                 txtcel.Enabled = true;
                 txtdire.Enabled = true;
 
+            }
+            if (modoActual == "modificar")
+            {
+                dataGridView1.Enabled = false;
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
+                btnelim.Enabled = false;
+                btnañadir.Enabled = false;
+
+                txtdni.Enabled = modoActual == "añadir";
+                txtnom.Enabled = true;
+                txtape.Enabled = true;
+                txtemail.Enabled = true;
+                txtcel.Enabled = true;
+                txtdire.Enabled = true;
+
             }
-            else if (modoActual == "desbloquear" || modoActual == "Activar/Desactivar")
+
+
+            if (modoActual == "Activar/Desactivar")
             {
+               
                 dataGridView1.Enabled = true;
 
                 txtdni.Enabled = false;
@@ -437,7 +454,8 @@ namespace Proyecto_NailsTime
 
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
-
+                btnañadir.Enabled = false;
+                btnmod.Enabled = false;
             }
 
            
@@ -458,8 +476,7 @@ namespace Proyecto_NailsTime
             txtdire.Enabled = txtcel.Enabled = true;
 
             
-            btnañadir.Enabled = btnmod.Enabled = /*btnelim.Enabled =*/ true;
- 
+            btnañadir.Enabled = btnmod.Enabled = true;
             btnelim.Enabled = true;
 
            
@@ -533,8 +550,6 @@ namespace Proyecto_NailsTime
                 btnmod.Enabled = false;
                 btnelim.Enabled = false;
                 btnañadir.Enabled = true;
-                //btn.Enabled = false;
-                //btndesb.Enabled = false;
                 
                 dataGridView1.Enabled = false;
 
@@ -560,9 +575,9 @@ namespace Proyecto_NailsTime
 
 
                
-                    modoActual = "consulta";           // 🔁 PRIMERO asignás el modo correcto
-                    ActualizarMensajeModo();           // ✅ Luego actualizás el label según ese modo
-                    ActivarModoEdicion();
+                    modoActual = "consulta";
+                ActualizarMensajeModo();
+                ActivarModoEdicion();
                 
 
 
