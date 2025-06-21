@@ -86,7 +86,7 @@ namespace Proyecto_NailsTime
 
         private void btnrealiz_Click(object sender, EventArgs e)
         {
-            // Validación simple (podés mejorarla)
+            
             if (cmbmet.SelectedItem == null)
             {
                 MessageBox.Show("Seleccioná un método de pago.");

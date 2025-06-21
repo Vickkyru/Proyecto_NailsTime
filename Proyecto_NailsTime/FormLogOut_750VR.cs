@@ -44,5 +44,10 @@ namespace Proyecto_NailsTime
         {
             this.Close();
         }
+
+        private void FormLogOut_750VR_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

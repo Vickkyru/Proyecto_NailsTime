@@ -100,7 +100,7 @@ namespace DAL_VR750
             }
         }
 
-        public bool DesbloquearUsuario_750VR(int dni) //desb
+        public bool DesbloquearUsuario_750VR(int dni) 
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
@@ -110,7 +110,7 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@DNI", dni);
 
                 int filasAfectadas = cmd.ExecuteNonQuery();
-                return filasAfectadas > 0; // Devuelve true si al menos una fila fue actualizada
+                return filasAfectadas > 0; 
             }
         }
 

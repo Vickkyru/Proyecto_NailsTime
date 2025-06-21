@@ -101,15 +101,17 @@ namespace Proyecto_NailsTime
             BLLusuario_750VR bll = new BLLusuario_750VR();
             bll.CambiarContraseña_750VR(usuario, nueva);
 
-            SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
             MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeClaveCambiada"),
-                Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloInformacion"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+             Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.MensajeClaveCambiada"),
+             Lenguaje_750VR.ObtenerEtiqueta("FormCambiarClave.TituloInformacion"),
+             MessageBoxButtons.OK,
+             MessageBoxIcon.Information
+         );
 
-            Application.Restart();
+            //SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
+
+            this.Close();
+            //Application.Restart();
         }
     }
 }
