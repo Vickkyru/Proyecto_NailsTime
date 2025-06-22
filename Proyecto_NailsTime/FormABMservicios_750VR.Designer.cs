@@ -45,6 +45,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblmensaje = new System.Windows.Forms.Label();
             this.txttec = new System.Windows.Forms.TextBox();
+            this.rbnTodos = new System.Windows.Forms.RadioButton();
+            this.rbnActivos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -223,12 +225,36 @@
             this.txttec.Size = new System.Drawing.Size(121, 20);
             this.txttec.TabIndex = 101;
             // 
+            // rbnTodos
+            // 
+            this.rbnTodos.AutoSize = true;
+            this.rbnTodos.Location = new System.Drawing.Point(583, 24);
+            this.rbnTodos.Name = "rbnTodos";
+            this.rbnTodos.Size = new System.Drawing.Size(51, 17);
+            this.rbnTodos.TabIndex = 103;
+            this.rbnTodos.TabStop = true;
+            this.rbnTodos.Text = "todos";
+            this.rbnTodos.UseVisualStyleBackColor = true;
+            // 
+            // rbnActivos
+            // 
+            this.rbnActivos.AutoSize = true;
+            this.rbnActivos.Location = new System.Drawing.Point(504, 24);
+            this.rbnActivos.Name = "rbnActivos";
+            this.rbnActivos.Size = new System.Drawing.Size(60, 17);
+            this.rbnActivos.TabIndex = 102;
+            this.rbnActivos.TabStop = true;
+            this.rbnActivos.Text = "Activos";
+            this.rbnActivos.UseVisualStyleBackColor = true;
+            // 
             // FormABMservicios_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.rbnTodos);
+            this.Controls.Add(this.rbnActivos);
             this.Controls.Add(this.txttec);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.btnapli);
@@ -274,5 +300,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblmensaje;
         private System.Windows.Forms.TextBox txttec;
+        private System.Windows.Forms.RadioButton rbnTodos;
+        private System.Windows.Forms.RadioButton rbnActivos;
     }
 }

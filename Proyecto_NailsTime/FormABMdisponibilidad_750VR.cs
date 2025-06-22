@@ -37,18 +37,26 @@ namespace Proyecto_NailsTime
         }
 
 
-        private void CargarDisponibilidad()
+        private void CargarDisponibilidad(bool soloActivos)
+       
         {
             var lista = bll.LeerDisponibilidades_750VR();
 
-            // Trae solo manicuristas activos
+            // Filtrar por manicuristas activos
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
             var manicuristasActivos = bllUsuario.ObtenerManicuristasActivos_750VR();
             var dniActivos = manicuristasActivos.Select(m => m.dni_750VR).ToList();
 
-            // Filtramos disponibilidades de manicuristas activos
+            // Filtrar disponibilidades de manicuristas activos
             var filtradas = lista.Where(d => dniActivos.Contains(d.DNImanic_750VR)).ToList();
 
+            // Aplicar filtro si se quieren solo activos
+            if (soloActivos)
+            {
+                filtradas = filtradas.Where(d => d.activo_750VR).ToList();
+            }
+
+            // Configurar DataGridView
             dataGridView1.DataSource = null;
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
@@ -140,8 +148,8 @@ namespace Proyecto_NailsTime
             dataGridView1.AllowUserToDeleteRows = false;
             cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarManicuristas();
-            CargarDisponibilidad();
-            PintarFilasInactivas();
+            rbnActivos.Checked = true;
+            CargarDisponibilidad(true);
             
         }
 
@@ -173,7 +181,7 @@ namespace Proyecto_NailsTime
             //lblmensaje.Text = "Modo Consulta";
             ActualizarMensajeModo();
             ResetearInterfaz();
-            CargarDisponibilidad();
+            CargarDisponibilidad(true);
             LimpiarCampos();
         }
 
@@ -254,6 +262,7 @@ namespace Proyecto_NailsTime
 
                 bll.CrearDisponibilidad_750VR(nuevo);
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadCreada"));
+                CargarDisponibilidad(true);
                 LimpiarCampos();
                 ResetearInterfaz();
             }
@@ -331,7 +340,7 @@ namespace Proyecto_NailsTime
                     if (modificado)
                     {
                         MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.DisponibilidadModificada"));
-                        CargarDisponibilidad();
+                        CargarDisponibilidad(true);
                         ResetearInterfaz();
                         LimpiarCampos();
                     }
@@ -502,6 +511,16 @@ namespace Proyecto_NailsTime
         private void btnsalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void rbnActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnActivos.Checked) CargarDisponibilidad(true);
+        }
+
+        private void rbnTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnTodos.Checked) CargarDisponibilidad(false);
         }
     }
 }

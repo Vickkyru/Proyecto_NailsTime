@@ -47,6 +47,8 @@
             this.txtdnimanic = new System.Windows.Forms.TextBox();
             this.cmbmanic = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.rbnTodos = new System.Windows.Forms.RadioButton();
+            this.rbnActivos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -240,12 +242,38 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 108;
             // 
-            // FormABMdisponibilidad
+            // rbnTodos
+            // 
+            this.rbnTodos.AutoSize = true;
+            this.rbnTodos.Location = new System.Drawing.Point(589, 37);
+            this.rbnTodos.Name = "rbnTodos";
+            this.rbnTodos.Size = new System.Drawing.Size(51, 17);
+            this.rbnTodos.TabIndex = 110;
+            this.rbnTodos.TabStop = true;
+            this.rbnTodos.Text = "todos";
+            this.rbnTodos.UseVisualStyleBackColor = true;
+            this.rbnTodos.CheckedChanged += new System.EventHandler(this.rbnTodos_CheckedChanged);
+            // 
+            // rbnActivos
+            // 
+            this.rbnActivos.AutoSize = true;
+            this.rbnActivos.Location = new System.Drawing.Point(510, 37);
+            this.rbnActivos.Name = "rbnActivos";
+            this.rbnActivos.Size = new System.Drawing.Size(60, 17);
+            this.rbnActivos.TabIndex = 109;
+            this.rbnActivos.TabStop = true;
+            this.rbnActivos.Text = "Activos";
+            this.rbnActivos.UseVisualStyleBackColor = true;
+            this.rbnActivos.CheckedChanged += new System.EventHandler(this.rbnActivos_CheckedChanged);
+            // 
+            // FormABMdisponibilidad_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.rbnTodos);
+            this.Controls.Add(this.rbnActivos);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.cmbmanic);
             this.Controls.Add(this.txtdnimanic);
@@ -265,7 +293,7 @@
             this.Controls.Add(this.txtfin);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
-            this.Name = "FormABMdisponibilidad";
+            this.Name = "FormABMdisponibilidad_750VR";
             this.Text = "FormABMdisponibilidad";
             this.Load += new System.EventHandler(this.FormABMdisponibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -295,5 +323,7 @@
         private System.Windows.Forms.TextBox txtdnimanic;
         private System.Windows.Forms.ComboBox cmbmanic;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.RadioButton rbnTodos;
+        private System.Windows.Forms.RadioButton rbnActivos;
     }
 }

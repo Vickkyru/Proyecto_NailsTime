@@ -74,11 +74,10 @@ namespace Proyecto_NailsTime
                     txtnom.Text = cliente.nombre_750VR;
                     txtape.Text = cliente.apellido_750VR;
 
-                    //emailCifradoActual = cliente.gmail_750VR;
-                    //txtemail.Text = DesencriptarEmail(emailCifradoActual);
+
                     emailCifradoActual = cliente.gmail_750VR;
-txtemail.Text = emailCifradoActual; // Mostramos cifrado por defecto
-checkBox1.Checked = false; // Reseteamos el checkbox
+txtemail.Text = emailCifradoActual; 
+checkBox1.Checked = false; 
 
                     txtcel.Text = cliente.celular_750VR.ToString();
                     txtdire.Text = cliente.direccion_750VR;
