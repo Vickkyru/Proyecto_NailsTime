@@ -18,7 +18,11 @@ namespace Proyecto_NailsTime
     public partial class FormABMClientes_750VR : Form, Iobserver_750VR
     {
         private string modoActual = "consulta";
- 
+        private string emailCifradoActual = "";
+
+        public bool InvocadoDesdeReserva { get; set; } = false;
+        public FormRegistrarReserva_750VR FormularioReserva { get; set; }
+
         public FormABMClientes_750VR()
         {
             InitializeComponent();
@@ -42,8 +46,7 @@ namespace Proyecto_NailsTime
 
 
         
-        public bool InvocadoDesdeReserva { get; set; } = false;
-        public FormRegistrarReserva_750VR FormularioReserva { get; set; }
+   
         public void LimpiarCampos()
         {
             txtdni.Clear();
@@ -170,17 +173,14 @@ checkBox1.Checked = false; // Reseteamos el checkbox
         private void CargarUsuarios(bool soloActivos)
         {
             var bll = new BLLCliente_750VR();
-    var lista = bll.leerEntidades_750VR();
+            var lista = soloActivos ? bll.leerEntidades_750VR().Where(c => c.activo_750VR).ToList() : bll.leerEntidades_750VR();
 
-    if (soloActivos)
-        lista = lista.Where(c => c.activo_750VR).ToList();
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = lista;
 
-    dataGridView1.Columns.Clear();
-    dataGridView1.AutoGenerateColumns = true;
-    dataGridView1.DataSource = lista;
-
-    PintarUsuariosInactivos();
-    TraducirEncabezadosDataGrid();
+            TraducirEncabezadosDataGrid();
+            PintarUsuariosInactivos();
 
         }
         private void TraducirEncabezadosDataGrid()
@@ -554,52 +554,30 @@ checkBox1.Checked = false; // Reseteamos el checkbox
 
         private void FormABMClientes_750VR_Load(object sender, EventArgs e)
         {
-           
-
             if (InvocadoDesdeReserva)
             {
-                btnmod.Enabled = false;
-                btnelim.Enabled = false;
-                btnañadir.Enabled = true;
-                
-                dataGridView1.Enabled = false;
-
                 modoActual = "añadir";
-                //lblmensaje.Text = "Alta desde Reserva";
-                ActualizarMensajeModo();
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.MensajeAltaDesdeReserva"));
-
+                rbnActivos.Checked = true;
                 CargarUsuarios(true);
                 ActivarModoEdicion();
+                btnmod.Enabled = btnelim.Enabled = false;
+                dataGridView1.Enabled = false;
                 btncance.Enabled = false;
             }
             else
             {
-                
-                btnapli.Enabled = false;
-                btncance.Enabled = false;
-
-               
+                modoActual = "consulta";
+                rbnActivos.Checked = true;
+                CargarUsuarios(true);
                 dataGridView1.ReadOnly = true;
                 dataGridView1.AllowUserToAddRows = false;
                 dataGridView1.AllowUserToDeleteRows = false;
-
-
-
-               
-                modoActual = "consulta";
-                ActualizarMensajeModo();
-                //ActivarModoEdicion();
-                PintarUsuariosInactivos();
-
-
             }
 
-            CargarUsuarios(true);
             ActualizarIdioma();
             ActivarModoEdicion();
             PintarUsuariosInactivos();
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -619,7 +597,7 @@ checkBox1.Checked = false; // Reseteamos el checkbox
             }
         }
 
-        private string emailCifradoActual = "";
+       
         private string DesencriptarEmail(string texto)
         {
             try

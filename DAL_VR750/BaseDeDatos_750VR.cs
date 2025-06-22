@@ -14,8 +14,8 @@ namespace DAL_VR750
         public static string dataSource = "HP_Victoria\\SQLEXPRESS";
         public static string dbName = "ProyectoNailsTime_VR750";
         public static string cadena = $"Data source={dataSource};Initial Catalog={dbName};Integrated Security=True;";
-        public SqlConnection Connection = new SqlConnection(cadena); //conexion a bd
-        public SqlCommand Command = new SqlCommand(); //ejecutar consultas SQL
+        public SqlConnection Connection = new SqlConnection(cadena); 
+        public SqlCommand Command = new SqlCommand(); 
 
         public BaseDeDatos_750VR()
         {
@@ -272,11 +272,6 @@ END;
                 (11100000, '2025-07-19', '11:00', '15:00', 1, 0)
             END
 
-            IF NOT EXISTS (SELECT 1 FROM Cliente_VR750 WHERE DNI_VR750 = 33111222)
-            BEGIN
-                INSERT INTO Cliente_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Direccion_VR750, Celular_VR750, Activo_VR750)
-                VALUES (33111222, 'martina', 'ruiz', 'martina@gmail.com', 'Cordoba1234', 1134567890, 1)
-            END
             ";
 
                     using (SqlCommand cmd = new SqlCommand(script, conn))
