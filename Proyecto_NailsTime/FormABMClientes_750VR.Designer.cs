@@ -53,6 +53,8 @@
             this.lblmensaje = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.rbnActivos = new System.Windows.Forms.RadioButton();
+            this.rbnTodos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -285,12 +287,38 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // rbnActivos
+            // 
+            this.rbnActivos.AutoSize = true;
+            this.rbnActivos.Location = new System.Drawing.Point(426, 25);
+            this.rbnActivos.Name = "rbnActivos";
+            this.rbnActivos.Size = new System.Drawing.Size(60, 17);
+            this.rbnActivos.TabIndex = 81;
+            this.rbnActivos.TabStop = true;
+            this.rbnActivos.Text = "Activos";
+            this.rbnActivos.UseVisualStyleBackColor = true;
+            this.rbnActivos.CheckedChanged += new System.EventHandler(this.rbnActivos_CheckedChanged);
+            // 
+            // rbnTodos
+            // 
+            this.rbnTodos.AutoSize = true;
+            this.rbnTodos.Location = new System.Drawing.Point(505, 25);
+            this.rbnTodos.Name = "rbnTodos";
+            this.rbnTodos.Size = new System.Drawing.Size(51, 17);
+            this.rbnTodos.TabIndex = 82;
+            this.rbnTodos.TabStop = true;
+            this.rbnTodos.Text = "todos";
+            this.rbnTodos.UseVisualStyleBackColor = true;
+            this.rbnTodos.CheckedChanged += new System.EventHandler(this.rbnTodos_CheckedChanged);
+            // 
             // FormABMClientes_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(677, 419);
+            this.Controls.Add(this.rbnTodos);
+            this.Controls.Add(this.rbnActivos);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.lblmensaje);
             this.Controls.Add(this.btnapli);
@@ -349,5 +377,7 @@
         private System.Windows.Forms.Label lblmensaje;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.RadioButton rbnActivos;
+        private System.Windows.Forms.RadioButton rbnTodos;
     }
 }

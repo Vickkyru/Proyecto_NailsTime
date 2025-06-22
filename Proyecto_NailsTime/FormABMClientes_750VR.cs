@@ -63,6 +63,7 @@ namespace Proyecto_NailsTime
                 string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
                 BLLCliente_750VR bll = new BLLCliente_750VR();
                 var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
+                btnañadir.Enabled = false;
 
                 if (cliente != null)
                 {
@@ -70,8 +71,11 @@ namespace Proyecto_NailsTime
                     txtnom.Text = cliente.nombre_750VR;
                     txtape.Text = cliente.apellido_750VR;
 
+                    //emailCifradoActual = cliente.gmail_750VR;
+                    //txtemail.Text = DesencriptarEmail(emailCifradoActual);
                     emailCifradoActual = cliente.gmail_750VR;
-                    txtemail.Text = checkBox1.Checked ? DesencriptarEmail(emailCifradoActual) : "[Email protegido]";
+txtemail.Text = emailCifradoActual; // Mostramos cifrado por defecto
+checkBox1.Checked = false; // Reseteamos el checkbox
 
                     txtcel.Text = cliente.celular_750VR.ToString();
                     txtdire.Text = cliente.direccion_750VR;
@@ -125,14 +129,14 @@ namespace Proyecto_NailsTime
                 dataGridView1.DataSource = resultados;
 
                 btncance.Enabled = false;
- 
-                //PintarUsuariosInactivos();
+
+                PintarUsuariosInactivos();
                 LimpiarCampos();
                 return;
             }
 
             // Validar campos solo si no estamos eliminando ni desbloqueando
-            if (!ValidarCampos() && modoActual != "Activar/Desactivar" && modoActual != "desbloquear")
+            if (!ValidarCampos() && modoActual != "Activar/Desactivar" )
                 return;
 
             // Ejecutar la acción según el modo
@@ -157,23 +161,26 @@ namespace Proyecto_NailsTime
             
             //lblmensaje.Text = "Modo Consulta";
             ResetearEstadoInterfaz();
-            CargarUsuarios(); // Refrescar grilla general
+            bool mostrarSoloActivos = rbnActivos.Checked;
+            CargarUsuarios(mostrarSoloActivos);
             LimpiarCampos();
 
         }
 
-        private void CargarUsuarios()
+        private void CargarUsuarios(bool soloActivos)
         {
             var bll = new BLLCliente_750VR();
-            var lista = bll.leerEntidades_750VR();
+    var lista = bll.leerEntidades_750VR();
 
-            dataGridView1.Columns.Clear();
-            dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = lista;
+    if (soloActivos)
+        lista = lista.Where(c => c.activo_750VR).ToList();
 
+    dataGridView1.Columns.Clear();
+    dataGridView1.AutoGenerateColumns = true;
+    dataGridView1.DataSource = lista;
 
-            PintarUsuariosInactivos();
-            TraducirEncabezadosDataGrid();
+    PintarUsuariosInactivos();
+    TraducirEncabezadosDataGrid();
 
         }
         private void TraducirEncabezadosDataGrid()
@@ -232,7 +239,8 @@ namespace Proyecto_NailsTime
 
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta(clave));
 
-                CargarUsuarios();
+                bool mostrarSoloActivos = rbnActivos.Checked;
+                CargarUsuarios(mostrarSoloActivos); 
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
@@ -268,7 +276,8 @@ namespace Proyecto_NailsTime
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteModificado"));
 
-                CargarUsuarios();
+                bool mostrarSoloActivos = rbnActivos.Checked;
+                CargarUsuarios(mostrarSoloActivos);
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
@@ -320,7 +329,8 @@ namespace Proyecto_NailsTime
 
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteCreado"));
                 LimpiarCampos();
-                CargarUsuarios();
+                bool mostrarSoloActivos = rbnActivos.Checked;
+                CargarUsuarios(mostrarSoloActivos);
             }
             catch (Exception ex)
             {
@@ -406,7 +416,8 @@ namespace Proyecto_NailsTime
             LimpiarCampos();
 
             ResetearEstadoInterfaz();
-            CargarUsuarios();  
+            bool mostrarSoloActivos = rbnActivos.Checked;
+            CargarUsuarios(mostrarSoloActivos);
         }
 
         private void ActivarModoEdicion()
@@ -558,7 +569,7 @@ namespace Proyecto_NailsTime
                 ActualizarMensajeModo();
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.MensajeAltaDesdeReserva"));
 
-                PintarUsuariosInactivos();
+                CargarUsuarios(true);
                 ActivarModoEdicion();
                 btncance.Enabled = false;
             }
@@ -584,7 +595,7 @@ namespace Proyecto_NailsTime
 
             }
 
-            CargarUsuarios();
+            CargarUsuarios(true);
             ActualizarIdioma();
             ActivarModoEdicion();
             PintarUsuariosInactivos();
@@ -598,7 +609,14 @@ namespace Proyecto_NailsTime
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            txtemail.Text = checkBox1.Checked ? DesencriptarEmail(emailCifradoActual) : "[Email protegido]";
+            if (checkBox1.Checked)
+            {
+                txtemail.Text = DesencriptarEmail(emailCifradoActual); // Mostrar desencriptado
+            }
+            else
+            {
+                txtemail.Text = emailCifradoActual; // Mostrar cifrado
+            }
         }
 
         private string emailCifradoActual = "";
@@ -615,5 +633,16 @@ namespace Proyecto_NailsTime
             }
         }
 
+        private void rbnActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnActivos.Checked)
+                CargarUsuarios(true);
+        }
+
+        private void rbnTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnTodos.Checked)
+                CargarUsuarios(false);
+        }
     }
 }

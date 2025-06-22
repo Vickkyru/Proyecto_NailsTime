@@ -387,6 +387,7 @@ namespace Proyecto_NailsTime
                 }
                 dateTimePicker1.Enabled = false;
                 cmbmanic.Enabled = false;
+                
                 txthorario.Text = horaInicioStr;
             }
         }
