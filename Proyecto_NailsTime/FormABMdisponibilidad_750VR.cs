@@ -22,8 +22,8 @@ namespace Proyecto_NailsTime
         public FormABMdisponibilidad_750VR()
         {
             InitializeComponent();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
@@ -387,14 +387,32 @@ namespace Proyecto_NailsTime
                 btncance.Enabled = true;
                 btnelim.Enabled = false;
                 btnmod.Enabled = false;
+
+                txtdnimanic.Enabled = modoActual == "añadir";
+                txtfin.Enabled = true;
+                txtinicio.Enabled = true;
+                dateTimePicker1.Enabled = true;
+                cmbmanic.Enabled = true;
+                //txtdire.Enabled = true;
             }
 
-            if (modoActual == "añadir" || modoActual == "modificar")
+            if (modoActual == "modificar")
             {
-                dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = true;
+                dataGridView1.Enabled = false;
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
+                btnelim.Enabled = false;
+                btnañadir.Enabled = false;
+
+                txtdnimanic.Enabled = modoActual == "añadir";
+                txtfin.Enabled = true;
+                txtinicio.Enabled = true;
+                dateTimePicker1.Enabled = true;
+                cmbmanic.Enabled = true;
+                //txtdire.Enabled = true;
+
             }
+
             else if (modoActual == "cambiarEstado")
             {
                 dataGridView1.Enabled = true;
@@ -408,13 +426,7 @@ namespace Proyecto_NailsTime
             }
 
 
-            //btnapli.Enabled = false;
-            //btncance.Enabled = false;
-
-
-            btnañadir.Enabled = true;
-            btnmod.Enabled = true;
-            btnelim.Enabled = true;
+       
 
 
         }

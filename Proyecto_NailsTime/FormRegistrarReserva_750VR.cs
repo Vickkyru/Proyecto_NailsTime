@@ -356,15 +356,35 @@ namespace Proyecto_NailsTime
                 DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
                 string horaInicioStr = fila.Cells["Hora Inicio"].Value.ToString();
 
-                
-                var manicSeleccionado = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dniManic);
-                if (manicSeleccionado != null)
+                foreach (var item in cmbmanic.Items)
                 {
-                    cmbmanic.SelectedValue = manicSeleccionado.dni_750VR;
+                    if (item is BEusuario_750VR manic && manic.dni_750VR == dniManic)
+                    {
+                        cmbmanic.SelectedItem = item;
+                        break;
+                    }
                 }
 
-                
-                dateTimePicker1.Value = fecha;
+
+                try
+                {
+                    var valorCelda = fila.Cells["Fecha"].Value;
+
+                    if (valorCelda != null && DateTime.TryParse(valorCelda.ToString(), out DateTime fechaSeleccionada))
+                    {
+                        dateTimePicker1.MinDate = DateTimePicker.MinimumDateTime;
+                        dateTimePicker1.MaxDate = DateTimePicker.MaximumDateTime;
+                        dateTimePicker1.Value = fechaSeleccionada;
+                    }
+                    else
+                    {
+                        MessageBox.Show("La fecha seleccionada no es válida.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al asignar la fecha: " + ex.Message);
+                }
                 dateTimePicker1.Enabled = false;
                 cmbmanic.Enabled = false;
                 txthorario.Text = horaInicioStr;

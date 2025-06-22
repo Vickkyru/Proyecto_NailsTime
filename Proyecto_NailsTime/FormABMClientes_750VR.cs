@@ -86,7 +86,8 @@ namespace Proyecto_NailsTime
 
         private void btnañadir_Click(object sender, EventArgs e)
         {
-            
+            btnelim.Enabled = false;
+            btnmod.Enabled = false;
             modoActual = "añadir";
             ActualizarMensajeModo();
             ActivarModoEdicion();
@@ -376,7 +377,8 @@ namespace Proyecto_NailsTime
 
         private void btnelim_Click(object sender, EventArgs e)
         {
-           
+            btnañadir.Enabled = false;
+            btnmod.Enabled = false;
             //lblmensaje.Text = "Modo Activar/Desactivar";
             modoActual = "Activar/Desactivar";
             ActualizarMensajeModo();
@@ -385,6 +387,8 @@ namespace Proyecto_NailsTime
 
         private void btnmod_Click(object sender, EventArgs e)
         {
+            btnelim.Enabled = false;
+            btnañadir.Enabled = false;
             modoActual = "modificar";
             ActualizarMensajeModo();
             ActivarModoEdicion();
@@ -412,8 +416,7 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = false;
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
-                btnelim.Enabled = false;
-                btnmod.Enabled = false;
+               
 
                 txtdni.Enabled = modoActual == "añadir";
                 txtnom.Enabled = true;
@@ -463,10 +466,6 @@ namespace Proyecto_NailsTime
             //btnapli.Enabled = false;
             //btncance.Enabled = false;
 
-            
-            btnañadir.Enabled = true;
-            btnmod.Enabled = true;
-            btnelim.Enabled = true;
 
         }
 
