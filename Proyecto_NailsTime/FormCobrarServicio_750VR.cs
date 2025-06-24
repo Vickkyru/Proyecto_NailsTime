@@ -154,8 +154,12 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK; 
+            
+            MessageBox.Show("la reserva quedo pendiente de cobro.");
             this.Close();
+
+           
+
         }
     }
 }

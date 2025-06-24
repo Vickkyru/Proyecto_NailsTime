@@ -24,9 +24,9 @@ namespace Proyecto_NailsTime
         public Form1_750VR()
         {
             InitializeComponent();
-            //db.VerificarOCrearBaseDeDatos();
-            //db.VerificarYCrearTablaUsuarios_750VR();
-            //db.InsertarServiciosIniciales();
+            db.VerificarOCrearBaseDeDatos();
+            db.VerificarYCrearTablaUsuarios_750VR();
+            db.InsertarServiciosIniciales();
             //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 

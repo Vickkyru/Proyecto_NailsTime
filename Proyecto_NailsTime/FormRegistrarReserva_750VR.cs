@@ -249,20 +249,35 @@ namespace Proyecto_NailsTime
 
                 FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.CodReserva_750VR);
                 var resultado = frmCobro.ShowDialog();
+
                 if (resultado == DialogResult.OK)
                 {
-                    //MessageBox.Show("Reserva cobrada correctamente.");
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcobrada"));
+                    //MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcobrada"));
                 }
                 else
                 {
-                    //MessageBox.Show("La reserva quedó pendiente de cobro.");
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIpendiente"));
+                    // Si cancela el cobro, cambiar el estado y devolver disponibilidad
+                    var bllReservaa = new BLLReserva_750VR();
+                    bllReservaa.ActualizarEstadoReserva(nuevaReserva.CodReserva_750VR, "Cancelado");
+
+                    var bllDispo = new BLLdisponibilidad_750VR();
+                    var nuevaDispo = new BEdisponibilidad_750VR(
+                        dni: nuevaReserva.DNImanic_750VR,
+                        fecha: nuevaReserva.Fecha_750VR,
+                        ini: nuevaReserva.HoraInicio_750VR,
+                        fin: nuevaReserva.HoraFin_750VR,
+                        acr: true,
+                        est: false
+                    );
+                    bllDispo.CrearDisponibilidad_750VR(nuevaDispo);
+
+                    //MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.MensajeReservaCancelada"));
                 }
 
                 CargarReservas();
                 LimpiarCamposReserva();
-                CargarReservasDispo();
+                CargarReservasFiltradas();
+                //CargarReservasDispo();
             }
             catch (Exception)
             {
@@ -281,7 +296,7 @@ namespace Proyecto_NailsTime
         private void LimpiarCamposReserva()
         {
             txtdni.Clear();
-            txtnom.Clear(); // si tenés
+            txtnom.Clear(); 
 
             cmbmanic.SelectedIndex = -1;
             cmbserv.SelectedIndex = -1;
@@ -334,7 +349,7 @@ namespace Proyecto_NailsTime
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             cmbmanic.SelectedIndexChanged += cmbmanic_SelectedIndexChanged;
             CargarServicios();
-
+            radioButton1.Checked = true;
             CargarManicuristas();
             //CargarReservasDispo();
             CargarReservasFiltradas();
@@ -446,68 +461,68 @@ namespace Proyecto_NailsTime
             CargarDisponibilidades();
         }
 
-        public void CargarReservasDispo()
-        {
+        //public void CargarReservasDispo()
+        //{
 
 
-            BLLReserva_750VR bll = new BLLReserva_750VR();
-            var lista = bll.leerEntidades_750VR(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
+        //    BLLReserva_750VR bll = new BLLReserva_750VR();
+        //    var lista = bll.leerEntidades_750VR(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
 
-            DataTable tabla = new DataTable();
-            tabla.Columns.Add("ID", typeof(int));
-            tabla.Columns.Add("Cliente", typeof(string));
-            tabla.Columns.Add("Manicurista", typeof(string));
-            tabla.Columns.Add("Servicio", typeof(string));
-            tabla.Columns.Add("Fecha", typeof(DateTime));
-            tabla.Columns.Add("Hora Inicio", typeof(string));
-            tabla.Columns.Add("Hora Fin", typeof(string));
-            tabla.Columns.Add("Precio", typeof(decimal));
-            tabla.Columns.Add("Cobrado", typeof(string));
+        //    DataTable tabla = new DataTable();
+        //    tabla.Columns.Add("ID", typeof(int));
+        //    tabla.Columns.Add("Cliente", typeof(string));
+        //    tabla.Columns.Add("Manicurista", typeof(string));
+        //    tabla.Columns.Add("Servicio", typeof(string));
+        //    tabla.Columns.Add("Fecha", typeof(DateTime));
+        //    tabla.Columns.Add("Hora Inicio", typeof(string));
+        //    tabla.Columns.Add("Hora Fin", typeof(string));
+        //    tabla.Columns.Add("Precio", typeof(decimal));
+        //    tabla.Columns.Add("Cobrado", typeof(string));
 
-            foreach (var r in lista)
-            {
-                string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
-                string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
-                string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_SinServicio");
+        //    foreach (var r in lista)
+        //    {
+        //        string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+        //        string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+        //        string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_SinServicio");
 
-                string cobrado = r.Cobrado_750VR
-                    ? Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Si")
-                    : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
+        //        string cobrado = r.Cobrado_750VR
+        //            ? Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Si")
+        //            : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
 
-                tabla.Rows.Add(
-                    r.CodReserva_750VR,
-                    cliente,
-                    manic,
-                    servicio,
-                    r.Fecha_750VR.Date,
-                    r.HoraInicio_750VR.ToString(@"hh\:mm"),
-                    r.HoraFin_750VR.ToString(@"hh\:mm"),
-                    r.Precio_750VR,
-                    cobrado
-                        );
-            }
+        //        tabla.Rows.Add(
+        //            r.CodReserva_750VR,
+        //            cliente,
+        //            manic,
+        //            servicio,
+        //            r.Fecha_750VR.Date,
+        //            r.HoraInicio_750VR.ToString(@"hh\:mm"),
+        //            r.HoraFin_750VR.ToString(@"hh\:mm"),
+        //            r.Precio_750VR,
+        //            cobrado
+        //                );
+        //    }
 
-            dataGridView2.DataSource = tabla;
-            dataGridView2.Columns["ID"].Visible = false;
-            // 🔤 Traducción de encabezados
-            dataGridView2.Columns["Cliente"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cliente");
-            dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Manicurista");
-            dataGridView2.Columns["Servicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Servicio");
-            dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Fecha");
-            dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraInicio");
-            dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraFin");
-            dataGridView2.Columns["Precio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Precio");
-            dataGridView2.Columns["Cobrado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cobrado");
+        //    dataGridView2.DataSource = tabla;
+        //    dataGridView2.Columns["ID"].Visible = false;
+        //    // 🔤 Traducción de encabezados
+        //    dataGridView2.Columns["Cliente"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cliente");
+        //    dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Manicurista");
+        //    dataGridView2.Columns["Servicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Servicio");
+        //    dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Fecha");
+        //    dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraInicio");
+        //    dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraFin");
+        //    dataGridView2.Columns["Precio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Precio");
+        //    dataGridView2.Columns["Cobrado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cobrado");
 
-            foreach (DataGridViewRow fila in dataGridView2.Rows)
-            {
-                if (fila.Cells["Cobrado"].Value?.ToString() == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No"))
-                {
-                    fila.DefaultCellStyle.BackColor = Color.LightCoral;
-                    fila.ReadOnly = true; // evita modificación directa
-                }
-            }
-        }
+        //    foreach (DataGridViewRow fila in dataGridView2.Rows)
+        //    {
+        //        if (fila.Cells["Cobrado"].Value?.ToString() == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No"))
+        //        {
+        //            fila.DefaultCellStyle.BackColor = Color.LightCoral;
+        //            fila.ReadOnly = true; // evita modificación directa
+        //        }
+        //    }
+        //}
 
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -617,7 +632,8 @@ namespace Proyecto_NailsTime
                 MessageBoxIcon.Information
             );
 
-            CargarReservasDispo();
+            //CargarReservasDispo();
+            CargarReservasFiltradas();
             CargarDisponibilidades();
             idReservaSeleccionada = -1;
 
@@ -722,6 +738,13 @@ namespace Proyecto_NailsTime
                 MessageBox.Show("Hora inválida.");
                 return;
             }
+            if (reservaExistente.Estado_750VR.Equals("Cancelado", StringComparison.OrdinalIgnoreCase) ||
+    reservaExistente.Cobrado_750VR == false)
+            {
+                MessageBox.Show("No se puede modificar una reserva cancelada o no cobrada.");
+                return;
+            }
+
 
             TimeSpan horaFin = horaInicio.Add(TimeSpan.FromMinutes(servicio.duracion_750VR));
 
@@ -756,6 +779,7 @@ namespace Proyecto_NailsTime
                 return;
             }
 
+
             // 🟢 3. Actualizar la reserva
             BEReserva_750VR nueva = new BEReserva_750VR(
                 cod: idReserva,
@@ -780,7 +804,7 @@ namespace Proyecto_NailsTime
                 // 🟢 4. Dividir la nueva disponibilidad
                 DividirDisponibilidad(dispoNueva, TimeSpan.FromMinutes(servicio.duracion_750VR));
                 MessageBox.Show("Reserva modificada correctamente.");
-                CargarReservasDispo();
+                CargarReservasFiltradas();
                 CargarDisponibilidades();
             }
             else
@@ -803,10 +827,12 @@ namespace Proyecto_NailsTime
             {
                 var fila = dataGridView2.SelectedRows[0];
                 var estadoCobro = fila.Cells["Cobrado"].Value?.ToString();
+                var estadoReserva = fila.Cells["Estado"]?.Value?.ToString();
 
-                if (estadoCobro == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No"))
+                if (estadoCobro == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No") ||
+                    estadoReserva?.Equals("Cancelado", StringComparison.OrdinalIgnoreCase) == true)
                 {
-                    dataGridView2.ClearSelection(); // evita que quede seleccionada
+                    dataGridView2.ClearSelection();
                     idReservaSeleccionada = -1;
                     return;
                 }
@@ -835,9 +861,10 @@ namespace Proyecto_NailsTime
             var bll = new BLLReserva_750VR();
             var lista = bll.leerEntidades_750VR(); // trae cliente, manic, serv
 
+            // Filtrar según el radio button
             if (radioButton2.Checked)
             {
-                lista = lista.Where(r => !r.Cobrado_750VR).ToList();
+                lista = lista.Where(r => !r.Cobrado_750VR).ToList(); // No cobrados
             }
             else if (radioButton3.Checked)
             {
@@ -848,7 +875,76 @@ namespace Proyecto_NailsTime
                 lista = lista.Where(r => r.Cobrado_750VR && !r.Estado_750VR.Equals("Cancelado", StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-   
+            // Armar tabla como en CargarReservasDispo()
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("ID", typeof(int));
+            tabla.Columns.Add("Cliente", typeof(string));
+            tabla.Columns.Add("Manicurista", typeof(string));
+            tabla.Columns.Add("Servicio", typeof(string));
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Hora Inicio", typeof(string));
+            tabla.Columns.Add("Hora Fin", typeof(string));
+            tabla.Columns.Add("Precio", typeof(decimal));
+            tabla.Columns.Add("Cobrado", typeof(string));
+            tabla.Columns.Add("Estado", typeof(string));
+
+            foreach (var r in lista)
+            {
+                string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+                string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
+                string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_SinServicio");
+
+                string cobrado = r.Cobrado_750VR
+                    ? Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Si")
+                    : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
+
+                tabla.Rows.Add(
+                    r.CodReserva_750VR,
+                    cliente,
+                    manic,
+                    servicio,
+                    r.Fecha_750VR.Date,
+                    r.HoraInicio_750VR.ToString(@"hh\:mm"),
+                    r.HoraFin_750VR.ToString(@"hh\:mm"),
+                    r.Precio_750VR,
+                    cobrado,
+                    r.Estado_750VR
+                );
+            }
+
+            dataGridView2.DataSource = tabla;
+            dataGridView2.Columns["ID"].Visible = false;
+
+            // Encabezados traducidos
+            dataGridView2.Columns["Cliente"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cliente");
+            dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Manicurista");
+            dataGridView2.Columns["Servicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Servicio");
+            dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Fecha");
+            dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraInicio");
+            dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraFin");
+            dataGridView2.Columns["Precio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Precio");
+            dataGridView2.Columns["Cobrado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cobrado");
+            dataGridView2.Columns["Estado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Estado");
+
+
+
+            foreach (DataGridViewRow fila in dataGridView2.Rows)
+            {
+                string cobrado = fila.Cells["Cobrado"].Value?.ToString();
+                string estado = fila.Cells["Estado"]?.Value?.ToString();
+
+                if (cobrado == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No"))
+                {
+                    fila.DefaultCellStyle.BackColor = Color.LightCoral; // No cobrado → rojo claro
+                    fila.ReadOnly = true;
+                }
+                else if (estado != null && estado.Equals("Cancelado", StringComparison.OrdinalIgnoreCase))
+                {
+                    fila.DefaultCellStyle.BackColor = Color.LightSalmon; // Cancelado → naranja claro
+                    fila.ReadOnly = true;
+                }
+            }
+
         }
     }
 }
