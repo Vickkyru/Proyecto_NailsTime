@@ -48,7 +48,7 @@ namespace Proyecto_NailsTime
         private void CargarInsumos()
         {
             BLLinsumos_750VR bllInsumo = new BLLinsumos_750VR();
-            var listaInsumos = bllInsumo.ObtenerInsumosActivos();
+            var listaInsumos = bllInsumo.LeerInsumosActivos_750VR();
 
             comboBox1.DataSource = listaInsumos;
             comboBox1.DisplayMember = "nombre_750VR";

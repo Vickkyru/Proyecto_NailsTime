@@ -257,8 +257,8 @@ END;
 (11000000, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0, 'Español'),
 (11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español'),
 
-(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Ingles'),
-(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Ingles')
+(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Español'),
+(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Español')
             END
 
             IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)

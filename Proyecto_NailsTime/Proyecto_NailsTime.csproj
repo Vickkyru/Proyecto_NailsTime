@@ -75,6 +75,12 @@
     <Compile Include="FormABMdisponibilidad_750VR.Designer.cs">
       <DependentUpon>FormABMdisponibilidad_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormABMinsumos_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormABMinsumos_750VR.Designer.cs">
+      <DependentUpon>FormABMinsumos_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormABMservicios_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormABMdisponibilidad_750VR.resx">
       <DependentUpon>FormABMdisponibilidad_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormABMinsumos_750VR.resx">
+      <DependentUpon>FormABMinsumos_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormABMservicios_750VR.resx">
       <DependentUpon>FormABMservicios_750VR.cs</DependentUpon>

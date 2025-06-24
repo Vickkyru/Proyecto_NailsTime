@@ -166,6 +166,7 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             ActualizarLabels();
             Actualizar();
           
@@ -245,6 +246,11 @@ namespace Proyecto_NailsTime
         private void cambiarIdiomaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirForm(new FormCambioIdioma_750VR());
+        }
+
+        private void insumosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormABMinsumos_750VR());
         }
     }
 }
