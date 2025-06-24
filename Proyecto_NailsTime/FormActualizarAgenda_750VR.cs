@@ -111,7 +111,11 @@ namespace Proyecto_NailsTime
             int dniManicurista = sesion.user.dni_750VR;
 
             var bll = new BLLReserva_750VR();
-            var reservas = bll.ObtenerReservasPorManicurista(dniManicurista);
+
+            // ⚠️ Filtramos SOLO las reservas cobradas
+            var reservas = bll.ObtenerReservasPorManicurista(dniManicurista)
+                              .Where(r => r.Cobrado_750VR) // <-- este filtro es clave
+                              .ToList();
 
             DataTable tabla = new DataTable();
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.DNICliente"), typeof(int));

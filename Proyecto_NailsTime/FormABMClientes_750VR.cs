@@ -66,7 +66,7 @@ namespace Proyecto_NailsTime
                 string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
                 BLLCliente_750VR bll = new BLLCliente_750VR();
                 var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
-                btnañadir.Enabled = false;
+                
 
                 if (cliente != null)
                 {
@@ -211,7 +211,7 @@ checkBox1.Checked = false;
             {
                 if (fila.DataBoundItem is BECliente_750VR usuario && !usuario.activo_750VR)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.Red;
+                    fila.DefaultCellStyle.BackColor = Color.LightCoral;
                 }
             }
         }

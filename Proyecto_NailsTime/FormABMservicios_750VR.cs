@@ -20,8 +20,8 @@ namespace Proyecto_NailsTime
         public FormABMservicios_750VR()
         {
             InitializeComponent();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
@@ -30,7 +30,7 @@ namespace Proyecto_NailsTime
         }
         private void ActualizarMensajeModo()
         {
-            string clave = "FormABMdisponibilidad.Mensaje." + modoActual;
+            string clave = "FormABMservicios_750VR.Mensaje." + modoActual;
             lblmensaje.Text = Lenguaje_750VR.ObtenerEtiqueta(clave);
         }
 
@@ -59,8 +59,8 @@ namespace Proyecto_NailsTime
 
         private void btnsalir_Click(object sender, EventArgs e)
         {
-            var mensaje = Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ConfirmarSalidaMensaje");
-            var titulo = Lenguaje_750VR.ObtenerEtiqueta("FormABMdisponibilidad_750VR.ConfirmarSalidaTitulo");
+            var mensaje = Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ConfirmarSalidaMensaje");
+            var titulo = Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ConfirmarSalidaTitulo");
 
             var result = MessageBox.Show(mensaje, titulo, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -90,55 +90,62 @@ namespace Proyecto_NailsTime
             //lblmensaje.Text = "Modo Consulta";
             ActualizarMensajeModo();
             ResetearEstadoInterfaz();
-            CargarServicios();
+            CargarServicios(true);
             LimpiarCampos();
         }
 
-        private void CargarServicios()
+        private void CargarServicios(bool soloActivos)
         {
             var bll = new BLLServicio_750VR();
             var lista = bll.LeerEntidades_750VR();
 
+            // Filtrar si se solicitan solo los activos
+            if (soloActivos)
+            {
+                lista = lista.Where(s => s.activo_750VR).ToList();
+            }
+
+            // Configurar el DataGridView
+            dataGridView1.DataSource = null;
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = lista;
-
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "nombre_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Nombre"),
-                Name = "colNombre"
+                ReadOnly = true
             });
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "tecnica_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Tecnica"),
-                Name = "colTecnica"
+                ReadOnly = true
             });
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "duracion_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Duracion"),
-                Name = "colDuracion"
+                ReadOnly = true
             });
 
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "precio_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Precio"),
-                Name = "colPrecio"
+                ReadOnly = true
             });
 
             dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn
             {
                 DataPropertyName = "activo_750VR",
                 HeaderText = Lenguaje_750VR.ObtenerEtiqueta("Grid.Servicio.Estado"),
-                Name = "colEstado"
+                ReadOnly = true
             });
 
+            dataGridView1.DataSource = lista;
             PintarServiciosInactivos();
         }
 
@@ -150,7 +157,7 @@ namespace Proyecto_NailsTime
             {
                 if (fila.DataBoundItem is BEServicio_750VR usuario && !usuario.activo_750VR)
                 {
-                    fila.DefaultCellStyle.BackColor = Color.Red;
+                    fila.DefaultCellStyle.BackColor = Color.LightCoral;
                 }
             }
         }
@@ -179,7 +186,7 @@ namespace Proyecto_NailsTime
                 : Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioDesactivado");
 
             MessageBox.Show(mensaje);
-            CargarServicios();
+            CargarServicios(true);
             ResetearEstadoInterfaz();
             LimpiarCampos();
         }
@@ -242,7 +249,7 @@ namespace Proyecto_NailsTime
                 MessageBox.Show(
                     Lenguaje_750VR.ObtenerEtiqueta("FormABMservicios_750VR.ServicioModificado")
                 );
-                CargarServicios();
+                CargarServicios(true);
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
@@ -295,7 +302,7 @@ namespace Proyecto_NailsTime
                     MessageBoxIcon.Information
                 );
                 LimpiarCampos();
-                CargarServicios();
+                CargarServicios(true);
             }
             catch (Exception ex)
             {
@@ -380,7 +387,7 @@ namespace Proyecto_NailsTime
             LimpiarCampos();
 
             ResetearEstadoInterfaz();
-            CargarServicios();   // Mostrar todos
+            CargarServicios(true);   // Mostrar todos
         }
 
         private void ActivarModoEdicion()
@@ -489,7 +496,7 @@ namespace Proyecto_NailsTime
         private void FormABMservicios_750VR_Load(object sender, EventArgs e)
         {
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
-            CargarServicios();
+            CargarServicios(true);
 
             // Deshabilitar botones Aplicar y Cancelar
             btnapli.Enabled = false;
@@ -499,7 +506,7 @@ namespace Proyecto_NailsTime
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-
+            rbnActivos.Checked = true;
 
             // Iniciar en modo consulta
             modoActual = "consulta";
@@ -520,6 +527,16 @@ namespace Proyecto_NailsTime
                     txtprecio.Text = servicio.precio_750VR.ToString("0.00");
                 }
             }
+        }
+
+        private void rbnActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnActivos.Checked) CargarServicios(true);
+        }
+
+        private void rbnTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnTodos.Checked) CargarServicios(false);
         }
     }
 }

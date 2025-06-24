@@ -38,7 +38,6 @@
             this.txtape = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtdni = new System.Windows.Forms.TextBox();
-            this.lblcantuser = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnañadir = new System.Windows.Forms.Button();
             this.btncance = new System.Windows.Forms.Button();
@@ -135,14 +134,6 @@
             this.txtdni.Size = new System.Drawing.Size(100, 20);
             this.txtdni.TabIndex = 46;
             this.txtdni.TextChanged += new System.EventHandler(this.txtdni_TextChanged);
-            // 
-            // lblcantuser
-            // 
-            this.lblcantuser.AutoSize = true;
-            this.lblcantuser.Location = new System.Drawing.Point(660, 12);
-            this.lblcantuser.Name = "lblcantuser";
-            this.lblcantuser.Size = new System.Drawing.Size(0, 13);
-            this.lblcantuser.TabIndex = 58;
             // 
             // label2
             // 
@@ -316,7 +307,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(677, 419);
+            this.ClientSize = new System.Drawing.Size(750, 419);
             this.Controls.Add(this.rbnTodos);
             this.Controls.Add(this.rbnActivos);
             this.Controls.Add(this.checkBox1);
@@ -340,7 +331,6 @@
             this.Controls.Add(this.txtape);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtdni);
-            this.Controls.Add(this.lblcantuser);
             this.Controls.Add(this.label2);
             this.Name = "FormABMClientes_750VR";
             this.Text = "FormRegistroClientes";
@@ -362,7 +352,6 @@
         private System.Windows.Forms.TextBox txtape;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtdni;
-        private System.Windows.Forms.Label lblcantuser;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnañadir;
         private System.Windows.Forms.Button btncance;

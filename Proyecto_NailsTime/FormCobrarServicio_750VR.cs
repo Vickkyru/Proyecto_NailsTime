@@ -14,7 +14,7 @@ namespace Proyecto_NailsTime
 {
     public partial class FormCobrarServicio_750VR : Form, Iobserver_750VR
     {
-        private int idReserva; // este campo almacena el ID recibido
+        private int idReserva; 
         public FormCobrarServicio_750VR(int idReservaRecibido)
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Proyecto_NailsTime
         private void CargarDatosReserva()
         {
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            var reserva = bll.ObtenerReservaPorId(idReserva); // tenés que tener este método
+            var reserva = bll.ObtenerReservaPorId(idReserva); 
 
             if (reserva != null)
             {
@@ -43,7 +43,9 @@ namespace Proyecto_NailsTime
         private void FormCobrarServicio_750VR_Load(object sender, EventArgs e)
         {
             cmbmet.Items.AddRange(new string[] { "Efectivo", "Débito", "Crédito" });
-            cmbmet.SelectedIndex = 0; // predeterminado
+            cmbmet.SelectedIndex = 0;
+
+            cmbmet.SelectedIndexChanged += cmbmet_SelectedIndexChanged;
 
             txtnum.Enabled = false;
             txtcuot.Enabled = false;
@@ -51,6 +53,8 @@ namespace Proyecto_NailsTime
 
         private void cmbmet_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cmbmet.SelectedItem == null) return;  
+
             string metodo = cmbmet.SelectedItem.ToString();
 
             switch (metodo)
@@ -150,7 +154,7 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK; // o Cancel según corresponda
+            this.DialogResult = DialogResult.OK; 
             this.Close();
         }
     }

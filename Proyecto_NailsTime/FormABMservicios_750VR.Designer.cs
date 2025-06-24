@@ -235,6 +235,7 @@
             this.rbnTodos.TabStop = true;
             this.rbnTodos.Text = "todos";
             this.rbnTodos.UseVisualStyleBackColor = true;
+            this.rbnTodos.CheckedChanged += new System.EventHandler(this.rbnTodos_CheckedChanged);
             // 
             // rbnActivos
             // 
@@ -246,6 +247,7 @@
             this.rbnActivos.TabStop = true;
             this.rbnActivos.Text = "Activos";
             this.rbnActivos.UseVisualStyleBackColor = true;
+            this.rbnActivos.CheckedChanged += new System.EventHandler(this.rbnActivos_CheckedChanged);
             // 
             // FormABMservicios_750VR
             // 

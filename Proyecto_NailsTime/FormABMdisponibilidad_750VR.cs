@@ -397,7 +397,7 @@ namespace Proyecto_NailsTime
                 btnelim.Enabled = false;
                 btnmod.Enabled = false;
 
-                txtdnimanic.Enabled = modoActual == "añadir";
+                txtdnimanic.Enabled = false;
                 txtfin.Enabled = true;
                 txtinicio.Enabled = true;
                 dateTimePicker1.Enabled = true;
@@ -413,7 +413,7 @@ namespace Proyecto_NailsTime
                 btnelim.Enabled = false;
                 btnañadir.Enabled = false;
 
-                txtdnimanic.Enabled = modoActual == "añadir";
+                txtdnimanic.Enabled = false;
                 txtfin.Enabled = true;
                 txtinicio.Enabled = true;
                 dateTimePicker1.Enabled = true;
@@ -427,6 +427,7 @@ namespace Proyecto_NailsTime
                 dataGridView1.Enabled = true;
 
                 dateTimePicker1.Enabled = txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
+                txtdnimanic.Enabled = false;
 
                 btnapli.Enabled = true;
                 btncance.Enabled = true;
@@ -445,7 +446,9 @@ namespace Proyecto_NailsTime
             btnapli.Enabled = false;
             btncance.Enabled = false;
             btnañadir.Enabled = btnmod.Enabled = btnelim.Enabled = true;
-            txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
+            //txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
+            //dateTimePicker1.Enabled= false;
+            //txtdnimanic.Enabled= false;
             dataGridView1.Enabled = true;
         }
 
@@ -459,7 +462,7 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           
+
 
             if (dataGridView1.SelectedRows.Count > 0)
             {
