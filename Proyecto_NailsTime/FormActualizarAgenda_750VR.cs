@@ -158,7 +158,8 @@ namespace Proyecto_NailsTime
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 idReservaSeleccionada = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IdReserva"].Value);
-                textBox1.Text = idReservaSeleccionada.ToString(); 
+                textBox1.Text = idReservaSeleccionada.ToString();
+                button2.Enabled = true;
             }
 
 
@@ -215,66 +216,66 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (idReservaSeleccionada == -1)
-            {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-                return;
-            }
+            //if (idReservaSeleccionada == -1)
+            //{
+            //    MessageBox.Show(
+            //        Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
+            //        Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Warning
+            //    );
+            //    return;
+            //}
 
-            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
-            string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
+            //BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            //string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
 
-            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoCancelable"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-                return;
-            }
+            //if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    MessageBox.Show(
+            //        Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoCancelable"),
+            //        Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Information
+            //    );
+            //    return;
+            //}
 
-            // Obtener la reserva completa
-            var reserva = bllReserva.ObtenerReservaPorId(idReservaSeleccionada);
+            //// Obtener la reserva completa
+            //var reserva = bllReserva.ObtenerReservaPorId(idReservaSeleccionada);
 
-            if (reserva == null)
-            {
-                MessageBox.Show("No se encontró la reserva.");
-                return;
-            }
+            //if (reserva == null)
+            //{
+            //    MessageBox.Show("No se encontró la reserva.");
+            //    return;
+            //}
 
-            // Cambiar estado de reserva
-            bllReserva.ActualizarEstadoReserva(reserva.CodReserva_750VR, "Cancelado");
+            //// Cambiar estado de reserva
+            //bllReserva.ActualizarEstadoReserva(reserva.CodReserva_750VR, "Cancelado");
 
-            // Reactivar disponibilidad correspondiente
-            var bllDispo = new BLLdisponibilidad_750VR();
+            //// Reactivar disponibilidad correspondiente
+            //var bllDispo = new BLLdisponibilidad_750VR();
 
-            var nuevaDispo = new BEdisponibilidad_750VR(
-                dni: reserva.DNImanic_750VR,
-                fecha: reserva.Fecha_750VR,
-                ini: reserva.HoraInicio_750VR,
-                fin: reserva.HoraFin_750VR,
-                acr: true,
-                est: false
-            );
+            //var nuevaDispo = new BEdisponibilidad_750VR(
+            //    dni: reserva.DNImanic_750VR,
+            //    fecha: reserva.Fecha_750VR,
+            //    ini: reserva.HoraInicio_750VR,
+            //    fin: reserva.HoraFin_750VR,
+            //    acr: true,
+            //    est: false
+            //);
 
-            bllDispo.CrearDisponibilidad_750VR(nuevaDispo);
+            //bllDispo.CrearDisponibilidad_750VR(nuevaDispo);
 
-            MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaCancelada"),
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            //MessageBox.Show(
+            //    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaCancelada"),
+            //    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
+            //    MessageBoxButtons.OK,
+            //    MessageBoxIcon.Information
+            //);
 
-            CargarReservas();
-            Disponibilidad();
+            //CargarReservas();
+            //Disponibilidad();
 
         }
 
@@ -356,11 +357,20 @@ namespace Proyecto_NailsTime
 
                 textBox2.Clear();
                 comboBox1.SelectedIndex = -1;
+                button2.Enabled = false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al registrar insumo: " + ex.Message);
             }
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            button2.Enabled = true;
+            textBox1.Clear();
+            textBox2.Clear();
+            comboBox1.SelectedIndex = -1;
         }
     }
     
