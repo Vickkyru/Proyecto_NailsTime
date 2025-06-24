@@ -40,7 +40,7 @@ namespace Proyecto_NailsTime
 
         private void FormActualizarAgenda_750VR_Load(object sender, EventArgs e)
         {
-            //Valida();
+          
             CargarReservas();
             Disponibilidad();
             CargarInsumos();
@@ -170,41 +170,67 @@ namespace Proyecto_NailsTime
         {
             if (idReservaSeleccionada == -1)
             {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show("Seleccioná una reserva.");
                 return;
             }
 
-            BLLReserva_750VR bll = new BLLReserva_750VR();
-            string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
+            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
 
             if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoModificable"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageBox.Show("La reserva no puede ser modificada.");
                 return;
             }
 
-            // Marcar como realizado directamente
-            bll.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
+            // Validar campos de insumo
+            if (comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Debés seleccionar un insumo y especificar la cantidad utilizada.");
+                return;
+            }
 
-            // Bloqueamos botones hasta que se registren insumos
-            button2.Enabled = false; // Ausente
-            button1.Enabled = false; // Salir
-            insumosPendientes = true;
+            // Verificar cantidad
+            if (!int.TryParse(textBox2.Text, out int cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show("Cantidad inválida.");
+                return;
+            }
 
-            MessageBox.Show("Reserva marcada como 'Realizado'. Ahora debes registrar al menos un insumo para finalizar.");
+            int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
 
-            CargarReservas();
-            Disponibilidad();
+            // Verificar si el insumo ya fue agregado
+            BLLreservaInsumo_750VR bllInsumo = new BLLreservaInsumo_750VR();
+            if (bllInsumo.InsumoYaAgregado(idReservaSeleccionada, idInsumo))
+            {
+                MessageBox.Show("Este insumo ya fue cargado para esta reserva.");
+                return;
+            }
+
+            try
+            {
+                // Registrar insumo
+                bllInsumo.RegistrarInsumoUsado(idReservaSeleccionada, idInsumo, cantidad);
+
+                // Marcar como Realizado
+                bllReserva.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
+
+                // Avisar y limpiar
+                MessageBox.Show("Reserva marcada como 'Realizado' y se registró el insumo correctamente.");
+                comboBox1.SelectedIndex = -1;
+                textBox2.Clear();
+
+                // Bloquear botón "Ausente"
+                button2.Enabled = false;
+
+                // Refrescar
+                CargarReservas();
+                Disponibilidad();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al registrar insumo o actualizar reserva: " + ex.Message);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -326,62 +352,62 @@ namespace Proyecto_NailsTime
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBox1.Text) || comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
-            {
-                MessageBox.Show("Completa todos los campos.");
-                return;
-            }
+            //if (string.IsNullOrEmpty(textBox1.Text) || comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
+            //{
+            //    MessageBox.Show("Completa todos los campos.");
+            //    return;
+            //}
 
-            int idReserva = Convert.ToInt32(textBox1.Text);
-            int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
-            int cantidad;
+            //int idReserva = Convert.ToInt32(textBox1.Text);
+            //int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
+            //int cantidad;
 
-            if (!int.TryParse(textBox2.Text, out cantidad) || cantidad <= 0)
-            {
-                MessageBox.Show("Cantidad inválida.");
-                return;
-            }
+            //if (!int.TryParse(textBox2.Text, out cantidad) || cantidad <= 0)
+            //{
+            //    MessageBox.Show("Cantidad inválida.");
+            //    return;
+            //}
 
-            // 🚫 Verificamos que la reserva no esté Ausente
-            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
-            string estadoActual = bllReserva.ObtenerEstadoReserva(idReserva);
+            //// 🚫 Verificamos que la reserva no esté Ausente
+            //BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            //string estadoActual = bllReserva.ObtenerEstadoReserva(idReserva);
 
-            if (estadoActual.Equals("Ausente", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("No se pueden registrar insumos para una reserva marcada como 'Ausente'.");
-                return;
-            }
+            //if (estadoActual.Equals("Ausente", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    MessageBox.Show("No se pueden registrar insumos para una reserva marcada como 'Ausente'.");
+            //    return;
+            //}
 
-            if (!estadoActual.Equals("Realizado", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("Solo puedes registrar insumos para una reserva marcada como 'Realizado'.");
-                return;
-            }
+            //if (!estadoActual.Equals("Realizado", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    MessageBox.Show("Solo puedes registrar insumos para una reserva marcada como 'Realizado'.");
+            //    return;
+            //}
 
-            BLLreservaInsumo_750VR bll = new BLLreservaInsumo_750VR();
+            //BLLreservaInsumo_750VR bll = new BLLreservaInsumo_750VR();
 
-            if (bll.InsumoYaAgregado(idReserva, idInsumo))
-            {
-                MessageBox.Show("Este insumo ya fue cargado para esta reserva.");
-                return;
-            }
+            //if (bll.InsumoYaAgregado(idReserva, idInsumo))
+            //{
+            //    MessageBox.Show("Este insumo ya fue cargado para esta reserva.");
+            //    return;
+            //}
 
-            try
-            {
-                bll.RegistrarInsumoUsado(idReserva, idInsumo, cantidad);
-                MessageBox.Show("Insumo registrado correctamente.");
+            //try
+            //{
+            //    bll.RegistrarInsumoUsado(idReserva, idInsumo, cantidad);
+            //    MessageBox.Show("Insumo registrado correctamente.");
 
-                // ✅ Si era el primero, liberamos botón Salir
-                insumosPendientes = false;
-                button1.Enabled = true;
+            //    // ✅ Si era el primero, liberamos botón Salir
+            //    insumosPendientes = false;
+            //    button1.Enabled = true;
 
-                textBox2.Clear();
-                comboBox1.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al registrar insumo: " + ex.Message);
-            }
+            //    textBox2.Clear();
+            //    comboBox1.SelectedIndex = -1;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error al registrar insumo: " + ex.Message);
+            //}
         }
 
         private void button4_Click_1(object sender, EventArgs e)
