@@ -193,27 +193,15 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            // Validar si hay al menos un insumo registrado
-            BLLreservaInsumo_750VR bllInsumo = new BLLreservaInsumo_750VR();
-            if (!bllInsumo.TieneInsumosRegistrados(idReservaSeleccionada))
-            {
-                MessageBox.Show("Debes registrar al menos un insumo utilizado antes de marcar como 'Realizado'.");
-                insumosPendientes = true;
-                return;
-            }
-
-            // Si pasó validación, actualizar estado
+            // Marcar como realizado directamente
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
 
-            MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaRealizada"),
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            // Bloqueamos botones hasta que se registren insumos
+            button2.Enabled = false; // Ausente
+            button1.Enabled = false; // Salir
+            insumosPendientes = true;
 
-            insumosPendientes = false;
-            button2.Enabled = false; // Deshabilita el botón "Ausente"
+            MessageBox.Show("Reserva marcada como 'Realizado'. Ahora debes registrar al menos un insumo para finalizar.");
 
             CargarReservas();
             Disponibilidad();
@@ -340,7 +328,7 @@ namespace Proyecto_NailsTime
         {
             if (string.IsNullOrEmpty(textBox1.Text) || comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
             {
-                MessageBox.Show("Completa todos los campos");
+                MessageBox.Show("Completa todos los campos.");
                 return;
             }
 
@@ -350,7 +338,23 @@ namespace Proyecto_NailsTime
 
             if (!int.TryParse(textBox2.Text, out cantidad) || cantidad <= 0)
             {
-                MessageBox.Show("Cantidad inválida");
+                MessageBox.Show("Cantidad inválida.");
+                return;
+            }
+
+            // 🚫 Verificamos que la reserva no esté Ausente
+            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
+            string estadoActual = bllReserva.ObtenerEstadoReserva(idReserva);
+
+            if (estadoActual.Equals("Ausente", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("No se pueden registrar insumos para una reserva marcada como 'Ausente'.");
+                return;
+            }
+
+            if (!estadoActual.Equals("Realizado", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Solo puedes registrar insumos para una reserva marcada como 'Realizado'.");
                 return;
             }
 
@@ -365,14 +369,12 @@ namespace Proyecto_NailsTime
             try
             {
                 bll.RegistrarInsumoUsado(idReserva, idInsumo, cantidad);
+                MessageBox.Show("Insumo registrado correctamente.");
 
-                // 🔁 Se registró un insumo correctamente
-                insumosPendientes = false;         // ✅ ya no hay pendiente
-                button2.Enabled = false;           // ⛔ no puede marcar "ausente" después de registrar insumos
+                // ✅ Si era el primero, liberamos botón Salir
+                insumosPendientes = false;
+                button1.Enabled = true;
 
-                MessageBox.Show("Insumo registrado correctamente");
-
-                // Limpiar campos
                 textBox2.Clear();
                 comboBox1.SelectedIndex = -1;
             }
