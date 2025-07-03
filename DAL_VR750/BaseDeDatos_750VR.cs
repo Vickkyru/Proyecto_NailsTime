@@ -152,6 +152,20 @@ IF NOT EXISTS (
                         );
                     END;
 
+                   BEGIN 
+                        CREATE TABLE Factura_VR750 (
+                            CodFactura_VR750 INT PRIMARY KEY IDENTITY(1,1),
+                            CodReserva_VR750 INT NOT NULL,
+                             fecha_VR750 DATE NOT NULL,
+                             horaEmision_VR750 TIME NOT NULL,
+                             metodopago_VR750 VARCHAR(20) NOT NULL,
+                             total_VR750 DECIMAL(10, 2) NOT NULL,
+                             titular_VR750 NVARCHAR(100) NOT NULL,
+                            FOREIGN KEY (CodReserva_VR750) REFERENCES Reserva_VR750(CodReserva_VR750)
+);
+
+
+
                     IF NOT EXISTS (
                         SELECT * FROM INFORMATION_SCHEMA.TABLES 
                         WHERE TABLE_NAME = 'Disponibilidad_VR750'

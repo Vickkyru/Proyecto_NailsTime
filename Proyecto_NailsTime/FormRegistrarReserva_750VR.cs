@@ -25,8 +25,8 @@ namespace Proyecto_NailsTime
         public FormRegistrarReserva_750VR()
         {
             InitializeComponent();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
 
         }
 

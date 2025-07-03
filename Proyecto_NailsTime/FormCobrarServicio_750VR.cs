@@ -22,7 +22,8 @@ namespace Proyecto_NailsTime
 
             
             CargarDatosReserva();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {
@@ -90,55 +91,96 @@ namespace Proyecto_NailsTime
 
         private void btnrealiz_Click(object sender, EventArgs e)
         {
-            
-            if (cmbmet.SelectedItem == null)
+            string metodo = cmbmet.SelectedItem?.ToString();
+
+            if (string.IsNullOrWhiteSpace(metodo))
             {
-                MessageBox.Show("Seleccioná un método de pago.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeSeleccionMetodo"));
                 return;
             }
 
-            if ((cmbmet.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            if (metodo == "Débito" || metodo == "Crédito")
             {
-                MessageBox.Show("Ingresá el número de tarjeta.");
-                return;
+                // Validar número de tarjeta (13 a 19 dígitos)
+                if (string.IsNullOrWhiteSpace(txtnum.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtnum.Text, @"^\d{13,19}$"))
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTarjetaInvalida"));
+                    return;
+                }
+
+                // Validar CVC (3 o 4 dígitos)
+                if (string.IsNullOrWhiteSpace(txtcvc.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtcvc.Text, @"^\d{3,4}$"))
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeCVCInvalido"));
+                    return;
+                }
+
+                // Validar vencimiento (MM/AA o MM/AAAA)
+                if (string.IsNullOrWhiteSpace(txtvenc.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtvenc.Text, @"^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$"))
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeVencimientoInvalido"));
+                    return;
+                }
+
+                try
+                {
+                    string[] partes = txtvenc.Text.Split('/');
+                    int mes = int.Parse(partes[0]);
+                    int año = partes[1].Length == 2 ? 2000 + int.Parse(partes[1]) : int.Parse(partes[1]);
+
+                    DateTime fechaVenc = new DateTime(año, mes, 1).AddMonths(1).AddDays(-1);
+                    if (fechaVenc < DateTime.Today)
+                    {
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTarjetaVencida"));
+                        return;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeVencimientoInvalido"));
+                    return;
+                }
             }
 
-            if ((txtcvc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            // Validar cuotas (solo crédito)
+            if (metodo == "Crédito")
             {
-                MessageBox.Show("Ingresá el número de cvc.");
-                return;
+                if (string.IsNullOrWhiteSpace(txtcuot.Text) || !int.TryParse(txtcuot.Text, out int cuotas) || cuotas <= 0)
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeCuotasInvalidas"));
+                    return;
+                }
             }
 
-            if ((txtvenc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
+            // Validar nombre del titular (solo débito)
+            if (metodo == "Débito")
             {
-                MessageBox.Show("Ingresá el número de vencimiento.");
-                return;
+                if (string.IsNullOrWhiteSpace(textBox1.Text))
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularRequerido"));
+                    return;
+                }
+
+                if (!System.Text.RegularExpressions.Regex.IsMatch(textBox1.Text, @"^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$"))
+                {
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularInvalido"));
+                    return;
+                }
             }
 
-            if (cmbmet.Text == "Crédito" && string.IsNullOrWhiteSpace(txtcuot.Text))
-            {
-                MessageBox.Show("Ingresá la cantidad de cuotas.");
-                return;
-            }
-            if ((txtvenc.Text == "Débito" || cmbmet.Text == "Crédito") && string.IsNullOrWhiteSpace(txtnum.Text))
-            {
-                MessageBox.Show("Seleccione el nombre del titular.");
-                return;
-            }
-
-         
+            // Confirmar pago
             BLLReserva_750VR bll = new BLLReserva_750VR();
-            bool exito = bll.MarcarComoCobrado(idReserva); 
+            bool exito = bll.MarcarComoCobrado(idReserva);
 
             if (exito)
             {
-                MessageBox.Show("Pago registrado correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeExito"));
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Error al registrar el pago.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeError"));
             }
         }
 
@@ -154,7 +196,7 @@ namespace Proyecto_NailsTime
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
+            MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.PendienteCobro"));
             MessageBox.Show("la reserva quedo pendiente de cobro.");
             this.Close();
 

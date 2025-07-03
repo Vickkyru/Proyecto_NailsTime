@@ -28,9 +28,9 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             formPrincipal = principal;
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             //Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
-            //ActualizarIdioma();
+            ActualizarIdioma();
         }
         public void ActualizarIdioma()
         {

@@ -19,8 +19,8 @@ namespace Proyecto_NailsTime
         public FormActualizarAgenda_750VR()
         {
             InitializeComponent();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
         private bool insumosPendientes = false;
 
@@ -170,7 +170,7 @@ namespace Proyecto_NailsTime
         {
             if (idReservaSeleccionada == -1)
             {
-                MessageBox.Show("Seleccioná una reserva.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeSeleccionarReserva"));
                 return;
             }
 
@@ -179,21 +179,21 @@ namespace Proyecto_NailsTime
 
             if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("La reserva no puede ser modificada.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeNoModificable"));
                 return;
             }
 
             // Validar campos de insumo
             if (comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
             {
-                MessageBox.Show("Debés seleccionar un insumo y especificar la cantidad utilizada.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCompletaCampos"));
                 return;
             }
 
             // Verificar cantidad
             if (!int.TryParse(textBox2.Text, out int cantidad) || cantidad <= 0)
             {
-                MessageBox.Show("Cantidad inválida.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCantidadInvalida"));
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace Proyecto_NailsTime
             BLLreservaInsumo_750VR bllInsumo = new BLLreservaInsumo_750VR();
             if (bllInsumo.InsumoYaAgregado(idReservaSeleccionada, idInsumo))
             {
-                MessageBox.Show("Este insumo ya fue cargado para esta reserva.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeInsumoYaAgregado"));
                 return;
             }
 
@@ -216,7 +216,7 @@ namespace Proyecto_NailsTime
                 bllReserva.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
 
                 // Avisar y limpiar
-                MessageBox.Show("Reserva marcada como 'Realizado' y se registró el insumo correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCorrecto"));
                 comboBox1.SelectedIndex = -1;
                 textBox2.Clear();
 
@@ -229,7 +229,7 @@ namespace Proyecto_NailsTime
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar insumo o actualizar reserva: " + ex.Message);
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeErrorRegistro") + " " + ex.Message);
             }
         }
 
@@ -302,7 +302,7 @@ namespace Proyecto_NailsTime
         {
             if (insumosPendientes)
             {
-                MessageBox.Show("Debe registrar los insumos utilizados antes de salir.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeDebeRegistrarInsumo"));
                 return;
             }
 

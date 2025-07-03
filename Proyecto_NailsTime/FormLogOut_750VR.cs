@@ -17,8 +17,8 @@ namespace Proyecto_NailsTime
         public FormLogOut_750VR()
         {
             InitializeComponent();
-            //Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
         }
 
         public void ActualizarIdioma()
