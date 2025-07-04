@@ -1,4 +1,6 @@
-﻿using BLL_VR750;
+﻿using BE_VR750;
+using BLL_VR750;
+using DAL_VR750;
 using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
@@ -177,11 +179,32 @@ namespace Proyecto_NailsTime
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeExito"));
                 this.DialogResult = DialogResult.OK;
                 this.Close();
+
+                decimal total = decimal.Parse(lblimp.Text.Replace("$", "").Trim());
+
+                var nuevaFactura = new BEfactura_750VR(
+                      codReserva: idReserva,
+                        fecha: DateTime.Now.Date,
+                          hora: DateTime.Now.TimeOfDay,
+                            total: total,
+                            metodoPago: cmbmet.Text,
+                           titular: textBox1.Text
+                );
+
+                BLLfactura_750VR bllFactura = new BLLfactura_750VR();
+                bool exitoFactura = bllFactura.GenerarFactura(nuevaFactura);
+
+                if (!exitoFactura)
+                {
+                    MessageBox.Show("Error al guardar la factura.");
+                    return;
+                }
             }
             else
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeError"));
             }
+       
         }
 
         private void button3_Click(object sender, EventArgs e)

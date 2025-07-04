@@ -12,9 +12,9 @@ namespace BLL_VR750
     {
         private DALfactura_750VR dal = new DALfactura_750VR();
 
-        public void GenerarFactura(BEfactura_750VR factura)
+        public bool GenerarFactura(BEfactura_750VR factura)
         {
-            dal.InsertarFactura(factura);
+            return dal.InsertarFactura(factura);
         }
 
         public List<BEfactura_750VR> ObtenerFacturas()

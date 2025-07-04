@@ -85,136 +85,139 @@ namespace DAL_VR750
                 conn.Open();
 
                 string verificarTabla = @"
-                    IF NOT EXISTS (
-                        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_NAME = 'Usuario_VR750'
-                    )
-                    BEGIN
-                        CREATE TABLE Usuario_VR750 (
-                            DNI_VR750 INT PRIMARY KEY,
-                            Nombre_VR750 VARCHAR(100) NOT NULL,
-                            Apellido_VR750 VARCHAR(100) NOT NULL,
-                            Email_VR750 VARCHAR(150) NOT NULL,
-                            Usuario_VR750 VARCHAR(150) NOT NULL UNIQUE,
-                            Contra_VR750 VARCHAR(256) NOT NULL,
-                            Salt_VR750 VARCHAR(50) NOT NULL,
-                            Rol_VR750 VARCHAR(50) NOT NULL,
-                            Activo_VR750 BIT NOT NULL DEFAULT 1,
-                            Bloqueado_VR750 BIT NOT NULL DEFAULT 0,
-                            Idioma_VR750 varchar(50) NOT NULL 
-                        );
-                    END;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Usuario_VR750'
+    )
+    BEGIN
+        CREATE TABLE Usuario_VR750 (
+            DNI_VR750 INT PRIMARY KEY,
+            Nombre_VR750 VARCHAR(100) NOT NULL,
+            Apellido_VR750 VARCHAR(100) NOT NULL,
+            Email_VR750 VARCHAR(150) NOT NULL,
+            Usuario_VR750 VARCHAR(150) NOT NULL UNIQUE,
+            Contra_VR750 VARCHAR(256) NOT NULL,
+            Salt_VR750 VARCHAR(50) NOT NULL,
+            Rol_VR750 VARCHAR(50) NOT NULL,
+            Activo_VR750 BIT NOT NULL DEFAULT 1,
+            Bloqueado_VR750 BIT NOT NULL DEFAULT 0,
+            Idioma_VR750 VARCHAR(50) NOT NULL 
+        );
+    END;
 
-IF NOT EXISTS (
-                SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                WHERE TABLE_NAME = 'Insumo_VR750'
-            )
-            BEGIN
-                CREATE TABLE Insumo_VR750 (
-                    CodInsumo_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                    Nombre_VR750 NVARCHAR(100) NOT NULL,
-                    Descripcion_VR750 NVARCHAR(255),
-                    CantidadActual_VR750 INT NOT NULL,
-                    StockMinimo_VR750 INT NOT NULL,
-                    UnidadMedida_VR750 NVARCHAR(50) NOT NULL,
-                    Activo_VR750 BIT NOT NULL DEFAULT 1
-                );
-            END;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Cliente_VR750'
+    )
+    BEGIN
+        CREATE TABLE Cliente_VR750 (
+            DNI_VR750 INT PRIMARY KEY,
+            Nombre_VR750 NVARCHAR(50) NOT NULL,
+            Apellido_VR750 NVARCHAR(50) NOT NULL,
+            Email_VR750 NVARCHAR(100) NOT NULL,
+            Direccion_VR750 NVARCHAR(200) NOT NULL,
+            Celular_VR750 NVARCHAR(100) NOT NULL,
+            Activo_VR750 BIT DEFAULT 1
+        );
+    END;
 
-                    IF NOT EXISTS (
-                        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_NAME = 'Cliente_VR750'
-                    )
-                    BEGIN
-                        CREATE TABLE Cliente_VR750 (
-                            DNI_VR750 INT PRIMARY KEY,
-                            Nombre_VR750 NVARCHAR(50) NOT NULL,
-                            Apellido_VR750 NVARCHAR(50) NOT NULL,
-                            Email_VR750 NVARCHAR(100) NOT NULL,
-                            Direccion_VR750 NVARCHAR(200) NOT NULL,
-                            Celular_VR750 NVARCHAR(100) NOT NULL,
-                            Activo_VR750 BIT DEFAULT 1
-                        );
-                    END;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Servicio_VR750'
+    )
+    BEGIN
+        CREATE TABLE Servicio_VR750 (
+            IdServicio_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            Nombre_VR750 NVARCHAR(100) NOT NULL,
+            Tecnica_VR750 NVARCHAR(100) NOT NULL,
+            DuracionMinutos_VR750 INT NOT NULL,
+            Precio_VR750 DECIMAL(10,2) NOT NULL,
+            Activo_VR750 BIT DEFAULT 1
+        );
+    END;
 
-                    IF NOT EXISTS (
-                        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_NAME = 'Servicio_VR750'
-                    )
-                    BEGIN
-                        CREATE TABLE Servicio_VR750 (
-                            IdServicio_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                            Nombre_VR750 NVARCHAR(100) NOT NULL,
-                            Tecnica_VR750 NVARCHAR(100) NOT NULL,
-                            DuracionMinutos_VR750 INT NOT NULL,
-                            Precio_VR750 DECIMAL(10,2) NOT NULL,
-                            Activo_VR750 BIT DEFAULT 1
-                        );
-                    END;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Reserva_VR750'
+    )
+    BEGIN
+        CREATE TABLE Reserva_VR750 (
+            IdReserva_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            DNIcli_VR750 INT NOT NULL FOREIGN KEY REFERENCES Cliente_VR750(DNI_VR750),
+            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
+            IdServicio_VR750 INT NOT NULL FOREIGN KEY REFERENCES Servicio_VR750(IdServicio_VR750),
+            Fecha_VR750 DATE NOT NULL,
+            HoraInicio_VR750 TIME NOT NULL,
+            HoraFin_VR750 TIME NOT NULL,
+            Precio_VR750 DECIMAL(10,2) NOT NULL,
+            Estado_VR750 VARCHAR(50) DEFAULT 'Pendiente',
+            Cobrado_VR750 BIT DEFAULT 0
+        );
+    END;
 
-                   BEGIN 
-                        CREATE TABLE Factura_VR750 (
-                            CodFactura_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                            CodReserva_VR750 INT NOT NULL,
-                             fecha_VR750 DATE NOT NULL,
-                             horaEmision_VR750 TIME NOT NULL,
-                             metodopago_VR750 VARCHAR(20) NOT NULL,
-                             total_VR750 DECIMAL(10, 2) NOT NULL,
-                             titular_VR750 NVARCHAR(100) NOT NULL,
-                            FOREIGN KEY (CodReserva_VR750) REFERENCES Reserva_VR750(CodReserva_VR750)
-);
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Factura_VR750'
+    )
+    BEGIN
+        CREATE TABLE Factura_VR750 (
+            CodFactura_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            CodReserva_VR750 INT NOT NULL,
+            fecha_VR750 DATE NOT NULL,
+            horaEmision_VR750 TIME NOT NULL,
+            metodopago_VR750 VARCHAR(20) NOT NULL,
+            total_VR750 DECIMAL(10, 2) NOT NULL,
+            titular_VR750 NVARCHAR(100) NOT NULL,
+            FOREIGN KEY (CodReserva_VR750) REFERENCES Reserva_VR750(IdReserva_VR750)
+        );
+    END;
 
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Insumo_VR750'
+    )
+    BEGIN
+        CREATE TABLE Insumo_VR750 (
+            CodInsumo_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            Nombre_VR750 NVARCHAR(100) NOT NULL,
+            Descripcion_VR750 NVARCHAR(255),
+            CantidadActual_VR750 INT NOT NULL,
+            StockMinimo_VR750 INT NOT NULL,
+            UnidadMedida_VR750 NVARCHAR(50) NOT NULL,
+            Activo_VR750 BIT NOT NULL DEFAULT 1
+        );
+    END;
 
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Disponibilidad_VR750'
+    )
+    BEGIN
+        CREATE TABLE Disponibilidad_VR750 (
+            IdDisponibilidad_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
+            Fecha_VR750 DATE NOT NULL,
+            HoraInicio_VR750 TIME NOT NULL,
+            HoraFin_VR750 TIME NOT NULL,
+            Activo_VR750 BIT DEFAULT 1,
+            Estado_VR750 BIT DEFAULT 0
+        );
+    END;
 
-                    IF NOT EXISTS (
-                        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_NAME = 'Disponibilidad_VR750'
-                    )
-                    BEGIN
-                        CREATE TABLE Disponibilidad_VR750 (
-                            IdDisponibilidad_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
-                            Fecha_VR750 DATE NOT NULL,
-                            HoraInicio_VR750 TIME NOT NULL,
-                            HoraFin_VR750 TIME NOT NULL,
-                            Activo_VR750 BIT DEFAULT 1,
-                            Estado_VR750 BIT DEFAULT 0
-                        );
-                    END;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'ReservaInsumo_VR750'
+    )
+    BEGIN
+        CREATE TABLE ReservaInsumo_VR750 (
+            IdReserva_VR750 INT NOT NULL FOREIGN KEY REFERENCES Reserva_VR750(IdReserva_VR750),
+            CodInsumo_VR750 INT NOT NULL FOREIGN KEY REFERENCES Insumo_VR750(CodInsumo_VR750),
+            CantidadUsada_VR750 INT NOT NULL,
+            PRIMARY KEY (IdReserva_VR750, CodInsumo_VR750)
+        );
+    END;
+";
 
-                    IF NOT EXISTS (
-                        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_NAME = 'Reserva_VR750'
-                    )
-                    BEGIN
-                        CREATE TABLE Reserva_VR750 (
-                            IdReserva_VR750 INT PRIMARY KEY IDENTITY(1,1),
-                            DNIcli_VR750 INT NOT NULL FOREIGN KEY REFERENCES Cliente_VR750(DNI_VR750),
-                            DNImanic_VR750 INT NOT NULL FOREIGN KEY REFERENCES Usuario_VR750(DNI_VR750),
-                            IdServicio_VR750 INT NOT NULL FOREIGN KEY REFERENCES Servicio_VR750(IdServicio_VR750),
-                            Fecha_VR750 DATE NOT NULL,
-                            HoraInicio_VR750 TIME NOT NULL,
-                            HoraFin_VR750 TIME NOT NULL,
-                            Precio_VR750 DECIMAL(10,2) NOT NULL,
-                            Estado_VR750 varchar(50) default 'Pendiente',
-                            Cobrado_VR750 BIT DEFAULT 0
-
-                        );
-                    END;
-
-IF NOT EXISTS (
-    SELECT * FROM INFORMATION_SCHEMA.TABLES 
-    WHERE TABLE_NAME = 'ReservaInsumo_VR750'
-)
-BEGIN
-    CREATE TABLE ReservaInsumo_VR750 (
-        IdReserva_VR750 INT NOT NULL FOREIGN KEY REFERENCES Reserva_VR750(IdReserva_VR750),
-        CodInsumo_VR750 INT NOT NULL FOREIGN KEY REFERENCES Insumo_VR750(CodInsumo_VR750),
-        CantidadUsada_VR750 INT NOT NULL,
-        PRIMARY KEY (IdReserva_VR750, CodInsumo_VR750)
-    );
-END;
-                ";
 
                 using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
                 {

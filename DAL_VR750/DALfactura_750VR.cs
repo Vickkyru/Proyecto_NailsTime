@@ -10,22 +10,30 @@ namespace DAL_VR750
 {
     public class DALfactura_750VR
     {
-        public void InsertarFactura(BEfactura_750VR factura)
+        public bool InsertarFactura(BEfactura_750VR factura)
         {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            try
             {
-                SqlCommand cmd = new SqlCommand("INSERT INTO Factura_VR750 (CodReserva_VR750, fecha_VR750, horaEmision_VR750, total_VR750, metodoPago_VR750, titular_VR750) " +
-                    "VALUES (@reserva, @fecha, @hora, @total, @metodo, @titular)", conn);
+                using (SqlConnection con = new SqlConnection(BaseDeDatos_750VR.cadena))
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Factura_VR750 (CodReserva_VR750, fecha_VR750, horaEmision_VR750, total_VR750, metodoPago_VR750, titular_VR750) " +
+                                                    "VALUES (@codReserva, @fecha, @hora, @total, @metodo, @titular)", con);
+                    cmd.Parameters.AddWithValue("@codReserva", factura.CodReserva_750VR);
+                    cmd.Parameters.AddWithValue("@fecha", factura.fecha_750VR);
+                    cmd.Parameters.AddWithValue("@hora", factura.horaEmision_750VR);
+                    cmd.Parameters.AddWithValue("@total", factura.total_750VR);
+                    cmd.Parameters.AddWithValue("@metodo", factura.metodoPago_750VR);
+                    cmd.Parameters.AddWithValue("@titular", factura.titular_750VR);
 
-                cmd.Parameters.AddWithValue("@reserva", factura.CodReserva_750VR);
-                cmd.Parameters.AddWithValue("@fecha", factura.fecha_750VR);
-                cmd.Parameters.AddWithValue("@hora", factura.horaEmision_750VR);
-                cmd.Parameters.AddWithValue("@total", factura.total_750VR);
-                cmd.Parameters.AddWithValue("@metodo", factura.metodoPago_750VR);
-                cmd.Parameters.AddWithValue("@titular", factura.titular_750VR);
+                    con.Open();
+                    int filas = cmd.ExecuteNonQuery();
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    return filas > 0;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -41,16 +49,15 @@ namespace DAL_VR750
 
                 while (reader.Read())
                 {
-                    BEfactura_750VR f = new BEfactura_750VR
-                    {
-                        CodFactura_750VR = Convert.ToInt32(reader["CodFactura_VR750"]),
-                        CodReserva_750VR = Convert.ToInt32(reader["CodReserva_VR750"]),
-                        fecha_750VR = Convert.ToDateTime(reader["fecha_VR750"]),
-                        horaEmision_750VR = (TimeSpan)reader["horaEmision_VR750"],
-                        metodoPago_750VR = reader["total_VR750"].ToString(),
-                        total_750VR = Convert.ToDecimal(reader["metodoPago_VR750"]),
-                        titular_750VR = reader["titular_VR750"].ToString()
-                    };
+                    int codFactura = Convert.ToInt32(reader["CodFactura_VR750"]);
+                    int codReserva = Convert.ToInt32(reader["CodReserva_VR750"]);
+                    DateTime fecha = Convert.ToDateTime(reader["fecha_VR750"]);
+                    TimeSpan hora = (TimeSpan)reader["horaEmision_VR750"];
+                    decimal total = Convert.ToDecimal(reader["total_VR750"]);
+                    string metodoPago = reader["metodoPago_VR750"].ToString();
+                    string titular = reader["titular_VR750"].ToString();
+
+                    BEfactura_750VR f = new BEfactura_750VR(codFactura, codReserva, fecha, hora, total, metodoPago, titular);
                     lista.Add(f);
                 }
             }
