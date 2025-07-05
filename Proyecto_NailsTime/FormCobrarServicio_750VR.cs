@@ -9,8 +9,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Proyecto_NailsTime
 {
@@ -31,7 +33,7 @@ namespace Proyecto_NailsTime
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
-
+     
         private void CargarDatosReserva()
         {
             BLLReserva_750VR bll = new BLLReserva_750VR();
@@ -103,22 +105,19 @@ namespace Proyecto_NailsTime
 
             if (metodo == "Débito" || metodo == "Crédito")
             {
-                // Validar número de tarjeta (13 a 19 dígitos)
-                if (string.IsNullOrWhiteSpace(txtnum.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtnum.Text, @"^\d{13,19}$"))
+                if (string.IsNullOrWhiteSpace(txtnum.Text) || !Regex.IsMatch(txtnum.Text, @"^\d{13,19}$"))
                 {
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTarjetaInvalida"));
                     return;
                 }
 
-                // Validar CVC (3 o 4 dígitos)
-                if (string.IsNullOrWhiteSpace(txtcvc.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtcvc.Text, @"^\d{3,4}$"))
+                if (string.IsNullOrWhiteSpace(txtcvc.Text) || !Regex.IsMatch(txtcvc.Text, @"^\d{3,4}$"))
                 {
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeCVCInvalido"));
                     return;
                 }
 
-                // Validar vencimiento (MM/AA o MM/AAAA)
-                if (string.IsNullOrWhiteSpace(txtvenc.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtvenc.Text, @"^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$"))
+                if (string.IsNullOrWhiteSpace(txtvenc.Text) || !Regex.IsMatch(txtvenc.Text, @"^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$"))
                 {
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeVencimientoInvalido"));
                     return;
@@ -142,9 +141,24 @@ namespace Proyecto_NailsTime
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeVencimientoInvalido"));
                     return;
                 }
+
+                // Validar nombre del titular si corresponde (para ambos métodos si visible)
+                if (textBox1.Enabled)
+                {
+                    if (string.IsNullOrWhiteSpace(textBox1.Text))
+                    {
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularRequerido"));
+                        return;
+                    }
+
+                    if (!Regex.IsMatch(textBox1.Text, @"^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$"))
+                    {
+                        MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularInvalido"));
+                        return;
+                    }
+                }
             }
 
-            // Validar cuotas (solo crédito)
             if (metodo == "Crédito")
             {
                 if (string.IsNullOrWhiteSpace(txtcuot.Text) || !int.TryParse(txtcuot.Text, out int cuotas) || cuotas <= 0)
@@ -154,57 +168,45 @@ namespace Proyecto_NailsTime
                 }
             }
 
-            // Validar nombre del titular (solo débito)
-            if (metodo == "Débito")
+            string textoMonto = lblimp.Text.Replace("$", "").Trim();
+            if (!decimal.TryParse(textoMonto, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal total))
             {
-                if (string.IsNullOrWhiteSpace(textBox1.Text))
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularRequerido"));
-                    return;
-                }
-
-                if (!System.Text.RegularExpressions.Regex.IsMatch(textBox1.Text, @"^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$"))
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeTitularInvalido"));
-                    return;
-                }
+                MessageBox.Show("Error al interpretar el monto total.");
+                return;
             }
 
-            // Confirmar pago
             BLLReserva_750VR bll = new BLLReserva_750VR();
             bool exito = bll.MarcarComoCobrado(idReserva);
 
-            if (exito)
+            if (!exito)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeError"));
+                return;
+            }
+
+            var nuevaFactura = new BEfactura_750VR(
+                codReserva: idReserva,
+                fecha: DateTime.Now.Date,
+                hora: DateTime.Now.TimeOfDay,
+                total: total,
+                metodoPago: metodo,
+                titular: textBox1.Text
+            );
+
+            BLLfactura_750VR bllFactura = new BLLfactura_750VR();
+            bool exitoFactura = bllFactura.GenerarFactura(nuevaFactura);
+
+            if (exitoFactura)
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeExito"));
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-
-                decimal total = decimal.Parse(lblimp.Text.Replace("$", "").Trim());
-
-                var nuevaFactura = new BEfactura_750VR(
-                      codReserva: idReserva,
-                        fecha: DateTime.Now.Date,
-                          hora: DateTime.Now.TimeOfDay,
-                            total: total,
-                            metodoPago: cmbmet.Text,
-                           titular: textBox1.Text
-                );
-
-                BLLfactura_750VR bllFactura = new BLLfactura_750VR();
-                bool exitoFactura = bllFactura.GenerarFactura(nuevaFactura);
-
-                if (!exitoFactura)
-                {
-                    MessageBox.Show("Error al guardar la factura.");
-                    return;
-                }
             }
             else
             {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.MensajeError"));
+                MessageBox.Show("Error al guardar la factura.");
             }
-       
+
         }
 
         private void button3_Click(object sender, EventArgs e)

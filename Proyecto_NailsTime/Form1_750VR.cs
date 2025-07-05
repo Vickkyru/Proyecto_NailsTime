@@ -252,5 +252,10 @@ namespace Proyecto_NailsTime
         {
             AbrirForm(new FormABMinsumos_750VR());
         }
+
+        private void facturasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormFactura2_750VR());
+        }
     }
 }

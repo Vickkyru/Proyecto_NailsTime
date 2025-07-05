@@ -123,11 +123,11 @@
     <Compile Include="FormCrearPerfiles_750VR.Designer.cs">
       <DependentUpon>FormCrearPerfiles_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormFactura_750VR.cs">
+    <Compile Include="FormFactura2_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormFactura_750VR.Designer.cs">
-      <DependentUpon>FormFactura_750VR.cs</DependentUpon>
+    <Compile Include="FormFactura2_750VR.Designer.cs">
+      <DependentUpon>FormFactura2_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRegistrarReserva_750VR.cs">
       <SubType>Form</SubType>
@@ -197,8 +197,8 @@
     <EmbeddedResource Include="FormCrearPerfiles_750VR.resx">
       <DependentUpon>FormCrearPerfiles_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormFactura_750VR.resx">
-      <DependentUpon>FormFactura_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormFactura2_750VR.resx">
+      <DependentUpon>FormFactura2_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRegistrarReserva_750VR.resx">
       <DependentUpon>FormRegistrarReserva_750VR.cs</DependentUpon>

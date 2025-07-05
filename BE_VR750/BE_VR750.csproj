@@ -73,6 +73,9 @@
     <Compile Include="BEfactura_750VR.cs" />
     <Compile Include="BEinsumos_750VR.cs" />
     <Compile Include="BEreservaInsumo_750VR.cs" />
+    <Compile Include="GrupoPermiso_750VR.cs" />
+    <Compile Include="IComponentePermiso_750VR.cs" />
+    <Compile Include="PermisoSimple_750VR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BEServicio_750VR.cs" />
     <Compile Include="BEReserva_750VR.cs" />

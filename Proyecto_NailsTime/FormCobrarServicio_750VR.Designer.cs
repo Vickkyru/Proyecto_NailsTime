@@ -136,6 +136,7 @@
             this.lblimp.Name = "lblimp";
             this.lblimp.Size = new System.Drawing.Size(106, 29);
             this.lblimp.TabIndex = 56;
+            this.lblimp.Tag = "Notranslate";
             // 
             // button3
             // 

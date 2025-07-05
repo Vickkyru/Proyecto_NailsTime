@@ -216,6 +216,57 @@ namespace DAL_VR750
             PRIMARY KEY (IdReserva_VR750, CodInsumo_VR750)
         );
     END;
+
+  IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'Permiso_VR750'
+    )
+    BEGIN
+        CREATE TABLE Permiso_VR750 (
+            CodPermiso_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            NombrePermiso_VR750 NVARCHAR(100) NOT NULL
+        );
+    END;
+
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'FamiliaPermiso_VR750'
+    )
+    BEGIN
+        CREATE TABLE FamiliaPermiso_VR750 (
+            CodFamilia_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            NombreFamilia_VR750 NVARCHAR(100) NOT NULL
+        );
+    END;
+
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'FamiliaPermisoDetalle_VR750'
+    )
+    BEGIN
+        CREATE TABLE FamiliaPermisoDetalle_VR750 (
+            CodFamilia_VR750 INT NOT NULL,
+            CodPermiso_VR750 INT NOT NULL,
+            PRIMARY KEY (CodFamilia_VR750, CodPermiso_VR750),
+            FOREIGN KEY (CodFamilia_VR750) REFERENCES FamiliaPermiso_VR750(CodFamilia_VR750),
+            FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+        );
+    END;
+
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'UsuarioPermiso_VR750'
+    )
+    BEGIN
+        CREATE TABLE UsuarioPermiso_VR750 (
+            DNI_Usuario_VR750 INT NOT NULL,
+            CodPermiso_VR750 INT NOT NULL,
+            EsFamilia_VR750 BIT NOT NULL,
+            PRIMARY KEY (DNI_Usuario_VR750, CodPermiso_VR750),
+            FOREIGN KEY (DNI_Usuario_VR750) REFERENCES Usuario_VR750(DNI_VR750),
+            FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+        );
+    END;
 ";
 
 

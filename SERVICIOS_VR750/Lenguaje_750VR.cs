@@ -82,6 +82,7 @@ namespace SERVICIOS_VR750
                 Diccionario = new Dictionary<string, string>();
             }
         }
+ 
 
         public string ObtenerTexto(string clave)
         {
@@ -101,6 +102,10 @@ namespace SERVICIOS_VR750
 
                 foreach (Control c in frm.Controls)
                 {
+                    // ⛔ Si el control tiene Tag = Notranslate, no se traduce
+                    if (c.Tag != null && c.Tag.ToString() == "Notranslate")
+                        continue;
+
                     if (c is Label || c is Button || c is CheckBox || c is GroupBox || c is RadioButton)
                         c.Text = ObtenerTexto(frm.Name + "." + c.Name);
 
@@ -124,7 +129,7 @@ namespace SERVICIOS_VR750
             }
         }
 
-       
+
         private void CambiarIdiomaMenuStrip(ToolStripItemCollection items, Control frm)
         {
             foreach (ToolStripItem item in items)

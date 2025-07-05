@@ -17,8 +17,17 @@ namespace SERVICIOS_VR750
     {
         public static void GenerarFacturaPDF(BEfactura_750VR factura)
         {
-            string ruta = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Factura_{factura.CodFactura_750VR}.pdf");
+            // ✅ Ruta a la carpeta Facturas dentro de bin\Debug
+            string carpetaFacturas = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Facturas");
 
+            // 🛠 Crear carpeta si no existe
+            if (!Directory.Exists(carpetaFacturas))
+                Directory.CreateDirectory(carpetaFacturas);
+
+            // 📄 Ruta completa del PDF
+            string ruta = Path.Combine(carpetaFacturas, $"Factura_{factura.CodFactura_750VR}.pdf");
+
+            // 🧾 Crear el documento PDF
             Document doc = new Document(PageSize.A4, 40, 40, 40, 40);
             PdfWriter.GetInstance(doc, new FileStream(ruta, FileMode.Create));
             doc.Open();
@@ -27,7 +36,7 @@ namespace SERVICIOS_VR750
             Font normal = FontFactory.GetFont(FontFactory.HELVETICA, 12);
 
             doc.Add(new iTextSharp.text.Paragraph("FACTURA", titulo));
-            doc.Add(new iTextSharp.text.Paragraph(" ")); // Espacio en blanco
+            doc.Add(new iTextSharp.text.Paragraph(" "));
 
             doc.Add(new iTextSharp.text.Paragraph($"Código factura: {factura.CodFactura_750VR}", normal));
             doc.Add(new iTextSharp.text.Paragraph($"Reserva asociada: {factura.CodReserva_750VR}", normal));
@@ -42,8 +51,10 @@ namespace SERVICIOS_VR750
 
             doc.Close();
 
-            Process.Start(ruta); // Abre el PDF automáticamente
+            // 🖥️ Abrir el PDF automáticamente
+            Process.Start(ruta);
         }
+       
 
 
     }
