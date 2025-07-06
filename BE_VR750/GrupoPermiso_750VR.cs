@@ -11,6 +11,11 @@ namespace BE_VR750
 
         public int Codigo_750VR { get; set; }
         public string Nombre_750VR { get; set; }
+        public GrupoPermiso_750VR(int codigo, string nombre)
+        {
+            Codigo_750VR = codigo;
+            Nombre_750VR = nombre;
+        }
 
         public List<IComponentePermiso_750VR> Hijos { get; set; } = new List<IComponentePermiso_750VR>();
 

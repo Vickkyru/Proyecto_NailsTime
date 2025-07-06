@@ -15,5 +15,22 @@ namespace BE_VR750
         {
             return new List<IComponentePermiso_750VR>(); // No tiene hijos
         }
+
+        public void Agregar(IComponentePermiso_750VR componente)
+        {
+            throw new NotImplementedException("Un permiso simple no puede tener hijos.");
+        }
+
+        public void Quitar(IComponentePermiso_750VR componente)
+        {
+            throw new NotImplementedException("Un permiso simple no puede tener hijos.");
+        }
+
+        // (Opcional) Podés agregar un constructor si lo necesitás
+        public PermisoSimple_750VR(int codigo, string nombre)
+        {
+            Codigo_750VR = codigo;
+            Nombre_750VR = nombre;
+        }
     }
 }

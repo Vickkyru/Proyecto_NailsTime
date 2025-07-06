@@ -85,25 +85,42 @@ namespace DAL_VR750
                 conn.Open();
 
                 string verificarTabla = @"
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-        WHERE TABLE_NAME = 'Usuario_VR750'
-    )
-    BEGIN
-        CREATE TABLE Usuario_VR750 (
-            DNI_VR750 INT PRIMARY KEY,
-            Nombre_VR750 VARCHAR(100) NOT NULL,
-            Apellido_VR750 VARCHAR(100) NOT NULL,
-            Email_VR750 VARCHAR(150) NOT NULL,
-            Usuario_VR750 VARCHAR(150) NOT NULL UNIQUE,
-            Contra_VR750 VARCHAR(256) NOT NULL,
-            Salt_VR750 VARCHAR(50) NOT NULL,
-            Rol_VR750 VARCHAR(50) NOT NULL,
-            Activo_VR750 BIT NOT NULL DEFAULT 1,
-            Bloqueado_VR750 BIT NOT NULL DEFAULT 0,
-            Idioma_VR750 VARCHAR(50) NOT NULL 
-        );
-    END;
+
+-- Tabla de perfiles (roles definidos por el sistema)
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'Perfil_VR750'
+)
+BEGIN
+    CREATE TABLE Perfil_VR750 (
+        CodPerfil_VR750 INT PRIMARY KEY IDENTITY(1,1),
+        NombrePerfil_VR750 NVARCHAR(100) NOT NULL
+    );
+END;
+   -- Modificación de la tabla Usuario para agregar referencia al perfil
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'Usuario_VR750'
+)
+BEGIN
+    CREATE TABLE Usuario_VR750 (
+        DNI_VR750 INT PRIMARY KEY,
+        Nombre_VR750 VARCHAR(100) NOT NULL,
+        Apellido_VR750 VARCHAR(100) NOT NULL,
+        Email_VR750 VARCHAR(150) NOT NULL,
+        Usuario_VR750 VARCHAR(150) NOT NULL UNIQUE,
+        Contra_VR750 VARCHAR(256) NOT NULL,
+        Salt_VR750 VARCHAR(50) NOT NULL,
+        Rol_VR750 VARCHAR(50) NOT NULL,
+        Activo_VR750 BIT NOT NULL DEFAULT 1,
+        Bloqueado_VR750 BIT NOT NULL DEFAULT 0,
+        Idioma_VR750 VARCHAR(50) NOT NULL,
+        CodPerfil_VR750 INT NULL,
+
+        CONSTRAINT FK_Usuario_Perfil FOREIGN KEY (CodPerfil_VR750)
+        REFERENCES Perfil_VR750(CodPerfil_VR750)
+    );
+END;
 
     IF NOT EXISTS (
         SELECT * FROM INFORMATION_SCHEMA.TABLES 
@@ -217,56 +234,50 @@ namespace DAL_VR750
         );
     END;
 
-  IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-        WHERE TABLE_NAME = 'Permiso_VR750'
-    )
-    BEGIN
-        CREATE TABLE Permiso_VR750 (
-            CodPermiso_VR750 INT PRIMARY KEY IDENTITY(1,1),
-            NombrePermiso_VR750 NVARCHAR(100) NOT NULL
-        );
-    END;
 
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-        WHERE TABLE_NAME = 'FamiliaPermiso_VR750'
-    )
-    BEGIN
-        CREATE TABLE FamiliaPermiso_VR750 (
-            CodFamilia_VR750 INT PRIMARY KEY IDENTITY(1,1),
-            NombreFamilia_VR750 NVARCHAR(100) NOT NULL
-        );
-    END;
 
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-        WHERE TABLE_NAME = 'FamiliaPermisoDetalle_VR750'
-    )
-    BEGIN
-        CREATE TABLE FamiliaPermisoDetalle_VR750 (
-            CodFamilia_VR750 INT NOT NULL,
-            CodPermiso_VR750 INT NOT NULL,
-            PRIMARY KEY (CodFamilia_VR750, CodPermiso_VR750),
-            FOREIGN KEY (CodFamilia_VR750) REFERENCES FamiliaPermiso_VR750(CodFamilia_VR750),
-            FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
-        );
-    END;
+-- Tabla de permisos simples
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'Permiso_VR750'
+)
+BEGIN
+    CREATE TABLE Permiso_VR750 (
+        CodPermiso_VR750 INT PRIMARY KEY IDENTITY(1,1),
+        NombrePermiso_VR750 NVARCHAR(100) NOT NULL,
+        EsFamilia_VR750 BIT NOT NULL DEFAULT 0 -- FALSE si es simple, TRUE si es familia
+    );
+END;
 
-    IF NOT EXISTS (
-        SELECT * FROM INFORMATION_SCHEMA.TABLES 
-        WHERE TABLE_NAME = 'UsuarioPermiso_VR750'
-    )
-    BEGIN
-        CREATE TABLE UsuarioPermiso_VR750 (
-            DNI_Usuario_VR750 INT NOT NULL,
-            CodPermiso_VR750 INT NOT NULL,
-            EsFamilia_VR750 BIT NOT NULL,
-            PRIMARY KEY (DNI_Usuario_VR750, CodPermiso_VR750),
-            FOREIGN KEY (DNI_Usuario_VR750) REFERENCES Usuario_VR750(DNI_VR750),
-            FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
-        );
-    END;
+-- Tabla que representa la jerarquía entre permisos (Composite)
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'PermisoComposicion_VR750'
+)
+BEGIN
+    CREATE TABLE PermisoComposicion_VR750 (
+        PadrePermiso_VR750 INT NOT NULL,
+        HijoPermiso_VR750 INT NOT NULL,
+        PRIMARY KEY (PadrePermiso_VR750, HijoPermiso_VR750),
+        FOREIGN KEY (PadrePermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750),
+        FOREIGN KEY (HijoPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+    );
+END;
+
+-- Asociación de permisos (simples o familias) a perfiles
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'PerfilPermiso_VR750'
+)
+BEGIN
+    CREATE TABLE PerfilPermiso_VR750 (
+        CodPerfil_VR750 INT NOT NULL,
+        CodPermiso_VR750 INT NOT NULL,
+        PRIMARY KEY (CodPerfil_VR750, CodPermiso_VR750),
+        FOREIGN KEY (CodPerfil_VR750) REFERENCES Perfil_VR750(CodPerfil_VR750),
+        FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+    );
+END;
 ";
 
 
@@ -340,7 +351,98 @@ namespace DAL_VR750
                 (11100000, '2025-07-19', '11:00', '15:00', 1, 0)
             END
 
-            ";
+-- Insertar perfiles base
+IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Administrador')
+    INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Administrador');
+IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Recepcionista')
+    INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Recepcionista');
+IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Manicurista')
+    INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Manicurista');
+
+-- Insertar permisos simples
+DECLARE @permisos TABLE(Nombre NVARCHAR(100));
+INSERT INTO @permisos (Nombre) VALUES 
+('Form1_750VR'), ('FormABMClientes_750VR'), ('FormABMdisponibilidad_750VR'), ('FormABMinsumos_750VR'),
+('FormABMservicios_750VR'), ('FormActualizarAgenda_750VR'), ('FormCambiarClave_750VR'), ('FormCambioIdioma_750VR'),
+('FormCobrarServicio_750VR'), ('FormCrearPerfiles_750VR'), ('FormFactura2_750VR'), ('FormGestionUsuario_750VR'),
+('FormLogIn_750VR'), ('FormLogOut_750VR'), ('FormRegistrarReserva_750VR');
+
+INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750)
+SELECT Nombre, 0 FROM @permisos
+WHERE NOT EXISTS (
+    SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = Nombre
+);
+
+-- Insertar familias
+IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'Maestros')
+    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('Maestros', 1);
+IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'Reportes')
+    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('Reportes', 1);
+
+-- Relacionar permisos simples con familia Maestros
+INSERT INTO PermisoComposicion_VR750 (PadrePermiso_VR750, HijoPermiso_VR750)
+SELECT f.CodPermiso_VR750, p.CodPermiso_VR750
+FROM Permiso_VR750 f, Permiso_VR750 p
+WHERE f.NombrePermiso_VR750 = 'Maestros' AND p.NombrePermiso_VR750 IN (
+    'FormABMClientes_750VR', 'FormABMdisponibilidad_750VR', 'FormABMinsumos_750VR', 'FormABMservicios_750VR'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM PermisoComposicion_VR750 
+    WHERE PadrePermiso_VR750 = f.CodPermiso_VR750 AND HijoPermiso_VR750 = p.CodPermiso_VR750
+);
+
+-- Relacionar permisos simples con familia Reportes
+INSERT INTO PermisoComposicion_VR750 (PadrePermiso_VR750, HijoPermiso_VR750)
+SELECT f.CodPermiso_VR750, p.CodPermiso_VR750
+FROM Permiso_VR750 f, Permiso_VR750 p
+WHERE f.NombrePermiso_VR750 = 'Reportes' AND p.NombrePermiso_VR750 IN (
+    'FormFactura2_750VR', 'FormCobrarServicio_750VR'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM PermisoComposicion_VR750 
+    WHERE PadrePermiso_VR750 = f.CodPermiso_VR750 AND HijoPermiso_VR750 = p.CodPermiso_VR750
+);
+
+-- Asignar permisos a perfil Administrador (todos)
+INSERT INTO PerfilPermiso_VR750 (CodPerfil_VR750, CodPermiso_VR750)
+SELECT pf.CodPerfil_VR750, p.CodPermiso_VR750
+FROM Perfil_VR750 pf, Permiso_VR750 p
+WHERE pf.NombrePerfil_VR750 = 'Administrador'
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilPermiso_VR750 
+    WHERE CodPerfil_VR750 = pf.CodPerfil_VR750 AND CodPermiso_VR750 = p.CodPermiso_VR750
+);
+
+-- Asignar permisos a Recepcionista
+INSERT INTO PerfilPermiso_VR750 (CodPerfil_VR750, CodPermiso_VR750)
+SELECT pf.CodPerfil_VR750, p.CodPermiso_VR750
+FROM Perfil_VR750 pf, Permiso_VR750 p
+WHERE pf.NombrePerfil_VR750 = 'Recepcionista'
+AND p.NombrePermiso_VR750 IN (
+    'Form1_750VR', 'FormABMClientes_750VR', 'FormABMdisponibilidad_750VR', 'FormABMinsumos_750VR',
+    'FormABMservicios_750VR', 'FormCambiarClave_750VR', 'FormCambioIdioma_750VR',
+    'FormFactura2_750VR', 'FormCobrarServicio_750VR', 'FormRegistrarReserva_750VR',
+    'FormLogIn_750VR', 'FormLogOut_750VR'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilPermiso_VR750 
+    WHERE CodPerfil_VR750 = pf.CodPerfil_VR750 AND CodPermiso_VR750 = p.CodPermiso_VR750
+);
+
+-- Asignar permisos a Manicurista
+INSERT INTO PerfilPermiso_VR750 (CodPerfil_VR750, CodPermiso_VR750)
+SELECT pf.CodPerfil_VR750, p.CodPermiso_VR750
+FROM Perfil_VR750 pf, Permiso_VR750 p
+WHERE pf.NombrePerfil_VR750 = 'Manicurista'
+AND p.NombrePermiso_VR750 IN (
+    'Form1_750VR', 'FormActualizarAgenda_750VR', 'FormCambiarClave_750VR', 'FormCambioIdioma_750VR',
+    'FormLogIn_750VR', 'FormLogOut_750VR'
+)
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilPermiso_VR750 
+    WHERE CodPerfil_VR750 = pf.CodPerfil_VR750 AND CodPermiso_VR750 = p.CodPermiso_VR750
+);
+";
 
                     using (SqlCommand cmd = new SqlCommand(script, conn))
                     {
@@ -349,11 +451,10 @@ namespace DAL_VR750
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al insertar servicios iniciales: " + ex.Message);
+                    MessageBox.Show("Error al insertar perfiles y permisos: " + ex.Message);
                 }
             }
         }
-
 
 
     }
