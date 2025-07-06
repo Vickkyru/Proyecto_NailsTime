@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormGestionUsuario_750VR
+    partial class FormGestionUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -419,7 +419,7 @@
             this.dataGridView1.CurrentCellChanged += new System.EventHandler(this.dataGridView1_CurrentCellChanged);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged_1);
             // 
-            // FormGestionUsuario_750VR
+            // FormGestionUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -454,7 +454,7 @@
             this.Controls.Add(this.rbtnact);
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "FormGestionUsuario_750VR";
+            this.Name = "FormGestionUsuario";
             this.Text = "FormAgregarUsuario_750VR";
             this.Load += new System.EventHandler(this.FormGestionUsuario_750VR_Load);
             this.groupBox1.ResumeLayout(false);

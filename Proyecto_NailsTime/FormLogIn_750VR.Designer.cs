@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormLogIn_750VR
+    partial class FormLogIn
     {
         /// <summary>
         /// Required designer variable.
@@ -117,7 +117,7 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // FormLogIn_750VR
+            // FormLogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -131,7 +131,7 @@
             this.Controls.Add(this.txtcontra);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
-            this.Name = "FormLogIn_750VR";
+            this.Name = "FormLogIn";
             this.Text = "FormLogIn_750VR";
             this.Load += new System.EventHandler(this.FormLogIn_750VR_Load);
             this.ResumeLayout(false);

@@ -42,5 +42,52 @@ namespace BLL_VR750
         {
             return dal.ObtenerPermisosDePerfil(idPerfil);
         }
+        public List<PermisoSimple_750VR> ObtenerPermisosSimples()
+        {
+            return dal.ObtenerPermisosSimples();
+        }
+        public List<GrupoPermiso_750VR> ObtenerFamilias()
+        {
+            return dal.ObtenerFamilias();
+        }
+
+        public void QuitarFamilia(int idPerfil, int idFamilia)
+        {
+            dal.QuitarFamilia(idPerfil, idFamilia);
+        }
+        public void QuitarPermiso(int idPerfil, int idPermiso)
+        {
+            dal.QuitarPermiso(idPerfil, idPermiso);
+        }
+        public void AgregarFamilia(string nombre)
+        {
+            dal.InsertarFamilia(nombre);
+        }
+
+        public void EliminarFamilia(int codFamilia)
+        {
+            dal.EliminarFamilia(codFamilia);
+        }
+
+        public void AgregarPermisoAFamilia(int idFamilia, int idPermiso)
+        {
+            dal.AgregarPermisoAFamilia(idFamilia, idPermiso);
+        }
+
+        public void QuitarPermisoDeFamilia(int idFamilia, int idPermiso)
+        {
+            dal.QuitarPermisoDeFamilia(idFamilia, idPermiso);
+        }
+        public void AsignarFamiliaAFamilia(int idPadre, int idHija)
+        {
+            dal.AsignarFamiliaAFamilia(idPadre, idHija);
+        }
+
+        public void QuitarFamiliaDeFamilia(int idPadre, int idHija)
+        {
+            dal.QuitarFamiliaDeFamilia(idPadre, idHija);
+        }
+
+
     }
 }

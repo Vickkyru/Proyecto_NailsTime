@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormLogOut_750VR
+    partial class FormLogOut
     {
         /// <summary>
         /// Required designer variable.
@@ -69,7 +69,7 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Confirme el cierre de sesion";
             // 
-            // FormLogOut_750VR
+            // FormLogOut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -78,7 +78,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "FormLogOut_750VR";
+            this.Name = "FormLogOut";
             this.Text = "FormLogOut_750VR";
             this.Load += new System.EventHandler(this.FormLogOut_750VR_Load);
             this.ResumeLayout(false);

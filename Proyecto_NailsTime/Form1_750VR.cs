@@ -14,14 +14,14 @@ using DAL_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class Form1_750VR : Form, Iobserver_750VR
+    public partial class FormPrincipal : Form, Iobserver_750VR
     {
         private Form formActivo = null;
 
         BaseDeDatos_750VR db = new BaseDeDatos_750VR();
 
 
-        public Form1_750VR()
+        public FormPrincipal()
         {
             InitializeComponent();
             db.VerificarOCrearBaseDeDatos();
@@ -79,26 +79,26 @@ namespace Proyecto_NailsTime
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormGestionUsuario_750VR());
+            AbrirForm(new FormGestionUsuario());
         }
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //AbrirForm(new FormLogIn_750VR());
 
-            FormLogIn_750VR login = new FormLogIn_750VR(this); 
+            FormLogIn login = new FormLogIn(this); 
             AbrirForm(login);
 
         }
 
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormCambiarClave_750VR());
+            AbrirForm(new FormCambiarClave());
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormLogOut_750VR());
+            AbrirForm(new FormLogOut());
         }
 
         private void administradorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,11 +166,27 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            AplicarPermisos();
             ActualizarLabels();
             Actualizar();
           
 
+        }
+
+        //me falta esto
+        private void AplicarPermisos()
+        {
+            var permisos = SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
+
+            usuariosToolStripMenuItem.Enabled = permisos.Contains("FormGestionUsuario_750VR");
+            insumosToolStripMenuItem.Enabled = permisos.Contains("FormABMinsumos_750VR");
+            horariosToolStripMenuItem.Enabled = permisos.Contains("FormABMdisponibilidad_750VR");
+            cambiarClaveToolStripMenuItem.Enabled = permisos.Contains("FormCambiarClave_750VR");
+            reservaToolStripMenuItem.Enabled = permisos.Contains("FormRegistrarReserva_750VR");
+            actAgendaToolStripMenuItem.Enabled = permisos.Contains("FormAgendaManicurista");
+            facturasToolStripMenuItem.Enabled = permisos.Contains("FormFactura2_750VR");
+            gestionDePerfilesToolStripMenuItem.Enabled = permisos.Contains("FormCrearPerfiles_750VR");
+            logoutToolStripMenuItem.Enabled = permisos.Contains("FormLogOut_750VR");
         }
         private void BloquearTodo()
         {
@@ -199,7 +215,7 @@ namespace Proyecto_NailsTime
         }
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormRegistrarReserva_750VR());
+            AbrirForm(new FormRegistrarReserva());
         }
 
         private void panel1_Paint_1(object sender, PaintEventArgs e)
@@ -225,37 +241,42 @@ namespace Proyecto_NailsTime
 
         private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormABMClientes_750VR());
+            AbrirForm(new FormABMClientes());
         }
 
         private void serviciosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormABMservicios_750VR());
+            AbrirForm(new FormABMservicios());
         }
 
         private void personalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormABMdisponibilidad_750VR());
+            AbrirForm(new FormABMdisponibilidad());
         }
 
         private void verTurnosReservadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormActualizarAgenda_750VR());
+            AbrirForm(new FormActualizarAgenda());
         }
 
         private void cambiarIdiomaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormCambioIdioma_750VR());
+            AbrirForm(new FormCambioIdioma());
         }
 
         private void insumosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormABMinsumos_750VR());
+            AbrirForm(new FormABMinsumos());
         }
 
         private void facturasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FormFactura2_750VR());
+            AbrirForm(new FormFactura());
+        }
+
+        private void gestionDePerfilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormCrearPerfiles());
         }
     }
 }

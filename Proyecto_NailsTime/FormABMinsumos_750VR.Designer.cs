@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormABMinsumos_750VR
+    partial class FormABMinsumos
     {
         /// <summary>
         /// Required designer variable.
@@ -262,7 +262,7 @@
             this.label1.TabIndex = 124;
             this.label1.Text = "U. medida";
             // 
-            // FormABMinsumos_750VR
+            // FormABMinsumos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -289,7 +289,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label2);
-            this.Name = "FormABMinsumos_750VR";
+            this.Name = "FormABMinsumos";
             this.Text = "FormABMinsumos_750VR";
             this.Load += new System.EventHandler(this.FormABMinsumos_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

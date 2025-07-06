@@ -21,6 +21,7 @@ namespace BE_VR750
 
         public string idioma_750VR { get; set; }
 
+        public int CodPerfil_750VR { get; set; }
         public BEusuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado,string idiom)
         {
             this.dni_750VR = dni;

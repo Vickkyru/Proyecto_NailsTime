@@ -331,13 +331,13 @@ END;
 
             IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
             BEGIN
-                INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750) VALUES
-               (10000000, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0, 'Español'),
-(11000000, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0, 'Español'),
-(11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español'),
+                INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750, CodPerfil_VR750) VALUES
+               (10000000, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0, 'Español', 3),
+(11000000, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0, 'Español', 3),
+(11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español', 3),
 
-(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Español'),
-(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Español')
+(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Español', 2),
+(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Español', 1)
             END
 
             IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
@@ -362,10 +362,10 @@ IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Manicurist
 -- Insertar permisos simples
 DECLARE @permisos TABLE(Nombre NVARCHAR(100));
 INSERT INTO @permisos (Nombre) VALUES 
-('Form1_750VR'), ('FormABMClientes_750VR'), ('FormABMdisponibilidad_750VR'), ('FormABMinsumos_750VR'),
-('FormABMservicios_750VR'), ('FormActualizarAgenda_750VR'), ('FormCambiarClave_750VR'), ('FormCambioIdioma_750VR'),
-('FormCobrarServicio_750VR'), ('FormCrearPerfiles_750VR'), ('FormFactura2_750VR'), ('FormGestionUsuario_750VR'),
-('FormLogIn_750VR'), ('FormLogOut_750VR'), ('FormRegistrarReserva_750VR');
+('FormPrincipal'), ('FormABMClientes'), ('FormABMdisponibilidad'), ('FormABMinsumos'),
+('FormABMservicios'), ('FormActualizarAgenda'), ('FormCambiarClave'), ('FormCambioIdioma'),
+('FormCobrarServicio'), ('FormCrearPerfiles'), ('FormFactura'), ('FormGestionUsuario'),
+('FormLogIn'), ('FormLogOut'), ('FormRegistrarReserva');
 
 INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750)
 SELECT Nombre, 0 FROM @permisos
@@ -384,7 +384,7 @@ INSERT INTO PermisoComposicion_VR750 (PadrePermiso_VR750, HijoPermiso_VR750)
 SELECT f.CodPermiso_VR750, p.CodPermiso_VR750
 FROM Permiso_VR750 f, Permiso_VR750 p
 WHERE f.NombrePermiso_VR750 = 'Maestros' AND p.NombrePermiso_VR750 IN (
-    'FormABMClientes_750VR', 'FormABMdisponibilidad_750VR', 'FormABMinsumos_750VR', 'FormABMservicios_750VR'
+    'FormABMClientes', 'FormABMdisponibilidad', 'FormABMinsumos', 'FormABMservicios'
 )
 AND NOT EXISTS (
     SELECT 1 FROM PermisoComposicion_VR750 
@@ -396,7 +396,7 @@ INSERT INTO PermisoComposicion_VR750 (PadrePermiso_VR750, HijoPermiso_VR750)
 SELECT f.CodPermiso_VR750, p.CodPermiso_VR750
 FROM Permiso_VR750 f, Permiso_VR750 p
 WHERE f.NombrePermiso_VR750 = 'Reportes' AND p.NombrePermiso_VR750 IN (
-    'FormFactura2_750VR', 'FormCobrarServicio_750VR'
+    'FormFactura', 'FormCobrarServicio'
 )
 AND NOT EXISTS (
     SELECT 1 FROM PermisoComposicion_VR750 
@@ -419,10 +419,10 @@ SELECT pf.CodPerfil_VR750, p.CodPermiso_VR750
 FROM Perfil_VR750 pf, Permiso_VR750 p
 WHERE pf.NombrePerfil_VR750 = 'Recepcionista'
 AND p.NombrePermiso_VR750 IN (
-    'Form1_750VR', 'FormABMClientes_750VR', 'FormABMdisponibilidad_750VR', 'FormABMinsumos_750VR',
-    'FormABMservicios_750VR', 'FormCambiarClave_750VR', 'FormCambioIdioma_750VR',
-    'FormFactura2_750VR', 'FormCobrarServicio_750VR', 'FormRegistrarReserva_750VR',
-    'FormLogIn_750VR', 'FormLogOut_750VR'
+    'FormPrincipal', 'FormABMClientes', 'FormABMdisponibilidad', 'FormABMinsumos',
+    'FormABMservicios', 'FormCambiarClave', 'FormCambioIdioma',
+    'FormFactura2', 'FormCobrarServicio', 'FormRegistrarReserva',
+    'FormLogIn', 'FormLogOut'
 )
 AND NOT EXISTS (
     SELECT 1 FROM PerfilPermiso_VR750 
@@ -435,8 +435,8 @@ SELECT pf.CodPerfil_VR750, p.CodPermiso_VR750
 FROM Perfil_VR750 pf, Permiso_VR750 p
 WHERE pf.NombrePerfil_VR750 = 'Manicurista'
 AND p.NombrePermiso_VR750 IN (
-    'Form1_750VR', 'FormActualizarAgenda_750VR', 'FormCambiarClave_750VR', 'FormCambioIdioma_750VR',
-    'FormLogIn_750VR', 'FormLogOut_750VR'
+    'FormPrincipal', 'FormActualizarAgenda', 'FormCambiarClave', 'FormCambioIdioma',
+    'FormLogIn', 'FormLogOut'
 )
 AND NOT EXISTS (
     SELECT 1 FROM PerfilPermiso_VR750 

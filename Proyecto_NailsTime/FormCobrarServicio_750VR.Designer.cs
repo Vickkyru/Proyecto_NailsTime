@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormCobrarServicio_750VR
+    partial class FormCobrarServici
     {
         /// <summary>
         /// Required designer variable.
@@ -212,7 +212,7 @@
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 60;
             // 
-            // FormCobrarServicio_750VR
+            // FormCobrarServici
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -236,7 +236,7 @@
             this.Controls.Add(this.btnrealiz);
             this.Controls.Add(this.txtnum);
             this.Controls.Add(this.label1);
-            this.Name = "FormCobrarServicio_750VR";
+            this.Name = "FormCobrarServici";
             this.Text = "CobrarReserva";
             this.Load += new System.EventHandler(this.FormCobrarServicio_750VR_Load);
             this.ResumeLayout(false);

@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormCambioIdioma_750VR : Form, Iobserver_750VR
+    public partial class FormCambioIdioma : Form, Iobserver_750VR
     {
-        public FormCambioIdioma_750VR()
+        public FormCambioIdioma()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);

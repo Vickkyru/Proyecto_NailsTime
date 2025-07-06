@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormCrearPerfiles_750VR
+    partial class FormCrearPerfiles
     {
         /// <summary>
         /// Required designer variable.
@@ -30,34 +30,34 @@
         {
             this.treeView2 = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbfamperf = new System.Windows.Forms.ComboBox();
+            this.cmbpermperf = new System.Windows.Forms.ComboBox();
+            this.cmbpermfam = new System.Windows.Forms.ComboBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtfam = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtnomperf = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cmbfamfam = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
-            this.btnrealiz = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.agperf = new System.Windows.Forms.Button();
+            this.btnelimperf = new System.Windows.Forms.Button();
+            this.btnelimfam = new System.Windows.Forms.Button();
+            this.btnagfam = new System.Windows.Forms.Button();
+            this.elimpermfam = new System.Windows.Forms.Button();
+            this.agpermfam = new System.Windows.Forms.Button();
+            this.btnelimfamfam = new System.Windows.Forms.Button();
+            this.btnagfamfam = new System.Windows.Forms.Button();
+            this.btnelimpermperf = new System.Windows.Forms.Button();
+            this.btnagpermperf = new System.Windows.Forms.Button();
+            this.btnelimfamperf = new System.Windows.Forms.Button();
+            this.btnagfamperf = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeView2
@@ -76,29 +76,29 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Gestion de perfiles";
             // 
-            // comboBox1
+            // cmbfamperf
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(30, 270);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 4;
+            this.cmbfamperf.FormattingEnabled = true;
+            this.cmbfamperf.Location = new System.Drawing.Point(30, 270);
+            this.cmbfamperf.Name = "cmbfamperf";
+            this.cmbfamperf.Size = new System.Drawing.Size(121, 21);
+            this.cmbfamperf.TabIndex = 4;
             // 
-            // comboBox2
+            // cmbpermperf
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(30, 171);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 7;
+            this.cmbpermperf.FormattingEnabled = true;
+            this.cmbpermperf.Location = new System.Drawing.Point(30, 171);
+            this.cmbpermperf.Name = "cmbpermperf";
+            this.cmbpermperf.Size = new System.Drawing.Size(121, 21);
+            this.cmbpermperf.TabIndex = 7;
             // 
-            // comboBox3
+            // cmbpermfam
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(651, 171);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 10;
+            this.cmbpermfam.FormattingEnabled = true;
+            this.cmbpermfam.Location = new System.Drawing.Point(651, 171);
+            this.cmbpermfam.Name = "cmbpermfam";
+            this.cmbpermfam.Size = new System.Drawing.Size(121, 21);
+            this.cmbpermfam.TabIndex = 10;
             // 
             // treeView1
             // 
@@ -125,12 +125,12 @@
             this.label3.TabIndex = 20;
             this.label3.Text = "Permisos";
             // 
-            // textBox1
+            // txtfam
             // 
-            this.textBox1.Location = new System.Drawing.Point(414, 82);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 21;
+            this.txtfam.Location = new System.Drawing.Point(414, 82);
+            this.txtfam.Name = "txtfam";
+            this.txtfam.Size = new System.Drawing.Size(100, 20);
+            this.txtfam.TabIndex = 21;
             // 
             // label4
             // 
@@ -150,12 +150,12 @@
             this.label5.TabIndex = 24;
             this.label5.Text = "Perfil";
             // 
-            // textBox2
+            // txtnomperf
             // 
-            this.textBox2.Location = new System.Drawing.Point(176, 82);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 23;
+            this.txtnomperf.Location = new System.Drawing.Point(176, 82);
+            this.txtnomperf.Name = "txtnomperf";
+            this.txtnomperf.Size = new System.Drawing.Size(100, 20);
+            this.txtnomperf.TabIndex = 23;
             // 
             // label6
             // 
@@ -175,13 +175,13 @@
             this.label7.TabIndex = 29;
             this.label7.Text = "Familia ";
             // 
-            // comboBox6
+            // cmbfamfam
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(651, 270);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(121, 21);
-            this.comboBox6.TabIndex = 27;
+            this.cmbfamfam.FormattingEnabled = true;
+            this.cmbfamfam.Location = new System.Drawing.Point(651, 270);
+            this.cmbfamfam.Name = "cmbfamfam";
+            this.cmbfamfam.Size = new System.Drawing.Size(121, 21);
+            this.cmbfamfam.TabIndex = 27;
             // 
             // label8
             // 
@@ -210,188 +210,201 @@
             this.button13.Text = "Volver";
             this.button13.UseVisualStyleBackColor = true;
             // 
-            // btnrealiz
+            // agperf
             // 
-            this.btnrealiz.BackColor = System.Drawing.Color.RosyBrown;
-            this.btnrealiz.FlatAppearance.BorderSize = 0;
-            this.btnrealiz.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnrealiz.Location = new System.Drawing.Point(176, 108);
-            this.btnrealiz.Name = "btnrealiz";
-            this.btnrealiz.Size = new System.Drawing.Size(75, 23);
-            this.btnrealiz.TabIndex = 37;
-            this.btnrealiz.Text = "Agregar perfil";
-            this.btnrealiz.UseVisualStyleBackColor = false;
+            this.agperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.agperf.FlatAppearance.BorderSize = 0;
+            this.agperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agperf.Location = new System.Drawing.Point(176, 108);
+            this.agperf.Name = "agperf";
+            this.agperf.Size = new System.Drawing.Size(75, 23);
+            this.agperf.TabIndex = 37;
+            this.agperf.Text = "Agregar perfil";
+            this.agperf.UseVisualStyleBackColor = false;
+            this.agperf.Click += new System.EventHandler(this.agperf_Click);
             // 
-            // button6
+            // btnelimperf
             // 
-            this.button6.BackColor = System.Drawing.Color.RosyBrown;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Location = new System.Drawing.Point(270, 108);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 38;
-            this.button6.Text = "Eliminar";
-            this.button6.UseVisualStyleBackColor = false;
+            this.btnelimperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelimperf.FlatAppearance.BorderSize = 0;
+            this.btnelimperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelimperf.Location = new System.Drawing.Point(270, 108);
+            this.btnelimperf.Name = "btnelimperf";
+            this.btnelimperf.Size = new System.Drawing.Size(75, 23);
+            this.btnelimperf.TabIndex = 38;
+            this.btnelimperf.Text = "Eliminar";
+            this.btnelimperf.UseVisualStyleBackColor = false;
+            this.btnelimperf.Click += new System.EventHandler(this.btnelimperf_Click);
             // 
-            // button5
+            // btnelimfam
             // 
-            this.button5.BackColor = System.Drawing.Color.RosyBrown;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(509, 108);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 40;
-            this.button5.Text = "Eliminar";
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnelimfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelimfam.FlatAppearance.BorderSize = 0;
+            this.btnelimfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelimfam.Location = new System.Drawing.Point(509, 108);
+            this.btnelimfam.Name = "btnelimfam";
+            this.btnelimfam.Size = new System.Drawing.Size(75, 23);
+            this.btnelimfam.TabIndex = 40;
+            this.btnelimfam.Text = "Eliminar";
+            this.btnelimfam.UseVisualStyleBackColor = false;
+            this.btnelimfam.Click += new System.EventHandler(this.btnelimfam_Click);
             // 
-            // button8
+            // btnagfam
             // 
-            this.button8.BackColor = System.Drawing.Color.RosyBrown;
-            this.button8.FlatAppearance.BorderSize = 0;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Location = new System.Drawing.Point(415, 108);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 39;
-            this.button8.Text = "Agregar";
-            this.button8.UseVisualStyleBackColor = false;
+            this.btnagfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnagfam.FlatAppearance.BorderSize = 0;
+            this.btnagfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnagfam.Location = new System.Drawing.Point(415, 108);
+            this.btnagfam.Name = "btnagfam";
+            this.btnagfam.Size = new System.Drawing.Size(75, 23);
+            this.btnagfam.TabIndex = 39;
+            this.btnagfam.Text = "Agregar";
+            this.btnagfam.UseVisualStyleBackColor = false;
+            this.btnagfam.Click += new System.EventHandler(this.btnagfam_Click);
             // 
-            // button7
+            // elimpermfam
             // 
-            this.button7.BackColor = System.Drawing.Color.RosyBrown;
-            this.button7.FlatAppearance.BorderSize = 0;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(713, 198);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 42;
-            this.button7.Text = "Quitar";
-            this.button7.UseVisualStyleBackColor = false;
+            this.elimpermfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.elimpermfam.FlatAppearance.BorderSize = 0;
+            this.elimpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.elimpermfam.Location = new System.Drawing.Point(713, 198);
+            this.elimpermfam.Name = "elimpermfam";
+            this.elimpermfam.Size = new System.Drawing.Size(75, 23);
+            this.elimpermfam.TabIndex = 42;
+            this.elimpermfam.Text = "Quitar";
+            this.elimpermfam.UseVisualStyleBackColor = false;
+            this.elimpermfam.Click += new System.EventHandler(this.elimpermfam_Click);
             // 
-            // button9
+            // agpermfam
             // 
-            this.button9.BackColor = System.Drawing.Color.RosyBrown;
-            this.button9.FlatAppearance.BorderSize = 0;
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(619, 198);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 41;
-            this.button9.Text = "Agregar";
-            this.button9.UseVisualStyleBackColor = false;
+            this.agpermfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.agpermfam.FlatAppearance.BorderSize = 0;
+            this.agpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agpermfam.Location = new System.Drawing.Point(619, 198);
+            this.agpermfam.Name = "agpermfam";
+            this.agpermfam.Size = new System.Drawing.Size(75, 23);
+            this.agpermfam.TabIndex = 41;
+            this.agpermfam.Text = "Agregar";
+            this.agpermfam.UseVisualStyleBackColor = false;
+            this.agpermfam.Click += new System.EventHandler(this.agpermfam_Click);
             // 
-            // button10
+            // btnelimfamfam
             // 
-            this.button10.BackColor = System.Drawing.Color.RosyBrown;
-            this.button10.FlatAppearance.BorderSize = 0;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(713, 297);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 44;
-            this.button10.Text = "Quitar";
-            this.button10.UseVisualStyleBackColor = false;
+            this.btnelimfamfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelimfamfam.FlatAppearance.BorderSize = 0;
+            this.btnelimfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelimfamfam.Location = new System.Drawing.Point(713, 297);
+            this.btnelimfamfam.Name = "btnelimfamfam";
+            this.btnelimfamfam.Size = new System.Drawing.Size(75, 23);
+            this.btnelimfamfam.TabIndex = 44;
+            this.btnelimfamfam.Text = "Quitar";
+            this.btnelimfamfam.UseVisualStyleBackColor = false;
+            this.btnelimfamfam.Click += new System.EventHandler(this.btnelimfamfam_Click);
             // 
-            // button11
+            // btnagfamfam
             // 
-            this.button11.BackColor = System.Drawing.Color.RosyBrown;
-            this.button11.FlatAppearance.BorderSize = 0;
-            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button11.Location = new System.Drawing.Point(619, 297);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 43;
-            this.button11.Text = "Agregar";
-            this.button11.UseVisualStyleBackColor = false;
+            this.btnagfamfam.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnagfamfam.FlatAppearance.BorderSize = 0;
+            this.btnagfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnagfamfam.Location = new System.Drawing.Point(619, 297);
+            this.btnagfamfam.Name = "btnagfamfam";
+            this.btnagfamfam.Size = new System.Drawing.Size(75, 23);
+            this.btnagfamfam.TabIndex = 43;
+            this.btnagfamfam.Text = "Agregar";
+            this.btnagfamfam.UseVisualStyleBackColor = false;
+            this.btnagfamfam.Click += new System.EventHandler(this.btnagfamfam_Click);
             // 
-            // button3
+            // btnelimpermperf
             // 
-            this.button3.BackColor = System.Drawing.Color.RosyBrown;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(92, 198);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 46;
-            this.button3.Text = "Quitar";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnelimpermperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelimpermperf.FlatAppearance.BorderSize = 0;
+            this.btnelimpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelimpermperf.Location = new System.Drawing.Point(92, 198);
+            this.btnelimpermperf.Name = "btnelimpermperf";
+            this.btnelimpermperf.Size = new System.Drawing.Size(75, 23);
+            this.btnelimpermperf.TabIndex = 46;
+            this.btnelimpermperf.Text = "Quitar";
+            this.btnelimpermperf.UseVisualStyleBackColor = false;
+            this.btnelimpermperf.Click += new System.EventHandler(this.btnelimpermperf_Click);
             // 
-            // button4
+            // btnagpermperf
             // 
-            this.button4.BackColor = System.Drawing.Color.RosyBrown;
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(-2, 198);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 45;
-            this.button4.Text = "Agregar";
-            this.button4.UseVisualStyleBackColor = false;
+            this.btnagpermperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnagpermperf.FlatAppearance.BorderSize = 0;
+            this.btnagpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnagpermperf.Location = new System.Drawing.Point(-2, 198);
+            this.btnagpermperf.Name = "btnagpermperf";
+            this.btnagpermperf.Size = new System.Drawing.Size(75, 23);
+            this.btnagpermperf.TabIndex = 45;
+            this.btnagpermperf.Text = "Agregar";
+            this.btnagpermperf.UseVisualStyleBackColor = false;
+            this.btnagpermperf.Click += new System.EventHandler(this.btnagpermperf_Click);
             // 
-            // button1
+            // btnelimfamperf
             // 
-            this.button1.BackColor = System.Drawing.Color.RosyBrown;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(92, 297);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 48;
-            this.button1.Text = "Quitar";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnelimfamperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnelimfamperf.FlatAppearance.BorderSize = 0;
+            this.btnelimfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnelimfamperf.Location = new System.Drawing.Point(92, 297);
+            this.btnelimfamperf.Name = "btnelimfamperf";
+            this.btnelimfamperf.Size = new System.Drawing.Size(75, 23);
+            this.btnelimfamperf.TabIndex = 48;
+            this.btnelimfamperf.Text = "Quitar";
+            this.btnelimfamperf.UseVisualStyleBackColor = false;
+            this.btnelimfamperf.Click += new System.EventHandler(this.btnelimfamperf_Click);
             // 
-            // button2
+            // btnagfamperf
             // 
-            this.button2.BackColor = System.Drawing.Color.RosyBrown;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(-2, 297);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 47;
-            this.button2.Text = "Agregar";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnagfamperf.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnagfamperf.FlatAppearance.BorderSize = 0;
+            this.btnagfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnagfamperf.Location = new System.Drawing.Point(-2, 297);
+            this.btnagfamperf.Name = "btnagfamperf";
+            this.btnagfamperf.Size = new System.Drawing.Size(75, 23);
+            this.btnagfamperf.TabIndex = 47;
+            this.btnagfamperf.Text = "Agregar";
+            this.btnagfamperf.UseVisualStyleBackColor = false;
+            this.btnagfamperf.Click += new System.EventHandler(this.btnagfamperf_Click);
             // 
-            // FormCrearPerfiles_750VR
+            // FormCrearPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button11);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.btnrealiz);
+            this.Controls.Add(this.btnelimfamperf);
+            this.Controls.Add(this.btnagfamperf);
+            this.Controls.Add(this.btnelimpermperf);
+            this.Controls.Add(this.btnagpermperf);
+            this.Controls.Add(this.btnelimfamfam);
+            this.Controls.Add(this.btnagfamfam);
+            this.Controls.Add(this.elimpermfam);
+            this.Controls.Add(this.agpermfam);
+            this.Controls.Add(this.btnelimfam);
+            this.Controls.Add(this.btnagfam);
+            this.Controls.Add(this.btnelimperf);
+            this.Controls.Add(this.agperf);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox6);
+            this.Controls.Add(this.cmbfamfam);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtnomperf);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtfam);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbpermfam);
+            this.Controls.Add(this.cmbpermperf);
+            this.Controls.Add(this.cmbfamperf);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.treeView2);
-            this.Name = "FormCrearPerfiles_750VR";
+            this.Name = "FormCrearPerfiles";
             this.Text = "FormCrearPerfiles_750VR";
+            this.Load += new System.EventHandler(this.FormCrearPerfiles_750VR_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -400,33 +413,33 @@
         #endregion
         private System.Windows.Forms.TreeView treeView2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbfamperf;
+        private System.Windows.Forms.ComboBox cmbpermperf;
+        private System.Windows.Forms.ComboBox cmbpermfam;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtfam;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtnomperf;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cmbfamfam;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button btnrealiz;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button agperf;
+        private System.Windows.Forms.Button btnelimperf;
+        private System.Windows.Forms.Button btnelimfam;
+        private System.Windows.Forms.Button btnagfam;
+        private System.Windows.Forms.Button elimpermfam;
+        private System.Windows.Forms.Button agpermfam;
+        private System.Windows.Forms.Button btnelimfamfam;
+        private System.Windows.Forms.Button btnagfamfam;
+        private System.Windows.Forms.Button btnelimpermperf;
+        private System.Windows.Forms.Button btnagpermperf;
+        private System.Windows.Forms.Button btnelimfamperf;
+        private System.Windows.Forms.Button btnagfamperf;
     }
 }

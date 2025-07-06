@@ -14,9 +14,9 @@ using DAL_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormActualizarAgenda_750VR : Form, Iobserver_750VR
+    public partial class FormActualizarAgenda : Form, Iobserver_750VR
     {
-        public FormActualizarAgenda_750VR()
+        public FormActualizarAgenda()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);

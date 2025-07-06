@@ -16,13 +16,13 @@ using System.Threading;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormRegistrarReserva_750VR : Form, Iobserver_750VR
+    public partial class FormRegistrarReserva : Form, Iobserver_750VR
     {
         private List<BEServicio_750VR> listaServicios;
         private List<BEusuario_750VR> listaUsuarios = new List<BEusuario_750VR>();
         private BLLdisponibilidad_750VR bll = new BLLdisponibilidad_750VR();
 
-        public FormRegistrarReserva_750VR()
+        public FormRegistrarReserva()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
@@ -247,7 +247,7 @@ namespace Proyecto_NailsTime
                 //MessageBox.Show("Reserva creada correctamente.");
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Mensaje_DNIcreada"));
 
-                FormCobrarServicio_750VR frmCobro = new FormCobrarServicio_750VR(nuevaReserva.CodReserva_750VR);
+                FormCobrarServici frmCobro = new FormCobrarServici(nuevaReserva.CodReserva_750VR);
                 var resultado = frmCobro.ShowDialog();
 
                 if (resultado == DialogResult.OK)
@@ -563,7 +563,7 @@ namespace Proyecto_NailsTime
             else
             {
                 // Cliente no existe → se abre directamente el formulario para crearlo
-                FormABMClientes_750VR frm = new FormABMClientes_750VR();
+                FormABMClientes frm = new FormABMClientes();
                 frm.InvocadoDesdeReserva = true;
                 frm.FormularioReserva = this;
                 frm.ShowDialog();

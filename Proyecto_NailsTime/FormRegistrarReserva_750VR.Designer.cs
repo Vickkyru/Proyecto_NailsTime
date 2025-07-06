@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormRegistrarReserva_750VR
+    partial class FormRegistrarReserva
     {
         /// <summary>
         /// Required designer variable.
@@ -385,7 +385,7 @@
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
-            // FormRegistrarReserva_750VR
+            // FormRegistrarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -424,7 +424,7 @@
             this.Controls.Add(this.txthorest);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label12);
-            this.Name = "FormRegistrarReserva_750VR";
+            this.Name = "FormRegistrarReserva";
             this.Text = "FormGestionReserva_750VR";
             this.Load += new System.EventHandler(this.FormRegistrarReserva_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

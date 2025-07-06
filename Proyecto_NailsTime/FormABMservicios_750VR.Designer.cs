@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormABMservicios_750VR
+    partial class FormABMservicios
     {
         /// <summary>
         /// Required designer variable.
@@ -249,7 +249,7 @@
             this.rbnActivos.UseVisualStyleBackColor = true;
             this.rbnActivos.CheckedChanged += new System.EventHandler(this.rbnActivos_CheckedChanged);
             // 
-            // FormABMservicios_750VR
+            // FormABMservicios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -274,7 +274,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label2);
-            this.Name = "FormABMservicios_750VR";
+            this.Name = "FormABMservicios";
             this.Text = "FormABMservicios_750VR";
             this.Load += new System.EventHandler(this.FormABMservicios_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

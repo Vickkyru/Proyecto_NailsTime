@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormCambiarClave_750VR
+    partial class FormCambiarClave
     {
         /// <summary>
         /// Required designer variable.
@@ -109,7 +109,7 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "Cambiar Clave";
             // 
-            // FormCambiarClave_750VR
+            // FormCambiarClave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -123,7 +123,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label2);
-            this.Name = "FormCambiarClave_750VR";
+            this.Name = "FormCambiarClave";
             this.Text = "FormCambiarClave_750VR";
             this.Load += new System.EventHandler(this.FormCambiarClave_750VR_Load);
             this.ResumeLayout(false);

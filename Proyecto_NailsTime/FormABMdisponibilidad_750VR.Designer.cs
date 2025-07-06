@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormABMdisponibilidad_750VR
+    partial class FormABMdisponibilidad
     {
         /// <summary>
         /// Required designer variable.
@@ -266,7 +266,7 @@
             this.rbnActivos.UseVisualStyleBackColor = true;
             this.rbnActivos.CheckedChanged += new System.EventHandler(this.rbnActivos_CheckedChanged);
             // 
-            // FormABMdisponibilidad_750VR
+            // FormABMdisponibilidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -293,7 +293,7 @@
             this.Controls.Add(this.txtfin);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
-            this.Name = "FormABMdisponibilidad_750VR";
+            this.Name = "FormABMdisponibilidad";
             this.Text = "FormABMdisponibilidad";
             this.Load += new System.EventHandler(this.FormABMdisponibilidad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

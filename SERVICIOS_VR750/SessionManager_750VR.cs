@@ -13,6 +13,9 @@ namespace SERVICIOS_VR750
       
         private static SessionManager_750VR Instancia;
         public BEusuario_750VR user { get; private set; }
+        public List<string> PermisosDelUsuario { get; set; } = new List<string>();
+
+
 
         private SessionManager_750VR() { }
 
@@ -40,6 +43,7 @@ namespace SERVICIOS_VR750
             this.user = userNuevo;
 
             MessageBox.Show($"Sesión iniciada para: {user.nombre_750VR} {user.apellido_750VR}");
+
 
             // ✅ Setear el idioma del usuario
             if (!string.IsNullOrEmpty(userNuevo.idioma_750VR))

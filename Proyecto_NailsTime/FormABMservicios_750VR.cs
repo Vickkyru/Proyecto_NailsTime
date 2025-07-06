@@ -14,10 +14,10 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormABMservicios_750VR : Form, Iobserver_750VR
+    public partial class FormABMservicios : Form, Iobserver_750VR
     {
         private string modoActual = "consulta";
-        public FormABMservicios_750VR()
+        public FormABMservicios()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);

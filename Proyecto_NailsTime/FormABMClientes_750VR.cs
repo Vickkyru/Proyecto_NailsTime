@@ -15,15 +15,15 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormABMClientes_750VR : Form, Iobserver_750VR
+    public partial class FormABMClientes : Form, Iobserver_750VR
     {
         private string modoActual = "consulta";
         private string emailCifradoActual = "";
 
         public bool InvocadoDesdeReserva { get; set; } = false;
-        public FormRegistrarReserva_750VR FormularioReserva { get; set; }
+        public FormRegistrarReserva FormularioReserva { get; set; }
 
-        public FormABMClientes_750VR()
+        public FormABMClientes()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);

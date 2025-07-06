@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormActualizarAgenda_750VR
+    partial class FormActualizarAgenda
     {
         /// <summary>
         /// Required designer variable.
@@ -203,7 +203,7 @@
             this.label7.TabIndex = 40;
             this.label7.Text = "Marque el turno";
             // 
-            // FormActualizarAgenda_750VR
+            // FormActualizarAgenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -225,7 +225,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "FormActualizarAgenda_750VR";
+            this.Name = "FormActualizarAgenda";
             this.Text = "FormAgendaManicurista";
             this.Load += new System.EventHandler(this.FormActualizarAgenda_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FormFactura2_750VR
+    partial class FormFactura
     {
         /// <summary>
         /// Required designer variable.
@@ -51,7 +51,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(540, 217);
             this.dataGridView1.TabIndex = 2;
             // 
-            // FormFactura2_750VR
+            // FormFactura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -59,7 +59,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "FormFactura2_750VR";
+            this.Name = "FormFactura";
             this.Text = "FormFactura2_750VR";
             this.Load += new System.EventHandler(this.FormFactura2_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

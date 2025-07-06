@@ -16,10 +16,10 @@ using System.Globalization;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormCobrarServicio_750VR : Form, Iobserver_750VR
+    public partial class FormCobrarServici : Form, Iobserver_750VR
     {
         private int idReserva; 
-        public FormCobrarServicio_750VR(int idReservaRecibido)
+        public FormCobrarServici(int idReservaRecibido)
         {
             InitializeComponent();
             idReserva = idReservaRecibido;

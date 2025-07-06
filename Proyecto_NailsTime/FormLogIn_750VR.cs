@@ -15,16 +15,16 @@ using SERVICIOS_VR750;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormLogIn_750VR : Form, Iobserver_750VR
+    public partial class FormLogIn : Form, Iobserver_750VR
     {
         public BLLusuario_750VR usuarioBLL = new BLLusuario_750VR();
         BLLusuario_750VR bll = new BLLusuario_750VR();
         private Dictionary<string, int> intentosFallidosPorUsuario = new Dictionary<string, int>();
 
-        private Form1_750VR formPrincipal;
+        private FormPrincipal formPrincipal;
         
 
-        public FormLogIn_750VR(Form1_750VR principal)
+        public FormLogIn(FormPrincipal principal)
         {
             InitializeComponent();
             formPrincipal = principal;
@@ -54,7 +54,7 @@ namespace Proyecto_NailsTime
             {
                 BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
 
-                
+
                 bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
 
                 if (!sesionOK)
@@ -64,19 +64,28 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-               
+                // 🔽 Paso 2 - Cargar permisos del perfil
+                var bllPerfil = new BLLperfil_750VR();
+                var permisos = bllPerfil.ObtenerPermisosDePerfil(usuario.CodPerfil_750VR);
+
+                List<string> nombresPermisos = new List<string>();
+                foreach (var permiso in permisos)
+                    nombresPermisos.AddRange(ObtenerNombresPermisos(permiso));
+
+                SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario = nombresPermisos;
+
+                // 🔽 Resto de tu código original
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
                 usuario.idioma_750VR = idioma;
 
-
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 formPrincipal.Actualizar();
 
-              
                 intentosFallidosPorUsuario.Remove(login);
 
                 this.Close();
+
             }
             catch (Exception ex)
             {
@@ -110,8 +119,17 @@ namespace Proyecto_NailsTime
             }
 
         }
+        private List<string> ObtenerNombresPermisos(IComponentePermiso_750VR permiso)
+        {
+            List<string> lista = new List<string>();
+            lista.Add(permiso.Nombre_750VR);
 
-        
+            foreach (var hijo in permiso.ObtenerHijos())
+                lista.AddRange(ObtenerNombresPermisos(hijo));
+
+            return lista;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();

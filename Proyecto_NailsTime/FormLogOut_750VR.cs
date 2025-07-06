@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormLogOut_750VR : Form, Iobserver_750VR
+    public partial class FormLogOut : Form, Iobserver_750VR
     {
-        public FormLogOut_750VR()
+        public FormLogOut()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);

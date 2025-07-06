@@ -13,10 +13,10 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormFactura2_750VR : Form
+    public partial class FormFactura : Form
     {
         private List<BEfactura_750VR> listaFacturas;
-        public FormFactura2_750VR()
+        public FormFactura()
         {
             InitializeComponent();
         }
