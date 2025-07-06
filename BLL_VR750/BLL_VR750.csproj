@@ -72,6 +72,7 @@
     <Compile Include="BLLCliente_750VR.cs" />
     <Compile Include="BLLfactura_750VR.cs" />
     <Compile Include="BLLinsumos_750VR.cs" />
+    <Compile Include="BLLperfil_750VR.cs" />
     <Compile Include="BLLreservaInsumo_750VR.cs" />
     <Compile Include="BLLServicio_750VR.cs" />
     <Compile Include="BLLReserva_750VR.cs" />

@@ -73,6 +73,7 @@
     <Compile Include="DALcliente_750VR.cs" />
     <Compile Include="DALfactura_750VR.cs" />
     <Compile Include="DALinsumos_750VR.cs" />
+    <Compile Include="DALperfil_750VR.cs" />
     <Compile Include="DALReservaInsumo_750VR.cs" />
     <Compile Include="DALreserva_750VR.cs" />
     <Compile Include="DALservicio_750VR.cs" />

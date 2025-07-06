@@ -72,6 +72,7 @@
     <Compile Include="BECliente_750VR.cs" />
     <Compile Include="BEfactura_750VR.cs" />
     <Compile Include="BEinsumos_750VR.cs" />
+    <Compile Include="BEperfil_750VR.cs" />
     <Compile Include="BEreservaInsumo_750VR.cs" />
     <Compile Include="GrupoPermiso_750VR.cs" />
     <Compile Include="IComponentePermiso_750VR.cs" />
