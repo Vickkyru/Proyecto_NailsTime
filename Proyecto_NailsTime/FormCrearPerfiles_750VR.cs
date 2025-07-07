@@ -78,6 +78,9 @@ namespace Proyecto_NailsTime
             cmbperf.DataSource = perfiles;
             cmbperf.DisplayMember = "NombrePerfil_750VR";
             cmbperf.ValueMember = "CodPerfil_750VR";
+
+            cmbperf.SelectedIndex = -1;
+
         }
 
 
@@ -143,6 +146,8 @@ namespace Proyecto_NailsTime
             cmbfamperf.DataSource = familias;
             cmbfamperf.DisplayMember = "Nombre_750VR";
             cmbfamperf.ValueMember = "Codigo_750VR";
+            cmbfamperf.SelectedIndex = -1;
+
         }
         private void CargarComboBoxFamilias2()
         {
@@ -151,6 +156,8 @@ namespace Proyecto_NailsTime
             cmbfamfam.DataSource = familias;
             cmbfamfam.DisplayMember = "Nombre_750VR";
             cmbfamfam.ValueMember = "Codigo_750VR";
+            cmbfamfam.SelectedIndex = -1;
+
         }
 
         private void AgregarNodoPermiso(TreeNode nodoPadre, IComponentePermiso_750VR permiso)
@@ -231,6 +238,7 @@ namespace Proyecto_NailsTime
             cmbpermperf.DataSource = listaPermisos;
             cmbpermperf.DisplayMember = "Nombre_750VR";
             cmbpermperf.ValueMember = "Codigo_750VR";
+            cmbpermperf.SelectedIndex = -1;
         }
         private void CargarComboPermisos2()
         {
@@ -238,6 +246,7 @@ namespace Proyecto_NailsTime
             cmbpermfam.DataSource = listaPermisos;
             cmbpermfam.DisplayMember = "Nombre_750VR";
             cmbpermfam.ValueMember = "Codigo_750VR";
+            cmbpermfam.SelectedIndex = -1;
         }
 
         private void btnagpermperf_Click(object sender, EventArgs e)

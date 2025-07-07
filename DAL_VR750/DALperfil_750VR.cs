@@ -15,7 +15,7 @@ namespace DAL_VR750
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = "INSERT INTO Perfil_750VR (Nombre_VR750) VALUES (@Nombre)";
+                string query = "INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES (@Nombre)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", perfil.NombrePerfil_750VR);
                 cmd.ExecuteNonQuery();
