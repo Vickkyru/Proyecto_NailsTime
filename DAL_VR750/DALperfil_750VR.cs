@@ -22,6 +22,32 @@ namespace DAL_VR750
             }
         }
 
+        public static List<string> ObtenerPermisosPorPerfil(int codPerfil)
+        {
+            List<string> permisos = new List<string>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(@"
+            SELECT p.Nombre_VR750
+            FROM PerfilPermiso_VR750 pp
+            JOIN Permiso_VR750 p ON pp.IdPermiso_VR750 = p.IdPermiso_VR750
+            WHERE pp.IdPerfil_VR750 = @codPerfil
+        ", conn);
+
+                cmd.Parameters.AddWithValue("@codPerfil", codPerfil);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    permisos.Add(reader.GetString(0));
+                }
+            }
+
+            return permisos;
+        }
+
         public void EliminarPerfil(int codPerfil)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))

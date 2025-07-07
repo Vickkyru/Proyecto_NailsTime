@@ -29,26 +29,26 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.administradorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gestionDePerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serviciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.horariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insumosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarClaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarIdiomaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.regReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.actAgendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insumosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.facturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaAdmin = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestionUsuarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestionPerfiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaMaestros = new System.Windows.Forms.ToolStripMenuItem();
+            this.AMBclientes = new System.Windows.Forms.ToolStripMenuItem();
+            this.AMBservicios = new System.Windows.Forms.ToolStripMenuItem();
+            this.ABMhorarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.ABMinsumos = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaUsuarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.inicioSesion = new System.Windows.Forms.ToolStripMenuItem();
+            this.cambiarClave = new System.Windows.Forms.ToolStripMenuItem();
+            this.cerrarSesion = new System.Windows.Forms.ToolStripMenuItem();
+            this.cambiarIdioma = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaReserva = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrarReserva = new System.Windows.Forms.ToolStripMenuItem();
+            this.actualizarAgenda = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaInsumos = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaReportes = new System.Windows.Forms.ToolStripMenuItem();
+            this.Facturas = new System.Windows.Forms.ToolStripMenuItem();
+            this.pestañaAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -64,13 +64,13 @@
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Right;
             this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.administradorToolStripMenuItem,
-            this.maestrosToolStripMenuItem,
-            this.usuarioToolStripMenuItem,
-            this.reservaToolStripMenuItem,
-            this.insumosToolStripMenuItem,
-            this.reportesToolStripMenuItem,
-            this.ayudaToolStripMenuItem});
+            this.pestañaAdmin,
+            this.pestañaMaestros,
+            this.pestañaUsuarios,
+            this.pestañaReserva,
+            this.pestañaInsumos,
+            this.pestañaReportes,
+            this.pestañaAyuda});
             this.menuStrip1.Location = new System.Drawing.Point(769, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(130, 489);
@@ -78,164 +78,164 @@
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
-            // administradorToolStripMenuItem
+            // pestañaAdmin
             // 
-            this.administradorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usuariosToolStripMenuItem,
-            this.gestionDePerfilesToolStripMenuItem});
-            this.administradorToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.administradorToolStripMenuItem.Name = "administradorToolStripMenuItem";
-            this.administradorToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.administradorToolStripMenuItem.Text = "Administrador";
-            this.administradorToolStripMenuItem.Click += new System.EventHandler(this.administradorToolStripMenuItem_Click);
+            this.pestañaAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gestionUsuarios,
+            this.gestionPerfiles});
+            this.pestañaAdmin.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaAdmin.Name = "pestañaAdmin";
+            this.pestañaAdmin.Size = new System.Drawing.Size(123, 25);
+            this.pestañaAdmin.Text = "Administrador";
+            this.pestañaAdmin.Click += new System.EventHandler(this.administradorToolStripMenuItem_Click);
             // 
-            // usuariosToolStripMenuItem
+            // gestionUsuarios
             // 
-            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
-            this.usuariosToolStripMenuItem.Text = "Gestion de usuarios";
-            this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
+            this.gestionUsuarios.Name = "gestionUsuarios";
+            this.gestionUsuarios.Size = new System.Drawing.Size(223, 26);
+            this.gestionUsuarios.Text = "Gestion de usuarios";
+            this.gestionUsuarios.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
-            // gestionDePerfilesToolStripMenuItem
+            // gestionPerfiles
             // 
-            this.gestionDePerfilesToolStripMenuItem.Name = "gestionDePerfilesToolStripMenuItem";
-            this.gestionDePerfilesToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
-            this.gestionDePerfilesToolStripMenuItem.Text = "gestion de perfiles";
-            this.gestionDePerfilesToolStripMenuItem.Click += new System.EventHandler(this.gestionDePerfilesToolStripMenuItem_Click);
+            this.gestionPerfiles.Name = "gestionPerfiles";
+            this.gestionPerfiles.Size = new System.Drawing.Size(223, 26);
+            this.gestionPerfiles.Text = "gestion de perfiles";
+            this.gestionPerfiles.Click += new System.EventHandler(this.gestionDePerfilesToolStripMenuItem_Click);
             // 
-            // maestrosToolStripMenuItem
+            // pestañaMaestros
             // 
-            this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clientesToolStripMenuItem,
-            this.serviciosToolStripMenuItem,
-            this.horariosToolStripMenuItem,
-            this.insumosToolStripMenuItem1});
-            this.maestrosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
-            this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.maestrosToolStripMenuItem.Text = "Maestros";
+            this.pestañaMaestros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AMBclientes,
+            this.AMBservicios,
+            this.ABMhorarios,
+            this.ABMinsumos});
+            this.pestañaMaestros.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaMaestros.Name = "pestañaMaestros";
+            this.pestañaMaestros.Size = new System.Drawing.Size(123, 25);
+            this.pestañaMaestros.Text = "Maestros";
             // 
-            // clientesToolStripMenuItem
+            // AMBclientes
             // 
-            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
-            this.clientesToolStripMenuItem.Text = "Clientes";
-            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
+            this.AMBclientes.Name = "AMBclientes";
+            this.AMBclientes.Size = new System.Drawing.Size(180, 26);
+            this.AMBclientes.Text = "Clientes";
+            this.AMBclientes.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
-            // serviciosToolStripMenuItem
+            // AMBservicios
             // 
-            this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
-            this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
-            this.serviciosToolStripMenuItem.Text = "Servicios";
-            this.serviciosToolStripMenuItem.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
+            this.AMBservicios.Name = "AMBservicios";
+            this.AMBservicios.Size = new System.Drawing.Size(180, 26);
+            this.AMBservicios.Text = "Servicios";
+            this.AMBservicios.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
-            // horariosToolStripMenuItem
+            // ABMhorarios
             // 
-            this.horariosToolStripMenuItem.Name = "horariosToolStripMenuItem";
-            this.horariosToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
-            this.horariosToolStripMenuItem.Text = "Horarios";
-            this.horariosToolStripMenuItem.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
+            this.ABMhorarios.Name = "ABMhorarios";
+            this.ABMhorarios.Size = new System.Drawing.Size(180, 26);
+            this.ABMhorarios.Text = "Horarios";
+            this.ABMhorarios.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
             // 
-            // insumosToolStripMenuItem1
+            // ABMinsumos
             // 
-            this.insumosToolStripMenuItem1.Name = "insumosToolStripMenuItem1";
-            this.insumosToolStripMenuItem1.Size = new System.Drawing.Size(146, 26);
-            this.insumosToolStripMenuItem1.Text = "Insumos";
-            this.insumosToolStripMenuItem1.Click += new System.EventHandler(this.insumosToolStripMenuItem1_Click);
+            this.ABMinsumos.Name = "ABMinsumos";
+            this.ABMinsumos.Size = new System.Drawing.Size(180, 26);
+            this.ABMinsumos.Text = "Insumos";
+            this.ABMinsumos.Click += new System.EventHandler(this.insumosToolStripMenuItem1_Click);
             // 
-            // usuarioToolStripMenuItem
+            // pestañaUsuarios
             // 
-            this.usuarioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loginToolStripMenuItem,
-            this.cambiarClaveToolStripMenuItem,
-            this.logoutToolStripMenuItem,
-            this.cambiarIdiomaToolStripMenuItem});
-            this.usuarioToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
-            this.usuarioToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.usuarioToolStripMenuItem.Text = "Usuario";
+            this.pestañaUsuarios.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.inicioSesion,
+            this.cambiarClave,
+            this.cerrarSesion,
+            this.cambiarIdioma});
+            this.pestañaUsuarios.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaUsuarios.Name = "pestañaUsuarios";
+            this.pestañaUsuarios.Size = new System.Drawing.Size(123, 25);
+            this.pestañaUsuarios.Text = "Usuario";
             // 
-            // loginToolStripMenuItem
+            // inicioSesion
             // 
-            this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
-            this.loginToolStripMenuItem.Text = "Inicio Sesion";
-            this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
+            this.inicioSesion.Name = "inicioSesion";
+            this.inicioSesion.Size = new System.Drawing.Size(195, 26);
+            this.inicioSesion.Text = "Inicio Sesion";
+            this.inicioSesion.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
-            // cambiarClaveToolStripMenuItem
+            // cambiarClave
             // 
-            this.cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
-            this.cambiarClaveToolStripMenuItem.Text = "Cambiar clave";
-            this.cambiarClaveToolStripMenuItem.Click += new System.EventHandler(this.cambiarClaveToolStripMenuItem_Click);
+            this.cambiarClave.Name = "cambiarClave";
+            this.cambiarClave.Size = new System.Drawing.Size(195, 26);
+            this.cambiarClave.Text = "Cambiar clave";
+            this.cambiarClave.Click += new System.EventHandler(this.cambiarClaveToolStripMenuItem_Click);
             // 
-            // logoutToolStripMenuItem
+            // cerrarSesion
             // 
-            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
-            this.logoutToolStripMenuItem.Text = "Cerrar Sesion";
-            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            this.cerrarSesion.Name = "cerrarSesion";
+            this.cerrarSesion.Size = new System.Drawing.Size(195, 26);
+            this.cerrarSesion.Text = "Cerrar Sesion";
+            this.cerrarSesion.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
-            // cambiarIdiomaToolStripMenuItem
+            // cambiarIdioma
             // 
-            this.cambiarIdiomaToolStripMenuItem.Name = "cambiarIdiomaToolStripMenuItem";
-            this.cambiarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(195, 26);
-            this.cambiarIdiomaToolStripMenuItem.Text = "Cambiar Idioma";
-            this.cambiarIdiomaToolStripMenuItem.Click += new System.EventHandler(this.cambiarIdiomaToolStripMenuItem_Click);
+            this.cambiarIdioma.Name = "cambiarIdioma";
+            this.cambiarIdioma.Size = new System.Drawing.Size(195, 26);
+            this.cambiarIdioma.Text = "Cambiar Idioma";
+            this.cambiarIdioma.Click += new System.EventHandler(this.cambiarIdiomaToolStripMenuItem_Click);
             // 
-            // reservaToolStripMenuItem
+            // pestañaReserva
             // 
-            this.reservaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.regReservaToolStripMenuItem,
-            this.actAgendaToolStripMenuItem});
-            this.reservaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reservaToolStripMenuItem.Name = "reservaToolStripMenuItem";
-            this.reservaToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.reservaToolStripMenuItem.Text = "Reserva";
+            this.pestañaReserva.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.registrarReserva,
+            this.actualizarAgenda});
+            this.pestañaReserva.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaReserva.Name = "pestañaReserva";
+            this.pestañaReserva.Size = new System.Drawing.Size(123, 25);
+            this.pestañaReserva.Text = "Reserva";
             // 
-            // regReservaToolStripMenuItem
+            // registrarReserva
             // 
-            this.regReservaToolStripMenuItem.Name = "regReservaToolStripMenuItem";
-            this.regReservaToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.regReservaToolStripMenuItem.Text = "Registrar Reserva";
-            this.regReservaToolStripMenuItem.Click += new System.EventHandler(this.verTurnosDisponiblesToolStripMenuItem_Click);
+            this.registrarReserva.Name = "registrarReserva";
+            this.registrarReserva.Size = new System.Drawing.Size(212, 26);
+            this.registrarReserva.Text = "Registrar Reserva";
+            this.registrarReserva.Click += new System.EventHandler(this.verTurnosDisponiblesToolStripMenuItem_Click);
             // 
-            // actAgendaToolStripMenuItem
+            // actualizarAgenda
             // 
-            this.actAgendaToolStripMenuItem.Name = "actAgendaToolStripMenuItem";
-            this.actAgendaToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.actAgendaToolStripMenuItem.Text = "Actualizar Agenda";
-            this.actAgendaToolStripMenuItem.Click += new System.EventHandler(this.verTurnosReservadosToolStripMenuItem_Click);
+            this.actualizarAgenda.Name = "actualizarAgenda";
+            this.actualizarAgenda.Size = new System.Drawing.Size(212, 26);
+            this.actualizarAgenda.Text = "Actualizar Agenda";
+            this.actualizarAgenda.Click += new System.EventHandler(this.verTurnosReservadosToolStripMenuItem_Click);
             // 
-            // insumosToolStripMenuItem
+            // pestañaInsumos
             // 
-            this.insumosToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.insumosToolStripMenuItem.Name = "insumosToolStripMenuItem";
-            this.insumosToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.insumosToolStripMenuItem.Text = "Insumos";
+            this.pestañaInsumos.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaInsumos.Name = "pestañaInsumos";
+            this.pestañaInsumos.Size = new System.Drawing.Size(123, 25);
+            this.pestañaInsumos.Text = "Insumos";
             // 
-            // reportesToolStripMenuItem
+            // pestañaReportes
             // 
-            this.reportesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.facturasToolStripMenuItem});
-            this.reportesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            this.reportesToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.reportesToolStripMenuItem.Text = "Reportes";
+            this.pestañaReportes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Facturas});
+            this.pestañaReportes.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaReportes.Name = "pestañaReportes";
+            this.pestañaReportes.Size = new System.Drawing.Size(123, 25);
+            this.pestañaReportes.Text = "Reportes";
             // 
-            // facturasToolStripMenuItem
+            // Facturas
             // 
-            this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
-            this.facturasToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
-            this.facturasToolStripMenuItem.Text = "Facturas";
-            this.facturasToolStripMenuItem.Click += new System.EventHandler(this.facturasToolStripMenuItem_Click);
+            this.Facturas.Name = "Facturas";
+            this.Facturas.Size = new System.Drawing.Size(180, 26);
+            this.Facturas.Text = "Facturas";
+            this.Facturas.Click += new System.EventHandler(this.facturasToolStripMenuItem_Click);
             // 
-            // ayudaToolStripMenuItem
+            // pestañaAyuda
             // 
-            this.ayudaToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(123, 25);
-            this.ayudaToolStripMenuItem.Text = "Ayuda";
+            this.pestañaAyuda.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pestañaAyuda.Name = "pestañaAyuda";
+            this.pestañaAyuda.Size = new System.Drawing.Size(123, 25);
+            this.pestañaAyuda.Text = "Ayuda";
             // 
             // pictureBox1
             // 
@@ -305,31 +305,31 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem administradorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem maestrosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usuarioToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cambiarClaveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reservaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem regReservaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem actAgendaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pestañaAdmin;
+        private System.Windows.Forms.ToolStripMenuItem gestionUsuarios;
+        private System.Windows.Forms.ToolStripMenuItem pestañaMaestros;
+        private System.Windows.Forms.ToolStripMenuItem pestañaUsuarios;
+        private System.Windows.Forms.ToolStripMenuItem inicioSesion;
+        private System.Windows.Forms.ToolStripMenuItem cambiarClave;
+        private System.Windows.Forms.ToolStripMenuItem cerrarSesion;
+        private System.Windows.Forms.ToolStripMenuItem pestañaReserva;
+        private System.Windows.Forms.ToolStripMenuItem pestañaInsumos;
+        private System.Windows.Forms.ToolStripMenuItem pestañaReportes;
+        private System.Windows.Forms.ToolStripMenuItem pestañaAyuda;
+        private System.Windows.Forms.ToolStripMenuItem registrarReserva;
+        private System.Windows.Forms.ToolStripMenuItem actualizarAgenda;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblbienvenido;
         private System.Windows.Forms.Label lblrol;
-        private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem horariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cambiarIdiomaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gestionDePerfilesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem insumosToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem facturasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AMBclientes;
+        private System.Windows.Forms.ToolStripMenuItem AMBservicios;
+        private System.Windows.Forms.ToolStripMenuItem ABMhorarios;
+        private System.Windows.Forms.ToolStripMenuItem cambiarIdioma;
+        private System.Windows.Forms.ToolStripMenuItem gestionPerfiles;
+        private System.Windows.Forms.ToolStripMenuItem ABMinsumos;
+        private System.Windows.Forms.ToolStripMenuItem Facturas;
     }
 }
 

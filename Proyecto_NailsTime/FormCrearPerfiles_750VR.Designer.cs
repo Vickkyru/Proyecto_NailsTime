@@ -235,7 +235,7 @@
             this.btnelimperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimperf.FlatAppearance.BorderSize = 0;
             this.btnelimperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimperf.Location = new System.Drawing.Point(94, 214);
+            this.btnelimperf.Location = new System.Drawing.Point(81, 214);
             this.btnelimperf.Name = "btnelimperf";
             this.btnelimperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimperf.TabIndex = 38;
@@ -390,7 +390,7 @@
             this.button2.BackColor = System.Drawing.Color.RosyBrown;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(141, 108);
+            this.button2.Location = new System.Drawing.Point(53, 85);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 51;
@@ -401,7 +401,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(111, 59);
+            this.label10.Location = new System.Drawing.Point(45, 36);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 50;
@@ -410,7 +410,7 @@
             // cmbperf
             // 
             this.cmbperf.FormattingEnabled = true;
-            this.cmbperf.Location = new System.Drawing.Point(114, 82);
+            this.cmbperf.Location = new System.Drawing.Point(32, 58);
             this.cmbperf.Name = "cmbperf";
             this.cmbperf.Size = new System.Drawing.Size(121, 21);
             this.cmbperf.TabIndex = 53;
@@ -419,7 +419,7 @@
             // cmbfam
             // 
             this.cmbfam.FormattingEnabled = true;
-            this.cmbfam.Location = new System.Drawing.Point(483, 82);
+            this.cmbfam.Location = new System.Drawing.Point(564, 59);
             this.cmbfam.Name = "cmbfam";
             this.cmbfam.Size = new System.Drawing.Size(121, 21);
             this.cmbfam.TabIndex = 56;
@@ -429,7 +429,7 @@
             this.button3.BackColor = System.Drawing.Color.RosyBrown;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(510, 108);
+            this.button3.Location = new System.Drawing.Point(591, 85);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 55;
@@ -439,7 +439,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(480, 59);
+            this.label11.Location = new System.Drawing.Point(561, 36);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(85, 13);
             this.label11.TabIndex = 54;

@@ -22,6 +22,10 @@ namespace BLL_VR750
         {
             dal.InsertarPerfil(perfil);
         }
+        public static List<string> ObtenerPermisosPorPerfil(int codPerfil)
+        {
+            return DALperfil_750VR.ObtenerPermisosPorPerfil(codPerfil);
+        }
 
         public void EliminarPerfil(int id)
         {

@@ -39,23 +39,23 @@ namespace Proyecto_NailsTime
 
         private void AbrirForm(Form nuevoForm)
         {
-            
+
             if (formActivo != null && formActivo.GetType() == nuevoForm.GetType())
                 return;
 
-            
+
             if (formActivo != null)
             {
                 if (!formActivo.IsDisposed)
                 {
                     this.Controls.Remove(formActivo);
-                    formActivo.Dispose();   
+                    formActivo.Dispose();
                 }
 
-                formActivo = null; 
+                formActivo = null;
             }
 
-            
+
             formActivo = nuevoForm;
             nuevoForm.TopLevel = false;
             nuevoForm.FormBorderStyle = FormBorderStyle.None;
@@ -70,7 +70,7 @@ namespace Proyecto_NailsTime
 
         }
 
-        
+
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -86,7 +86,7 @@ namespace Proyecto_NailsTime
         {
             //AbrirForm(new FormLogIn_750VR());
 
-            FormLogIn login = new FormLogIn(this); 
+            FormLogIn login = new FormLogIn(this);
             AbrirForm(login);
 
         }
@@ -107,97 +107,96 @@ namespace Proyecto_NailsTime
         }
         public void Actualizar()
         {
-            
+
             if (!SessionManager_750VR.ObtenerInstancia.EstaLogueado_750VR())
             {
                 BloquearTodo();
                 return;
             }
 
-            
+
             string rol = SessionManager_750VR.ObtenerInstancia.user.rol_750VR.ToLower();
-            
 
 
 
-            switch (rol)
-            {
-                case "manicurista":
-                    administradorToolStripMenuItem.Enabled = false;
-                    maestrosToolStripMenuItem.Enabled = false;
-                    usuarioToolStripMenuItem.Enabled = true;
-                    reservaToolStripMenuItem.Enabled = true;
-                    insumosToolStripMenuItem.Enabled = false;
-                    reportesToolStripMenuItem.Enabled = false;
-                    regReservaToolStripMenuItem.Enabled = false;
-                    cambiarClaveToolStripMenuItem.Enabled = true;
-                    cambiarIdiomaToolStripMenuItem.Enabled = true;
-                    break;
 
-                case "recepcionista":
-                    administradorToolStripMenuItem.Enabled = false;
-                    maestrosToolStripMenuItem.Enabled = false;
-                    usuarioToolStripMenuItem.Enabled = true;
-                    reservaToolStripMenuItem.Enabled = true;
-                    insumosToolStripMenuItem.Enabled = false;
-                    reportesToolStripMenuItem.Enabled = false;
-                    actAgendaToolStripMenuItem.Enabled = false;
-                    cambiarClaveToolStripMenuItem.Enabled = true;
-                    cambiarIdiomaToolStripMenuItem.Enabled = true;
-                    break;
+            //switch (rol)
+            //{
+            //    case "manicurista":
+            //        administradorToolStripMenuItem.Enabled = false;
+            //        maestrosToolStripMenuItem.Enabled = false;
+            //        usuarioToolStripMenuItem.Enabled = true;
+            //        reservaToolStripMenuItem.Enabled = true;
+            //        insumosToolStripMenuItem.Enabled = false;
+            //        reportesToolStripMenuItem.Enabled = false;
+            //        regReservaToolStripMenuItem.Enabled = false;
+            //        cambiarClaveToolStripMenuItem.Enabled = true;
+            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
+            //        break;
 
-                case "administrador":
-                    administradorToolStripMenuItem.Enabled = true;
-                    maestrosToolStripMenuItem.Enabled = true;
-                    usuarioToolStripMenuItem.Enabled = true;
-                    reservaToolStripMenuItem.Enabled = true;
-                    insumosToolStripMenuItem.Enabled = true;
-                    reportesToolStripMenuItem.Enabled = true;
-                    cambiarClaveToolStripMenuItem.Enabled = true;
-                    cambiarIdiomaToolStripMenuItem.Enabled = true;
-                    break;
+            //    case "recepcionista":
+            //        administradorToolStripMenuItem.Enabled = false;
+            //        maestrosToolStripMenuItem.Enabled = false;
+            //        usuarioToolStripMenuItem.Enabled = true;
+            //        reservaToolStripMenuItem.Enabled = true;
+            //        insumosToolStripMenuItem.Enabled = false;
+            //        reportesToolStripMenuItem.Enabled = false;
+            //        actAgendaToolStripMenuItem.Enabled = false;
+            //        cambiarClaveToolStripMenuItem.Enabled = true;
+            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
+            //        break;
 
-                default:
-                    BloquearTodo();
-                    break;
-            }
+            //    case "administrador":
+            //        administradorToolStripMenuItem.Enabled = true;
+            //        maestrosToolStripMenuItem.Enabled = true;
+            //        usuarioToolStripMenuItem.Enabled = true;
+            //        reservaToolStripMenuItem.Enabled = true;
+            //        insumosToolStripMenuItem.Enabled = true;
+            //        reportesToolStripMenuItem.Enabled = true;
+            //        cambiarClaveToolStripMenuItem.Enabled = true;
+            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
+            //        break;
 
+            //    default:
+            //        BloquearTodo();
+            //        break;
         }
+
+    
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            AplicarPermisos();
+            //AplicarPermisos();
             ActualizarLabels();
             Actualizar();
           
 
         }
 
-        //me falta esto
-        private void AplicarPermisos()
+        public void AplicarPermisos()
         {
-            var permisos = SERVICIOS_VR750.SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
+            var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
 
-            usuariosToolStripMenuItem.Enabled = permisos.Contains("FormGestionUsuario_750VR");
-            insumosToolStripMenuItem.Enabled = permisos.Contains("FormABMinsumos_750VR");
-            horariosToolStripMenuItem.Enabled = permisos.Contains("FormABMdisponibilidad_750VR");
-            cambiarClaveToolStripMenuItem.Enabled = permisos.Contains("FormCambiarClave_750VR");
-            reservaToolStripMenuItem.Enabled = permisos.Contains("FormRegistrarReserva_750VR");
-            actAgendaToolStripMenuItem.Enabled = permisos.Contains("FormAgendaManicurista");
-            facturasToolStripMenuItem.Enabled = permisos.Contains("FormFactura2_750VR");
-            gestionDePerfilesToolStripMenuItem.Enabled = permisos.Contains("FormCrearPerfiles_750VR");
-            logoutToolStripMenuItem.Enabled = permisos.Contains("FormLogOut_750VR");
+            MessageBox.Show("Permisos cargados:\n" + string.Join("\n", SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario));
+
+
+            GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
         }
+
+
         private void BloquearTodo()
         {
-            administradorToolStripMenuItem.Enabled = false;
-            maestrosToolStripMenuItem.Enabled = false;
-            usuarioToolStripMenuItem.Enabled = true;
-            reservaToolStripMenuItem.Enabled = false;
-            insumosToolStripMenuItem.Enabled = false;
-            reportesToolStripMenuItem.Enabled = false;
-            cambiarClaveToolStripMenuItem.Enabled = false;
-            cambiarIdiomaToolStripMenuItem.Enabled = false;
+            pestañaAdmin.Enabled = false;
+            pestañaMaestros.Enabled = false;
+            pestañaUsuarios.Enabled = true;
+            inicioSesion.Enabled = true;
+            cerrarSesion.Enabled = true;
+            pestañaReserva.Enabled = false;
+            pestañaInsumos.Enabled = false;
+            pestañaReportes.Enabled = false;
+            cambiarClave.Enabled = false;
+            cambiarIdioma.Enabled = false;
         }
 
 

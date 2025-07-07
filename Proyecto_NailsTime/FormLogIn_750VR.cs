@@ -56,15 +56,13 @@ namespace Proyecto_NailsTime
 
 
                 bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
-
                 if (!sesionOK)
                 {
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.SesionActiva"));
-                    this.Close();
                     return;
                 }
 
-                // 🔽 Paso 2 - Cargar permisos del perfil
+                // 🔽 Cargar permisos si la sesión fue exitosa
                 var bllPerfil = new BLLperfil_750VR();
                 var permisos = bllPerfil.ObtenerPermisosDePerfil(usuario.CodPerfil_750VR);
 
@@ -72,6 +70,7 @@ namespace Proyecto_NailsTime
                 foreach (var permiso in permisos)
                     nombresPermisos.AddRange(ObtenerNombresPermisos(permiso));
 
+                // 🔽 Guardar permisos en la sesión
                 SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario = nombresPermisos;
 
                 // 🔽 Resto de tu código original
@@ -81,6 +80,7 @@ namespace Proyecto_NailsTime
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 formPrincipal.Actualizar();
+                formPrincipal.AplicarPermisos();
 
                 intentosFallidosPorUsuario.Remove(login);
 
