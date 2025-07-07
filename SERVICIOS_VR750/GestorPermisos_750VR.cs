@@ -20,7 +20,7 @@ namespace SERVICIOS_VR750
             }
         }
 
-        private static void AplicarPermisosAlMenu(ToolStripMenuItem menuItem, List<string> permisos)
+        public static void AplicarPermisosAlMenu(ToolStripMenuItem menuItem, List<string> permisos)
         {
             foreach (ToolStripItem subItem in menuItem.DropDownItems)
             {

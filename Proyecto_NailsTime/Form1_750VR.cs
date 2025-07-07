@@ -178,10 +178,13 @@ namespace Proyecto_NailsTime
         {
             var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
 
-            MessageBox.Show("Permisos cargados:\n" + string.Join("\n", SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario));
+            // DEBUG: mostrar los nombres
+            MessageBox.Show("Permisos cargados:\n" + string.Join(", ", permisos));
 
-
-            GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
+            foreach (ToolStripMenuItem item in menuStrip1.Items)
+            {
+                GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
+            }
         }
 
 
