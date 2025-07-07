@@ -330,8 +330,7 @@ namespace Proyecto_NailsTime
                 string salt = encriptador.GenerarSalt_750VR();
                 string contraseñaHasheada = encriptador.HashearConSalt_750VR(contraseña, salt);
 
-                //esta mal
-                int cod = 1;
+             
 
                 BEusuario_750VR nuevo = new BEusuario_750VR(
                     dni,
@@ -344,8 +343,8 @@ namespace Proyecto_NailsTime
                     rol,
                     true,
                     false,
-                    idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual,
-                    cod
+                    idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
+                    
                 );
 
                 bll.CrearUsuario_750VR(nuevo);

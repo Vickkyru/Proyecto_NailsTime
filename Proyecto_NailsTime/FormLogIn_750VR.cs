@@ -64,7 +64,8 @@ namespace Proyecto_NailsTime
 
                 // 🔽 Cargar permisos si la sesión fue exitosa
                 var bllPerfil = new BLLperfil_750VR();
-                var permisos = bllPerfil.ObtenerPermisosDePerfil(usuario.CodPerfil_750VR);
+                var permisos = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
+
 
                 List<string> nombresPermisos = new List<string>();
                 foreach (var permiso in permisos)

@@ -92,6 +92,10 @@ namespace BLL_VR750
             dal.QuitarFamiliaDeFamilia(idPadre, idHija);
         }
 
+        public List<IComponentePermiso_750VR> ObtenerPermisosDePerfilPorNombre(string nombrePerfil)
+        {
+            return dal.ObtenerPermisosDePerfilPorNombre(nombrePerfil);
+        }
 
     }
 }

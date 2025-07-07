@@ -18,11 +18,9 @@ namespace BE_VR750
         public string rol_750VR { get; set; }
         public bool activo_750VR { get; set; }
         public bool bloqueado_750VR { get; set; }
-
         public string idioma_750VR { get; set; }
 
-        public int CodPerfil_750VR { get; set; }
-        public BEusuario_750VR(int dni, string nombre, string ape, string mail,string user,string contra, string salt, string rol, bool activo, bool bloqueado,string idiom, int cod)
+        public BEusuario_750VR(int dni, string nombre, string ape, string mail, string user, string contra, string salt, string rol, bool activo, bool bloqueado, string idiom)
         {
             this.dni_750VR = dni;
             this.nombre_750VR = nombre;
@@ -35,11 +33,9 @@ namespace BE_VR750
             this.activo_750VR = activo;
             this.bloqueado_750VR = bloqueado;
             this.idioma_750VR = idiom;
-            this.CodPerfil_750VR = cod;
-
         }
 
-   
+
 
 
     }

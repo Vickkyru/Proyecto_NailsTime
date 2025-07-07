@@ -216,6 +216,57 @@ namespace DAL_VR750
                 cmd.ExecuteNonQuery();
             }
         }
+        public List<IComponentePermiso_750VR> ObtenerPermisosDePerfilPorNombre(string nombrePerfil)
+        {
+            List<IComponentePermiso_750VR> permisos = new List<IComponentePermiso_750VR>();
+            List<(int codPermiso, string nombre, bool esFamilia)> resultados = new List<(int, string, bool)>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"
+        SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750, p.EsFamilia_VR750
+        FROM PerfilPermiso_VR750 pp
+        INNER JOIN Permiso_VR750 p ON pp.CodPermiso_VR750 = p.CodPermiso_VR750
+        INNER JOIN Perfil_VR750 perf ON perf.CodPerfil_VR750 = pp.CodPerfil_VR750
+        WHERE perf.NombrePerfil_VR750 = @nombrePerfil";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@nombrePerfil", nombrePerfil);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            resultados.Add((
+                                reader.GetInt32(0),
+                                reader.GetString(1),
+                                reader.GetBoolean(2)
+                            ));
+                        }
+                    }
+
+                    foreach (var r in resultados)
+                    {
+                        if (r.esFamilia)
+                        {
+                            var familia = new GrupoPermiso_750VR(r.codPermiso, r.nombre);
+                            CargarHijos(familia, conn);
+                            permisos.Add(familia);
+                        }
+                        else
+                        {
+                            permisos.Add(new PermisoSimple_750VR(r.codPermiso, r.nombre));
+                        }
+                    }
+                }
+            }
+
+            return permisos;
+        }
+
+
         public void EliminarFamilia(int codFamilia)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
