@@ -58,6 +58,13 @@
             this.btnagpermperf = new System.Windows.Forms.Button();
             this.btnelimfamperf = new System.Windows.Forms.Button();
             this.btnagfamperf = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbperf = new System.Windows.Forms.ComboBox();
+            this.cmbfam = new System.Windows.Forms.ComboBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // treeView2
@@ -79,7 +86,7 @@
             // cmbfamperf
             // 
             this.cmbfamperf.FormattingEnabled = true;
-            this.cmbfamperf.Location = new System.Drawing.Point(30, 270);
+            this.cmbfamperf.Location = new System.Drawing.Point(32, 369);
             this.cmbfamperf.Name = "cmbfamperf";
             this.cmbfamperf.Size = new System.Drawing.Size(121, 21);
             this.cmbfamperf.TabIndex = 4;
@@ -87,7 +94,7 @@
             // cmbpermperf
             // 
             this.cmbpermperf.FormattingEnabled = true;
-            this.cmbpermperf.Location = new System.Drawing.Point(30, 171);
+            this.cmbpermperf.Location = new System.Drawing.Point(32, 270);
             this.cmbpermperf.Name = "cmbpermperf";
             this.cmbpermperf.Size = new System.Drawing.Size(121, 21);
             this.cmbpermperf.TabIndex = 7;
@@ -95,7 +102,7 @@
             // cmbpermfam
             // 
             this.cmbpermfam.FormattingEnabled = true;
-            this.cmbpermfam.Location = new System.Drawing.Point(651, 171);
+            this.cmbpermfam.Location = new System.Drawing.Point(651, 282);
             this.cmbpermfam.Name = "cmbpermfam";
             this.cmbpermfam.Size = new System.Drawing.Size(121, 21);
             this.cmbpermfam.TabIndex = 10;
@@ -110,7 +117,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 254);
+            this.label2.Location = new System.Drawing.Point(17, 353);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 19;
@@ -119,7 +126,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 155);
+            this.label3.Location = new System.Drawing.Point(17, 254);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 20;
@@ -127,7 +134,7 @@
             // 
             // txtfam
             // 
-            this.txtfam.Location = new System.Drawing.Point(414, 82);
+            this.txtfam.Location = new System.Drawing.Point(625, 194);
             this.txtfam.Name = "txtfam";
             this.txtfam.Size = new System.Drawing.Size(100, 20);
             this.txtfam.TabIndex = 21;
@@ -135,7 +142,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(411, 59);
+            this.label4.Location = new System.Drawing.Point(622, 171);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 22;
@@ -144,7 +151,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(173, 59);
+            this.label5.Location = new System.Drawing.Point(-3, 165);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(30, 13);
             this.label5.TabIndex = 24;
@@ -152,7 +159,7 @@
             // 
             // txtnomperf
             // 
-            this.txtnomperf.Location = new System.Drawing.Point(176, 82);
+            this.txtnomperf.Location = new System.Drawing.Point(0, 188);
             this.txtnomperf.Name = "txtnomperf";
             this.txtnomperf.Size = new System.Drawing.Size(100, 20);
             this.txtnomperf.TabIndex = 23;
@@ -160,7 +167,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(636, 155);
+            this.label6.Location = new System.Drawing.Point(636, 266);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 25;
@@ -169,7 +176,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(636, 254);
+            this.label7.Location = new System.Drawing.Point(636, 365);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(42, 13);
             this.label7.TabIndex = 29;
@@ -178,7 +185,7 @@
             // cmbfamfam
             // 
             this.cmbfamfam.FormattingEnabled = true;
-            this.cmbfamfam.Location = new System.Drawing.Point(651, 270);
+            this.cmbfamfam.Location = new System.Drawing.Point(651, 381);
             this.cmbfamfam.Name = "cmbfamfam";
             this.cmbfamfam.Size = new System.Drawing.Size(121, 21);
             this.cmbfamfam.TabIndex = 27;
@@ -203,7 +210,7 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(697, 405);
+            this.button13.Location = new System.Drawing.Point(697, 25);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 23);
             this.button13.TabIndex = 32;
@@ -215,7 +222,7 @@
             this.agperf.BackColor = System.Drawing.Color.RosyBrown;
             this.agperf.FlatAppearance.BorderSize = 0;
             this.agperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agperf.Location = new System.Drawing.Point(176, 108);
+            this.agperf.Location = new System.Drawing.Point(0, 214);
             this.agperf.Name = "agperf";
             this.agperf.Size = new System.Drawing.Size(75, 23);
             this.agperf.TabIndex = 37;
@@ -228,7 +235,7 @@
             this.btnelimperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimperf.FlatAppearance.BorderSize = 0;
             this.btnelimperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimperf.Location = new System.Drawing.Point(270, 108);
+            this.btnelimperf.Location = new System.Drawing.Point(94, 214);
             this.btnelimperf.Name = "btnelimperf";
             this.btnelimperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimperf.TabIndex = 38;
@@ -241,7 +248,7 @@
             this.btnelimfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimfam.FlatAppearance.BorderSize = 0;
             this.btnelimfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfam.Location = new System.Drawing.Point(509, 108);
+            this.btnelimfam.Location = new System.Drawing.Point(720, 220);
             this.btnelimfam.Name = "btnelimfam";
             this.btnelimfam.Size = new System.Drawing.Size(75, 23);
             this.btnelimfam.TabIndex = 40;
@@ -254,7 +261,7 @@
             this.btnagfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfam.FlatAppearance.BorderSize = 0;
             this.btnagfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfam.Location = new System.Drawing.Point(415, 108);
+            this.btnagfam.Location = new System.Drawing.Point(626, 220);
             this.btnagfam.Name = "btnagfam";
             this.btnagfam.Size = new System.Drawing.Size(75, 23);
             this.btnagfam.TabIndex = 39;
@@ -267,7 +274,7 @@
             this.elimpermfam.BackColor = System.Drawing.Color.RosyBrown;
             this.elimpermfam.FlatAppearance.BorderSize = 0;
             this.elimpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.elimpermfam.Location = new System.Drawing.Point(713, 198);
+            this.elimpermfam.Location = new System.Drawing.Point(713, 309);
             this.elimpermfam.Name = "elimpermfam";
             this.elimpermfam.Size = new System.Drawing.Size(75, 23);
             this.elimpermfam.TabIndex = 42;
@@ -280,7 +287,7 @@
             this.agpermfam.BackColor = System.Drawing.Color.RosyBrown;
             this.agpermfam.FlatAppearance.BorderSize = 0;
             this.agpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agpermfam.Location = new System.Drawing.Point(619, 198);
+            this.agpermfam.Location = new System.Drawing.Point(619, 309);
             this.agpermfam.Name = "agpermfam";
             this.agpermfam.Size = new System.Drawing.Size(75, 23);
             this.agpermfam.TabIndex = 41;
@@ -293,7 +300,7 @@
             this.btnelimfamfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimfamfam.FlatAppearance.BorderSize = 0;
             this.btnelimfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfamfam.Location = new System.Drawing.Point(713, 297);
+            this.btnelimfamfam.Location = new System.Drawing.Point(713, 408);
             this.btnelimfamfam.Name = "btnelimfamfam";
             this.btnelimfamfam.Size = new System.Drawing.Size(75, 23);
             this.btnelimfamfam.TabIndex = 44;
@@ -306,7 +313,7 @@
             this.btnagfamfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfamfam.FlatAppearance.BorderSize = 0;
             this.btnagfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfamfam.Location = new System.Drawing.Point(619, 297);
+            this.btnagfamfam.Location = new System.Drawing.Point(619, 408);
             this.btnagfamfam.Name = "btnagfamfam";
             this.btnagfamfam.Size = new System.Drawing.Size(75, 23);
             this.btnagfamfam.TabIndex = 43;
@@ -319,7 +326,7 @@
             this.btnelimpermperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimpermperf.FlatAppearance.BorderSize = 0;
             this.btnelimpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimpermperf.Location = new System.Drawing.Point(92, 198);
+            this.btnelimpermperf.Location = new System.Drawing.Point(94, 297);
             this.btnelimpermperf.Name = "btnelimpermperf";
             this.btnelimpermperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimpermperf.TabIndex = 46;
@@ -332,7 +339,7 @@
             this.btnagpermperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagpermperf.FlatAppearance.BorderSize = 0;
             this.btnagpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagpermperf.Location = new System.Drawing.Point(-2, 198);
+            this.btnagpermperf.Location = new System.Drawing.Point(0, 297);
             this.btnagpermperf.Name = "btnagpermperf";
             this.btnagpermperf.Size = new System.Drawing.Size(75, 23);
             this.btnagpermperf.TabIndex = 45;
@@ -345,7 +352,7 @@
             this.btnelimfamperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimfamperf.FlatAppearance.BorderSize = 0;
             this.btnelimfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfamperf.Location = new System.Drawing.Point(92, 297);
+            this.btnelimfamperf.Location = new System.Drawing.Point(94, 396);
             this.btnelimfamperf.Name = "btnelimfamperf";
             this.btnelimfamperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimfamperf.TabIndex = 48;
@@ -358,7 +365,7 @@
             this.btnagfamperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfamperf.FlatAppearance.BorderSize = 0;
             this.btnagfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfamperf.Location = new System.Drawing.Point(-2, 297);
+            this.btnagfamperf.Location = new System.Drawing.Point(0, 396);
             this.btnagfamperf.Name = "btnagfamperf";
             this.btnagfamperf.Size = new System.Drawing.Size(75, 23);
             this.btnagfamperf.TabIndex = 47;
@@ -366,12 +373,91 @@
             this.btnagfamperf.UseVisualStyleBackColor = false;
             this.btnagfamperf.Click += new System.EventHandler(this.btnagfamperf_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.RosyBrown;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(286, 108);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(101, 23);
+            this.button1.TabIndex = 52;
+            this.button1.Text = "Limpiar Campos";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.RosyBrown;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(141, 108);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 51;
+            this.button2.Text = "Mostrar";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(111, 59);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(83, 13);
+            this.label10.TabIndex = 50;
+            this.label10.Text = "Perfiles Creados";
+            // 
+            // cmbperf
+            // 
+            this.cmbperf.FormattingEnabled = true;
+            this.cmbperf.Location = new System.Drawing.Point(114, 82);
+            this.cmbperf.Name = "cmbperf";
+            this.cmbperf.Size = new System.Drawing.Size(121, 21);
+            this.cmbperf.TabIndex = 53;
+            this.cmbperf.SelectedIndexChanged += new System.EventHandler(this.cmbperf_SelectedIndexChanged);
+            // 
+            // cmbfam
+            // 
+            this.cmbfam.FormattingEnabled = true;
+            this.cmbfam.Location = new System.Drawing.Point(483, 82);
+            this.cmbfam.Name = "cmbfam";
+            this.cmbfam.Size = new System.Drawing.Size(121, 21);
+            this.cmbfam.TabIndex = 56;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.RosyBrown;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(510, 108);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 55;
+            this.button3.Text = "Mostrar";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(480, 59);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(85, 13);
+            this.label11.TabIndex = 54;
+            this.label11.Text = "Familias creadas";
+            // 
             // FormCrearPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cmbfam);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.cmbperf);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.btnelimfamperf);
             this.Controls.Add(this.btnagfamperf);
             this.Controls.Add(this.btnelimpermperf);
@@ -441,5 +527,12 @@
         private System.Windows.Forms.Button btnagpermperf;
         private System.Windows.Forms.Button btnelimfamperf;
         private System.Windows.Forms.Button btnagfamperf;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cmbperf;
+        private System.Windows.Forms.ComboBox cmbfam;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label11;
     }
 }
