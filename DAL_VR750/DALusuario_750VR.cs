@@ -157,7 +157,9 @@ namespace DAL_VR750
      reader["Rol_VR750"].ToString(),
      Convert.ToBoolean(reader["Activo_VR750"]),
      Convert.ToBoolean(reader["Bloqueado_VR750"]),
-     reader["Idioma_VR750"].ToString()
+     reader["Idioma_VR750"].ToString(),
+     Convert.ToInt32(reader["CodPerfil_VR750"])
+
  );
                         lista.Add(userr);
                     }
@@ -189,7 +191,8 @@ namespace DAL_VR750
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
                         bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
-                        idiom: reader["Idioma_VR750"].ToString()
+                        idiom: reader["Idioma_VR750"].ToString(),
+cod: Convert.ToInt32(reader["CodPerfil_VR750"])
                     );
 
                     lista.Add(usuario);
@@ -236,8 +239,10 @@ namespace DAL_VR750
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
                         bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
-                        idiom: reader["Idioma_VR750"].ToString()
-                    
+                        idiom: reader["Idioma_VR750"].ToString(),
+                        cod: Convert.ToInt32(reader["CodPerfil_VR750"])
+
+
                     );
                 }
             }
@@ -289,6 +294,10 @@ namespace DAL_VR750
                             bool activo = lector.GetBoolean(8);
                             bool bloqueado = lector.GetBoolean(9);
                             string idioma = lector["Idioma_VR750"].ToString();
+                            int codPerfil = lector.GetInt32(11);
+
+
+
 
 
                             if (!activo) throw new Exception("El usuario está inactivo.");
@@ -311,7 +320,10 @@ namespace DAL_VR750
                             if (!contraseñaValida)
                                 throw new Exception("Contraseña incorrecta");
 
-                            return new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado,idioma);
+                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado, idioma, codPerfil);
+                           
+                            return usuario;
+
                         }
                     }
                 }

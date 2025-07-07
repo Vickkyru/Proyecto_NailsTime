@@ -114,8 +114,10 @@ namespace Proyecto_NailsTime
             BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
             var manicuristas = bllUsuario.ObtenerManicuristasActivos_750VR();
 
+            int cod = 3;
+
             // Agrego opción "--Seleccione--"
-            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false, "Español");
+            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false, "Español", cod);
             manicuristas.Insert(0, vacio);
 
             cmbmanic.DataSource = manicuristas;

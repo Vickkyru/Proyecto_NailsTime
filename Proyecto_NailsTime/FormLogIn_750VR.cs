@@ -71,7 +71,7 @@ namespace Proyecto_NailsTime
                     nombresPermisos.AddRange(ObtenerNombresPermisos(permiso));
 
                 // 🔽 Guardar permisos en la sesión
-                SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario = nombresPermisos;
+                SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
 
                 // 🔽 Resto de tu código original
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
@@ -79,7 +79,7 @@ namespace Proyecto_NailsTime
                 usuario.idioma_750VR = idioma;
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
-                formPrincipal.Actualizar();
+                //formPrincipal.Actualizar();
                 formPrincipal.AplicarPermisos();
 
                 intentosFallidosPorUsuario.Remove(login);

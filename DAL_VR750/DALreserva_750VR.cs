@@ -76,7 +76,8 @@ namespace DAL_VR750
                             rol: reader["RolManic"].ToString(),
                             activo: Convert.ToBoolean(reader["ActivoManic"]),
                             bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
-                            idiom: reader["IdiomaManic"].ToString()
+                            idiom: reader["IdiomaManic"].ToString(),
+                            cod: Convert.ToInt32(reader["CodPerfil_VR750"])
                         );
 
                         var serv = new BEServicio_750VR(
@@ -254,7 +255,8 @@ namespace DAL_VR750
                         rol: reader["RolManic"].ToString(),
                         activo: Convert.ToBoolean(reader["ActivoManic"]),
                         bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
-                        idiom: reader["IdiomaManic"].ToString()
+                        idiom: reader["IdiomaManic"].ToString(),
+                        cod: Convert.ToInt32(reader["CodPerfil_VR750"])
                     );
 
                     var serv = new BEServicio_750VR(

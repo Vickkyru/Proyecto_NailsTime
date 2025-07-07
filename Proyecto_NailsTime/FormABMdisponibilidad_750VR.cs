@@ -192,6 +192,7 @@ namespace Proyecto_NailsTime
 
             // Traduce el texto "-- Seleccione --" con el sistema de idiomas
             string textoSeleccion = Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione");
+            int cod = 3;
 
             // Insertamos un "item vacío" al principio usando el idioma actual
             var vacio = new BEusuario_750VR(
@@ -205,7 +206,8 @@ namespace Proyecto_NailsTime
                 rol: "manicurista",
                 activo: true,
                 bloqueado: false,
-                idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
+                idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual,
+                cod
             );
 
             manicuristas.Insert(0, vacio);
