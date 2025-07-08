@@ -21,6 +21,17 @@ namespace DAL_VR750
                 cmd.ExecuteNonQuery();
             }
         }
+        public int InsertarPerfilYDevolverID(BEperfil_750VR perfil)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "INSERT INTO Perfil_VR750 (NombrePerfil_VR750) OUTPUT INSERTED.CodPerfil_VR750 VALUES (@Nombre)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Nombre", perfil.NombrePerfil_750VR);
+                return (int)cmd.ExecuteScalar();
+            }
+        }
 
         public static List<string> ObtenerPermisosPorPerfil(int codPerfil)
         {
@@ -247,6 +258,31 @@ WHERE pp.CodPerfil_VR750 = @codPerfil
 
             return permisos;
         }
+        public List<BEperfil_750VR> ObtenerTodosLosPerfiles()
+        {
+            List<BEperfil_750VR> perfiles = new List<BEperfil_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT CodPerfil_VR750, NombrePerfil_VR750 FROM Perfil_VR750";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perfiles.Add(new BEperfil_750VR
+                        {
+                            CodPerfil_750VR = reader.GetInt32(0),
+                            NombrePerfil_750VR = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            return perfiles;
+        }
 
 
         public bool AsignarPermiso(int codPerfil, int codPermiso)
@@ -336,7 +372,44 @@ WHERE pp.CodPerfil_VR750 = @codPerfil
             return permisos;
         }
 
+        public List<IComponentePermiso_750VR> ObtenerHijosDeFamilia(int codFamilia)
+        {
+            List<IComponentePermiso_750VR> hijos = new List<IComponentePermiso_750VR>();
 
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(@"
+            SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750, p.EsFamilia_VR750
+            FROM PermisoComposicion_VR750 pc
+            INNER JOIN Permiso_VR750 p ON pc.HijoPermiso_VR750 = p.CodPermiso_VR750
+            WHERE pc.PadrePermiso_VR750 = @codFamilia", conn);
+
+                cmd.Parameters.AddWithValue("@codFamilia", codFamilia);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int cod = reader.GetInt32(0);
+                        string nombre = reader.GetString(1);
+                        bool esFamilia = reader.GetBoolean(2);
+
+                        if (esFamilia)
+                        {
+                            hijos.Add(new GrupoPermiso_750VR(cod, nombre));
+                        }
+                        else
+                        {
+                            hijos.Add(new PermisoSimple_750VR(cod, nombre));
+                        }
+
+                    }
+                }
+            }
+
+            return hijos;
+        }
         public void EliminarFamilia(int codFamilia)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
@@ -597,24 +670,13 @@ WHERE pp.CodPerfil_VR750 = @codPerfil
                 cmd.ExecuteNonQuery();
             }
         }
-        private void CargarHijos(GrupoPermiso_750VR familia, SqlConnection conn, HashSet<int> yaVisitados = null)
+        private void CargarHijos(GrupoPermiso_750VR familia, SqlConnection conn)
         {
-            if (yaVisitados == null)
-                yaVisitados = new HashSet<int>();
-
-            if (yaVisitados.Contains(familia.Codigo_750VR))
-                return;
-
-            yaVisitados.Add(familia.Codigo_750VR);
-
-            // 🔄 Acá sólo recuperamos los datos
-            List<(int cod, string nombre, bool esFam)> hijos = new List<(int, string, bool)>();
-
             string query = @"
-        SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750, p.EsFamilia_VR750
-        FROM PermisoComposicion_VR750 pc
-        INNER JOIN Permiso_VR750 p ON pc.HijoPermiso_VR750 = p.CodPermiso_VR750
-        WHERE pc.PadrePermiso_VR750 = @idPadre";
+    SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750, p.EsFamilia_VR750
+    FROM PermisoComposicion_VR750 pc
+    INNER JOIN Permiso_VR750 p ON pc.CodHijo_VR750 = p.CodPermiso_VR750
+    WHERE pc.CodPadre_VR750 = @idPadre";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
@@ -626,28 +688,23 @@ WHERE pp.CodPerfil_VR750 = @codPerfil
                     {
                         int cod = reader.GetInt32(0);
                         string nombre = reader.GetString(1);
-                        bool esFam = reader.GetBoolean(2);
+                        bool esFamilia = reader.GetBoolean(2);
 
-                        hijos.Add((cod, nombre, esFam));
+                        if (esFamilia)
+                        {
+                            var subFamilia = new GrupoPermiso_750VR(cod, nombre);
+                            CargarHijos(subFamilia, conn); // recursivo
+                            familia.Agregar(subFamilia);
+                        }
+                        else
+                        {
+                            familia.Agregar(new PermisoSimple_750VR(cod, nombre));
+                        }
                     }
-                } // 🛑 El reader se cierra 100% acá
-            }
-
-            // 🔁 Ahora sí procesamos recursivamente, sin reader abierto
-            foreach (var h in hijos)
-            {
-                if (h.esFam)
-                {
-                    var subFam = new GrupoPermiso_750VR(h.cod, h.nombre);
-                    CargarHijos(subFam, conn, yaVisitados); // ✅ reader ya cerrado
-                    familia.Agregar(subFam);
-                }
-                else
-                {
-                    familia.Agregar(new PermisoSimple_750VR(h.cod, h.nombre));
                 }
             }
         }
+
 
 
 

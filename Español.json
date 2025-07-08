@@ -527,7 +527,32 @@
   "FormCrearPerfiles.FamiliaAgregadaCorrectamente": "Familia agregada correctamente.",
   "FormCrearPerfiles.SeleccioneFamiliaAgregar": "Seleccione una familia a agregar.",
   "FormCrearPerfiles.SeleccioneFamiliaParaQuitarOtra": "Seleccione una familia en el árbol para quitarle otra familia.",
-  "FormCrearPerfiles.SeleccioneFamiliaAQuitar": "Seleccione una familia a quitar."
+  "FormCrearPerfiles.SeleccioneFamiliaAQuitar": "Seleccione una familia a quitar.",
+  "FormCrearPerfiles.label1": "Gestion de perfiles.",
+  "FormCrearPerfiles.label10": "Perfiles creados",
+  "FormCrearPerfiles.label5": "Perfiles.",
+  "FormCrearPerfiles.label3": "Permisos",
+  "FormCrearPerfiles.label2": "Familia",
+  "FormCrearPerfiles.label8": "Perfiles",
+  "FormCrearPerfiles.label9": "Familias",
+  "FormCrearPerfiles.label11": "Familias creadas",
+  "FormCrearPerfiles.label4": "Familia",
+  "FormCrearPerfiles.label6": "Permisos",
+  "FormCrearPerfiles.label7": "Familia",
+  "FormCrearPerfiles.button1": "Limpiar campos",
+  "FormCrearPerfiles.btnelimperf": "Quitar",
+  "FormCrearPerfiles.agperf": "Agregar",
+  "FormCrearPerfiles.agpermperf": "Agregar",
+  "FormCrearPerfiles.btnelimpermperf": "Eliminar",
+  "FormCrearPerfiles.btnagfamperf": "Agregar",
+  "FormCrearPerfiles.button4": "Limpiar campos",
+  "FormCrearPerfiles.btnagfam": "Agregar",
+  "FormCrearPerfiles.btnelimfam": "Eliminar",
+  "FormCrearPerfiles.agpermfam": "Agregar",
+  "FormCrearPerfiles.elimpermfam": "Eliminar",
+  "FormCrearPerfiles.btnagfamfam": "Agregar",
+  "FormCrearPerfiles.btnelimfamfam": "Eliminar",
+  "FormCrearPerfiles.button13": "Volver"
 
 
 

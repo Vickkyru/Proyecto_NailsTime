@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL_VR750;
+using System.Data.SqlClient;
 
 namespace BLL_VR750
 {
@@ -18,14 +19,24 @@ namespace BLL_VR750
             return dal.ObtenerPerfiles();
         }
 
+        //public void AgregarPerfil(BEperfil_750VR perfil)
+        //{
+        //    dal.InsertarPerfil(perfil);
+        //}
         public void AgregarPerfil(BEperfil_750VR perfil)
         {
-            dal.InsertarPerfil(perfil);
+            perfil.CodPerfil_750VR = dal.InsertarPerfilYDevolverID(perfil);
         }
-        public static List<string> ObtenerPermisosPorPerfil(int codPerfil)
+
+        public List<BEperfil_750VR> ObtenerTodosLosPerfiles()
         {
-            return DALperfil_750VR.ObtenerPermisosPorPerfil(codPerfil);
+            return dal.ObtenerTodosLosPerfiles();
         }
+
+        //public static List<string> ObtenerPermisosPorPerfil(int codPerfil)
+        //{
+        //    return DALperfil_750VR.ObtenerPermisosPorPerfil(codPerfil);
+        //}
 
         public void EliminarPerfil(int id)
         {
@@ -43,8 +54,19 @@ namespace BLL_VR750
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
         {
-            return dal.ObtenerPermisosDePerfil(idPerfil);
+            var permisos = dal.ObtenerPermisosDePerfil(idPerfil);
+
+            foreach (var permiso in permisos)
+            {
+                if (permiso is GrupoPermiso_750VR grupo)
+                {
+                    grupo.Hijos = ObtenerPermisosDeFamilia(grupo.Codigo_750VR);
+                }
+            }
+
+            return permisos;
         }
+
         public List<PermisoSimple_750VR> ObtenerPermisosSimples()
         {
             return dal.ObtenerPermisosSimples();
@@ -56,8 +78,16 @@ namespace BLL_VR750
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDeFamilia(int codFamilia)
         {
-            return dal.ObtenerPermisosDeFamilia(codFamilia);
+            var hijos = dal.ObtenerHijosDeFamilia(codFamilia);
+
+            foreach (var hijo in hijos.OfType<GrupoPermiso_750VR>())
+            {
+                hijo.Hijos = ObtenerPermisosDeFamilia(hijo.Codigo_750VR); // << RECURSIVIDAD
+            }
+
+            return hijos;
         }
+
 
         public void QuitarFamilia(int idPerfil, int idFamilia)
         {
@@ -127,6 +157,7 @@ namespace BLL_VR750
                 }
             }
         }
+ 
 
 
 
