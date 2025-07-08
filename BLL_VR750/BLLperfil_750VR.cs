@@ -32,11 +32,10 @@ namespace BLL_VR750
             dal.EliminarPerfil(id);
         }
 
-        public void AsignarPermiso(int idPerfil, int idPermiso)
+        public bool AsignarPermiso(int idPerfil, int idPermiso)
         {
-            dal.AsignarPermiso(idPerfil, idPermiso);
+            return dal.AsignarPermiso(idPerfil, idPermiso); // delega el resultado
         }
-
         public void AsignarFamilia(int idPerfil, int idFamilia)
         {
             dal.AsignarFamilia(idPerfil, idFamilia);
@@ -53,6 +52,11 @@ namespace BLL_VR750
         public List<GrupoPermiso_750VR> ObtenerFamilias()
         {
             return dal.ObtenerFamilias();
+        }
+
+        public List<IComponentePermiso_750VR> ObtenerPermisosDeFamilia(int codFamilia)
+        {
+            return dal.ObtenerPermisosDeFamilia(codFamilia);
         }
 
         public void QuitarFamilia(int idPerfil, int idFamilia)
@@ -73,19 +77,33 @@ namespace BLL_VR750
             dal.EliminarFamilia(codFamilia);
         }
 
-        public void AgregarPermisoAFamilia(int idFamilia, int idPermiso)
+        public bool AgregarPermisoAFamilia(int idFamilia, int idPermiso)
         {
-            dal.AgregarPermisoAFamilia(idFamilia, idPermiso);
+           return  dal.AgregarPermisoAFamilia(idFamilia, idPermiso);
         }
 
         public void QuitarPermisoDeFamilia(int idFamilia, int idPermiso)
         {
             dal.QuitarPermisoDeFamilia(idFamilia, idPermiso);
         }
-        public void AsignarFamiliaAFamilia(int idPadre, int idHija)
+        public bool AsignarFamiliaAFamilia(int idPadre, int idHija)
         {
-            dal.AsignarFamiliaAFamilia(idPadre, idHija);
+            try
+            {
+                dal.AsignarFamiliaAFamilia(idPadre, idHija);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
+
+        public GrupoPermiso_750VR ObtenerFamiliaPorId(int idFamilia)
+        {
+            return dal.ObtenerFamiliaPorId(idFamilia);
+        }
+
 
         public void QuitarFamiliaDeFamilia(int idPadre, int idHija)
         {
@@ -96,6 +114,21 @@ namespace BLL_VR750
         {
             return dal.ObtenerPermisosDePerfilPorNombre(nombrePerfil);
         }
+        public void ObtenerPermisosRecursivos(IComponentePermiso_750VR componente, List<IComponentePermiso_750VR> acumulador)
+        {
+            if (!acumulador.Any(p => p.Codigo_750VR == componente.Codigo_750VR))
+                acumulador.Add(componente); // ✅ Incluye el mismo permiso o familia
+
+            if (componente is GrupoPermiso_750VR grupo)
+            {
+                foreach (var hijo in grupo.ObtenerHijos())
+                {
+                    ObtenerPermisosRecursivos(hijo, acumulador);
+                }
+            }
+        }
+
+
 
     }
 }

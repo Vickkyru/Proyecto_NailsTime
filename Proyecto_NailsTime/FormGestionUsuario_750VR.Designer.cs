@@ -164,10 +164,6 @@
             // cmbrol
             // 
             this.cmbrol.FormattingEnabled = true;
-            this.cmbrol.Items.AddRange(new object[] {
-            "Administrador",
-            "Recepcionista",
-            "Manicurista"});
             this.cmbrol.Location = new System.Drawing.Point(262, 283);
             this.cmbrol.Name = "cmbrol";
             this.cmbrol.Size = new System.Drawing.Size(121, 21);

@@ -311,7 +311,8 @@ namespace Proyecto_NailsTime
                 string nombre = txtnom.Text.Trim();
                 string apellido = txtape.Text.Trim();
                 string mail = txtemail.Text.Trim();
-                string rol = cmbrol.SelectedItem?.ToString();
+                string rol = (cmbrol.SelectedItem as BEperfil_750VR)?.NombrePerfil_750VR;
+
                 string user = $"{nombre}{apellido}";
 
                
@@ -645,6 +646,7 @@ namespace Proyecto_NailsTime
             //CargarUsuarios(true);   // Mostrar activos
 
             MostrarCantidadUsuarios(); //muetsra en el label cant users
+            CargarComboBoxPerfiles(); // cargar roles al iniciar el form
 
 
             // Deshabilitar botones Aplicar y Cancelar
@@ -666,6 +668,16 @@ namespace Proyecto_NailsTime
             modoActual = "consulta";
             ActualizarMensajeModo();
 
+        }
+        private void CargarComboBoxPerfiles()
+        {
+            BLLperfil_750VR bllPerfil = new BLLperfil_750VR();
+            List<BEperfil_750VR> perfiles = bllPerfil.ObtenerPerfiles();
+
+            cmbrol.DataSource = perfiles;
+            cmbrol.DisplayMember = "NombrePerfil_750VR"; // El nombre que se muestra
+            cmbrol.ValueMember = "CodPerfil_750VR";       // El valor que se guarda
+            cmbrol.SelectedIndex = -1; // Nada seleccionado por defecto
         }
 
         private void btnmod_Click(object sender, EventArgs e)

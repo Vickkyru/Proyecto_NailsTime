@@ -56,7 +56,6 @@
             this.btnagfamfam = new System.Windows.Forms.Button();
             this.btnelimpermperf = new System.Windows.Forms.Button();
             this.btnagpermperf = new System.Windows.Forms.Button();
-            this.btnelimfamperf = new System.Windows.Forms.Button();
             this.btnagfamperf = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -65,6 +64,7 @@
             this.cmbfam = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeView2
@@ -77,16 +77,16 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(264, -2);
+            this.label1.Location = new System.Drawing.Point(125, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 50);
+            this.label1.Size = new System.Drawing.Size(245, 32);
             this.label1.TabIndex = 2;
             this.label1.Text = "Gestion de perfiles";
             // 
             // cmbfamperf
             // 
             this.cmbfamperf.FormattingEnabled = true;
-            this.cmbfamperf.Location = new System.Drawing.Point(32, 369);
+            this.cmbfamperf.Location = new System.Drawing.Point(16, 381);
             this.cmbfamperf.Name = "cmbfamperf";
             this.cmbfamperf.Size = new System.Drawing.Size(121, 21);
             this.cmbfamperf.TabIndex = 4;
@@ -94,7 +94,7 @@
             // cmbpermperf
             // 
             this.cmbpermperf.FormattingEnabled = true;
-            this.cmbpermperf.Location = new System.Drawing.Point(32, 270);
+            this.cmbpermperf.Location = new System.Drawing.Point(12, 255);
             this.cmbpermperf.Name = "cmbpermperf";
             this.cmbpermperf.Size = new System.Drawing.Size(121, 21);
             this.cmbpermperf.TabIndex = 7;
@@ -117,7 +117,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 353);
+            this.label2.Location = new System.Drawing.Point(5, 365);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 19;
@@ -126,7 +126,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 254);
+            this.label3.Location = new System.Drawing.Point(12, 236);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 20;
@@ -151,7 +151,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(-3, 165);
+            this.label5.Location = new System.Drawing.Point(13, 140);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(30, 13);
             this.label5.TabIndex = 24;
@@ -159,7 +159,7 @@
             // 
             // txtnomperf
             // 
-            this.txtnomperf.Location = new System.Drawing.Point(0, 188);
+            this.txtnomperf.Location = new System.Drawing.Point(15, 156);
             this.txtnomperf.Name = "txtnomperf";
             this.txtnomperf.Size = new System.Drawing.Size(100, 20);
             this.txtnomperf.TabIndex = 23;
@@ -193,20 +193,20 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(173, 155);
+            this.label8.Location = new System.Drawing.Point(177, 155);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(82, 13);
+            this.label8.Size = new System.Drawing.Size(41, 13);
             this.label8.TabIndex = 30;
-            this.label8.Text = "Arbol de perfiles";
+            this.label8.Text = "Perfiles";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(407, 155);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(83, 13);
+            this.label9.Size = new System.Drawing.Size(44, 13);
             this.label9.TabIndex = 31;
-            this.label9.Text = "Arbol de familias";
+            this.label9.Text = "Familias";
             // 
             // button13
             // 
@@ -222,7 +222,7 @@
             this.agperf.BackColor = System.Drawing.Color.RosyBrown;
             this.agperf.FlatAppearance.BorderSize = 0;
             this.agperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agperf.Location = new System.Drawing.Point(0, 214);
+            this.agperf.Location = new System.Drawing.Point(8, 182);
             this.agperf.Name = "agperf";
             this.agperf.Size = new System.Drawing.Size(75, 23);
             this.agperf.TabIndex = 37;
@@ -235,7 +235,7 @@
             this.btnelimperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimperf.FlatAppearance.BorderSize = 0;
             this.btnelimperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimperf.Location = new System.Drawing.Point(81, 214);
+            this.btnelimperf.Location = new System.Drawing.Point(90, 182);
             this.btnelimperf.Name = "btnelimperf";
             this.btnelimperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimperf.TabIndex = 38;
@@ -326,7 +326,7 @@
             this.btnelimpermperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimpermperf.FlatAppearance.BorderSize = 0;
             this.btnelimpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimpermperf.Location = new System.Drawing.Point(94, 297);
+            this.btnelimpermperf.Location = new System.Drawing.Point(76, 333);
             this.btnelimpermperf.Name = "btnelimpermperf";
             this.btnelimpermperf.Size = new System.Drawing.Size(75, 23);
             this.btnelimpermperf.TabIndex = 46;
@@ -339,7 +339,7 @@
             this.btnagpermperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagpermperf.FlatAppearance.BorderSize = 0;
             this.btnagpermperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagpermperf.Location = new System.Drawing.Point(0, 297);
+            this.btnagpermperf.Location = new System.Drawing.Point(41, 282);
             this.btnagpermperf.Name = "btnagpermperf";
             this.btnagpermperf.Size = new System.Drawing.Size(75, 23);
             this.btnagpermperf.TabIndex = 45;
@@ -347,25 +347,12 @@
             this.btnagpermperf.UseVisualStyleBackColor = false;
             this.btnagpermperf.Click += new System.EventHandler(this.btnagpermperf_Click);
             // 
-            // btnelimfamperf
-            // 
-            this.btnelimfamperf.BackColor = System.Drawing.Color.RosyBrown;
-            this.btnelimfamperf.FlatAppearance.BorderSize = 0;
-            this.btnelimfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfamperf.Location = new System.Drawing.Point(94, 396);
-            this.btnelimfamperf.Name = "btnelimfamperf";
-            this.btnelimfamperf.Size = new System.Drawing.Size(75, 23);
-            this.btnelimfamperf.TabIndex = 48;
-            this.btnelimfamperf.Text = "Quitar";
-            this.btnelimfamperf.UseVisualStyleBackColor = false;
-            this.btnelimfamperf.Click += new System.EventHandler(this.btnelimfamperf_Click);
-            // 
             // btnagfamperf
             // 
             this.btnagfamperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfamperf.FlatAppearance.BorderSize = 0;
             this.btnagfamperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfamperf.Location = new System.Drawing.Point(0, 396);
+            this.btnagfamperf.Location = new System.Drawing.Point(41, 408);
             this.btnagfamperf.Name = "btnagfamperf";
             this.btnagfamperf.Size = new System.Drawing.Size(75, 23);
             this.btnagfamperf.TabIndex = 47;
@@ -378,19 +365,20 @@
             this.button1.BackColor = System.Drawing.Color.RosyBrown;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(286, 108);
+            this.button1.Location = new System.Drawing.Point(248, 85);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(101, 23);
             this.button1.TabIndex = 52;
             this.button1.Text = "Limpiar Campos";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.RosyBrown;
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(53, 85);
+            this.button2.Location = new System.Drawing.Point(153, 85);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 51;
@@ -401,7 +389,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(45, 36);
+            this.label10.Location = new System.Drawing.Point(13, 67);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 50;
@@ -410,7 +398,7 @@
             // cmbperf
             // 
             this.cmbperf.FormattingEnabled = true;
-            this.cmbperf.Location = new System.Drawing.Point(32, 58);
+            this.cmbperf.Location = new System.Drawing.Point(16, 87);
             this.cmbperf.Name = "cmbperf";
             this.cmbperf.Size = new System.Drawing.Size(121, 21);
             this.cmbperf.TabIndex = 53;
@@ -423,6 +411,7 @@
             this.cmbfam.Name = "cmbfam";
             this.cmbfam.Size = new System.Drawing.Size(121, 21);
             this.cmbfam.TabIndex = 56;
+            this.cmbfam.SelectedIndexChanged += new System.EventHandler(this.cmbfam_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -445,12 +434,26 @@
             this.label11.TabIndex = 54;
             this.label11.Text = "Familias creadas";
             // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.RosyBrown;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(492, 136);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(101, 23);
+            this.button4.TabIndex = 57;
+            this.button4.Text = "Limpiar Campos";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // FormCrearPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.cmbfam);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label11);
@@ -458,7 +461,6 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.btnelimfamperf);
             this.Controls.Add(this.btnagfamperf);
             this.Controls.Add(this.btnelimpermperf);
             this.Controls.Add(this.btnagpermperf);
@@ -525,7 +527,6 @@
         private System.Windows.Forms.Button btnagfamfam;
         private System.Windows.Forms.Button btnelimpermperf;
         private System.Windows.Forms.Button btnagpermperf;
-        private System.Windows.Forms.Button btnelimfamperf;
         private System.Windows.Forms.Button btnagfamperf;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
@@ -534,5 +535,6 @@
         private System.Windows.Forms.ComboBox cmbfam;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button4;
     }
 }
