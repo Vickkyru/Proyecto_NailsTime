@@ -636,12 +636,12 @@ namespace Proyecto_NailsTime
         }
         private void FormGestionUsuario_750VR_Load(object sender, EventArgs e)
         {
-            groupBox1.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.groupBox1");
-            groupBox2.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.groupBox2");
-            actsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.actsi");
-            actno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.actno");
-            bloqsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.bloqsi");
-            bloqno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.bloqno");
+            groupBox1.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.groupBox1");
+            groupBox2.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.groupBox2");
+            actsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.actsi");
+            actno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.actno");
+            bloqsi.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.bloqsi");
+            bloqno.Text = Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario.bloqno");
             rbtnact.Checked = true; // Marcar por defecto
             //CargarUsuarios(true);   // Mostrar activos
 
@@ -762,6 +762,11 @@ namespace Proyecto_NailsTime
                     MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormGestionUsuario_750VR.ErrorRecuperarDatos"));
                 }
             }
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

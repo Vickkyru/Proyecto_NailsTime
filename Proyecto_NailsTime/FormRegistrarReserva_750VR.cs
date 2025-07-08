@@ -700,7 +700,7 @@ namespace Proyecto_NailsTime
         {
             if (dataGridView2.CurrentRow == null || dataGridView2.CurrentRow.Index < 0)
             {
-                MessageBox.Show("Seleccione una reserva para modificar.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.SeleccioneReserva"));
                 return;
             }
 
@@ -714,7 +714,7 @@ namespace Proyecto_NailsTime
 
             if (reservaExistente == null)
             {
-                MessageBox.Show("No se encontró la reserva.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.ReservaNoEncontrada"));
                 return;
             }
 
@@ -723,7 +723,7 @@ namespace Proyecto_NailsTime
 
             if (cliente == null)
             {
-                MessageBox.Show("No se pudo recuperar el cliente de la reserva.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.ClienteNoRecuperado"));
                 return;
             }
             var manic = cmbmanic.SelectedItem as BEusuario_750VR;
@@ -731,19 +731,19 @@ namespace Proyecto_NailsTime
 
             if (manic == null || servicio == null)
             {
-                MessageBox.Show("Complete todos los campos.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.CompletarCampos"));
                 return;
             }
 
             if (!TimeSpan.TryParse(txthorario.Text, out TimeSpan horaInicio))
             {
-                MessageBox.Show("Hora inválida.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.HoraInvalida"));
                 return;
             }
             if (reservaExistente.Estado_750VR.Equals("Cancelado", StringComparison.OrdinalIgnoreCase) ||
     reservaExistente.Cobrado_750VR == false)
             {
-                MessageBox.Show("No se puede modificar una reserva cancelada o no cobrada.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.ReservaNoModificable"));
                 return;
             }
 
@@ -777,7 +777,7 @@ namespace Proyecto_NailsTime
 
             if (dispoNueva == null)
             {
-                MessageBox.Show("No se encontró disponibilidad para el nuevo horario.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.DisponibilidadNoEncontrada"));
                 return;
             }
 
@@ -805,13 +805,13 @@ namespace Proyecto_NailsTime
             {
                 // 🟢 4. Dividir la nueva disponibilidad
                 DividirDisponibilidad(dispoNueva, TimeSpan.FromMinutes(servicio.duracion_750VR));
-                MessageBox.Show("Reserva modificada correctamente.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.ReservaModificada"));
                 CargarReservasFiltradas();
                 CargarDisponibilidades();
             }
             else
             {
-                MessageBox.Show("Error al modificar la reserva.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarReserva.ErrorModificarReserva"));
             }
 
             txtdni.Enabled = true;

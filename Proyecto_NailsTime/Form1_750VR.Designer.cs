@@ -33,8 +33,8 @@
             this.gestionUsuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionPerfiles = new System.Windows.Forms.ToolStripMenuItem();
             this.pestañaMaestros = new System.Windows.Forms.ToolStripMenuItem();
-            this.AMBclientes = new System.Windows.Forms.ToolStripMenuItem();
-            this.AMBservicios = new System.Windows.Forms.ToolStripMenuItem();
+            this.ABMclientes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ABMservicios = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMhorarios = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMinsumos = new System.Windows.Forms.ToolStripMenuItem();
             this.pestañaUsuarios = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,9 +51,6 @@
             this.pestañaAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblbienvenido = new System.Windows.Forms.Label();
-            this.lblrol = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -106,8 +103,8 @@
             // pestañaMaestros
             // 
             this.pestañaMaestros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AMBclientes,
-            this.AMBservicios,
+            this.ABMclientes,
+            this.ABMservicios,
             this.ABMhorarios,
             this.ABMinsumos});
             this.pestañaMaestros.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -115,19 +112,19 @@
             this.pestañaMaestros.Size = new System.Drawing.Size(123, 25);
             this.pestañaMaestros.Text = "Maestros";
             // 
-            // AMBclientes
+            // ABMclientes
             // 
-            this.AMBclientes.Name = "AMBclientes";
-            this.AMBclientes.Size = new System.Drawing.Size(180, 26);
-            this.AMBclientes.Text = "Clientes";
-            this.AMBclientes.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
+            this.ABMclientes.Name = "ABMclientes";
+            this.ABMclientes.Size = new System.Drawing.Size(180, 26);
+            this.ABMclientes.Text = "Clientes";
+            this.ABMclientes.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
-            // AMBservicios
+            // ABMservicios
             // 
-            this.AMBservicios.Name = "AMBservicios";
-            this.AMBservicios.Size = new System.Drawing.Size(180, 26);
-            this.AMBservicios.Text = "Servicios";
-            this.AMBservicios.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
+            this.ABMservicios.Name = "ABMservicios";
+            this.ABMservicios.Size = new System.Drawing.Size(180, 26);
+            this.ABMservicios.Text = "Servicios";
+            this.ABMservicios.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
             // ABMhorarios
             // 
@@ -226,7 +223,7 @@
             // Facturas
             // 
             this.Facturas.Name = "Facturas";
-            this.Facturas.Size = new System.Drawing.Size(180, 26);
+            this.Facturas.Size = new System.Drawing.Size(139, 26);
             this.Facturas.Text = "Facturas";
             this.Facturas.Click += new System.EventHandler(this.facturasToolStripMenuItem_Click);
             // 
@@ -255,38 +252,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Bienvenido: ";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(307, 456);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Rol:";
-            // 
-            // lblbienvenido
-            // 
-            this.lblbienvenido.Location = new System.Drawing.Point(116, 456);
-            this.lblbienvenido.Name = "lblbienvenido";
-            this.lblbienvenido.Size = new System.Drawing.Size(113, 50);
-            this.lblbienvenido.TabIndex = 6;
-            // 
-            // lblrol
-            // 
-            this.lblrol.Location = new System.Drawing.Point(339, 456);
-            this.lblrol.Name = "lblrol";
-            this.lblrol.Size = new System.Drawing.Size(117, 41);
-            this.lblrol.TabIndex = 7;
-            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(899, 489);
-            this.Controls.Add(this.lblrol);
-            this.Controls.Add(this.lblbienvenido);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
@@ -320,11 +291,8 @@
         private System.Windows.Forms.ToolStripMenuItem actualizarAgenda;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lblbienvenido;
-        private System.Windows.Forms.Label lblrol;
-        private System.Windows.Forms.ToolStripMenuItem AMBclientes;
-        private System.Windows.Forms.ToolStripMenuItem AMBservicios;
+        private System.Windows.Forms.ToolStripMenuItem ABMclientes;
+        private System.Windows.Forms.ToolStripMenuItem ABMservicios;
         private System.Windows.Forms.ToolStripMenuItem ABMhorarios;
         private System.Windows.Forms.ToolStripMenuItem cambiarIdioma;
         private System.Windows.Forms.ToolStripMenuItem gestionPerfiles;

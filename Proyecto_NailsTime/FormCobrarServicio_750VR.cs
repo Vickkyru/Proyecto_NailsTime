@@ -222,7 +222,7 @@ namespace Proyecto_NailsTime
         private void button4_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCobrarServicio_750VR.PendienteCobro"));
-            MessageBox.Show("la reserva quedo pendiente de cobro.");
+            //MessageBox.Show("la reserva quedo pendiente de cobro.");
             this.Close();
 
            

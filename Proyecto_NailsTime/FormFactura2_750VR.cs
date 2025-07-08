@@ -13,19 +13,36 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormFactura : Form
+    public partial class FormFactura : Form, Iobserver_750VR
     {
         private List<BEfactura_750VR> listaFacturas;
         public FormFactura()
         {
             InitializeComponent();
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
+        }
+
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
+            this.Text = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Titulo");
+            button1.Text = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.btnGenerar");
+
+            dataGridView1.Columns["CodFactura_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Codigo");
+            dataGridView1.Columns["CodReserva_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Reserva");
+            dataGridView1.Columns["fecha_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Fecha");
+            dataGridView1.Columns["horaEmision_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Hora");
+            dataGridView1.Columns["total_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Total");
+            dataGridView1.Columns["metodoPago_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MetodoPago");
+            dataGridView1.Columns["titular_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Titular");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Seleccioná una factura.");
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MensajeSeleccion"));
                 return;
             }
 
@@ -34,12 +51,13 @@ namespace Proyecto_NailsTime
 
             // Generar el PDF
             Archivo_750VR.GenerarFacturaPDF(factura);
-            MessageBox.Show("Factura generada correctamente.");
+            MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MensajeExito"));
         }
 
         private void FormFactura2_750VR_Load(object sender, EventArgs e)
         {
             CargarFacturas();
+            ActualizarIdioma(); // Agregado
         }
 
         private void CargarFacturas()

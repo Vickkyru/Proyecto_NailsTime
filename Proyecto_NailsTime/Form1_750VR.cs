@@ -118,48 +118,6 @@ namespace Proyecto_NailsTime
             string rol = SessionManager_750VR.ObtenerInstancia.user.rol_750VR.ToLower();
 
 
-
-
-            //switch (rol)
-            //{
-            //    case "manicurista":
-            //        administradorToolStripMenuItem.Enabled = false;
-            //        maestrosToolStripMenuItem.Enabled = false;
-            //        usuarioToolStripMenuItem.Enabled = true;
-            //        reservaToolStripMenuItem.Enabled = true;
-            //        insumosToolStripMenuItem.Enabled = false;
-            //        reportesToolStripMenuItem.Enabled = false;
-            //        regReservaToolStripMenuItem.Enabled = false;
-            //        cambiarClaveToolStripMenuItem.Enabled = true;
-            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
-            //        break;
-
-            //    case "recepcionista":
-            //        administradorToolStripMenuItem.Enabled = false;
-            //        maestrosToolStripMenuItem.Enabled = false;
-            //        usuarioToolStripMenuItem.Enabled = true;
-            //        reservaToolStripMenuItem.Enabled = true;
-            //        insumosToolStripMenuItem.Enabled = false;
-            //        reportesToolStripMenuItem.Enabled = false;
-            //        actAgendaToolStripMenuItem.Enabled = false;
-            //        cambiarClaveToolStripMenuItem.Enabled = true;
-            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
-            //        break;
-
-            //    case "administrador":
-            //        administradorToolStripMenuItem.Enabled = true;
-            //        maestrosToolStripMenuItem.Enabled = true;
-            //        usuarioToolStripMenuItem.Enabled = true;
-            //        reservaToolStripMenuItem.Enabled = true;
-            //        insumosToolStripMenuItem.Enabled = true;
-            //        reportesToolStripMenuItem.Enabled = true;
-            //        cambiarClaveToolStripMenuItem.Enabled = true;
-            //        cambiarIdiomaToolStripMenuItem.Enabled = true;
-            //        break;
-
-            //    default:
-            //        BloquearTodo();
-            //        break;
         }
 
     
@@ -167,10 +125,9 @@ namespace Proyecto_NailsTime
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //AplicarPermisos();
-            ActualizarLabels();
-            Actualizar();
-          
+            MostrarDatosUsuarioLogueado(); // ✅ nuevo
+            Actualizar(); // tus permisos
+
 
         }
 
@@ -205,16 +162,7 @@ namespace Proyecto_NailsTime
 
 
 
-        public void ActualizarLabels()
-        {
-            var usuario = SessionManager_750VR.ObtenerInstancia.user;
-
-            if (usuario != null)
-            {
-                lblbienvenido.Text = usuario.nombre_750VR;
-                lblrol.Text = usuario.rol_750VR;
-            }
-        }
+     
         private void verTurnosDisponiblesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirForm(new FormRegistrarReserva());
@@ -231,13 +179,19 @@ namespace Proyecto_NailsTime
 
             if (usuario != null)
             {
-                lblbienvenido.Text = $"{usuario.nombre_750VR}";
-                lblrol.Text = $"{usuario.rol_750VR}";
+                string mensaje = string.Format(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormPrincipal.MensajeUsuario"),
+                    usuario.nombre_750VR,
+                    usuario.rol_750VR
+                );
+
+                label1.Text = mensaje;
+                label1.Visible = true; // Lo muestro
             }
             else
             {
-                lblbienvenido.Text = "";
-                lblrol.Text = "";
+                label1.Text = "";
+                label1.Visible = false; // Lo oculto
             }
         }
 
