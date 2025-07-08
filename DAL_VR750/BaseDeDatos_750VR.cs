@@ -13,7 +13,7 @@ namespace DAL_VR750
     {
         public static string dataSource = "HP_Victoria\\SQLEXPRESS";
         public static string dbName = "ProyectoNailsTime_VR750";
-        public static string cadena = $"Data source={dataSource};Initial Catalog={dbName};Integrated Security=True;";
+        public static string cadena = $"Data source={dataSource};Initial Catalog={dbName};Integrated Security=True;MultipleActiveResultSets=true";
         public SqlConnection Connection = new SqlConnection(cadena); 
         public SqlCommand Command = new SqlCommand(); 
 

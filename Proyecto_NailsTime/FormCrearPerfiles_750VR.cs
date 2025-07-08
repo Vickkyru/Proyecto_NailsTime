@@ -37,6 +37,12 @@ namespace Proyecto_NailsTime
             TreeNode nodoRaiz = new TreeNode("Seleccione un perfil");
             treeView1.Nodes.Add(nodoRaiz);
         }
+        private void MostrarTreeViewInicial2()
+        {
+            treeView2.Nodes.Clear();
+            TreeNode nodoRaiz = new TreeNode("Seleccione un perfil");
+            treeView2.Nodes.Add(nodoRaiz);
+        }
 
         private void RefrescarPantallaFamilias()
         {
@@ -683,8 +689,10 @@ namespace Proyecto_NailsTime
             cmbfam.SelectedIndex = -1;
             cmbfamfam.SelectedIndex = -1;
             cmbfamperf.SelectedIndex = -1;
-            MostrarTreeViewInicial(); // 👈 usá esto en vez de escribirlo de nuevo
+            MostrarTreeViewInicial2(); // 👈 usá esto en vez de escribirlo de nuevo
         }
+
+
         private void RefrescarYMostrarFamilia(int codFamilia)
         {
             // Buscar la familia completa (desde BLL y DAL)
