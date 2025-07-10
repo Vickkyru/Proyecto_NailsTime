@@ -10,7 +10,7 @@ namespace BE_VR750
     {
         int Codigo_750VR { get; set; }
         string Nombre_750VR { get; set; }
-        bool EsFamilia { get; }
+        //bool EsFamilia { get; }
         List<IComponentePermiso_750VR> ObtenerHijos();
         void Agregar(IComponentePermiso_750VR componente);
         void Quitar(IComponentePermiso_750VR componente);

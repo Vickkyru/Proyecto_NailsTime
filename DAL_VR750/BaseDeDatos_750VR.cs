@@ -236,7 +236,7 @@ END;
 
 
 
--- Tabla de permisos simples
+-- Tabla de Permisos
 IF NOT EXISTS (
     SELECT * FROM INFORMATION_SCHEMA.TABLES 
     WHERE TABLE_NAME = 'Permiso_VR750'
@@ -244,33 +244,41 @@ IF NOT EXISTS (
 BEGIN
     CREATE TABLE Permiso_VR750 (
         CodPermiso_VR750 INT PRIMARY KEY IDENTITY(1,1),
-        NombrePermiso_VR750 NVARCHAR(100) NOT NULL,
-        EsFamilia_VR750 BIT NOT NULL DEFAULT 0 -- FALSE si es simple, TRUE si es familia
+        NombrePermiso_VR750 NVARCHAR(100) NOT NULL
     );
 END;
 
--- Tabla que representa la jerarquía entre permisos (Composite)
+-- Tabla de Familias
 IF NOT EXISTS (
     SELECT * FROM INFORMATION_SCHEMA.TABLES 
-    WHERE TABLE_NAME = 'PermisoComposicion_VR750'
+    WHERE TABLE_NAME = 'Familia_VR750'
 )
 BEGIN
-    CREATE TABLE PermisoComposicion_VR750 (
-        PadrePermiso_VR750 INT NOT NULL,
-        HijoPermiso_VR750 INT NOT NULL,
-        PRIMARY KEY (PadrePermiso_VR750, HijoPermiso_VR750),
-        FOREIGN KEY (PadrePermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750),
-        FOREIGN KEY (HijoPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+    CREATE TABLE Familia_VR750 (
+        CodFamilia_VR750 INT PRIMARY KEY IDENTITY(1,1),
+        NombreFamilia_VR750 NVARCHAR(100) NOT NULL
     );
 END;
 
--- Asociación de permisos (simples o familias) a perfiles
+-- Tabla de Perfiles
 IF NOT EXISTS (
     SELECT * FROM INFORMATION_SCHEMA.TABLES 
-    WHERE TABLE_NAME = 'PerfilPermiso_VR750'
+    WHERE TABLE_NAME = 'Perfil_VR750'
 )
 BEGIN
-    CREATE TABLE PerfilPermiso_VR750 (
+    CREATE TABLE Perfil_VR750 (
+        CodPerfil_VR750 INT PRIMARY KEY IDENTITY(1,1),
+        NombrePerfil_VR750 NVARCHAR(100) NOT NULL
+    );
+END;
+
+-- Asociación: Perfil - Permiso
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'PerfilXPermiso_VR750'
+)
+BEGIN
+    CREATE TABLE PerfilXPermiso_VR750 (
         CodPerfil_VR750 INT NOT NULL,
         CodPermiso_VR750 INT NOT NULL,
         PRIMARY KEY (CodPerfil_VR750, CodPermiso_VR750),
@@ -278,9 +286,52 @@ BEGIN
         FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
     );
 END;
+
+-- Asociación: Perfil - Familia
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'PerfilXFamilia_VR750'
+)
+BEGIN
+    CREATE TABLE PerfilXFamilia_VR750 (
+        CodPerfil_VR750 INT NOT NULL,
+        CodFamilia_VR750 INT NOT NULL,
+        PRIMARY KEY (CodPerfil_VR750, CodFamilia_VR750),
+        FOREIGN KEY (CodPerfil_VR750) REFERENCES Perfil_VR750(CodPerfil_VR750),
+        FOREIGN KEY (CodFamilia_VR750) REFERENCES Familia_VR750(CodFamilia_VR750)
+    );
+END;
+
+-- Asociación: Permiso - Familia
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'PermisoXFamilia_VR750'
+)
+BEGIN
+    CREATE TABLE PermisoXFamilia_VR750 (
+        CodFamilia_VR750 INT NOT NULL,
+        CodPermiso_VR750 INT NOT NULL,
+        PRIMARY KEY (CodFamilia_VR750, CodPermiso_VR750),
+        FOREIGN KEY (CodFamilia_VR750) REFERENCES Familia_VR750(CodFamilia_VR750),
+        FOREIGN KEY (CodPermiso_VR750) REFERENCES Permiso_VR750(CodPermiso_VR750)
+    );
+END;
+
+-- Asociación: Familia - Familia (jerarquía recursiva)
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = 'FamiliaXFamilia_VR750'
+)
+BEGIN
+    CREATE TABLE FamiliaXFamilia_VR750 (
+        CodFamiliaPadre_VR750 INT NOT NULL,
+        CodFamiliaHija_VR750 INT NOT NULL,
+        PRIMARY KEY (CodFamiliaPadre_VR750, CodFamiliaHija_VR750),
+        FOREIGN KEY (CodFamiliaPadre_VR750) REFERENCES Familia_VR750(CodFamilia_VR750),
+        FOREIGN KEY (CodFamiliaHija_VR750) REFERENCES Familia_VR750(CodFamilia_VR750)
+    );
+END;
 ";
-
-
                 using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -313,28 +364,28 @@ INSERT INTO @permisos (Nombre) VALUES
 ('cambiarClave'), ('cerrarSesion'), ('cambiarIdioma'), ('registrarReserva'), ('actualizarAgenda'),
 ('Facturas'), ('ABMclientes'), ('ABMhorarios'), ('ABMservicios'), ('ABMinsumos');
 
-INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750)
-SELECT Nombre, 0 FROM @permisos
+INSERT INTO Permiso_VR750 (NombrePermiso_VR750)
+SELECT Nombre FROM @permisos
 WHERE NOT EXISTS (
     SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = Nombre
 );
 
 -- 3. Insertar familias (si no existen)
-IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'administrador')
-    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('administrador', 1);
-IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'usuario')
-    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('usuario', 1);
-IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'maestros')
-    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('maestros', 1);
-IF NOT EXISTS (SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = 'recepcion')
-    INSERT INTO Permiso_VR750 (NombrePermiso_VR750, EsFamilia_VR750) VALUES ('recepcion', 1);
+IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'administrador')
+    INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('administrador');
+IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'usuario')
+    INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('usuario');
+IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'maestros')
+    INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('maestros');
+IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'recepcion')
+    INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('recepcion');
 
--- 4. Asociar permisos a la familia administrador (solo los definidos a mano)
-INSERT INTO PermisoComposicion_VR750 (PadrePermiso_VR750, HijoPermiso_VR750)
-SELECT f.CodPermiso_VR750, p.CodPermiso_VR750
-FROM Permiso_VR750 f
-JOIN Permiso_VR750 p ON p.EsFamilia_VR750 = 0
-WHERE f.NombrePermiso_VR750 = 'administrador'
+-- 4. Asociar permisos a la familia administrador
+INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
+SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
+FROM Familia_VR750 f
+JOIN Permiso_VR750 p ON 1 = 1
+WHERE f.NombreFamilia_VR750 = 'administrador'
   AND p.NombrePermiso_VR750 IN (
     'pestañaAdmin', 'pestañaMaestros', 'pestañaUsuarios', 'pestañaReserva', 'pestañaInsumos',
     'pestañaReportes', 'pestañaAyuda', 'gestionUsuarios', 'gestionPerfiles', 'inicioSesion',
@@ -342,28 +393,32 @@ WHERE f.NombrePermiso_VR750 = 'administrador'
     'Facturas', 'ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos'
   )
   AND NOT EXISTS (
-      SELECT 1 FROM PermisoComposicion_VR750 pc
-      WHERE pc.PadrePermiso_VR750 = f.CodPermiso_VR750 AND pc.HijoPermiso_VR750 = p.CodPermiso_VR750
+      SELECT 1 FROM PermisoXFamilia_VR750 pf
+      WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
 );
 
--- 5. Eliminar asignaciones previas a otros perfiles (solo mantener Administrador con familia administrador)
-DELETE FROM PerfilPermiso_VR750
+-- 5. Eliminar asignaciones previas (salvo Administrador)
+DELETE FROM PerfilXPermiso_VR750
+WHERE CodPerfil_VR750 IN (
+    SELECT CodPerfil_VR750 FROM Perfil_VR750
+    WHERE NombrePerfil_VR750 <> 'Administrador'
+);
+DELETE FROM PerfilXFamilia_VR750
 WHERE CodPerfil_VR750 IN (
     SELECT CodPerfil_VR750 FROM Perfil_VR750
     WHERE NombrePerfil_VR750 <> 'Administrador'
 );
 
--- 6. Asignar familia administrador al perfil Administrador
-INSERT INTO PerfilPermiso_VR750 (CodPerfil_VR750, CodPermiso_VR750)
-SELECT p.CodPerfil_VR750, f.CodPermiso_VR750
-FROM Perfil_VR750 p, Permiso_VR750 f
+-- 6. Asignar la familia administrador al perfil Administrador
+INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
+SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
+FROM Perfil_VR750 p, Familia_VR750 f
 WHERE p.NombrePerfil_VR750 = 'Administrador'
-  AND f.NombrePermiso_VR750 = 'administrador'
+  AND f.NombreFamilia_VR750 = 'administrador'
   AND NOT EXISTS (
-      SELECT 1 FROM PerfilPermiso_VR750 pp
-      WHERE pp.CodPerfil_VR750 = p.CodPerfil_VR750 AND pp.CodPermiso_VR750 = f.CodPermiso_VR750
+      SELECT 1 FROM PerfilXFamilia_VR750 pf
+      WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
 );
-
 
 
 
