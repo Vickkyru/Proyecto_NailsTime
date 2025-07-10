@@ -131,17 +131,31 @@ namespace Proyecto_NailsTime
 
         }
 
+        //public void AplicarPermisos()
+        //{
+        //    var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
+
+        //    // DEBUG: mostrar los nombres
+        //    //MessageBox.Show("Permisos cargados:\n" + string.Join(", ", permisos));
+
+        //    foreach (ToolStripMenuItem item in menuStrip1.Items)
+        //    {
+        //        GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
+        //    }
+        //}
+        //public void AplicarPermisos()
+        //{
+        //    var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
+
+        //    // DEBUG: mostrar los nombres de los permisos cargados (podés descomentar si querés verificar)
+        //    // MessageBox.Show("Permisos cargados:\n" + string.Join(", ", permisos));
+
+        //    GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
+        //}
         public void AplicarPermisos()
         {
-            var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
-
-            // DEBUG: mostrar los nombres
-            //MessageBox.Show("Permisos cargados:\n" + string.Join(", ", permisos));
-
-            foreach (ToolStripMenuItem item in menuStrip1.Items)
-            {
-                GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
-            }
+            var permisos = new List<string> { "Usuario", "Insumos" };
+            GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
         }
 
 

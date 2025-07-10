@@ -815,19 +815,19 @@ namespace Proyecto_NailsTime
         private void cmbfam_SelectedIndexChanged(object sender, EventArgs e)
         {
          
-            if (estaCargando || cmbfam.SelectedIndex == -1)
-                return;
+            //if (estaCargando || cmbfam.SelectedIndex == -1)
+            //    return;
 
            
-            if (cmbfam.SelectedItem is GrupoPermiso_750VR familia)
-            {
+            //if (cmbfam.SelectedItem is GrupoPermiso_750VR familia)
+            //{
               
-                var hijos = bllPerfil.ObtenerPermisosDeFamilia(familia.Codigo_750VR);
-                familia.Hijos = hijos;
+            //    var hijos = bllPerfil.ObtenerPermisosDeFamilia(familia.Codigo_750VR);
+            //    familia.Hijos = hijos;
 
                
-                MostrarPermisosDeFamilia(familia);
-            }
+            //    MostrarPermisosDeFamilia(familia);
+            //}
         }
     }
 }

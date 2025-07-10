@@ -62,18 +62,25 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // 🔽 Cargar permisos si la sesión fue exitosa
+                // 1) Traigo los componentes raíz (familias y simples asignados al perfil)
                 var bllPerfil = new BLLperfil_750VR();
-                var permisos = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
+                var componentesRaiz = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
 
+                var listaComponentes = new List<IComponentePermiso_750VR>();
 
-                List<string> nombresPermisos = new List<string>();
-                foreach (var permiso in permisos)
-                    nombresPermisos.AddRange(ObtenerNombresPermisos(permiso));
+                // 2) Expando cada componente con la recursividad de la BLL
+                foreach (var comp in componentesRaiz)
+                    bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
 
-                // 🔽 Guardar permisos en la sesión
+                // 3) Quedo sólo con los permisos simples y tomo sus nombres
+                List<string> nombresPermisos = listaComponentes
+                    .OfType<PermisoSimple_750VR>()
+                    .Select(p => p.Nombre_750VR)   // <— nombre nuevo de la propiedad
+                    .Distinct()
+                    .ToList();
+
+                // 4) Los guardo en sesión
                 SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
-
                 // 🔽 Resto de tu código original
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
