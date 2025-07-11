@@ -13,25 +13,30 @@ namespace SERVICIOS_VR750
         {
             foreach (ToolStripMenuItem item in menuStrip.Items)
             {
-                item.Enabled = permisos.Contains(item.Name);
+                bool tieneHabilitado = AplicarPermisosAlMenu(item, permisos);
 
-                if (item.HasDropDownItems)
-                    AplicarPermisosAlMenu(item, permisos);
+                // 🔽 Activar solo si su nombre está en la lista o alguno de sus hijos fue habilitado
+                item.Enabled = permisos.Contains(item.Name) || tieneHabilitado;
             }
         }
 
-        public static void AplicarPermisosAlMenu(ToolStripMenuItem menuItem, List<string> permisos)
+        public static bool AplicarPermisosAlMenu(ToolStripMenuItem menuItem, List<string> permisos)
         {
+            bool alMenosUnoHabilitado = false;
+
             foreach (ToolStripItem subItem in menuItem.DropDownItems)
             {
                 if (subItem is ToolStripMenuItem subMenu)
                 {
-                    subMenu.Enabled = permisos.Contains(subMenu.Name);
+                    bool habilitado = permisos.Contains(subMenu.Name) || AplicarPermisosAlMenu(subMenu, permisos);
+                    subMenu.Enabled = habilitado;
 
-                    if (subMenu.HasDropDownItems)
-                        AplicarPermisosAlMenu(subMenu, permisos); // recursión
+                    if (habilitado)
+                        alMenosUnoHabilitado = true;
                 }
             }
+
+            return alMenosUnoHabilitado;
         }
 
 

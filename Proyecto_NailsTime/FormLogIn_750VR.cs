@@ -65,12 +65,17 @@ namespace Proyecto_NailsTime
                 // 1) Traigo los componentes raíz (familias y simples asignados al perfil)
                 var bllPerfil = new BLLperfil_750VR();
                 var componentesRaiz = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
+                
+
 
                 var listaComponentes = new List<IComponentePermiso_750VR>();
 
                 // 2) Expando cada componente con la recursividad de la BLL
                 foreach (var comp in componentesRaiz)
+                {
+                    MessageBox.Show($"Raíz: {comp.Nombre_750VR}");
                     bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
+                }
 
                 // 3) Quedo sólo con los permisos simples y tomo sus nombres
                 List<string> nombresPermisos = listaComponentes
@@ -88,6 +93,8 @@ namespace Proyecto_NailsTime
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 //formPrincipal.Actualizar();
+                MessageBox.Show(string.Join(",", nombresPermisos));
+
                 formPrincipal.AplicarPermisos();
 
                 intentosFallidosPorUsuario.Remove(login);
@@ -137,6 +144,7 @@ namespace Proyecto_NailsTime
 
             return lista;
         }
+   
 
         private void button2_Click(object sender, EventArgs e)
         {

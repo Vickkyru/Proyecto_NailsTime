@@ -152,9 +152,15 @@ namespace Proyecto_NailsTime
 
         //    GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
         //}
+        //public void AplicarPermisos()
+        //{
+        //    var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario;
+        //    GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
+        //}
+
         public void AplicarPermisos()
         {
-            var permisos = new List<string> { "Usuario", "Insumos" };
+            var permisos = SessionManager_750VR.ObtenerInstancia.PermisosDelUsuario ?? new List<string>();
             GestorPermisos_750VR.AplicarPermisosAlMenuCompleto(menuStrip1, permisos);
         }
 
