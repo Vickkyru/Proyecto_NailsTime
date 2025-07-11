@@ -154,21 +154,30 @@ namespace DAL_VR750
 
         public List<GrupoPermiso_750VR> ObtenerFamilias()
         {
-            var lista = new List<GrupoPermiso_750VR>();
+            List<GrupoPermiso_750VR> familias = new List<GrupoPermiso_750VR>();
+
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT CodFamilia_VR750, NombreFamilia_VR750 FROM Familia_VR750", conn);
+                string query = "SELECT CodFamilia_VR750, NombreFamilia_VR750 FROM Familia_VR750";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        lista.Add(new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1)));
+                        var familia = new GrupoPermiso_750VR(
+                            reader.GetInt32(0),
+                            reader.GetString(1)
+                        );
+                        familias.Add(familia);
                     }
                 }
             }
-            return lista;
+
+            return familias;
         }
+
 
         public List<IComponentePermiso_750VR> ObtenerHijosDeFamilia(int idFamilia)
         {
@@ -323,21 +332,120 @@ namespace DAL_VR750
 
         public GrupoPermiso_750VR ObtenerFamiliaPorId(int idFamilia)
         {
+            GrupoPermiso_750VR familia = null;
+
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT CodFamilia_VR750, NombreFamilia_VR750 FROM Familia_VR750 WHERE CodFamilia_VR750 = @id", conn);
-                cmd.Parameters.AddWithValue("@id", idFamilia);
-                using (SqlDataReader reader = cmd.ExecuteReader())
+
+                // 1. Obtener la familia principal
+                SqlCommand cmdFamilia = new SqlCommand(
+                    "SELECT CodFamilia_VR750, NombreFamilia_VR750 FROM Familia_VR750 WHERE CodFamilia_VR750 = @id", conn);
+                cmdFamilia.Parameters.AddWithValue("@id", idFamilia);
+
+                using (SqlDataReader reader = cmdFamilia.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        return new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1));
+                        familia = new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1));
+                    }
+                }
+
+                if (familia == null)
+                    return null;
+
+                // 2. Cargar permisos simples asignados a la familia
+                SqlCommand cmdPermisos = new SqlCommand(@"
+            SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
+            FROM Permiso_VR750 p
+            JOIN PermisoXFamilia_VR750 pf ON pf.CodPermiso_VR750 = p.CodPermiso_VR750
+            WHERE pf.CodFamilia_VR750 = @id", conn);
+                cmdPermisos.Parameters.AddWithValue("@id", idFamilia);
+
+                using (SqlDataReader readerPerm = cmdPermisos.ExecuteReader())
+                {
+                    while (readerPerm.Read())
+                    {
+                        var permiso = new PermisoSimple_750VR(readerPerm.GetInt32(0), readerPerm.GetString(1));
+                        familia.Agregar(permiso);
+                    }
+                }
+
+                // 3. (Opcional) Cargar familias hijas si estás usando FamiliaXFamilia_VR750
+                SqlCommand cmdFamiliasHijas = new SqlCommand(@"
+            SELECT f.CodFamilia_VR750, f.NombreFamilia_VR750
+            FROM Familia_VR750 f
+            JOIN FamiliaXFamilia_VR750 ff ON ff.CodFamiliaHija_VR750 = f.CodFamilia_VR750
+            WHERE ff.CodFamiliaPadre_VR750 = @id", conn);
+                cmdFamiliasHijas.Parameters.AddWithValue("@id", idFamilia);
+
+                using (SqlDataReader readerHijas = cmdFamiliasHijas.ExecuteReader())
+                {
+                    while (readerHijas.Read())
+                    {
+                        // Llamada recursiva para armar también las hijas con sus hijos
+                        var familiaHija = ObtenerFamiliaPorId(readerHijas.GetInt32(0));
+                        if (familiaHija != null)
+                            familia.Agregar(familiaHija);
                     }
                 }
             }
-            return null;
+
+            return familia;
         }
+        public List<PermisoSimple_750VR> ObtenerPermisosSimplesPorFamilia(int codFamilia)
+        {
+            var lista = new List<PermisoSimple_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(@"
+            SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
+            FROM Permiso_VR750 p
+            INNER JOIN PermisoXFamilia_VR750 pf ON p.CodPermiso_VR750 = pf.CodPermiso_VR750
+            WHERE pf.CodFamilia_VR750 = @codFamilia", conn);
+
+                cmd.Parameters.AddWithValue("@codFamilia", codFamilia);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new PermisoSimple_750VR(reader.GetInt32(0), reader.GetString(1)));
+                    }
+                }
+            }
+
+            return lista;
+        }
+        public List<GrupoPermiso_750VR> ObtenerFamiliasHijas(int codFamilia)
+        {
+            var lista = new List<GrupoPermiso_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(@"
+            SELECT f.CodFamilia_VR750, f.NombreFamilia_VR750
+            FROM Familia_VR750 f
+            INNER JOIN FamiliaXFamilia_VR750 ff ON f.CodFamilia_VR750 = ff.CodFamiliaHija_VR750
+            WHERE ff.CodFamiliaPadre_VR750 = @codFamilia", conn);
+
+                cmd.Parameters.AddWithValue("@codFamilia", codFamilia);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        lista.Add(new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1)));
+                    }
+                }
+            }
+
+            return lista;
+        }
+
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfilPorNombre(string nombrePerfil)
         {

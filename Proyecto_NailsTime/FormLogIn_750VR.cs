@@ -73,7 +73,7 @@ namespace Proyecto_NailsTime
                 // 2) Expando cada componente con la recursividad de la BLL
                 foreach (var comp in componentesRaiz)
                 {
-                    MessageBox.Show($"Raíz: {comp.Nombre_750VR}");
+                    //MessageBox.Show($"Raíz: {comp.Nombre_750VR}");
                     bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
                 }
 
@@ -93,7 +93,7 @@ namespace Proyecto_NailsTime
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 //formPrincipal.Actualizar();
-                MessageBox.Show(string.Join(",", nombresPermisos));
+                //MessageBox.Show(string.Join(",", nombresPermisos));
 
                 formPrincipal.AplicarPermisos();
 

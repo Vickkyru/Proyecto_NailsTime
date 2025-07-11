@@ -47,6 +47,7 @@ namespace BE_VR750
 
         public int CodPerfil_750VR { get; set; }
         public string NombrePerfil_750VR { get; set; }
+        public GrupoPermiso_750VR PermisosCompuestos_750VR { get; set; } = new GrupoPermiso_750VR(0, "Perfil compuesto");
 
         //public List<IComponentePermiso_750VR> Permisos_750VR { get; } = new();
         public List<IComponentePermiso_750VR> Permisos_750VR { get; set; }

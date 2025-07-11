@@ -11,7 +11,7 @@ namespace BE_VR750
 
         public int Codigo_750VR { get; set; }
         public string Nombre_750VR { get; set; }
-        public bool EsFamilia => false;
+        //public bool EsFamilia => false;
 
 
         public List<IComponentePermiso_750VR> ObtenerHijos()
