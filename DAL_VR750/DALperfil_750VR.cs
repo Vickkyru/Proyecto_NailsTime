@@ -395,30 +395,33 @@ namespace DAL_VR750
         }
         public List<PermisoSimple_750VR> ObtenerPermisosSimplesPorFamilia(int codFamilia)
         {
-            var lista = new List<PermisoSimple_750VR>();
+            List<PermisoSimple_750VR> lista = new List<PermisoSimple_750VR>();
 
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(@"
+                string query = @"
             SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
-            FROM Permiso_VR750 p
-            INNER JOIN PermisoXFamilia_VR750 pf ON p.CodPermiso_VR750 = pf.CodPermiso_VR750
-            WHERE pf.CodFamilia_VR750 = @codFamilia", conn);
+            FROM PermisoXFamilia_VR750 pf
+            JOIN Permiso_VR750 p ON pf.CodPermiso_VR750 = p.CodPermiso_VR750
+            WHERE pf.CodFamilia_VR750 = @cod";
 
-                cmd.Parameters.AddWithValue("@codFamilia", codFamilia);
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@cod", codFamilia);
+                SqlDataReader reader = cmd.ExecuteReader();
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        lista.Add(new PermisoSimple_750VR(reader.GetInt32(0), reader.GetString(1)));
-                    }
+                    lista.Add(new PermisoSimple_750VR(
+                        reader.GetInt32(0),         // Código permiso
+                        reader.GetString(1)         // Nombre permiso
+                    ));
                 }
             }
 
             return lista;
         }
+
         public List<GrupoPermiso_750VR> ObtenerFamiliasHijas(int codFamilia)
         {
             var lista = new List<GrupoPermiso_750VR>();

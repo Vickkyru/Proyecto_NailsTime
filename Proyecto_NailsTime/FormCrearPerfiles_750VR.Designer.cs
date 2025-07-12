@@ -162,6 +162,7 @@
             this.txtnomperf.Name = "txtnomperf";
             this.txtnomperf.Size = new System.Drawing.Size(100, 20);
             this.txtnomperf.TabIndex = 23;
+            this.txtnomperf.TextChanged += new System.EventHandler(this.txtnomperf_TextChanged);
             // 
             // label6
             // 

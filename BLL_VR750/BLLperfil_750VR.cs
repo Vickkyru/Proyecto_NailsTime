@@ -106,27 +106,26 @@ namespace BLL_VR750
         public GrupoPermiso_750VR ObtenerFamiliaCompletaPorId(int idFamilia)
         {
             GrupoPermiso_750VR familia = dal.ObtenerFamiliaPorId(idFamilia);
+            if (familia == null) return null;
 
-            if (familia != null)
+            // Permisos simples de la familia
+            var permisosSimples = dal.ObtenerPermisosSimplesPorFamilia(idFamilia);
+            foreach (var permiso in permisosSimples)
+                familia.Agregar(permiso);
+
+            // Subfamilias
+            var subfamilias = dal.ObtenerFamiliasHijas(idFamilia);
+            foreach (var sub in subfamilias)
             {
-                // 1. Obtener permisos simples asignados a esta familia
-                List<PermisoSimple_750VR> permisosSimples = dal.ObtenerPermisosSimplesPorFamilia(idFamilia);
-                foreach (var permiso in permisosSimples)
-                {
-                    familia.Agregar(permiso);
-                }
-
-                // 2. Obtener subfamilias (familias hijas)
-                List<GrupoPermiso_750VR> subfamilias = dal.ObtenerFamiliasHijas(idFamilia);
-                foreach (var sub in subfamilias)
-                {
-                    GrupoPermiso_750VR subCompleta = ObtenerFamiliaCompletaPorId(sub.Codigo_750VR); // Recursivo
+                var subCompleta = ObtenerFamiliaCompletaPorId(sub.Codigo_750VR);
+                if (subCompleta != null)
                     familia.Agregar(subCompleta);
-                }
             }
 
             return familia;
         }
+
+
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
         {

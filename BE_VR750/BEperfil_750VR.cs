@@ -49,6 +49,8 @@ namespace BE_VR750
         public string NombrePerfil_750VR { get; set; }
         public GrupoPermiso_750VR PermisosCompuestos_750VR { get; set; } = new GrupoPermiso_750VR(0, "Perfil compuesto");
 
+        public List<IComponentePermiso_750VR> Hijos => PermisosCompuestos_750VR.ObtenerHijos();
+
         //public List<IComponentePermiso_750VR> Permisos_750VR { get; } = new();
         public List<IComponentePermiso_750VR> Permisos_750VR { get; set; }
 
@@ -73,5 +75,10 @@ namespace BE_VR750
                 }
             }
         }
+        public void Agregar(IComponentePermiso_750VR componente)
+        {
+            Permisos_750VR.Add(componente);
+        }
+
     }
 }

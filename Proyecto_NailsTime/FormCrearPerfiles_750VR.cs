@@ -28,15 +28,18 @@ namespace Proyecto_NailsTime
         {
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             ActualizarIdioma();
+         
+
             CargarPerfilesEnComboBox();
             CargarPermisosSimples();
             CargarFamilias();
+
+            MostrarTreeViewInicialPerfil();
+            MostrarTreeViewInicialFamilia();
         }
         private void CargarFamilias()
         {
-            var familias = bllPerfil.ObtenerFamilias(); // debe devolver List<GrupoPermiso_750VR>
-                                                        // PRUEBA
-            //MessageBox.Show("Cantidad de familias: " + familias.Count);
+            var familias = bllPerfil.ObtenerFamilias();
 
             cmbfam.DataSource = familias;
             cmbfam.DisplayMember = "Nombre_750VR";
@@ -48,13 +51,15 @@ namespace Proyecto_NailsTime
             cmbfamperf.ValueMember = "Codigo_750VR";
             cmbfamperf.SelectedIndex = -1;
 
-
+            cmbfamfam.DataSource = familias;
+            cmbfamfam.DisplayMember = "Nombre_750VR";
+            cmbfamfam.ValueMember = "Codigo_750VR";
+            cmbfamfam.SelectedIndex = -1;
         }
 
         private void CargarPerfilesEnComboBox()
         {
-            var perfiles = bllPerfil.ObtenerPerfiles();
-            cmbperf.DataSource = perfiles;
+            cmbperf.DataSource = bllPerfil.ObtenerPerfiles();
             cmbperf.DisplayMember = "NombrePerfil_750VR";
             cmbperf.ValueMember = "CodPerfil_750VR";
             cmbperf.SelectedIndex = -1;
@@ -65,15 +70,27 @@ namespace Proyecto_NailsTime
             cmbpermperf.DisplayMember = "Nombre_750VR";
             cmbpermperf.ValueMember = "Codigo_750VR";
             cmbpermperf.SelectedIndex = -1;
+
+            cmbpermfam.DataSource = bllPerfil.ObtenerPermisosSimples();
+            cmbpermfam.DisplayMember = "Nombre_750VR";
+            cmbpermfam.ValueMember = "Codigo_750VR";
+            cmbpermfam.SelectedIndex = -1;
+        }
+        private void MostrarTreeViewInicialPerfil()
+        {
+            treeView1.Nodes.Clear();
+            treeView1.Nodes.Add(new TreeNode("Seleccione un perfil"));
+        }
+
+        private void MostrarTreeViewInicialFamilia()
+        {
+            treeView2.Nodes.Clear();
+            treeView2.Nodes.Add(new TreeNode("Seleccione una familia"));
         }
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
             this.Text = Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Titulo");
-     
-
-            MostrarTreeViewInicial();
-            MostrarTreeViewInicial2();
         }
         private void MostrarTreeViewInicial()
         {
@@ -153,42 +170,7 @@ namespace Proyecto_NailsTime
             return nodo;
         }
 
-        private void ActualizarPerfilEnTreeview(BEperfil_750VR perfilActualizado)
-        {
-            foreach (TreeNode nodo in treeView1.Nodes)
-            {
-                if (nodo.Tag is BEperfil_750VR perfil && perfil.CodPerfil_750VR == perfilActualizado.CodPerfil_750VR)
-                {
-                    nodo.Nodes.Clear();
-
-                    var permisos = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR);
-                    perfil.Permisos_750VR = permisos;
-
-                    foreach (var permiso in permisos)
-                    {
-                        TreeNode nodoPermiso = CrearNodoPermiso(permiso);
-
-                        if (permiso is GrupoPermiso_750VR grupo)
-                        {
-                            grupo.Hijos = bllPerfil.ObtenerPermisosDeFamilia(grupo.Codigo_750VR);
-
-                            foreach (var hijo in grupo.Hijos)
-                            {
-                                TreeNode nodoHijo = CrearNodoPermiso(hijo);
-                                nodoPermiso.Nodes.Add(nodoHijo);
-                            }
-                        }
-
-                        nodo.Nodes.Add(nodoPermiso);
-
-                    }
-
-
-                    treeView1.ExpandAll();
-                    break;
-                }
-            }
-        }
+      
 
         private TreeNode CrearNodoPermiso(IComponentePermiso_750VR permiso)
         {
@@ -390,22 +372,15 @@ namespace Proyecto_NailsTime
 
         private void btnagfamperf_Click(object sender, EventArgs e)
         {
-            if (cmbfam.SelectedItem == null || cmbperf.SelectedItem == null)
+            if (cmbfam.SelectedItem == null || perfilSeleccionado == null)
             {
                 MessageBox.Show("Seleccione una familia y un perfil.");
                 return;
             }
 
-            var perfilSeleccionado = cmbperf.SelectedItem as BEperfil_750VR;
-            if (perfilSeleccionado == null)
-            {
-                MessageBox.Show("Seleccione un perfil válido.");
-                return;
-            }
-
             int idFamilia = (int)cmbfam.SelectedValue;
 
-            // 1. Obtener familia completa (con permisos e hijas)
+            // 1. Obtener familia completa
             GrupoPermiso_750VR familia = bllPerfil.ObtenerFamiliaCompletaPorId(idFamilia);
             if (familia == null)
             {
@@ -414,36 +389,40 @@ namespace Proyecto_NailsTime
             }
 
             // 2. Verificar si ya fue agregada al perfil
-            if (perfilSeleccionado.PermisosCompuestos_750VR.Hijos.Any(h => h.Codigo_750VR == familia.Codigo_750VR))
+            if (perfilSeleccionado.Hijos.Any(h => h.Codigo_750VR == familia.Codigo_750VR))
             {
                 MessageBox.Show("Esa familia ya fue asignada al perfil.");
                 return;
             }
 
             // 3. Agregar familia al perfil
-            perfilSeleccionado.PermisosCompuestos_750VR.Agregar(familia);
+            perfilSeleccionado.Agregar(familia);
 
-            // 4. Refrescar el árbol de permisos
+            // 👉 4. Refrescar el TreeView
             RefrescarTreeViewPerfil();
 
         }
-
+ 
         private void RefrescarTreeViewPerfil()
         {
+            if (perfilSeleccionado == null) return;
+
             treeView1.Nodes.Clear();
-            TreeNode root = ConstruirNodoDesdeComponente(perfilSeleccionado.PermisosCompuestos_750VR);
+
+            TreeNode root = new TreeNode(perfilSeleccionado.NombrePerfil_750VR) { Tag = perfilSeleccionado };
+
+            foreach (var comp in perfilSeleccionado.PermisosCompuestos_750VR.ObtenerHijos())
+                root.Nodes.Add(ConstruirNodoDesdeComponente(comp));
+
             treeView1.Nodes.Add(root);
             treeView1.ExpandAll();
         }
-        private TreeNode ConstruirNodoDesdeComponente(IComponentePermiso_750VR componente)
+        private TreeNode ConstruirNodoDesdeComponente(IComponentePermiso_750VR comp)
         {
-            TreeNode nodo = new TreeNode(componente.Nombre_750VR);
-            nodo.Tag = componente;
+            TreeNode nodo = new TreeNode(comp.Nombre_750VR) { Tag = comp };
 
-            foreach (var hijo in componente.ObtenerHijos())
-            {
+            foreach (var hijo in comp.ObtenerHijos())
                 nodo.Nodes.Add(ConstruirNodoDesdeComponente(hijo));
-            }
 
             return nodo;
         }
@@ -749,9 +728,11 @@ namespace Proyecto_NailsTime
 
         private void cmbperf_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbperf.SelectedItem is BEperfil_750VR perfilSeleccionado)
+            if (cmbperf.SelectedItem is BEperfil_750VR perfil)
             {
-                MostrarPermisosDelPerfil(perfilSeleccionado);
+                perfilSeleccionado = perfil;
+                perfilSeleccionado.Permisos_750VR = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR);
+                RefrescarTreeViewPerfil();
             }
         }
 
@@ -852,6 +833,11 @@ namespace Proyecto_NailsTime
                 // Si tenés cargado el árbol con hijos en PermisosCompuestos_750VR:
                 RefrescarTreeViewPerfil();
             }
+        }
+
+        private void txtnomperf_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
