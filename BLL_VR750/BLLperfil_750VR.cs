@@ -125,7 +125,10 @@ namespace BLL_VR750
             return familia;
         }
 
-
+        public void AsignarFamiliaAlPerfil(int idPerfil, int idFamilia)
+        {
+            dal.AsignarFamiliaAlPerfil(idPerfil, idFamilia);
+        }
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
         {

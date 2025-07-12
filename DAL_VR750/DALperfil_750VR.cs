@@ -422,6 +422,22 @@ namespace DAL_VR750
             return lista;
         }
 
+
+        public void AsignarFamiliaAlPerfil(int idPerfil, int idFamilia)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
+                         VALUES (@perfil, @familia)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@perfil", idPerfil);
+                cmd.Parameters.AddWithValue("@familia", idFamilia);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
         public List<GrupoPermiso_750VR> ObtenerFamiliasHijas(int codFamilia)
         {
             var lista = new List<GrupoPermiso_750VR>();
