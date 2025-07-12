@@ -35,5 +35,8 @@ namespace BE_VR750
             Codigo_750VR = codigo;
             Nombre_750VR = nombre;
         }
+
+        // 🔹 Implementación de Listar: devuelve sólo su propio nombre
+        public List<string> Listar() => new List<string> { Nombre_750VR };
     }
 }

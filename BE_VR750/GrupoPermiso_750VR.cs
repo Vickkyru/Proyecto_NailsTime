@@ -19,21 +19,25 @@ namespace BE_VR750
             Nombre_750VR = nombre;
         }
 
-        public List<IComponentePermiso_750VR> Hijos { get; set; } = new List<IComponentePermiso_750VR>();
+        //public List<IComponentePermiso_750VR> Hijos { get; set; } = new List<IComponentePermiso_750VR>();
 
-        public List<IComponentePermiso_750VR> ObtenerHijos()
-        {
-            return Hijos;
-        }
+        // Lista de hijos (permisos simples y/o sub-familias)
+        private readonly List<IComponentePermiso_750VR> _hijos = new List<IComponentePermiso_750VR>();
+        public List<IComponentePermiso_750VR> Hijos => _hijos;
 
-        public void Agregar(IComponentePermiso_750VR componente)
-        {
-            Hijos.Add(componente);
-        }
+        public List<IComponentePermiso_750VR> ObtenerHijos() => _hijos;
 
-        public void Quitar(IComponentePermiso_750VR componente)
+        public void Agregar(IComponentePermiso_750VR componente) => _hijos.Add(componente);
+        public void Quitar(IComponentePermiso_750VR componente) => _hijos.Remove(componente);
+
+        // 🔹 Implementación recursiva de Listar
+        public List<string> Listar()
         {
-            Hijos.Remove(componente);
+            List<string> resultado = new List<string>();
+
+            foreach (var hijo in _hijos)
+                resultado.AddRange(hijo.Listar());   // recursión
+            return resultado;
         }
     }
 }

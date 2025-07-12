@@ -10,9 +10,13 @@ namespace BE_VR750
     {
         int Codigo_750VR { get; set; }
         string Nombre_750VR { get; set; }
-        //bool EsFamilia { get; }
+
+        // Hijos y operaciones del Composite
         List<IComponentePermiso_750VR> ObtenerHijos();
         void Agregar(IComponentePermiso_750VR componente);
         void Quitar(IComponentePermiso_750VR componente);
+
+        // 🔹 NUEVO: Devuelve todos los nombres de permisos simples que cuelgan de este componente
+        List<string> Listar();
     }
 }

@@ -380,7 +380,7 @@ IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'maestros
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'recepcion')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('recepcion');
 
--- 4. Asignar permisos a la familia administrador (evita duplicados)
+-- 4. Asignar permisos a la familia administrador
 INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
 SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
 FROM Familia_VR750 f
@@ -396,7 +396,7 @@ AND NOT EXISTS (
     WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
 );
 
--- 4b. Asignar permisos a la familia maestros (evita duplicados)
+-- 4b. Asignar permisos a la familia maestros
 INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
 SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
 FROM Familia_VR750 f
@@ -407,7 +407,7 @@ AND NOT EXISTS (
     WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
 );
 
--- 5. Eliminar asignaciones previas de perfiles (excepto Administrador)
+-- 5. Limpiar asignaciones previas de perfiles (excepto Administrador)
 DELETE FROM PerfilXPermiso_VR750
 WHERE CodPerfil_VR750 IN (
     SELECT CodPerfil_VR750 FROM Perfil_VR750
@@ -419,23 +419,7 @@ WHERE CodPerfil_VR750 IN (
     WHERE NombrePerfil_VR750 <> 'Administrador'
 );
 
--- 6. Asignar permisos simples directamente al perfil Administrador
-INSERT INTO PerfilXPermiso_VR750 (CodPerfil_VR750, CodPermiso_VR750)
-SELECT p.CodPerfil_VR750, perm.CodPermiso_VR750
-FROM Perfil_VR750 p
-JOIN Permiso_VR750 perm ON perm.NombrePermiso_VR750 IN (
-    'pestañaAdmin', 'pestañaMaestros', 'pestañaUsuarios', 'pestañaReserva', 'pestañaInsumos',
-    'pestañaReportes', 'pestañaAyuda', 'gestionUsuarios', 'gestionPerfiles', 'inicioSesion',
-    'cambiarClave', 'cerrarSesion', 'cambiarIdioma', 'registrarReserva', 'actualizarAgenda',
-    'Facturas', 'ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos'
-)
-WHERE p.NombrePerfil_VR750 = 'Administrador'
-AND NOT EXISTS (
-    SELECT 1 FROM PerfilXPermiso_VR750 pxp
-    WHERE pxp.CodPerfil_VR750 = p.CodPerfil_VR750 AND pxp.CodPermiso_VR750 = perm.CodPermiso_VR750
-);
-
--- 7. Asignar la familia administrador al perfil Administrador
+-- ✅ 6. Asignar solo la familia al perfil Administrador (no permisos directos)
 INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
 SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
 FROM Perfil_VR750 p, Familia_VR750 f

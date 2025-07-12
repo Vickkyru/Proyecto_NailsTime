@@ -130,22 +130,54 @@ namespace BLL_VR750
             dal.AsignarFamiliaAlPerfil(idPerfil, idFamilia);
         }
 
+        public List<string> ObtenerPermisosDelPerfil(int codPerfil)
+        {
+            var componentes = ObtenerPermisosDePerfil(codPerfil);
+
+            var nombres = new HashSet<string>();              // evita duplicados
+
+            foreach (var comp in componentes)
+                foreach (var n in comp.Listar())
+                    nombres.Add(n);
+
+            return nombres.ToList();
+        }
+
+        // ---- BLL ----
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
         {
-            var permisos = dal.ObtenerPermisosDePerfil(idPerfil);
+            var permisos = new List<IComponentePermiso_750VR>();
 
-            foreach (var permiso in permisos.OfType<GrupoPermiso_750VR>())
+            // 1. Obtener permisos simples directos
+            var simples = dal.ObtenerPermisosSimplesDePerfil(idPerfil);
+            permisos.AddRange(simples);
+
+            // 2. Obtener familias del perfil
+            var familias = dal.ObtenerFamiliasDePerfil(idPerfil);
+
+            foreach (var familia in familias)
             {
-                permiso.ObtenerHijos().AddRange(ObtenerPermisosDeFamilia(permiso.Codigo_750VR));
+                // 🔁 Obtener hijos de cada familia
+                var hijos = ObtenerPermisosDeFamilia(familia.Codigo_750VR);
+                foreach (var hijo in hijos)
+                {
+                    familia.Agregar(hijo);  // Importante: llenar recursivamente
+                }
+
+                permisos.Add(familia);  // Cargar la familia completa
             }
 
             return permisos;
         }
 
+
+
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfilPorNombre(string nombrePerfil)
         {
-            return dal.ObtenerPermisosDePerfilPorNombre(nombrePerfil);
+            int codPerfil = dal.ObtenerCodPerfilPorNombre(nombrePerfil);
+            return ObtenerPermisosDePerfil(codPerfil);
         }
+
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDeFamilia(int codFamilia)
         {
@@ -159,18 +191,17 @@ namespace BLL_VR750
             return hijos;
         }
 
-        public void ObtenerPermisosRecursivos(IComponentePermiso_750VR componente, List<IComponentePermiso_750VR> acumulador)
+        public void ObtenerPermisosRecursivos(IComponentePermiso_750VR componente, List<IComponentePermiso_750VR> lista)
         {
-            if (!acumulador.Any(p => p.Codigo_750VR == componente.Codigo_750VR))
-                acumulador.Add(componente);
-
+            lista.Add(componente);
             foreach (var hijo in componente.ObtenerHijos())
             {
-                ObtenerPermisosRecursivos(hijo, acumulador);
+                ObtenerPermisosRecursivos(hijo, lista);
             }
         }
 
-   
+
+
 
     }
 }

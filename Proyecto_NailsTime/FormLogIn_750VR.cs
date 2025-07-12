@@ -86,6 +86,10 @@ namespace Proyecto_NailsTime
 
                 // 4) Los guardo en sesión
                 SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
+                // DEBUG: Ver los permisos que se están cargando
+                MessageBox.Show("Permisos cargados:\n" + string.Join("\n", nombresPermisos));
+
+
                 // 🔽 Resto de tu código original
                 string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
                 Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
