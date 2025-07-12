@@ -21,9 +21,9 @@ namespace BLL_VR750
             perfil.CodPerfil_750VR = dal.InsertarPerfilYDevolverID(perfil);
         }
 
-        public List<BEperfil_750VR> ObtenerTodosLosPerfiles()
+        public List<IComponentePermiso_750VR> ObtenerTodosLosPermisos()
         {
-           return dal.ObtenerTodosLosPerfiles();
+            return dal.ObtenerTodosLosPermisos(); 
         }
 
         public void EliminarPerfil(int id)
@@ -130,18 +130,12 @@ namespace BLL_VR750
             dal.AsignarFamiliaAlPerfil(idPerfil, idFamilia);
         }
 
-        public List<string> ObtenerPermisosDelPerfil(int codPerfil)
+
+        public bool FamiliaYaAsignada(int idPerfil, int idFamilia)
         {
-            var componentes = ObtenerPermisosDePerfil(codPerfil);
-
-            var nombres = new HashSet<string>();              // evita duplicados
-
-            foreach (var comp in componentes)
-                foreach (var n in comp.Listar())
-                    nombres.Add(n);
-
-            return nombres.ToList();
+            return dal.FamiliaYaAsignada(idPerfil, idFamilia);
         }
+
 
         // ---- BLL ----
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
@@ -176,6 +170,10 @@ namespace BLL_VR750
         {
             int codPerfil = dal.ObtenerCodPerfilPorNombre(nombrePerfil);
             return ObtenerPermisosDePerfil(codPerfil);
+        }
+        public void EliminarFamiliaDePerfil(int idPerfil, int idFamilia)
+        {
+            dal.EliminarFamiliaDePerfil(idPerfil, idFamilia);
         }
 
 

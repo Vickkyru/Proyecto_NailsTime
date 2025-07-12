@@ -32,6 +32,48 @@ namespace DAL_VR750
             return lista;
         }
 
+        public List<IComponentePermiso_750VR> ObtenerTodosLosPermisos()
+        {
+            var lista = new List<IComponentePermiso_750VR>();
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+
+                /*  
+                 *  Traemos TODO de Permiso_VR750 y vemos si tiene
+                 *  coincidencia en Familia_VR750 (IsFamilia = 1 cuando existe).
+                 */
+                string query = @"
+            SELECT  p.CodPermiso_VR750,
+                    p.NombrePermiso_VR750,
+                    CASE WHEN f.CodFamilia_VR750 IS NULL THEN 0 ELSE 1 END AS EsFamilia
+            FROM    Permiso_VR750 p
+            LEFT JOIN Familia_VR750 f
+                   ON  f.CodFamilia_VR750 = p.CodPermiso_VR750";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int cod = reader.GetInt32(0);
+                        string nombre = reader.GetString(1);
+                        bool esFamilia = reader.GetInt32(2) == 1;
+
+                        if (esFamilia)
+                            lista.Add(new GrupoPermiso_750VR(cod, nombre));
+                        else
+                            lista.Add(new PermisoSimple_750VR(cod, nombre));
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
+
         public int InsertarPerfilYDevolverID(BEperfil_750VR perfil)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
@@ -43,7 +85,7 @@ namespace DAL_VR750
             }
         }
 
-        public List<BEperfil_750VR> ObtenerTodosLosPerfiles() => ObtenerPerfiles();
+        
 
         public void EliminarPerfil(int id)
         {
@@ -551,7 +593,21 @@ namespace DAL_VR750
             }
         }
 
+        public bool FamiliaYaAsignada(int idPerfil, int idFamilia)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"SELECT COUNT(*) FROM PerfilXFamilia_VR750 
+                         WHERE CodPerfil_VR750 = @perfil AND CodFamilia_VR750 = @familia";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@perfil", idPerfil);
+                cmd.Parameters.AddWithValue("@familia", idFamilia);
 
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+        }
         public List<GrupoPermiso_750VR> ObtenerFamiliasHijas(int codFamilia)
         {
             var lista = new List<GrupoPermiso_750VR>();
@@ -648,7 +704,19 @@ namespace DAL_VR750
             return familias;
         }
 
-
+        public void EliminarFamiliaDePerfil(int idPerfil, int idFamilia)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"DELETE FROM PerfilXFamilia_VR750 
+                         WHERE CodPerfil_VR750 = @perfil AND CodFamilia_VR750 = @familia";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@perfil", idPerfil);
+                cmd.Parameters.AddWithValue("@familia", idFamilia);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
     }
 }
