@@ -71,7 +71,36 @@ namespace DAL_VR750
 
             return lista;
         }
+        public void ActualizarNombrePerfil(int codPerfil, string nuevoNombre)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "UPDATE Perfil_VR750 SET NombrePerfil_VR750 = @Nombre WHERE CodPerfil_VR750 = @CodPerfil";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Nombre", nuevoNombre);
+                    cmd.Parameters.AddWithValue("@CodPerfil", codPerfil);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
+
+        public bool ExisteUsuarioConPerfil(int codPerfil)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM Usuario_VR750 WHERE CodPerfil_VR750 = @CodPerfil";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CodPerfil", codPerfil);
+                    int cantidad = (int)cmd.ExecuteScalar();
+                    return cantidad > 0;
+                }
+            }
+        }
 
 
         public int InsertarPerfilYDevolverID(BEperfil_750VR perfil)

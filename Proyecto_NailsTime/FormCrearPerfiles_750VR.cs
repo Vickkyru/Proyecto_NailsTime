@@ -22,6 +22,8 @@ namespace Proyecto_NailsTime
         }
         private BEperfil_750VR perfilSeleccionado;
         private GrupoPermiso_750VR perfilCompuesto; // Opcional si usás la propiedad interna
+        private IComponentePermiso_750VR componenteSeleccionado;
+
 
 
         private BLLperfil_750VR bllPerfil = new BLLperfil_750VR();
@@ -40,23 +42,27 @@ namespace Proyecto_NailsTime
         }
         private void CargarFamilias()
         {
-            var familias = bllPerfil.ObtenerFamilias();
+            var familias1 = bllPerfil.ObtenerFamilias();
+            var familias2 = bllPerfil.ObtenerFamilias();
+            var familias3 = bllPerfil.ObtenerFamilias();
 
-            cmbfam.DataSource = familias;
+            cmbfam.DataSource = familias1;
             cmbfam.DisplayMember = "Nombre_750VR";
             cmbfam.ValueMember = "Codigo_750VR";
             cmbfam.SelectedIndex = -1;
 
-            cmbfamperf.DataSource = familias;
+            cmbfamperf.DataSource = familias2;
             cmbfamperf.DisplayMember = "Nombre_750VR";
             cmbfamperf.ValueMember = "Codigo_750VR";
             cmbfamperf.SelectedIndex = -1;
 
-            cmbfamfam.DataSource = familias;
+            cmbfamfam.DataSource = familias3;
             cmbfamfam.DisplayMember = "Nombre_750VR";
             cmbfamfam.ValueMember = "Codigo_750VR";
             cmbfamfam.SelectedIndex = -1;
         }
+
+
 
         private void CargarPerfilesEnComboBox()
         {
@@ -173,17 +179,22 @@ namespace Proyecto_NailsTime
 
 
 
-        private TreeNode CrearNodoPermiso(IComponentePermiso_750VR componente)
+        private TreeNode CrearNodoPermiso(IComponentePermiso_750VR comp)
         {
-            TreeNode nodo = new TreeNode(componente.Nombre_750VR);
-
-            foreach (var hijo in componente.ObtenerHijos())
+            TreeNode nodo = new TreeNode(comp.Nombre_750VR)
             {
-                nodo.Nodes.Add(CrearNodoPermiso(hijo));
+                Tag = comp        // ⬅️ SIEMPRE asignamos el componente
+            };
+
+            if (comp is GrupoPermiso_750VR grupo)
+            {
+                foreach (var hijo in grupo.ObtenerHijos())
+                    nodo.Nodes.Add(CrearNodoPermiso(hijo));
             }
 
             return nodo;
         }
+
         private void CargarComboBoxFamilias()
         {
             var familias = bllPerfil.ObtenerFamilias();
@@ -241,6 +252,7 @@ namespace Proyecto_NailsTime
             MessageBox.Show("Perfil agregado correctamente.");
 
             CargarPerfilesEnComboBox();
+            MostrarTreeViewInicial();
             txtnomperf.Clear();
         }
 
@@ -259,6 +271,13 @@ namespace Proyecto_NailsTime
                 return;
             }
 
+            if (bllPerfil.PerfilTieneUsuariosAsociados(perfilSeleccionado.CodPerfil_750VR))
+            {
+                MessageBox.Show("No se puede eliminar el perfil porque está asignado a uno o más usuarios.");
+                return;
+            }
+
+
             var confirm = MessageBox.Show($"¿Está seguro de eliminar el perfil '{perfilSeleccionado.NombrePerfil_750VR}'?",
                                           "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -268,7 +287,7 @@ namespace Proyecto_NailsTime
 
                 MessageBox.Show("Perfil eliminado correctamente.");
                 CargarPerfilesEnComboBox();
-                CargarTreeViewPerfiles();
+                MostrarTreeViewInicial();
             }
         }
 
@@ -283,7 +302,9 @@ namespace Proyecto_NailsTime
    
         private void btnagpermperf_Click(object sender, EventArgs e)
         {
-            // 1) Validaciones de selección
+            
+            
+           // 1) Validaciones de selección
             var perfil = cmbperf.SelectedItem as BEperfil_750VR;
             if (perfil == null)
             {
@@ -298,12 +319,27 @@ namespace Proyecto_NailsTime
                 return;
             }
 
+            if (treeView1.SelectedNode == null || !(treeView1.SelectedNode.Tag is BEperfil_750VR))
+            {
+                MessageBox.Show("No se puede agregar un permiso a un permiso o familia. Seleccione el perfil en el árbol.");
+                return;
+            }
+
             // 2) Verificar que no sea un grupo (familia)
             if (permiso is GrupoPermiso_750VR)
             {
                 MessageBox.Show("No se puede asignar una familia desde aquí. Use la sección de asignación de familias.");
                 return;
             }
+
+            bool yaExiste = PermisoYaExisteEnLista(perfilSeleccionado.Permisos_750VR, permiso.Codigo_750VR);
+
+            if (yaExiste)
+            {
+                MessageBox.Show("Este permiso ya está asignado al perfil (directa o indirectamente).");
+                return;
+            }
+
 
             // 3) Verificar si ya está asignado al perfil
             var permisosActuales = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR);
@@ -328,6 +364,21 @@ namespace Proyecto_NailsTime
             RefrescarTreeViewPerfil();
         }
 
+        private bool PermisoYaExisteEnLista(List<IComponentePermiso_750VR> lista, int codPermiso)
+        {
+            foreach (var comp in lista)
+            {
+                if (comp is PermisoSimple_750VR simple && simple.Codigo_750VR == codPermiso)
+                    return true;
+
+                if (comp is GrupoPermiso_750VR grupo && PermisoYaExisteEnLista(grupo.ObtenerHijos(), codPermiso))
+                    return true;
+            }
+
+            return false;
+        }
+
+
         private void btnelimpermperf_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode == null)
@@ -351,7 +402,7 @@ namespace Proyecto_NailsTime
 
             if (perfil == null)
             {
-                MessageBox.Show("Error al obtener el perfil.");
+                MessageBox.Show("No se puede eliminar un permiso de una familia desde aca.");
                 return;
             }
 
@@ -371,7 +422,9 @@ namespace Proyecto_NailsTime
             {
                 bllPerfil.QuitarPermiso(perfil.CodPerfil_750VR, permiso.Codigo_750VR);
                 MessageBox.Show("Permiso eliminado.");
-                CargarTreeViewPerfiles();
+                perfilSeleccionado = perfil; // <-- actualizar la referencia
+                perfil.Permisos_750VR = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR); // <- actualizar lista
+                RefrescarTreeViewPerfil();
             }
         }
 
@@ -412,72 +465,7 @@ namespace Proyecto_NailsTime
 
         }
 
-        //private void RefrescarTreeViewPerfil()
-        //{
-        //    treeView1.Nodes.Clear();
-
-        //    TreeNode nodoRaiz = new TreeNode(perfilSeleccionado.NombrePerfil_750VR);
-
-        //    foreach (var comp in perfilSeleccionado.Permisos_750VR)
-        //    {
-        //        TreeNode nodoHijo = CrearNodoPermiso(comp);
-        //        nodoRaiz.Nodes.Add(nodoHijo);
-        //    }
-
-        //    treeView1.Nodes.Add(nodoRaiz);
-        //    treeView1.ExpandAll();
-        //}
-
-        //private TreeNode CrearNodoRecursivo(IComponentePermiso_750VR comp)
-        //{
-        //    TreeNode nodo = new TreeNode(comp.Nombre_750VR);
-
-        //    if (comp is GrupoPermiso_750VR familia)
-        //    {
-        //        foreach (var hijo in familia.ObtenerHijos())
-        //        {
-        //            nodo.Nodes.Add(CrearNodoRecursivo(hijo));
-        //        }
-        //    }
-
-        //    return nodo;
-        //}
-
-
-
-        //private TreeNode ConstruirNodoDesdeComponente(IComponentePermiso_750VR comp)
-        //{
-        //    TreeNode nodo = new TreeNode(comp.Nombre_750VR) { Tag = comp };
-
-        //    if (comp is GrupoPermiso_750VR grupo)
-        //    {
-        //        foreach (var hijo in grupo.ObtenerHijos())
-        //        {
-        //            nodo.Nodes.Add(ConstruirNodoDesdeComponente(hijo));
-        //        }
-        //    }
-
-        //    return nodo;
-        //}
-
-        //private void AgregarNodosRecursivos(TreeNode padre, IComponentePermiso_750VR componente)
-        //{
-        //    TreeNode nodo = new TreeNode(componente.Nombre_750VR);
-        //    nodo.Tag = componente;
-
-        //    if (padre == null)
-        //        treeView1.Nodes.Add(nodo); // nodo raíz
-        //    else
-        //        padre.Nodes.Add(nodo);     // nodo hijo
-
-        //    if (componente is GrupoPermiso_750VR grupo)
-        //    {
-        //        foreach (var hijo in grupo.ObtenerHijos())
-        //        {
-        //            AgregarNodosRecursivos(nodo, hijo);
-        //        }
-        //    }
-        //}
+       
 
         private void RefrescarTreeViewPerfil()
         {
@@ -525,8 +513,13 @@ namespace Proyecto_NailsTime
             }
 
             bllPerfil.AgregarFamilia(txtfam.Text.Trim());
-            CargarTreeViewFamilias(); // Refresca el árbol
+            MessageBox.Show("Se ha agregado una familia nueva");
+
+            //CargarTreeViewFamilias(); 
+
             RefrescarPantalla();
+            CargarFamilias();
+            MostrarTreeViewInicialFamilia();
             txtfam.Clear();
         }
 
@@ -616,20 +609,7 @@ namespace Proyecto_NailsTime
             treeView2.ExpandAll();
         }
 
-        //private void MostrarPermisosDeFamilia(GrupoPermiso_750VR familia)
-        //{
-        //    treeView2.Nodes.Clear();
-
-        //    TreeNode nodoFamilia = new TreeNode(familia.Nombre_750VR)
-        //    {
-        //        Tag = familia
-        //    };
-
-        //    AgregarNodoPermiso(nodoFamilia, familia);
-
-        //    treeView2.Nodes.Add(nodoFamilia);
-        //    treeView2.ExpandAll();
-        //}
+ 
         private void agpermfam_Click(object sender, EventArgs e)
         {
             //TreeNode nodoSeleccionado2 = treeView1.SelectedNode;
@@ -673,86 +653,128 @@ namespace Proyecto_NailsTime
 
         private void elimpermfam_Click(object sender, EventArgs e)
         {
-            TreeNode nodoSeleccionado = treeView1.SelectedNode;
-
-            if (nodoSeleccionado == null || nodoSeleccionado.Parent == null)
+            /*----------------------------------------------------------
+        * 1) Debe haber un nodo seleccionado EN EL TREE DE FAMILIAS
+        *    (treeView2). Si no, avisamos y salimos.
+        *---------------------------------------------------------*/
+            TreeNode nodoSeleccionado = treeView2.SelectedNode;
+            if (nodoSeleccionado == null)
             {
                 MessageBox.Show(
-          Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccionarPermisoFamiliaEnRaiz"),
-          Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Advertencia"),
-          MessageBoxButtons.OK,
-          MessageBoxIcon.Warning);
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccionePermiso"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Advertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            // El padre debe ser la familia raíz
+            /*----------------------------------------------------------
+             * 2) El padre del nodo (el nivel inmediatamente anterior)
+             *    DEBE ser la familia raíz. Si el padre no existe o a su
+             *    vez tiene padre, significa que el usuario eligió algo
+             *    más profundo y no lo permitimos.
+             *---------------------------------------------------------*/
             TreeNode nodoPadre = nodoSeleccionado.Parent;
-            if (nodoPadre.Parent != null)
+            if (nodoPadre == null || nodoPadre.Parent != null)
             {
                 MessageBox.Show(
-           Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SoloQuitarAsignadosADirectoRaiz"),
-           Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Advertencia"),
-           MessageBoxButtons.OK,
-           MessageBoxIcon.Warning);
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SoloQuitarAsignadosADirectoRaiz"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Advertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            var nodoSeleccionado2 = treeView2.SelectedNode;
-
-            if (nodoSeleccionado2 == null || !(nodoSeleccionado2.Tag is GrupoPermiso_750VR familia))
+            /*----------------------------------------------------------
+             * 3) Verificamos que el PADRE sea efectivamente una familia
+             *---------------------------------------------------------*/
+            GrupoPermiso_750VR familia = nodoPadre.Tag as GrupoPermiso_750VR;
+            if (familia == null)
             {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccioneFamiliaParaQuitarPermiso"));
+                // Si Tag no contiene la familia, algo está mal cargado.
+                MessageBox.Show("Nodo padre inválido (no es una familia).");
                 return;
             }
 
-            if (cmbpermfam.SelectedItem is PermisoSimple_750VR permiso)
+            /*----------------------------------------------------------
+             * 4) El nodo a eliminar debe ser un PermisoSimple.
+             *---------------------------------------------------------*/
+            PermisoSimple_750VR permiso = nodoSeleccionado.Tag as PermisoSimple_750VR;
+            if (permiso == null)
             {
-                bllPerfil.QuitarPermisoDeFamilia(familia.Codigo_750VR, permiso.Codigo_750VR);
-                RefrescarYMostrarFamilia(familia.Codigo_750VR);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SoloPermisosSimplesEliminar"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.Advertencia"),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
             }
-            else
-            {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccionePermiso"));
-            }
+
+            /*----------------------------------------------------------
+             * 5) Confirmación
+             *---------------------------------------------------------*/
+            DialogResult confirm = MessageBox.Show(
+                $"¿Desea quitar el permiso '{permiso.Nombre_750VR}' de la familia '{familia.Nombre_750VR}'?",
+                "Confirmar eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            /*----------------------------------------------------------
+             * 6) BLL → eliminar y refrescar UI
+             *---------------------------------------------------------*/
+            bllPerfil.QuitarPermisoDeFamilia(familia.Codigo_750VR, permiso.Codigo_750VR);
+
+            // Recargar la familia en el árbol para que se vea el cambio
+            RefrescarYMostrarFamilia(familia.Codigo_750VR);
         }
 
         private void btnagfamfam_Click(object sender, EventArgs e)
         {
             TreeNode nodoSeleccionado = treeView2.SelectedNode;
 
+            // 1. Validar que se haya seleccionado una familia raíz (padre)
             if (nodoSeleccionado == null || !(nodoSeleccionado.Tag is GrupoPermiso_750VR familiaPadre))
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccioneFamiliaAgregarOtra"));
                 return;
             }
 
-            if (cmbfamfam.SelectedItem is GrupoPermiso_750VR familiaHija)
+            // 2. Verificar que se haya seleccionado otra familia del combo
+            if (!(cmbfamfam.SelectedItem is GrupoPermiso_750VR familiaHija))
             {
-                if (familiaPadre.Codigo_750VR == familiaHija.Codigo_750VR)
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.NoAgregarMismaFamilia"));
-                    return;
-                }
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccioneFamiliaAgregar"));
+                return;
+            }
 
-                bool agregado = bllPerfil.AsignarFamiliaAFamilia(familiaPadre.Codigo_750VR, familiaHija.Codigo_750VR);
+            // 3. Evitar agregar la misma familia a sí misma
+            if (familiaPadre.Codigo_750VR == familiaHija.Codigo_750VR)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.NoAgregarMismaFamilia"));
+                return;
+            }
 
-                if (agregado)
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.FamiliaAgregadaCorrectamente"));
+            // 4. Verificar que no haya ciclos (es decir, que familiaHija no contenga indirectamente a familiaPadre)
+            if (bllPerfil.FamiliaContieneAFamilia(familiaHija.Codigo_750VR, familiaPadre.Codigo_750VR))
+            {
+                MessageBox.Show("No se puede crear una relación circular entre familias.");
+                return;
+            }
 
+            // 5. Intentar asignar la familia hija a la familia padre
+            bool agregado = bllPerfil.AsignarFamiliaAFamilia(familiaPadre.Codigo_750VR, familiaHija.Codigo_750VR);
 
-                    var familiaActualizada = bllPerfil.ObtenerFamiliaPorId(familiaPadre.Codigo_750VR);
-                    MostrarPermisosDeFamilia(familiaActualizada);
-                }
-                else
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.FamiliaYaAsignada"));
-                }
+            if (agregado)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.FamiliaAgregadaCorrectamente"));
 
+                var familiaActualizada = bllPerfil.ObtenerFamiliaPorId(familiaPadre.Codigo_750VR);
+                MostrarPermisosDeFamilia(familiaActualizada); // Refresca el árbol
             }
             else
             {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.SeleccioneFamiliaAgregar"));
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.FamiliaYaAsignada"));
             }
         }
 
@@ -779,7 +801,7 @@ namespace Proyecto_NailsTime
 
         private void cmbperf_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+        
 
             if (cmbperf.SelectedItem is BEperfil_750VR perfil)
             {
@@ -791,6 +813,13 @@ namespace Proyecto_NailsTime
   
 
                 // Refrescar visualmente el TreeView
+                RefrescarTreeViewPerfil();
+            }
+
+            var perfilSeleccionado1 = cmbperf.SelectedItem as BEperfil_750VR;
+            if (perfilSeleccionado1 != null)
+            {
+                txtnomperf.Text = perfilSeleccionado1.NombrePerfil_750VR;
                 RefrescarTreeViewPerfil();
             }
 
@@ -844,21 +873,36 @@ namespace Proyecto_NailsTime
 
         private void cmbfam_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
-            //if (estaCargando || cmbfam.SelectedIndex == -1)
-            //    return;
+            var familiaSeleccionada = cmbfam.SelectedItem as GrupoPermiso_750VR;
+            if (familiaSeleccionada == null) return;
 
-           
-            //if (cmbfam.SelectedItem is GrupoPermiso_750VR familia)
-            //{
-              
-            //    var hijos = bllPerfil.ObtenerPermisosDeFamilia(familia.Codigo_750VR);
-            //    familia.Hijos = hijos;
+            treeView2.Nodes.Clear();
 
-               
-            //    MostrarPermisosDeFamilia(familia);
-            //}
+            // Obtener familia completa (con hijos y permisos)
+            var familiaCompleta = bllPerfil.ObtenerFamiliaPorId(familiaSeleccionada.Codigo_750VR);
+            if (familiaCompleta == null) return;
+
+            // Crear nodo raíz y agregarlo al TreeView
+            TreeNode nodoRaiz = new TreeNode(familiaCompleta.Nombre_750VR) { Tag = familiaCompleta };
+            AgregarHijosAlTreeView(familiaCompleta, nodoRaiz);
+
+            treeView2.Nodes.Add(nodoRaiz);
+            treeView2.ExpandAll();
         }
+
+        private void AgregarHijosAlTreeView(GrupoPermiso_750VR familia, TreeNode padre)
+        {
+            foreach (var hijo in familia.Hijos)
+            {
+                TreeNode n = new TreeNode(hijo.Nombre_750VR) { Tag = hijo };  // ⬅️
+                if (hijo is GrupoPermiso_750VR sub)
+                    AgregarHijosAlTreeView(sub, n);
+
+                padre.Nodes.Add(n);
+            }
+        }
+
+
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -869,6 +913,15 @@ namespace Proyecto_NailsTime
             //    // Si tenés cargado el árbol con hijos en PermisosCompuestos_750VR:
             //    RefrescarTreeViewPerfil();
             //}
+
+            if (e.Node?.Tag is IComponentePermiso_750VR comp)
+            {
+                componenteSeleccionado = comp;
+            }
+            else
+            {
+                componenteSeleccionado = null;
+            }
         }
 
         private void txtnomperf_TextChanged(object sender, EventArgs e)
@@ -909,15 +962,72 @@ namespace Proyecto_NailsTime
 
         private void cmbpermperf_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<IComponentePermiso_750VR> todosLosPermisos = bllPerfil.ObtenerTodosLosPermisos();
-            List<PermisoSimple_750VR> permisosSimples = todosLosPermisos
-                .OfType<PermisoSimple_750VR>()
-                .ToList();
+            //List<IComponentePermiso_750VR> todosLosPermisos = bllPerfil.ObtenerTodosLosPermisos();
+            //List<PermisoSimple_750VR> permisosSimples = todosLosPermisos
+            //    .OfType<PermisoSimple_750VR>()
+            //    .ToList();
 
-            cmbpermperf.DataSource = permisosSimples;
-            cmbpermperf.DisplayMember = "Nombre_750VR";
-            cmbpermperf.ValueMember = "Codigo_750VR";
+            //cmbpermperf.DataSource = permisosSimples;
+            //cmbpermperf.DisplayMember = "Nombre_750VR";
+            //cmbpermperf.ValueMember = "Codigo_750VR";
            
+        }
+
+        private void btnmodperf_Click(object sender, EventArgs e)
+        {
+            var perfil = cmbperf.SelectedItem as BEperfil_750VR;
+            if (perfil == null)
+            {
+                MessageBox.Show("Debe seleccionar un perfil para modificar.");
+                return;
+            }
+
+            string nuevoNombre = txtnomperf.Text.Trim();
+            if (string.IsNullOrWhiteSpace(nuevoNombre))
+            {
+                MessageBox.Show("Debe ingresar un nuevo nombre para el perfil.");
+                return;
+            }
+
+            // Validar que no exista otro perfil con el mismo nombre
+            var todos = bllPerfil.ObtenerPerfiles(); // Asumimos que este método existe
+            if (todos.Any(p => p.NombrePerfil_750VR.Equals(nuevoNombre, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show("Ya existe un perfil con ese nombre.");
+                return;
+            }
+
+            // Modificar en BD
+            bllPerfil.ModificarNombrePerfil(perfil.CodPerfil_750VR, nuevoNombre);
+
+            MessageBox.Show("Perfil modificado correctamente.");
+
+            // Recargar combos y TreeView
+            CargarPerfilesEnComboBox();
+            CargarTreeViewPerfiles();
+            
+
+            txtnomperf.Clear();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void cmbfamfam_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbfamperf_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

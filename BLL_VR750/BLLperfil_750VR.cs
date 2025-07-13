@@ -21,10 +21,38 @@ namespace BLL_VR750
             perfil.CodPerfil_750VR = dal.InsertarPerfilYDevolverID(perfil);
         }
 
-        public List<IComponentePermiso_750VR> ObtenerTodosLosPermisos()
+     
+        public bool PerfilTieneUsuariosAsociados(int codPerfil)
         {
-            return dal.ObtenerTodosLosPermisos(); 
+            return dal.ExisteUsuarioConPerfil(codPerfil);
         }
+
+        public void ModificarNombrePerfil(int codPerfil, string nuevoNombre)
+        {
+            dal.ActualizarNombrePerfil(codPerfil, nuevoNombre);
+        }
+        public bool FamiliaContieneAFamilia(int idFamiliaOrigen, int idFamiliaBuscada)
+        {
+            GrupoPermiso_750VR origen = ObtenerFamiliaPorId(idFamiliaOrigen);
+            return BuscarFamiliaRecursivamente(origen, idFamiliaBuscada);
+        }
+
+        private bool BuscarFamiliaRecursivamente(GrupoPermiso_750VR grupo, int idBuscado)
+        {
+            foreach (var hijo in grupo.Hijos)
+            {
+                if (hijo is GrupoPermiso_750VR subFamilia)
+                {
+                    if (subFamilia.Codigo_750VR == idBuscado)
+                        return true;
+
+                    if (BuscarFamiliaRecursivamente(subFamilia, idBuscado))
+                        return true;
+                }
+            }
+            return false;
+        }
+
 
         public void EliminarPerfil(int id)
         {
