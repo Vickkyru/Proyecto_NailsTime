@@ -351,8 +351,10 @@ END;
 -- 1. Insertar perfiles si no existen
 IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Administrador')
     INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Administrador');
+
 IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Recepcionista')
     INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Recepcionista');
+
 IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Manicurista')
     INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Manicurista');
 
@@ -373,10 +375,13 @@ WHERE NOT EXISTS (
 -- 3. Insertar familias si no existen
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'administrador')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('administrador');
+
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'usuario')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('usuario');
+
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'maestros')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('maestros');
+
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'recepcion')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('recepcion');
 
@@ -413,13 +418,14 @@ WHERE CodPerfil_VR750 IN (
     SELECT CodPerfil_VR750 FROM Perfil_VR750
     WHERE NombrePerfil_VR750 <> 'Administrador'
 );
+
 DELETE FROM PerfilXFamilia_VR750
 WHERE CodPerfil_VR750 IN (
     SELECT CodPerfil_VR750 FROM Perfil_VR750
     WHERE NombrePerfil_VR750 <> 'Administrador'
 );
 
--- ✅ 6. Asignar solo la familia al perfil Administrador (no permisos directos)
+-- 6. Asignar solo la familia al perfil Administrador
 INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
 SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
 FROM Perfil_VR750 p, Familia_VR750 f
@@ -430,61 +436,62 @@ WHERE p.NombrePerfil_VR750 = 'Administrador'
       WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
 );
 
+-- 7. Insertar servicios si no existen
+IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)
+BEGIN
+    INSERT INTO Servicio_VR750 (Nombre_VR750, Tecnica_VR750, DuracionMinutos_VR750, Precio_VR750, Activo_VR750) VALUES
+    ('Masajes', 'Relajantes', 60, 8000.00, 1),
+    ('Masajes', 'Descontracturantes', 60, 9000.00, 1),
+    ('Pedicura', 'Esmaltado tradicional', 20, 4000.00, 1),
+    ('Pedicura', 'Esmaltado semi', 40, 5000.00, 1),
+    ('Pedicura', 'Esmaltado tradicional + Spa', 60, 6000.00, 1),
+    ('Manicura', 'Esmaltado tradicional', 30, 4000.00, 1),
+    ('Manicura', 'Semipermanente', 45, 8000.00, 1),
+    ('Manicura', 'Kapping con gel', 60, 10000.00, 1),
+    ('Manicura', 'Uñas esculpidas acrílicas', 90, 12000.00, 1),
+    ('Limpieza facial', 'Profunda', 60, 7000.00, 1),
+    ('Limpieza facial', 'Express', 30, 4000.00, 1),
+    ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
+    ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1)
+END
 
+-- 8. Insertar insumos si no existen
+IF NOT EXISTS (SELECT 1 FROM Insumo_VR750)
+BEGIN
+    INSERT INTO Insumo_VR750 (Nombre_VR750, Descripcion_VR750, CantidadActual_VR750, StockMinimo_VR750, UnidadMedida_VR750, Activo_VR750) VALUES
+    ('Esmalte rojo clásico', 'Esmalte rojo clásico', 50, 10, 'unidad', 1),
+    ('Quitaesmalte','Removedor universal de esmalte', 100, 20, 'ml', 1),
+    ('Algodón', 'Bolsita de algodón', 200, 50, 'unidad', 1),
+    ('Lima desechable', 'Lima de uso único', 150, 30, 'unidad', 1),
+    ('Base fortalecedora', 'Base antes del esmaltado', 60, 10, 'unidad', 1),
+    ('Esmalte semi permanente rosa', 'Para técnica semipermanente', 40, 8, 'unidad', 1),
+    ('Gel constructor', 'Gel para uñas esculpidas', 30, 5, 'ml', 1),
+    ('Mascarilla facial hidratante', 'Aplicación post limpieza facial', 20, 5, 'unidad', 1),
+    ('Crema exfoliante', 'Para limpieza facial profunda', 25, 5, 'ml', 1)
+END
 
-            IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)
-            BEGIN
-                INSERT INTO Servicio_VR750 (Nombre_VR750, Tecnica_VR750, DuracionMinutos_VR750, Precio_VR750, Activo_VR750) VALUES
-                ('Masajes', 'Relajantes', 60, 8000.00, 1),
-                ('Masajes', 'Descontracturantes', 60, 9000.00, 1),
-                ('Pedicura', 'Esmaltado tradicional', 20, 4000.00, 1),
-                ('Pedicura', 'Esmaltado semi', 40, 5000.00, 1),
-                ('Pedicura', 'Esmaltado tradicional + Spa', 60, 6000.00, 1),
-                ('Manicura', 'Esmaltado tradicional', 30, 4000.00, 1),
-                ('Manicura', 'Semipermanente', 45, 8000.00, 1),
-                ('Manicura', 'Kapping con gel', 60, 10000.00, 1),
-                ('Manicura', 'Uñas esculpidas acrílicas', 90, 12000.00, 1),
-                ('Limpieza facial', 'Profunda', 60, 7000.00, 1),
-                ('Limpieza facial', 'Express', 30, 4000.00, 1),
-                ('Limpieza facial', 'Punta de diamante', 45, 6500.00, 1),
-                ('Limpieza facial', 'Peeling químico', 60, 7500.00, 1)
-            END
+-- 9. Insertar usuarios si no existen
+IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
+BEGIN
+    INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750, CodPerfil_VR750) VALUES
+    (10000000, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0, 'Español', 3),
+    (11000000, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0, 'Español', 3),
+    (11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español', 3),
+    (10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Español', 2),
+    (10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Español', 1)
+END
 
-   IF NOT EXISTS (SELECT 1 FROM Insumo_VR750)
-            BEGIN
-                INSERT INTO Insumo_VR750 (Nombre_VR750, Descripcion_VR750, CantidadActual_VR750, StockMinimo_VR750, UnidadMedida_VR750, Activo_VR750) VALUES
-                ('Esmalte rojo clásico', 'Esmalte rojo clásico', 50, 10, 'unidad', 1),
-                ('Quitaesmalte','Removedor universal de esmalte', 100, 20, 'ml', 1),
-                ('Algodón', 'Bolsita de algodón', 200, 50, 'unidad', 1),
-                ('Lima desechable', 'Lima de uso único', 150, 30, 'unidad', 1),
-                ('Base fortalecedora', 'Base antes del esmaltado', 60, 10, 'unidad', 1),
-                ('Esmalte semi permanente rosa', 'Para técnica semipermanente', 40, 8, 'unidad', 1),
-                ('Gel constructor', 'Gel para uñas esculpidas', 30, 5, 'ml', 1),
-                ('Mascarilla facial hidratante', 'Aplicación post limpieza facial', 20, 5, 'unidad', 1),
-                ('Crema exfoliante', 'Para limpieza facial profunda', 25, 5, 'ml', 1)
-            END
-
-            IF NOT EXISTS (SELECT 1 FROM Usuario_VR750)
-            BEGIN
-                INSERT INTO Usuario_VR750 (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750, CodPerfil_VR750) VALUES
-               (10000000, 'Ana', 'López', 'ana@demo.com', 'analopez', 'ana123', '', 'Manicurista', 1, 0, 'Español', 3),
-(11000000, 'pepita', 'juanes', 'pepi@demo.com', 'pepitajuanes', 'pepi123', '', 'Manicurista', 1, 0, 'Español', 3),
-(11100000, 'joaca', 'perez', 'joa@demo.com', 'joacaperez', 'joa123', '', 'Manicurista', 1, 0, 'Español', 3),
-
-(10000002, 'Tomás', 'García', 'tomas@demo.com', 'tomasgarcia', 'tomas123', '', 'Recepcionista', 1, 0, 'Español', 2),
-(10000003, 'Carla', 'Gómez', 'carla@demo.com', 'carlagomez', 'carla123', '', 'Administrador', 1, 0,'Español', 1)
-            END
-
-            IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
-            BEGIN
-                INSERT INTO Disponibilidad_VR750 (DNImanic_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
-                (10000000, '2025-07-14', '09:00', '13:00', 1, 0),
-                (10000000, '2025-07-16', '14:00', '18:00', 1, 0),
-                (11000000, '2025-07-15', '10:00', '14:00', 1, 0),
-                (11000000, '2025-07-17', '15:00', '19:00', 1, 0),
-                (11100000, '2025-07-18', '09:30', '12:30', 1, 0),
-                (11100000, '2025-07-19', '11:00', '15:00', 1, 0)
-            END
+-- 10. Insertar disponibilidad si no existen
+IF NOT EXISTS (SELECT 1 FROM Disponibilidad_VR750)
+BEGIN
+    INSERT INTO Disponibilidad_VR750 (DNImanic_VR750, Fecha_VR750, HoraInicio_VR750, HoraFin_VR750, Activo_VR750, Estado_VR750) VALUES
+    (10000000, '2025-07-14', '09:00', '13:00', 1, 0),
+    (10000000, '2025-07-16', '14:00', '18:00', 1, 0),
+    (11000000, '2025-07-15', '10:00', '14:00', 1, 0),
+    (11000000, '2025-07-17', '15:00', '19:00', 1, 0),
+    (11100000, '2025-07-18', '09:30', '12:30', 1, 0),
+    (11100000, '2025-07-19', '11:00', '15:00', 1, 0)
+END
 
 
 ";

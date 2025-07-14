@@ -53,6 +53,15 @@ namespace BLL_VR750
             return false;
         }
 
+        public void ModificarNombreFamilia(int codFamilia, string nuevoNombre)
+        {
+            dal.ModificarNombreFamilia(codFamilia, nuevoNombre);
+        }
+
+        public bool ExisteFamiliaConNombre(string nombre, int idExcluir = 0)
+        {
+            return dal.ExisteFamiliaConNombre(nombre, idExcluir);
+        }
 
         public void EliminarPerfil(int id)
         {
@@ -119,7 +128,7 @@ namespace BLL_VR750
 
         public GrupoPermiso_750VR ObtenerFamiliaPorId(int idFamilia)
         {
-           return dal.ObtenerFamiliaPorId(idFamilia);
+            return dal.ObtenerFamiliaPorIdRecursiva(idFamilia, new HashSet<int>());
         }
 
         public List<PermisoSimple_750VR> ObtenerPermisosSimples()
@@ -227,6 +236,10 @@ namespace BLL_VR750
         }
 
 
+        public bool FamiliaAsignadaAAlgunPerfil(int codFamilia)
+        {
+            return dal.FamiliaAsignadaAAlgunPerfil(codFamilia); // consulta SQL
+        }
 
 
     }

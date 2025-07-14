@@ -39,5 +39,25 @@ namespace BE_VR750
                 resultado.AddRange(hijo.Listar());   // recursión
             return resultado;
         }
+
+        public List<PermisoSimple_750VR> ObtenerTodosLosPermisos()
+        {
+            var lista = new List<PermisoSimple_750VR>();
+
+            foreach (var hijo in this.Hijos)        // Recorre todos los hijos de la familia
+            {
+                if (hijo is PermisoSimple_750VR permisoSimple)      // ⬅️ Es un permiso simple
+                {
+                    lista.Add(permisoSimple);
+                }
+                else if (hijo is GrupoPermiso_750VR grupo)          // ⬅️ Es otra familia
+                {
+                    // 🔁 Llama recursivamente para acumular los permisos de la sub-familia
+                    lista.AddRange(grupo.ObtenerTodosLosPermisos());
+                }
+            }
+
+            return lista;   // Devuelve la lista plana de permisos simples
+        }
     }
 }

@@ -79,7 +79,7 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(125, 9);
+            this.label1.Location = new System.Drawing.Point(81, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(285, 32);
             this.label1.TabIndex = 2;
@@ -88,7 +88,7 @@
             // cmbfamperf
             // 
             this.cmbfamperf.FormattingEnabled = true;
-            this.cmbfamperf.Location = new System.Drawing.Point(19, 311);
+            this.cmbfamperf.Location = new System.Drawing.Point(16, 311);
             this.cmbfamperf.Name = "cmbfamperf";
             this.cmbfamperf.Size = new System.Drawing.Size(121, 21);
             this.cmbfamperf.TabIndex = 4;
@@ -106,7 +106,7 @@
             // cmbpermfam
             // 
             this.cmbpermfam.FormattingEnabled = true;
-            this.cmbpermfam.Location = new System.Drawing.Point(651, 176);
+            this.cmbpermfam.Location = new System.Drawing.Point(627, 176);
             this.cmbpermfam.Name = "cmbpermfam";
             this.cmbpermfam.Size = new System.Drawing.Size(121, 21);
             this.cmbpermfam.TabIndex = 10;
@@ -139,7 +139,7 @@
             // 
             // txtfam
             // 
-            this.txtfam.Location = new System.Drawing.Point(688, 60);
+            this.txtfam.Location = new System.Drawing.Point(668, 86);
             this.txtfam.Name = "txtfam";
             this.txtfam.Size = new System.Drawing.Size(100, 20);
             this.txtfam.TabIndex = 21;
@@ -147,7 +147,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(685, 45);
+            this.label4.Location = new System.Drawing.Point(665, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 22;
@@ -156,7 +156,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 45);
+            this.label5.Location = new System.Drawing.Point(13, 73);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(30, 13);
             this.label5.TabIndex = 24;
@@ -164,7 +164,7 @@
             // 
             // txtnomperf
             // 
-            this.txtnomperf.Location = new System.Drawing.Point(15, 61);
+            this.txtnomperf.Location = new System.Drawing.Point(15, 89);
             this.txtnomperf.Name = "txtnomperf";
             this.txtnomperf.Size = new System.Drawing.Size(100, 20);
             this.txtnomperf.TabIndex = 23;
@@ -173,7 +173,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(636, 160);
+            this.label6.Location = new System.Drawing.Point(624, 160);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 25;
@@ -182,7 +182,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(636, 313);
+            this.label7.Location = new System.Drawing.Point(624, 295);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(42, 13);
             this.label7.TabIndex = 29;
@@ -191,7 +191,7 @@
             // cmbfamfam
             // 
             this.cmbfamfam.FormattingEnabled = true;
-            this.cmbfamfam.Location = new System.Drawing.Point(651, 329);
+            this.cmbfamfam.Location = new System.Drawing.Point(627, 311);
             this.cmbfamfam.Name = "cmbfamfam";
             this.cmbfamfam.Size = new System.Drawing.Size(121, 21);
             this.cmbfamfam.TabIndex = 27;
@@ -217,7 +217,7 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(376, 9);
+            this.button13.Location = new System.Drawing.Point(618, 12);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 23);
             this.button13.TabIndex = 32;
@@ -229,11 +229,11 @@
             this.agperf.BackColor = System.Drawing.Color.RosyBrown;
             this.agperf.FlatAppearance.BorderSize = 0;
             this.agperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agperf.Location = new System.Drawing.Point(131, 58);
+            this.agperf.Location = new System.Drawing.Point(131, 86);
             this.agperf.Name = "agperf";
             this.agperf.Size = new System.Drawing.Size(92, 23);
             this.agperf.TabIndex = 37;
-            this.agperf.Text = "Agregar perfil";
+            this.agperf.Text = "Crear";
             this.agperf.UseVisualStyleBackColor = false;
             this.agperf.Click += new System.EventHandler(this.agperf_Click);
             // 
@@ -242,7 +242,7 @@
             this.btnelimperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimperf.FlatAppearance.BorderSize = 0;
             this.btnelimperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimperf.Location = new System.Drawing.Point(131, 87);
+            this.btnelimperf.Location = new System.Drawing.Point(131, 115);
             this.btnelimperf.Name = "btnelimperf";
             this.btnelimperf.Size = new System.Drawing.Size(92, 23);
             this.btnelimperf.TabIndex = 38;
@@ -255,7 +255,7 @@
             this.btnelimfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimfam.FlatAppearance.BorderSize = 0;
             this.btnelimfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfam.Location = new System.Drawing.Point(697, 89);
+            this.btnelimfam.Location = new System.Drawing.Point(677, 115);
             this.btnelimfam.Name = "btnelimfam";
             this.btnelimfam.Size = new System.Drawing.Size(75, 23);
             this.btnelimfam.TabIndex = 40;
@@ -268,11 +268,11 @@
             this.btnagfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfam.FlatAppearance.BorderSize = 0;
             this.btnagfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfam.Location = new System.Drawing.Point(584, 57);
+            this.btnagfam.Location = new System.Drawing.Point(564, 83);
             this.btnagfam.Name = "btnagfam";
             this.btnagfam.Size = new System.Drawing.Size(82, 23);
             this.btnagfam.TabIndex = 39;
-            this.btnagfam.Text = "Agregar";
+            this.btnagfam.Text = "Crear";
             this.btnagfam.UseVisualStyleBackColor = false;
             this.btnagfam.Click += new System.EventHandler(this.btnagfam_Click);
             // 
@@ -281,9 +281,9 @@
             this.elimpermfam.BackColor = System.Drawing.Color.RosyBrown;
             this.elimpermfam.FlatAppearance.BorderSize = 0;
             this.elimpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.elimpermfam.Location = new System.Drawing.Point(622, 232);
+            this.elimpermfam.Location = new System.Drawing.Point(627, 232);
             this.elimpermfam.Name = "elimpermfam";
-            this.elimpermfam.Size = new System.Drawing.Size(150, 23);
+            this.elimpermfam.Size = new System.Drawing.Size(152, 23);
             this.elimpermfam.TabIndex = 42;
             this.elimpermfam.Text = "Quitar";
             this.elimpermfam.UseVisualStyleBackColor = false;
@@ -294,9 +294,9 @@
             this.agpermfam.BackColor = System.Drawing.Color.RosyBrown;
             this.agpermfam.FlatAppearance.BorderSize = 0;
             this.agpermfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agpermfam.Location = new System.Drawing.Point(619, 203);
+            this.agpermfam.Location = new System.Drawing.Point(627, 203);
             this.agpermfam.Name = "agpermfam";
-            this.agpermfam.Size = new System.Drawing.Size(169, 23);
+            this.agpermfam.Size = new System.Drawing.Size(152, 23);
             this.agpermfam.TabIndex = 41;
             this.agpermfam.Text = "Agregar";
             this.agpermfam.UseVisualStyleBackColor = false;
@@ -307,9 +307,9 @@
             this.btnelimfamfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnelimfamfam.FlatAppearance.BorderSize = 0;
             this.btnelimfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnelimfamfam.Location = new System.Drawing.Point(713, 356);
+            this.btnelimfamfam.Location = new System.Drawing.Point(627, 367);
             this.btnelimfamfam.Name = "btnelimfamfam";
-            this.btnelimfamfam.Size = new System.Drawing.Size(75, 23);
+            this.btnelimfamfam.Size = new System.Drawing.Size(152, 23);
             this.btnelimfamfam.TabIndex = 44;
             this.btnelimfamfam.Text = "Quitar";
             this.btnelimfamfam.UseVisualStyleBackColor = false;
@@ -320,9 +320,9 @@
             this.btnagfamfam.BackColor = System.Drawing.Color.RosyBrown;
             this.btnagfamfam.FlatAppearance.BorderSize = 0;
             this.btnagfamfam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnagfamfam.Location = new System.Drawing.Point(619, 356);
+            this.btnagfamfam.Location = new System.Drawing.Point(627, 338);
             this.btnagfamfam.Name = "btnagfamfam";
-            this.btnagfamfam.Size = new System.Drawing.Size(75, 23);
+            this.btnagfamfam.Size = new System.Drawing.Size(152, 23);
             this.btnagfamfam.TabIndex = 43;
             this.btnagfamfam.Text = "Agregar";
             this.btnagfamfam.UseVisualStyleBackColor = false;
@@ -372,9 +372,9 @@
             this.button1.BackColor = System.Drawing.Color.RosyBrown;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(245, 116);
+            this.button1.Location = new System.Drawing.Point(16, 414);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 36);
+            this.button1.Size = new System.Drawing.Size(148, 23);
             this.button1.TabIndex = 52;
             this.button1.Text = "Limpiar Campos";
             this.button1.UseVisualStyleBackColor = false;
@@ -383,7 +383,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(242, 73);
+            this.label10.Location = new System.Drawing.Point(242, 101);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(83, 13);
             this.label10.TabIndex = 50;
@@ -392,7 +392,7 @@
             // cmbperf
             // 
             this.cmbperf.FormattingEnabled = true;
-            this.cmbperf.Location = new System.Drawing.Point(245, 89);
+            this.cmbperf.Location = new System.Drawing.Point(245, 117);
             this.cmbperf.Name = "cmbperf";
             this.cmbperf.Size = new System.Drawing.Size(121, 21);
             this.cmbperf.TabIndex = 53;
@@ -401,7 +401,7 @@
             // cmbfam
             // 
             this.cmbfam.FormattingEnabled = true;
-            this.cmbfam.Location = new System.Drawing.Point(443, 89);
+            this.cmbfam.Location = new System.Drawing.Point(423, 115);
             this.cmbfam.Name = "cmbfam";
             this.cmbfam.Size = new System.Drawing.Size(121, 21);
             this.cmbfam.TabIndex = 56;
@@ -410,7 +410,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(440, 73);
+            this.label11.Location = new System.Drawing.Point(420, 99);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(85, 13);
             this.label11.TabIndex = 54;
@@ -421,9 +421,9 @@
             this.button4.BackColor = System.Drawing.Color.RosyBrown;
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(224, 142);
+            this.button4.Location = new System.Drawing.Point(627, 414);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(173, 23);
+            this.button4.Size = new System.Drawing.Size(146, 23);
             this.button4.TabIndex = 57;
             this.button4.Text = "Limpiar Campos";
             this.button4.UseVisualStyleBackColor = false;
@@ -438,7 +438,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(152, 23);
             this.button2.TabIndex = 58;
-            this.button2.Text = "Eliminar";
+            this.button2.Text = "Quitar";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
@@ -447,7 +447,7 @@
             this.btnmodperf.BackColor = System.Drawing.Color.RosyBrown;
             this.btnmodperf.FlatAppearance.BorderSize = 0;
             this.btnmodperf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnmodperf.Location = new System.Drawing.Point(16, 87);
+            this.btnmodperf.Location = new System.Drawing.Point(16, 115);
             this.btnmodperf.Name = "btnmodperf";
             this.btnmodperf.Size = new System.Drawing.Size(92, 23);
             this.btnmodperf.TabIndex = 59;
@@ -460,7 +460,7 @@
             this.button3.BackColor = System.Drawing.Color.RosyBrown;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(584, 89);
+            this.button3.Location = new System.Drawing.Point(564, 115);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(82, 23);
             this.button3.TabIndex = 60;
@@ -473,7 +473,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(791, 450);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btnmodperf);
             this.Controls.Add(this.button2);

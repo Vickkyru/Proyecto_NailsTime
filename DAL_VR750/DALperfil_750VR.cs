@@ -248,7 +248,62 @@ namespace DAL_VR750
 
             return familias;
         }
+        public GrupoPermiso_750VR ObtenerFamiliaPorIdRecursiva(int idFamilia, HashSet<int> visitados)
+        {
+            if (visitados.Contains(idFamilia))
+                return null; // 🔁 si ya pasamos por acá, cortamos la recursión
 
+            visitados.Add(idFamilia);
+
+            GrupoPermiso_750VR familia = null;
+
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+
+                // 1. Buscar familia
+                SqlCommand cmd = new SqlCommand("SELECT CodFamilia_VR750, NombreFamilia_VR750 FROM Familia_VR750 WHERE CodFamilia_VR750 = @id", conn);
+                cmd.Parameters.AddWithValue("@id", idFamilia);
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                    familia = new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1));
+                reader.Close();
+
+                if (familia == null) return null;
+
+                // 2. Permisos simples
+                SqlCommand cmdPerm = new SqlCommand(@"
+            SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
+            FROM PermisoXFamilia_VR750 pf
+            JOIN Permiso_VR750 p ON p.CodPermiso_VR750 = pf.CodPermiso_VR750
+            WHERE pf.CodFamilia_VR750 = @id", conn);
+                cmdPerm.Parameters.AddWithValue("@id", idFamilia);
+                var readerPerm = cmdPerm.ExecuteReader();
+                while (readerPerm.Read())
+                {
+                    familia.Agregar(new PermisoSimple_750VR(readerPerm.GetInt32(0), readerPerm.GetString(1)));
+                }
+                readerPerm.Close();
+
+                // 3. Familias hijas (usamos recursión segura)
+                SqlCommand cmdHijas = new SqlCommand(@"
+            SELECT CodFamilia_VR750, NombreFamilia_VR750
+            FROM Familia_VR750
+            JOIN FamiliaXFamilia_VR750 ON CodFamilia_VR750 = CodFamiliaHija_VR750
+            WHERE CodFamiliaPadre_VR750 = @id", conn);
+                cmdHijas.Parameters.AddWithValue("@id", idFamilia);
+                var readerHijas = cmdHijas.ExecuteReader();
+                while (readerHijas.Read())
+                {
+                    var hija = ObtenerFamiliaPorIdRecursiva(readerHijas.GetInt32(0), visitados);
+                    if (hija != null)
+                        familia.Agregar(hija);
+                }
+                readerHijas.Close();
+            }
+
+            return familia;
+        }
 
         public List<IComponentePermiso_750VR> ObtenerHijosDeFamilia(int idFamilia)
         {
@@ -732,6 +787,61 @@ namespace DAL_VR750
 
             return familias;
         }
+
+        public bool FamiliaAsignadaAAlgunPerfil(int codFamilia)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+
+                string query = @"
+            SELECT 1 
+            FROM PerfilXFamilia_VR750 
+            WHERE CodFamilia_VR750 = @codFamilia";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@codFamilia", codFamilia);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        return reader.HasRows;
+                    }
+                }
+            }
+        }
+        public void ModificarNombreFamilia(int codFamilia, string nuevoNombre)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = "UPDATE Familia_VR750 SET NombreFamilia_VR750 = @nuevoNombre WHERE CodFamilia_VR750 = @cod";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nuevoNombre", nuevoNombre);
+                cmd.Parameters.AddWithValue("@cod", codFamilia);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool ExisteFamiliaConNombre(string nombre, int idExcluir = 0)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                conn.Open();
+                string query = @"
+            SELECT 1 
+            FROM Familia_VR750 
+            WHERE NombreFamilia_VR750 = @nombre AND CodFamilia_VR750 <> @idExcluir";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@idExcluir", idExcluir);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    return reader.HasRows;
+                }
+            }
+        }
+
 
         public void EliminarFamiliaDePerfil(int idPerfil, int idFamilia)
         {
