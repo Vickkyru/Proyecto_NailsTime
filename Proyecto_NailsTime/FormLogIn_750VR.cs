@@ -62,7 +62,7 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-                // 1) Traigo los componentes raíz (familias y simples asignados al perfil)
+              
                 var bllPerfil = new BLLperfil_750VR();
                 var componentesRaiz = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
                 
@@ -70,30 +70,29 @@ namespace Proyecto_NailsTime
 
                 var listaComponentes = new List<IComponentePermiso_750VR>();
 
-                // 2) Expando cada componente con la recursividad de la BLL
+             
                 foreach (var comp in componentesRaiz)
                 {
-                    //MessageBox.Show($"Raíz: {comp.Nombre_750VR}");
+                   
                     bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
                 }
 
-                // 3) Quedo sólo con los permisos simples y tomo sus nombres
+               
                 List<string> nombresPermisos = listaComponentes
                     .OfType<PermisoSimple_750VR>()
-                    .Select(p => p.Nombre_750VR)   // <— nombre nuevo de la propiedad
+                    .Select(p => p.Nombre_750VR)   
                     .Distinct()
                     .ToList();
 
-                // 4) Los guardo en sesión
+                
                 SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
-                // DEBUG: Ver los permisos que se están cargando
+             
                 MessageBox.Show("Permisos cargados:\n" + string.Join("\n", nombresPermisos));
 
 
-                // 🔽 Resto de tu código original
-                string idioma = string.IsNullOrEmpty(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
-                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = idioma;
-                usuario.idioma_750VR = idioma;
+                // Establece el idioma por defecto en la sesión (esto también actualiza el Lenguaje_750VR automáticamente)
+                SessionManager_750VR.ObtenerInstancia.IdiomaActual = "Español";
+              
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 //formPrincipal.Actualizar();

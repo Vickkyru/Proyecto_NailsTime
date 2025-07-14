@@ -117,7 +117,7 @@ namespace Proyecto_NailsTime
            
 
             // Agrego opción "--Seleccione--"
-            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false, "Español");
+            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false);
             manicuristas.Insert(0, vacio);
 
             cmbmanic.DataSource = manicuristas;

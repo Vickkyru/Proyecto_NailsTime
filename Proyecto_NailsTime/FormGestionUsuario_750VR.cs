@@ -343,8 +343,8 @@ namespace Proyecto_NailsTime
                     salt,
                     rol,
                     true,
-                    false,
-                    idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
+                    false
+                  
                     
                 );
 

@@ -32,45 +32,7 @@ namespace DAL_VR750
             return lista;
         }
 
-        public List<IComponentePermiso_750VR> ObtenerTodosLosPermisos()
-        {
-            var lista = new List<IComponentePermiso_750VR>();
-
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-
-                /*  
-                 *  Traemos TODO de Permiso_VR750 y vemos si tiene
-                 *  coincidencia en Familia_VR750 (IsFamilia = 1 cuando existe).
-                 */
-                string query = @"
-            SELECT  p.CodPermiso_VR750,
-                    p.NombrePermiso_VR750,
-                    CASE WHEN f.CodFamilia_VR750 IS NULL THEN 0 ELSE 1 END AS EsFamilia
-            FROM    Permiso_VR750 p
-            LEFT JOIN Familia_VR750 f
-                   ON  f.CodFamilia_VR750 = p.CodPermiso_VR750";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        int cod = reader.GetInt32(0);
-                        string nombre = reader.GetString(1);
-                        bool esFamilia = reader.GetInt32(2) == 1;
-
-                        if (esFamilia)
-                            lista.Add(new GrupoPermiso_750VR(cod, nombre));
-                        else
-                            lista.Add(new PermisoSimple_750VR(cod, nombre));
-                    }
-                }
-            }
-
-            return lista;
-        }
+      
         public void ActualizarNombrePerfil(int codPerfil, string nuevoNombre)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
@@ -147,63 +109,9 @@ namespace DAL_VR750
             }
         }
 
-        public void AsignarFamilia(int idPerfil, int idFamilia)
-        {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(@"
-                    IF NOT EXISTS (
-                        SELECT 1 FROM PerfilXFamilia_VR750
-                        WHERE CodPerfil_VR750 = @idPerfil AND CodFamilia_VR750 = @idFamilia
-                    )
-                    BEGIN
-                        INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
-                        VALUES (@idPerfil, @idFamilia)
-                    END", conn);
-                cmd.Parameters.AddWithValue("@idPerfil", idPerfil);
-                cmd.Parameters.AddWithValue("@idFamilia", idFamilia);
-                cmd.ExecuteNonQuery();
-            }
-        }
+     
 
-        public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
-        {
-            var lista = new List<IComponentePermiso_750VR>();
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-
-                SqlCommand cmd1 = new SqlCommand(@"
-                    SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
-                    FROM PerfilXPermiso_VR750 pxp
-                    JOIN Permiso_VR750 p ON pxp.CodPermiso_VR750 = p.CodPermiso_VR750
-                    WHERE pxp.CodPerfil_VR750 = @id", conn);
-                cmd1.Parameters.AddWithValue("@id", idPerfil);
-                using (SqlDataReader reader = cmd1.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        lista.Add(new PermisoSimple_750VR(reader.GetInt32(0), reader.GetString(1)));
-                    }
-                }
-
-                SqlCommand cmd2 = new SqlCommand(@"
-                    SELECT f.CodFamilia_VR750, f.NombreFamilia_VR750
-                    FROM PerfilXFamilia_VR750 pf
-                    JOIN Familia_VR750 f ON pf.CodFamilia_VR750 = f.CodFamilia_VR750
-                    WHERE pf.CodPerfil_VR750 = @id", conn);
-                cmd2.Parameters.AddWithValue("@id", idPerfil);
-                using (SqlDataReader reader = cmd2.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        lista.Add(new GrupoPermiso_750VR(reader.GetInt32(0), reader.GetString(1)));
-                    }
-                }
-            }
-            return lista;
-        }
+      
 
         public List<PermisoSimple_750VR> ObtenerPermisosSimples()
         {
@@ -355,17 +263,7 @@ namespace DAL_VR750
             }
         }
 
-        public void QuitarFamilia(int idPerfil, int idFamilia)
-        {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM PerfilXFamilia_VR750 WHERE CodPerfil_VR750 = @p AND CodFamilia_VR750 = @q", conn);
-                cmd.Parameters.AddWithValue("@p", idPerfil);
-                cmd.Parameters.AddWithValue("@q", idFamilia);
-                cmd.ExecuteNonQuery();
-            }
-        }
+
 
         public void InsertarFamilia(string nombre)
         {
@@ -409,17 +307,20 @@ namespace DAL_VR750
             }
         }
 
-        public void QuitarPermisoDeFamilia(int idFamilia, int idPermiso)
+        public bool QuitarPermisoDeFamilia(int idFamilia, int idPermiso)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM PermisoXFamilia_VR750 WHERE CodFamilia_VR750 = @f AND CodPermiso_VR750 = @p", conn);
-                cmd.Parameters.AddWithValue("@f", idFamilia);
-                cmd.Parameters.AddWithValue("@p", idPermiso);
-                cmd.ExecuteNonQuery();
+                string query = "DELETE FROM PermisoXFamilia_VR750 WHERE CodFamilia_VR750 = @idFamilia AND CodPermiso_VR750 = @idPermiso";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idFamilia", idFamilia);
+                cmd.Parameters.AddWithValue("@idPermiso", idPermiso);
+
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
+
 
         public void AsignarFamiliaAFamilia(int idPadre, int idHija)
         {
@@ -443,18 +344,24 @@ namespace DAL_VR750
                 cmd.ExecuteNonQuery();
             }
         }
-
-        public void QuitarFamiliaDeFamilia(int idPadre, int idHija)
+        public bool EliminarRelacionFamiliaAFamilia(int idPadre, int idHija)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM FamiliaXFamilia_VR750 WHERE CodFamiliaPadre_VR750 = @padre AND CodFamiliaHija_VR750 = @hija", conn);
+                string query = @"DELETE FROM FamiliaXFamilia_VR750 
+                         WHERE CodFamiliaPadre_VR750 = @padre 
+                           AND CodFamiliaHija_VR750 = @hija";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@padre", idPadre);
                 cmd.Parameters.AddWithValue("@hija", idHija);
-                cmd.ExecuteNonQuery();
+
+                int filasAfectadas = cmd.ExecuteNonQuery();
+                return filasAfectadas > 0;
             }
         }
+
 
         public GrupoPermiso_750VR ObtenerFamiliaPorId(int idFamilia)
         {

@@ -30,10 +30,7 @@ namespace BLL_VR750
             var lista = leerEntidades_750VR();
             return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
         }
-        public void ActualizarIdiomaUsuario(int dni, string idioma)
-        {
-            new DALusuario_750VR().ActualizarIdiomaUsuario(dni, idioma);
-        }
+    
 
         public void CrearUsuario_750VR(BEusuario_750VR usuario)
         {

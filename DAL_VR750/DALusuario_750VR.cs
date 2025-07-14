@@ -26,17 +26,7 @@ namespace DAL_VR750
             var lista = leerEntidades_750VR();
             return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
         }
-        public void ActualizarIdiomaUsuario(int dni, string idioma)
-        {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Usuario_VR750 SET Idioma_VR750 = @idioma WHERE DNI_VR750 = @dni", conn);
-                cmd.Parameters.AddWithValue("@idioma", idioma);
-                cmd.Parameters.AddWithValue("@dni", dni);
-                cmd.ExecuteNonQuery();
-            }
-        }
+      
 
         public void CrearUsuario_750VR(BEusuario_750VR usuario) //alta user
         {
@@ -44,8 +34,8 @@ namespace DAL_VR750
             {
                 conn.Open();
                 string query = @"INSERT INTO Usuario_VR750 
-        (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750) 
-        VALUES (@DNI, @Nombre, @Apellido, @Email, @Usuario, @Contra, @Salt, @Rol, @Activo, @Bloqueado, @idioma )";
+        (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) 
+        VALUES (@DNI, @Nombre, @Apellido, @Email, @Usuario, @Contra, @Salt, @Rol, @Activo, @Bloqueado)";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
@@ -58,7 +48,7 @@ namespace DAL_VR750
                 cmd.Parameters.AddWithValue("@Rol", usuario.rol_750VR);
                 cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
                 cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado_750VR);
-                cmd.Parameters.AddWithValue("@idioma", usuario.idioma_750VR);
+              
 
                 cmd.ExecuteNonQuery();
             }
@@ -156,9 +146,8 @@ namespace DAL_VR750
      reader["Salt_VR750"].ToString(),
      reader["Rol_VR750"].ToString(),
      Convert.ToBoolean(reader["Activo_VR750"]),
-     Convert.ToBoolean(reader["Bloqueado_VR750"]),
-     reader["Idioma_VR750"].ToString()
-     //Convert.ToInt32(reader["CodPerfil_VR750"])
+     Convert.ToBoolean(reader["Bloqueado_VR750"])
+   
 
  );
                         lista.Add(userr);
@@ -190,9 +179,8 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
-                        idiom: reader["Idioma_VR750"].ToString()
-//cod: Convert.ToInt32(reader["CodPerfil_VR750"])
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
+                        
                     );
 
                     lista.Add(usuario);
@@ -238,9 +226,8 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
-                        idiom: reader["Idioma_VR750"].ToString()
-                        //cod: Convert.ToInt32(reader["CodPerfil_VR750"])
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
+                    
 
 
                     );
@@ -293,8 +280,7 @@ namespace DAL_VR750
                             string rol = lector.GetString(7);
                             bool activo = lector.GetBoolean(8);
                             bool bloqueado = lector.GetBoolean(9);
-                            string idioma = lector["Idioma_VR750"].ToString();
-                            //int codPerfil = lector.GetInt32(11);
+                         
 
 
 
@@ -320,7 +306,7 @@ namespace DAL_VR750
                             if (!contraseñaValida)
                                 throw new Exception("Contraseña incorrecta");
 
-                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado, idioma);
+                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado);
                            
                             return usuario;
 

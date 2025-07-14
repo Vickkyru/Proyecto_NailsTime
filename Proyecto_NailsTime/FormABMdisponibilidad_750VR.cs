@@ -205,8 +205,8 @@ namespace Proyecto_NailsTime
                 salt: "",
                 rol: "manicurista",
                 activo: true,
-                bloqueado: false,
-                idiom: Lenguaje_750VR.ObtenerInstancia().IdiomaActual
+                bloqueado: false
+             
                 
             );
 
