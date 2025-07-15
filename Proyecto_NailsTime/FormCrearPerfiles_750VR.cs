@@ -37,8 +37,8 @@ namespace Proyecto_NailsTime
             CargarPermisosSimples();
             CargarFamilias();
 
-            treeView1.Nodes.Clear();
-            treeView2.Nodes.Clear();
+            MostrarTreeViewInicial();
+            MostrarTreeViewInicial2();
         }
 
 
