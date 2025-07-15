@@ -37,10 +37,6 @@ namespace BLL_VR750
         }
 
 
-        //public List<BEdisponibilidad_750VR> leerDisponibilidadesActivas_750VR()
-        //{
-
-        //    return dal.leerDisponibilidadesActivas_750VR();
-        //}
+      
     }
 }

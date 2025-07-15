@@ -21,10 +21,6 @@ namespace BLL_VR750
             return dal.YaExisteInsumoParaReserva(idReserva, idInsumo);
         }
 
-        public bool TieneInsumosRegistrados(int idReserva)
-        {
-            return dal.TieneInsumosCargados(idReserva);
-        }
 
     }
 }

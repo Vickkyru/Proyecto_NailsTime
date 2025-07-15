@@ -81,9 +81,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(81, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(285, 32);
+            this.label1.Size = new System.Drawing.Size(370, 32);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Gestion de perfiles";
+            this.label1.Text = "Gestion de perfiles y familias";
             // 
             // cmbfamperf
             // 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,6 +15,20 @@ namespace SERVICIOS_VR750
         private static SessionManager_750VR Instancia;
         public BEusuario_750VR user { get; private set; }
         public List<string> PermisosDelUsuario { get; set; } = new List<string>();
+        private string _idiomaActual = "Español";
+
+        public string IdiomaActual
+        {
+            get => _idiomaActual;
+            set
+            {
+                _idiomaActual = string.IsNullOrWhiteSpace(value) ? "Español" : value;
+                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = _idiomaActual;
+            }
+        }
+
+        public static SessionManager_750VR ObtenerInstancia
+        => Instancia ?? (Instancia = new SessionManager_750VR());
 
         public void EstablecerPermisos(List<string> permisos)
         {
@@ -21,50 +36,21 @@ namespace SERVICIOS_VR750
         }
 
 
-        private SessionManager_750VR() { }
+        private SessionManager_750VR() {  }
 
-        public static SessionManager_750VR ObtenerInstancia
+       
+
+
+        public bool IniciarSesion_750VR(BEusuario_750VR usuario)
         {
-            get
-            {
-               
-                
-                    if (Instancia == null)
-                        Instancia = new SessionManager_750VR();
-                    return Instancia;
-                
-            }
-        }
+            if (user != null) return false;
 
-        public string IdiomaActual
-        {
-            get => _idiomaActual;
-            set
-            {
-                _idiomaActual = value;
-                // Propaga el cambio al sistema de traducción
-                Lenguaje_750VR.ObtenerInstancia().IdiomaActual = _idiomaActual;
-            }
-        }
-        private string _idiomaActual = "Español";   // valor por defecto
+            user = usuario;
 
+            // ✅ Siempre arranca en Español
+            IdiomaActual = "Español";
 
-
-      
-        public bool IniciarSesion_750VR(BEusuario_750VR userNuevo)
-        {
-            if (this.user != null)
-                return false; // Ya hay sesión iniciada
-
-            this.user = userNuevo;
-
-            MessageBox.Show($"Sesión iniciada para: {user.nombre_750VR} {user.apellido_750VR}");
-     
-
-            // ✅ Setear el idioma por defecto o el que ya tenía en SessionManager
-            if (string.IsNullOrEmpty(SessionManager_750VR.ObtenerInstancia.IdiomaActual))
-                SessionManager_750VR.ObtenerInstancia.IdiomaActual = "Español";
-
+            MessageBox.Show($"Sesión iniciada para: {usuario.nombre_750VR} {usuario.apellido_750VR}");
             return true;
         }
 
@@ -87,6 +73,5 @@ namespace SERVICIOS_VR750
             return user != null;
         }
 
-        public BEusuario_750VR UsuarioActual => user;
     }
 }

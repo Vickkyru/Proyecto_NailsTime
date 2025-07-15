@@ -10,10 +10,7 @@ namespace SERVICIOS_VR750
 {
     public class Encriptador_750VR
     {
-        //private readonly string clave = "1234567890ABCDEF"; // 16 chars ASCII
-        //private readonly string iv = "ABCDEF1234567890";   // 16 chars ASCII
-
-
+     
         public string HashearSHA256_750VR(string texto)
         {
             using (SHA256 sha256 = SHA256.Create())

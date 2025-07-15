@@ -91,8 +91,10 @@ namespace Proyecto_NailsTime
 
 
                 // Establece el idioma por defecto en la sesión (esto también actualiza el Lenguaje_750VR automáticamente)
-                SessionManager_750VR.ObtenerInstancia.IdiomaActual = "Español";
-              
+                Lenguaje_750VR.ObtenerInstancia().IdiomaActual =
+     SessionManager_750VR.ObtenerInstancia.IdiomaActual;
+
+
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 //formPrincipal.Actualizar();

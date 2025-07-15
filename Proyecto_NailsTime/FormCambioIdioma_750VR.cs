@@ -32,7 +32,7 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // ── 1) Validar selección ───────────────────────────────────────────────
+            
             if (comboBox1.SelectedItem == null)
             {
                 MessageBox.Show(
@@ -43,13 +43,11 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            // ── 2) Tomar el idioma elegido ─────────────────────────────────────────
-            string idiomaSeleccionado = comboBox1.SelectedItem.ToString();
 
-            // ── 3) Guardarlo SOLO en la sesión  (esto también actualiza Lenguaje_750VR) ─
-            SessionManager_750VR.ObtenerInstancia.IdiomaActual = idiomaSeleccionado;
+            SessionManager_750VR.ObtenerInstancia.IdiomaActual = comboBox1.SelectedItem.ToString();
 
-            // ── 4) Feedback al usuario ─────────────────────────────────────────────
+
+
             MessageBox.Show(
                 Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma_750VR.MensajeIdiomaActualizado"),
                 "Idioma",
