@@ -37,8 +37,8 @@ namespace Proyecto_NailsTime
             CargarPermisosSimples();
             CargarFamilias();
 
-            MostrarTreeViewInicialPerfil();
-            MostrarTreeViewInicialFamilia();
+            treeView1.Nodes.Clear();
+            treeView2.Nodes.Clear();
         }
 
 
@@ -88,14 +88,10 @@ namespace Proyecto_NailsTime
         private void MostrarTreeViewInicialPerfil()
         {
             treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode("Seleccione un perfil"));
+            
         }
 
-        private void MostrarTreeViewInicialFamilia()
-        {
-            treeView2.Nodes.Clear();
-            treeView2.Nodes.Add(new TreeNode("Seleccione una familia"));
-        }
+     
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
@@ -588,7 +584,7 @@ namespace Proyecto_NailsTime
 
             RefrescarPantalla();
             CargarFamilias();
-            MostrarTreeViewInicialFamilia();
+            treeView2.Nodes.Clear();
             txtfam.Clear();
         }
         
