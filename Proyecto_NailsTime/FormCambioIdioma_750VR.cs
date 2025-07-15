@@ -35,20 +35,20 @@ namespace Proyecto_NailsTime
             if (comboBox1.SelectedItem == null)
             {
                 MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma_750VR.MensajeDebeSeleccionarIdioma"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma.MensajeDebeSeleccionarIdioma"),
                     "Idioma",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
                 return;
             }
 
-            // 🔁 Actualizar idioma en SessionManager y notificar
+            
             string nuevoIdioma = comboBox1.SelectedItem.ToString();
             SessionManager_750VR.IdiomaActual = nuevoIdioma;
             Lenguaje_750VR.ObtenerInstancia().Notificar();  
 
             MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma_750VR.MensajeIdiomaActualizado"),
+                Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma.MensajeIdiomaActualizado"),
                 "Idioma",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);

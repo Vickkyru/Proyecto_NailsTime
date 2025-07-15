@@ -20,7 +20,7 @@ namespace Proyecto_NailsTime
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            ActualizarIdioma();
+            //ActualizarIdioma();
         }
 
         public void ActualizarIdioma()
@@ -67,14 +67,12 @@ namespace Proyecto_NailsTime
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listaFacturas;
 
-            // Cambiar encabezados del DataGridView
-            dataGridView1.Columns["CodFactura_750VR"].HeaderText = "Código";
-            dataGridView1.Columns["CodReserva_750VR"].HeaderText = "Reserva";
-            dataGridView1.Columns["fecha_750VR"].HeaderText = "Fecha";
-            dataGridView1.Columns["horaEmision_750VR"].HeaderText = "Hora";
-            dataGridView1.Columns["total_750VR"].HeaderText = "Total";
-            dataGridView1.Columns["metodoPago_750VR"].HeaderText = "Método";
-            dataGridView1.Columns["titular_750VR"].HeaderText = "Titular";
+            // ✅ Formatear hora (solo HH:mm)
+            dataGridView1.Columns["horaEmision_750VR"].DefaultCellStyle.Format = @"hh\:mm";
+
+            // ✅ Formatear total (con separador adecuado)
+            dataGridView1.Columns["total_750VR"].DefaultCellStyle.Format = "N2"; // Formato numérico con 2 decimales
+
         }
     }
 }

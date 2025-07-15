@@ -36,7 +36,7 @@
   "Login.Mensaje.Bloqueado": "Cuenta bloqueada tras 3 intentos fallidos.",
   "Login.Mensaje.IntentoFallido": "Contrase�a incorrecta. Intentos fallidos: {0}",
   "FormLogIn.checkBox1": "",
-  "Logout.Mensaje.ErrorCerrarSesion": "Error al cerrar sesi�n",
+  "Logout.Mensaje.ErrorCerrarSesion": "Error al cerrar sesion",
 
 
 
@@ -218,6 +218,17 @@
   "FormCobrarServicio_750VR.MensajeExito": "Pago registrado correctamente.",
   "FormCobrarServicio_750VR.MensajeError": "Error al registrar el pago.",
   "FormCobrarServicio_750VR.pendienteCobro": "la reserva quedo pendiente de cobro",
+  "FormCobrarServicio_750VR.label1": "Cobrar",
+  "FormCobrarServicio_750VR.label4": "Metodo de pago",
+  "FormCobrarServicio_750VR.label6": "Numero de tarjeta",
+  "FormCobrarServicio_750VR.label2": "Cuotas",
+  "FormCobrarServicio_750VR.label7": "CVC",
+  "FormCobrarServicio_750VR.label5": "vencimiento",
+  "FormCobrarServicio_750VR.label8": "Nombre titular",
+  "FormCobrarServicio_750VR.label3": "Importe: ",
+  "FormCobrarServicio_750VR.btnrealiz": "Realizar",
+  "FormCobrarServicio_750VR.button3": "Cancelar",
+  "FormCobrarServicio_750VR.button4": "Salir",
 
 
 
@@ -482,6 +493,10 @@
   "FormFactura.Titular": "Titular",
   "FormFactura.MensajeSeleccion": "Seleccioná una factura.",
   "FormFactura.MensajeExito": "Factura generada correctamente.",
+  "FormFactura.TituloPDF": "Factura",
+  "FormFactura.MensajeGracias": "¡Gracias por su compra!",
+
+
 
 
   "FormCrearPerfiles.SeleccionePerfil": "Seleccione un perfil",
@@ -556,6 +571,7 @@
   "FormCrearPerfiles.btnagfamfam": "Agregar",
   "FormCrearPerfiles.btnelimfamfam": "Quitar",
   "FormCrearPerfiles.button13": "Volver",
+  "FormCrearPerfiles.btnagpermperf": "Agregar",
   "FormCrearPerfiles.IngreseNombrePerfil": "Debe ingresar un nombre para el perfil.",
   "FormCrearPerfiles.PerfilYaExiste": "Ya existe un perfil con ese nombre.",
   "FormCrearPerfiles.PerfilAgregadoOk": "Perfil agregado correctamente.",
@@ -607,6 +623,10 @@
   "FormCrearPerfiles.NombrePerfilYaExiste": "Ya existe un perfil con ese nombre.",
   "FormCrearPerfiles.PerfilModificadoOK": "Perfil modificado correctamente.",
   "FormCrearPerfiles.FamiliaModificadaOK": "Familia modificada correctamente."
+
+
+
+
 
 
 

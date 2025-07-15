@@ -448,7 +448,7 @@ namespace DAL_VR750
                 {
                     lista.Add(new PermisoSimple_750VR(
                         reader.GetInt32(0),         // Código permiso
-                        reader.GetString(1)         // Nombre permiso
+                        reader.GetString(1)        
                     ));
                 }
             }
@@ -456,69 +456,10 @@ namespace DAL_VR750
             return lista;
         }
 
-        // Método que devuelve los permisos simples directamente asignados al perfil
-        public List<IComponentePermiso_750VR> ObtenerPermisosSimplesPorPerfil(int codPerfil)
-        {
-            List<IComponentePermiso_750VR> permisos = new List<IComponentePermiso_750VR>();
+        
 
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                string query = @"
-                    SELECT p.CodPermiso_VR750, p.NombrePermiso_VR750
-                    FROM Permiso_VR750 p
-                    INNER JOIN PerfilXPermiso_VR750 pp ON pp.CodPermiso_VR750 = p.CodPermiso_VR750
-                    WHERE pp.CodPerfil_VR750 = @codPerfil";
 
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@codPerfil", codPerfil);
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    int cod = reader.GetInt32(0);
-                    string nombre = reader.GetString(1);
-                    permisos.Add(new PermisoSimple_750VR(cod, nombre));
-                }
-            }
-
-            return permisos;
-        }
-
-        // Método que devuelve las familias asignadas al perfil, con sus hijos (recursivo)
-        public List<IComponentePermiso_750VR> ObtenerFamiliasPorPerfil(int codPerfil)
-        {
-            List<IComponentePermiso_750VR> familias = new List<IComponentePermiso_750VR>();
-
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                conn.Open();
-                string query = @"
-                    SELECT f.CodFamilia_VR750, f.NombreFamilia_VR750
-                    FROM Familia_VR750 f
-                    INNER JOIN PerfilXFamilia_VR750 pf ON pf.CodFamilia_VR750 = f.CodFamilia_VR750
-                    WHERE pf.CodPerfil_VR750 = @codPerfil";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@codPerfil", codPerfil);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    int cod = reader.GetInt32(0);
-                    string nombre = reader.GetString(1);
-
-                    var familia = new GrupoPermiso_750VR(cod, nombre);
-                    CargarHijosFamilia(familia); // carga sus hijos (recursivo)
-
-                    familias.Add(familia);
-                }
-            }
-
-            return familias;
-        }
-
-        // Método recursivo para cargar hijos de una familia (familias o permisos simples)
         private void CargarHijosFamilia(GrupoPermiso_750VR familia)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
@@ -567,7 +508,6 @@ namespace DAL_VR750
                 readerSub.Close();
             }
         }
-
 
 
 

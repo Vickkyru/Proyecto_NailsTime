@@ -71,11 +71,7 @@ namespace DAL_VR750
             }
         }
 
-        public List<BEdisponibilidad_750VR> leerDisponibilidadesActivas_750VR()
-        {
-            var lista = LeerDisponibilidades_750VR();
-            return lista.Where(u => u.activo_750VR).ToList();
-        }
+ 
 
         public List<BEdisponibilidad_750VR> LeerDisponibilidades_750VR()
         {

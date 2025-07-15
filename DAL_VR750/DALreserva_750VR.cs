@@ -216,7 +216,7 @@ u.idioma_VR750 AS idioma,
             u.Salt_VR750 AS SaltManic,
             u.Rol_VR750 AS RolManic,
             u.Activo_VR750 AS ActivoManic,
-            u.Bloqueado_VR750 AS BloqueadoManic
+            u.Bloqueado_VR750 AS BloqueadoManic,
 u.Idioma_VR750 AS Idioma,
            
 

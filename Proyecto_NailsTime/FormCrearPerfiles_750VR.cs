@@ -349,11 +349,17 @@ namespace Proyecto_NailsTime
             
             bllPerfil.AsignarPermiso(perfil.CodPerfil_750VR, permiso.Codigo_750VR);
             MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.PermisoAsignadoOk"));
+            var permisosRaiz = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR);
+            var listaCompleta = new List<IComponentePermiso_750VR>();
 
-            
-            perfil.Permisos_750VR = bllPerfil.ObtenerPermisosDePerfil(perfil.CodPerfil_750VR);
+            foreach (var comp in permisosRaiz)
+            {
+                bllPerfil.ObtenerPermisosRecursivos(comp, listaCompleta);
+            }
+
+            perfil.Permisos_750VR = listaCompleta;
             RefrescarTreeViewPerfil();
-           
+
         }
 
         private bool PermisoYaExisteEnLista(List<IComponentePermiso_750VR> lista, int codPermiso)
@@ -681,7 +687,8 @@ namespace Proyecto_NailsTime
             if (resultado)
             {
 
-                //CargarTreeViewFamilias();      
+                //CargarTreeViewFamilias();
+                MostrarPermisosDeFamilia(familiaSeleccionada);
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.PermisoAgregadoCorrectamente"));
 
             }
@@ -1120,6 +1127,35 @@ namespace Proyecto_NailsTime
         private void cmbfamperf_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        private void RefrescarTreeViewFamilia(GrupoPermiso_750VR familiaRaiz)
+        {
+            if (familiaRaiz == null) return;
+
+            // 1) Traemos la familia actualizada con todos sus hijos/ permisos
+            var familiaActualizada = bllPerfil.ObtenerFamiliaCompletaPorId(familiaRaiz.Codigo_750VR);
+            if (familiaActualizada == null) return;
+
+            // 2) Limpiamos y armamos el árbol
+            treeView2.Nodes.Clear();
+
+            TreeNode nodoRaiz = new TreeNode(familiaActualizada.Nombre_750VR)
+            {
+                Tag = familiaActualizada
+            };
+
+            foreach (var hijo in familiaActualizada.ObtenerHijos())
+            {
+                nodoRaiz.Nodes.Add(CrearNodoPermiso(hijo));   // ya tenés CrearNodoPermiso
+            }
+
+            treeView2.Nodes.Add(nodoRaiz);
+            treeView2.ExpandAll();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Proyecto_NailsTime
                     txtcuot.Enabled = false;
                     txtvenc.Enabled = false;
                     txtcvc.Enabled = false;
-                    textBox1.Enabled = false;
+                    textBox1.Enabled = true;
                     break;
 
                 case "Débito":
@@ -85,7 +85,7 @@ namespace Proyecto_NailsTime
                     txtcuot.Enabled = true;
                     txtvenc.Enabled = true;
                     txtcvc.Enabled = true;
-                    textBox1.Enabled = false;
+                    textBox1.Enabled = true;
                     break;
             }
 

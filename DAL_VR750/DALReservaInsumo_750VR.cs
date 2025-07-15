@@ -34,26 +34,26 @@ namespace DAL_VR750
                 }
             }
         }
-        public bool TieneInsumosCargados(int idReserva)
-        {
-            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
-            {
-                string query = @"SELECT COUNT(*) FROM ReservaInsumo_VR750 WHERE IdReserva_VR750 = @reserva";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@reserva", idReserva);
+        //public bool TieneInsumosCargados(int idReserva)
+        //{
+        //    using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+        //    {
+        //        string query = @"SELECT COUNT(*) FROM ReservaInsumo_VR750 WHERE IdReserva_VR750 = @reserva";
+        //        SqlCommand cmd = new SqlCommand(query, conn);
+        //        cmd.Parameters.AddWithValue("@reserva", idReserva);
 
-                try
-                {
-                    conn.Open();
-                    int cantidad = (int)cmd.ExecuteScalar();
-                    return cantidad > 0;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error al verificar insumos cargados: " + ex.Message);
-                }
-            }
-        }
+        //        try
+        //        {
+        //            conn.Open();
+        //            int cantidad = (int)cmd.ExecuteScalar();
+        //            return cantidad > 0;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new Exception("Error al verificar insumos cargados: " + ex.Message);
+        //        }
+        //    }
+        //}
 
         public bool YaExisteInsumoParaReserva(int idReserva, int idInsumo)
         {
