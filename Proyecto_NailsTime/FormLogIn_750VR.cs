@@ -53,7 +53,15 @@ namespace Proyecto_NailsTime
             try
             {
                 BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
-
+                // Setear idioma del usuario
+                if (!string.IsNullOrWhiteSpace(usuario.idioma_750VR))
+                {
+                    SessionManager_750VR.IdiomaActual = usuario.idioma_750VR;
+                }
+                else
+                {
+                    SessionManager_750VR.IdiomaActual = "Español";
+                }
 
                 bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
                 if (!sesionOK)
@@ -87,14 +95,7 @@ namespace Proyecto_NailsTime
                 
                 SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
              
-                MessageBox.Show("Permisos cargados:\n" + string.Join("\n", nombresPermisos));
-
-
-                // Establece el idioma por defecto en la sesión (esto también actualiza el Lenguaje_750VR automáticamente)
-                Lenguaje_750VR.ObtenerInstancia().IdiomaActual =
-     SessionManager_750VR.ObtenerInstancia.IdiomaActual;
-
-
+               
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
                 //formPrincipal.Actualizar();

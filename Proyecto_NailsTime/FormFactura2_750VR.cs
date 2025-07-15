@@ -49,7 +49,7 @@ namespace Proyecto_NailsTime
             int codFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["CodFactura_750VR"].Value);
             BEfactura_750VR factura = listaFacturas.Find(f => f.CodFactura_750VR == codFactura);
 
-            // Generar el PDF
+           
             Archivo_750VR.GenerarFacturaPDF(factura);
             MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MensajeExito"));
         }
@@ -57,7 +57,7 @@ namespace Proyecto_NailsTime
         private void FormFactura2_750VR_Load(object sender, EventArgs e)
         {
             CargarFacturas();
-            ActualizarIdioma(); // Agregado
+            ActualizarIdioma(); 
         }
 
         private void CargarFacturas()

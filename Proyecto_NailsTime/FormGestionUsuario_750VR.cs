@@ -315,8 +315,6 @@ namespace Proyecto_NailsTime
 
                 string user = $"{nombre}{apellido}";
 
-               
-
                 BLLusuario_750VR bll = new BLLusuario_750VR();
 
                 if (bll.ExisteUsuarioConLoginODNI(user, dni))
@@ -325,13 +323,13 @@ namespace Proyecto_NailsTime
                     return;
                 }
 
-
                 Encriptador_750VR encriptador = new Encriptador_750VR();
                 string contraseña = $"{dni}{nombre}";
                 string salt = encriptador.GenerarSalt_750VR();
                 string contraseñaHasheada = encriptador.HashearConSalt_750VR(contraseña, salt);
 
-             
+                // ✅ Idioma por defecto
+                string idiom = "Español";
 
                 BEusuario_750VR nuevo = new BEusuario_750VR(
                     dni,
@@ -343,9 +341,8 @@ namespace Proyecto_NailsTime
                     salt,
                     rol,
                     true,
-                    false
-                  
-                    
+                    false,
+                    idiom
                 );
 
                 bll.CrearUsuario_750VR(nuevo);
@@ -370,7 +367,6 @@ namespace Proyecto_NailsTime
                 );
             }
         }
-
 
         private bool ValidarCampos()
         {

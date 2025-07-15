@@ -49,20 +49,21 @@ namespace DAL_VR750
         }
 
 
-        public bool ExisteUsuarioConPerfil(int codPerfil)
+        public bool ExisteUsuarioConRol(string rol)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM Usuario_VR750 WHERE CodPerfil_VR750 = @CodPerfil";
+                string query = "SELECT COUNT(*) FROM Usuario_VR750 WHERE Rol_VR750 = @Rol";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@CodPerfil", codPerfil);
+                    cmd.Parameters.AddWithValue("@Rol", rol);
                     int cantidad = (int)cmd.ExecuteScalar();
                     return cantidad > 0;
                 }
             }
         }
+
 
 
         public int InsertarPerfilYDevolverID(BEperfil_750VR perfil)

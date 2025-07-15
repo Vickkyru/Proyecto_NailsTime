@@ -117,7 +117,7 @@ namespace Proyecto_NailsTime
            
 
             // Agrego opción "--Seleccione--"
-            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false);
+            var vacio = new BEusuario_750VR(0, Lenguaje_750VR.ObtenerEtiqueta("ComboBox.Seleccione"), "", "", "", "", "", "manicurista", true, false, "Español");
             manicuristas.Insert(0, vacio);
 
             cmbmanic.DataSource = manicuristas;
@@ -463,69 +463,7 @@ namespace Proyecto_NailsTime
             CargarDisponibilidades();
         }
 
-        //public void CargarReservasDispo()
-        //{
-
-
-        //    BLLReserva_750VR bll = new BLLReserva_750VR();
-        //    var lista = bll.leerEntidades_750VR(); // debe devolver List<BEReserva_750VR> con cliente, manic, serv
-
-        //    DataTable tabla = new DataTable();
-        //    tabla.Columns.Add("ID", typeof(int));
-        //    tabla.Columns.Add("Cliente", typeof(string));
-        //    tabla.Columns.Add("Manicurista", typeof(string));
-        //    tabla.Columns.Add("Servicio", typeof(string));
-        //    tabla.Columns.Add("Fecha", typeof(DateTime));
-        //    tabla.Columns.Add("Hora Inicio", typeof(string));
-        //    tabla.Columns.Add("Hora Fin", typeof(string));
-        //    tabla.Columns.Add("Precio", typeof(decimal));
-        //    tabla.Columns.Add("Cobrado", typeof(string));
-
-        //    foreach (var r in lista)
-        //    {
-        //        string cliente = r.cliente != null ? $"{r.cliente.nombre_750VR} {r.cliente.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
-        //        string manic = r.manic != null ? $"{r.manic.nombre_750VR} {r.manic.apellido_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Desconocido");
-        //        string servicio = r.serv != null ? $"{r.serv.tecnica_750VR}" : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_SinServicio");
-
-        //        string cobrado = r.Cobrado_750VR
-        //            ? Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Si")
-        //            : Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No");
-
-        //        tabla.Rows.Add(
-        //            r.CodReserva_750VR,
-        //            cliente,
-        //            manic,
-        //            servicio,
-        //            r.Fecha_750VR.Date,
-        //            r.HoraInicio_750VR.ToString(@"hh\:mm"),
-        //            r.HoraFin_750VR.ToString(@"hh\:mm"),
-        //            r.Precio_750VR,
-        //            cobrado
-        //                );
-        //    }
-
-        //    dataGridView2.DataSource = tabla;
-        //    dataGridView2.Columns["ID"].Visible = false;
-        //    // 🔤 Traducción de encabezados
-        //    dataGridView2.Columns["Cliente"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cliente");
-        //    dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Manicurista");
-        //    dataGridView2.Columns["Servicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Servicio");
-        //    dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Fecha");
-        //    dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraInicio");
-        //    dataGridView2.Columns["Hora Fin"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_HoraFin");
-        //    dataGridView2.Columns["Precio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Precio");
-        //    dataGridView2.Columns["Cobrado"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_Cobrado");
-
-        //    foreach (DataGridViewRow fila in dataGridView2.Rows)
-        //    {
-        //        if (fila.Cells["Cobrado"].Value?.ToString() == Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid2_No"))
-        //        {
-        //            fila.DefaultCellStyle.BackColor = Color.LightCoral;
-        //            fila.ReadOnly = true; // evita modificación directa
-        //        }
-        //    }
-        //}
-
+      
         private void cmbmanic_SelectedIndexChanged(object sender, EventArgs e)
         {
 

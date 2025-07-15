@@ -265,7 +265,7 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            if (bllPerfil.PerfilTieneUsuariosAsociados(perfilSeleccionado.CodPerfil_750VR))
+            if (bllPerfil.PerfilTieneUsuariosAsociados(perfilSeleccionado.NombrePerfil_750VR))
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormCrearPerfiles.PerfilConUsuarios"));
 

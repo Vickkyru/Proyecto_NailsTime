@@ -35,7 +35,8 @@ namespace DAL_VR750
                u.Rol_VR750 AS RolManic,
                u.Activo_VR750 AS ActivoManic,
                u.Bloqueado_VR750 AS BloqueadoManic,
-               u.Idioma_VR750 AS IdiomaManic,
+u.idioma_VR750 AS idioma,
+              
 
                s.Nombre_VR750 AS NombreServicio, 
                s.Tecnica_VR750 AS TecnicaServicio, 
@@ -75,9 +76,10 @@ namespace DAL_VR750
                             salt: reader["SaltManic"].ToString(),
                             rol: reader["RolManic"].ToString(),
                             activo: Convert.ToBoolean(reader["ActivoManic"]),
-                            bloqueado: Convert.ToBoolean(reader["BloqueadoManic"])
-                            
-                        
+                            bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
+                            idiom: reader["Idioma"].ToString()
+
+
                         );
 
                         var serv = new BEServicio_750VR(
@@ -214,8 +216,9 @@ namespace DAL_VR750
             u.Salt_VR750 AS SaltManic,
             u.Rol_VR750 AS RolManic,
             u.Activo_VR750 AS ActivoManic,
-            u.Bloqueado_VR750 AS BloqueadoManic,
-            u.Idioma_VR750 AS IdiomaManic,
+            u.Bloqueado_VR750 AS BloqueadoManic
+u.Idioma_VR750 AS Idioma,
+           
 
             s.Nombre_VR750 AS NombreServicio, 
             s.Tecnica_VR750 AS TecnicaServicio, 
@@ -254,8 +257,10 @@ namespace DAL_VR750
                         salt: reader["SaltManic"].ToString(),
                         rol: reader["RolManic"].ToString(),
                         activo: Convert.ToBoolean(reader["ActivoManic"]),
-                        bloqueado: Convert.ToBoolean(reader["BloqueadoManic"])
-                       
+                        bloqueado: Convert.ToBoolean(reader["BloqueadoManic"]),
+                        idiom: reader["Idioma"].ToString()
+
+
                     );
 
                     var serv = new BEServicio_750VR(

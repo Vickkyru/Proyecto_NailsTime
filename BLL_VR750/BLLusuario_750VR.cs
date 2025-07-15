@@ -95,5 +95,11 @@ namespace BLL_VR750
         {
             dal.BloquearUsuario_750VR(login);
         }
+
+        public void ModificarIdiomaUsuario_750VR(string login, string idioma)
+        {
+           
+            dal.ActualizarIdiomaUsuario_750VR(login, idioma);
+        }
     }
 }

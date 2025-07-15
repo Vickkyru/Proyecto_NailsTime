@@ -32,7 +32,6 @@ namespace Proyecto_NailsTime
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
             if (comboBox1.SelectedItem == null)
             {
                 MessageBox.Show(
@@ -43,10 +42,10 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-
-            SessionManager_750VR.ObtenerInstancia.IdiomaActual = comboBox1.SelectedItem.ToString();
-
-
+            // 🔁 Actualizar idioma en SessionManager y notificar
+            string nuevoIdioma = comboBox1.SelectedItem.ToString();
+            SessionManager_750VR.IdiomaActual = nuevoIdioma;
+            Lenguaje_750VR.ObtenerInstancia().Notificar();  
 
             MessageBox.Show(
                 Lenguaje_750VR.ObtenerEtiqueta("FormCambioIdioma_750VR.MensajeIdiomaActualizado"),

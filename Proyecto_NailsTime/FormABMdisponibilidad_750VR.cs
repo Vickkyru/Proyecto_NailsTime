@@ -205,9 +205,10 @@ namespace Proyecto_NailsTime
                 salt: "",
                 rol: "manicurista",
                 activo: true,
-                bloqueado: false
-             
-                
+                bloqueado: false,
+                  idiom: "Español"
+
+
             );
 
             manicuristas.Insert(0, vacio);
@@ -448,9 +449,7 @@ namespace Proyecto_NailsTime
             btnapli.Enabled = false;
             btncance.Enabled = false;
             btnañadir.Enabled = btnmod.Enabled = btnelim.Enabled = true;
-            //txtinicio.Enabled = txtfin.Enabled = cmbmanic.Enabled = false;
-            //dateTimePicker1.Enabled= false;
-            //txtdnimanic.Enabled= false;
+          
             dataGridView1.Enabled = true;
         }
 

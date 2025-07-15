@@ -146,8 +146,10 @@ namespace DAL_VR750
      reader["Salt_VR750"].ToString(),
      reader["Rol_VR750"].ToString(),
      Convert.ToBoolean(reader["Activo_VR750"]),
-     Convert.ToBoolean(reader["Bloqueado_VR750"])
-   
+     Convert.ToBoolean(reader["Bloqueado_VR750"]),
+     reader["Idioma_VR750"].ToString()
+
+
 
  );
                         lista.Add(userr);
@@ -179,8 +181,10 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
-                        
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
+                        idiom: reader["Idioma_VR750"].ToString()
+
+
                     );
 
                     lista.Add(usuario);
@@ -226,8 +230,9 @@ namespace DAL_VR750
                         salt: reader["Salt_VR750"].ToString(),
                         rol: reader["Rol_VR750"].ToString(),
                         activo: Convert.ToBoolean(reader["Activo_VR750"]),
-                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"])
-                    
+                        bloqueado: Convert.ToBoolean(reader["Bloqueado_VR750"]),
+                        idiom: reader["Idioma_VR750"].ToString()
+
 
 
                     );
@@ -280,11 +285,7 @@ namespace DAL_VR750
                             string rol = lector.GetString(7);
                             bool activo = lector.GetBoolean(8);
                             bool bloqueado = lector.GetBoolean(9);
-                         
-
-
-
-
+                            string idioma = lector["Idioma_VR750"].ToString(); // <-- Agregado
 
                             if (!activo) throw new Exception("El usuario está inactivo.");
                             if (bloqueado) throw new Exception("El usuario está bloqueado.");
@@ -293,12 +294,10 @@ namespace DAL_VR750
 
                             if (string.IsNullOrEmpty(saltAlmacenado))
                             {
-                                // Usuario sin hash (prueba)
                                 contraseñaValida = contraseñaAlmacenada == contraseña;
                             }
                             else
                             {
-                                // Usuario real con hash
                                 string hashCalculado = hasher.HashearConSalt_750VR(contraseña, saltAlmacenado);
                                 contraseñaValida = hashCalculado == contraseñaAlmacenada;
                             }
@@ -306,10 +305,8 @@ namespace DAL_VR750
                             if (!contraseñaValida)
                                 throw new Exception("Contraseña incorrecta");
 
-                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado);
-                           
+                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado, idioma);
                             return usuario;
-
                         }
                     }
                 }
@@ -321,6 +318,23 @@ namespace DAL_VR750
                 db.Desconectar_750VR();
             }
         }
+
+
+        public void ActualizarIdiomaUsuario_750VR(string login, string idioma)
+        {
+            using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            {
+                string query = "UPDATE Usuario_VR750 SET Idioma_VR750 = @idioma WHERE Usuario_VR750 = @login";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idioma", idioma);
+                cmd.Parameters.AddWithValue("@login", login);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
 
         public void CambiarContraseña_750VR(BEusuario_750VR usuario, string NuevaContraseña)
         {

@@ -22,9 +22,9 @@ namespace BLL_VR750
         }
 
      
-        public bool PerfilTieneUsuariosAsociados(int codPerfil)
+        public bool PerfilTieneUsuariosAsociados(string rol)
         {
-            return dal.ExisteUsuarioConPerfil(codPerfil);
+            return dal.ExisteUsuarioConRol(rol);
         }
 
         public void ModificarNombrePerfil(int codPerfil, string nuevoNombre)
