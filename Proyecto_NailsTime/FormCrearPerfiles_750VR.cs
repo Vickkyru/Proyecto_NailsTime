@@ -85,11 +85,7 @@ namespace Proyecto_NailsTime
             cmbpermfam.ValueMember = "Codigo_750VR";
             cmbpermfam.SelectedIndex = -1;
         }
-        private void MostrarTreeViewInicialPerfil()
-        {
-            treeView1.Nodes.Clear();
-            
-        }
+ 
 
      
         public void ActualizarIdioma()

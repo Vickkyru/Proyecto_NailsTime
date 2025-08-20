@@ -99,6 +99,12 @@
     <Compile Include="FormActualizarAgenda_750VR.Designer.cs">
       <DependentUpon>FormActualizarAgenda_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBitacora_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBitacora_750VR.Designer.cs">
+      <DependentUpon>FormBitacora_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCambioIdioma_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormActualizarAgenda_750VR.resx">
       <DependentUpon>FormActualizarAgenda_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBitacora_750VR.resx">
+      <DependentUpon>FormBitacora_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCambiarClave_750VR.resx">
       <DependentUpon>FormCambiarClave_750VR.cs</DependentUpon>
