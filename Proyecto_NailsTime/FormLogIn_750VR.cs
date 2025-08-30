@@ -52,61 +52,30 @@ namespace Proyecto_NailsTime
 
             try
             {
-                BEusuario_750VR usuario = bll.recuperarUsuario_750VR(login, password);
-                // Setear idioma del usuario
-                if (!string.IsNullOrWhiteSpace(usuario.idioma_750VR))
-                {
-                    SessionManager_750VR.IdiomaActual = usuario.idioma_750VR;
-                }
-                else
-                {
-                    SessionManager_750VR.IdiomaActual = "Español";
-                }
+                // ⬇️ La BLL hace: validar + setear idioma + iniciar sesión + loguear bitácora
+                BEusuario_750VR usuario = bll.AutenticarEIniciarSesion_750VR(login, password);
 
-                bool sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
-                if (!sesionOK)
-                {
-                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.SesionActiva"));
-                    return;
-                }
-
-              
+                // ---- lo demás como lo tenías ----
                 var bllPerfil = new BLLperfil_750VR();
                 var componentesRaiz = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
-                
-
 
                 var listaComponentes = new List<IComponentePermiso_750VR>();
-
-             
                 foreach (var comp in componentesRaiz)
-                {
-                   
                     bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
-                }
 
-               
                 List<string> nombresPermisos = listaComponentes
                     .OfType<PermisoSimple_750VR>()
-                    .Select(p => p.Nombre_750VR)   
+                    .Select(p => p.Nombre_750VR)
                     .Distinct()
                     .ToList();
 
-                
                 SessionManager_750VR.ObtenerInstancia.EstablecerPermisos(nombresPermisos);
-             
-               
 
                 formPrincipal.MostrarDatosUsuarioLogueado();
-                //formPrincipal.Actualizar();
-                //MessageBox.Show(string.Join(",", nombresPermisos));
-
                 formPrincipal.AplicarPermisos();
 
                 intentosFallidosPorUsuario.Remove(login);
-
                 this.Close();
-
             }
             catch (Exception ex)
             {
@@ -121,15 +90,14 @@ namespace Proyecto_NailsTime
 
                     if (intentosFallidosPorUsuario[login] >= 3)
                     {
-                        bll.BloquearUsuario_750VR(login);
+                        bll.BloquearUsuario_750VR(login); // tu método actual
                         MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.Bloqueado"));
                     }
                     else
                     {
                         string texto = string.Format(
-                     Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.IntentoFallido"),
-                     intentosFallidosPorUsuario[login]);
-
+                            Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.IntentoFallido"),
+                            intentosFallidosPorUsuario[login]);
                         MessageBox.Show(texto);
                     }
                 }

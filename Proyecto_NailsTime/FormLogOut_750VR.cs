@@ -32,23 +32,22 @@ namespace Proyecto_NailsTime
             {
                 try
                 {
-                    var idiomaFinal = SessionManager_750VR.IdiomaActual; 
-                    
+                    var idiomaFinal = SessionManager_750VR.IdiomaActual;
                     string login = SessionManager_750VR.ObtenerInstancia.user.user_750VR;
 
-                    // Guardar idioma en BD usando BLL
+                    // Guardar idioma en BD
                     var bllUsuario = new BLLusuario_750VR();
                     bllUsuario.ModificarIdiomaUsuario_750VR(login, idiomaFinal);
+
+                    // 👉 ahora hacemos logout con bitácora
+                    bllUsuario.Logout_750VR();
+
+                    Application.Restart(); // opcional
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al guardar idioma: " + ex.Message);
+                    MessageBox.Show("Error al cerrar sesión: " + ex.Message);
                 }
-
-                // Luego cerramos la sesión normalmente
-                SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
-                SessionManager_750VR.IdiomaActual = "Español";
-                Application.Restart(); // si querés reiniciar
             }
             else
             {

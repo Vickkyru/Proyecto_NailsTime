@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDeDatos_750VR.cs" />
+    <Compile Include="DALbitacora_750VR.cs" />
     <Compile Include="DALdisponibilidad_750VR.cs" />
     <Compile Include="DALcliente_750VR.cs" />
     <Compile Include="DALfactura_750VR.cs" />

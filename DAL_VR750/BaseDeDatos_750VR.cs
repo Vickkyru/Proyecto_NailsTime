@@ -329,6 +329,28 @@ BEGIN
         FOREIGN KEY (CodFamiliaHija_VR750) REFERENCES Familia_VR750(CodFamilia_VR750)
     );
 END;
+
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_NAME = 'EVENTOS_VR750'
+)
+BEGIN
+    CREATE TABLE EVENTOS_VR750 (
+        Id_Evento     INT IDENTITY(1,1) PRIMARY KEY,     -- PK
+        Login         VARCHAR(150) NOT NULL,              -- FK -> Usuario_VR750(Usuario_VR750)
+        Fecha         DATE        NOT NULL DEFAULT CAST(GETDATE() AS DATE),
+        Hora          TIME(0)     NOT NULL DEFAULT CAST(GETDATE() AS TIME(0)),
+        Modulo        NVARCHAR(120) NOT NULL,             -- tipificado por combo en la GUI
+        Evento        NVARCHAR(120) NOT NULL,             -- tipificado por combo en la GUI
+        Criticidad    TINYINT     NOT NULL,               -- 1 (más importante) .. 5 (menos)
+        CONSTRAINT FK_EVENTOS_USUARIO_LOGIN
+            FOREIGN KEY (Login) REFERENCES Usuario_VR750(Usuario_VR750)
+    );
+
+    -- Validación de rango de criticidad
+    ALTER TABLE EVENTOS_VR750
+      ADD CONSTRAINT CK_EVENTOS_Criticidad_Rango CHECK (Criticidad BETWEEN 1 AND 5);
+END;
 ";
                 using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
                 {

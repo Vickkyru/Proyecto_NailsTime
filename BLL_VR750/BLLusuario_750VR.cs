@@ -9,8 +9,6 @@ using SERVICIOS_VR750;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 
-
-
 //hacer mejor con la interfaz
 namespace BLL_VR750
 {
@@ -22,7 +20,7 @@ namespace BLL_VR750
         {
           dal = new DALusuario_750VR();
         }
-
+        private readonly BLLbitacora_750VR _log = new BLLbitacora_750VR();
         Encriptador_750VR encriptador = new Encriptador_750VR();
 
         public List<BEusuario_750VR> ObtenerManicuristasActivos_750VR()
@@ -30,30 +28,73 @@ namespace BLL_VR750
             var lista = leerEntidades_750VR();
             return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
         }
-    
+
+        public BEusuario_750VR AutenticarEIniciarSesion_750VR(string login, string password)
+        {
+            // 1) valida credenciales (lanza excepción si falla)
+            var usuario = dal.recuperarUsuario_750VR(login, password);
+
+            // 2) setea idioma en sesión
+            SessionManager_750VR.IdiomaActual = string.IsNullOrWhiteSpace(usuario.idioma_750VR)
+                ? "Español"
+                : usuario.idioma_750VR;
+
+            // 3) inicia sesión en SessionManager
+            var sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
+            if (!sesionOK) throw new Exception("Ya hay una sesión activa.");
+
+            // 4) registra en bitácora (desde BLL, no el form)
+            _log.LoginOK();
+
+            return usuario;
+        }
+
+        public void Logout_750VR()
+        {
+            // 1) loguear en bitácora antes de cerrar
+            _log.Logout();
+
+            // 2) cerrar sesión en SessionManager
+            SessionManager_750VR.ObtenerInstancia.CerrarSesion_750VR();
+
+            // 3) resetear idioma por defecto
+            SessionManager_750VR.IdiomaActual = "Español";
+        }
 
         public void CrearUsuario_750VR(BEusuario_750VR usuario)
         {
      
           
            dal.CrearUsuario_750VR(usuario);
+            _log.CrearUsuario(usuario.dni_750VR);   // la BLL registra, no el Form
         }
 
         public bool ModificarUsuario_750VR(int dni, string nombre, string apellido, string mail, string rol, string usuario)
         {
-
-            return dal.ModificarUsuario_750VR(dni, nombre, apellido, mail, rol, usuario);
+            var ok = dal.ModificarUsuario_750VR(dni, nombre, apellido, mail, rol, usuario);
+            if (ok) _log.ModificarUsuario(dni);
+            return ok;
         }
 
         public bool CambiarEstadoUsuario_750VR(int dni, bool nuevoEstado)
         {
-            return dal.CambiarEstadoUsuario_750VR(dni, nuevoEstado);
+            var ok = dal.CambiarEstadoUsuario_750VR(dni, nuevoEstado);
+            if (ok)
+            {
+                if (nuevoEstado)
+                    _log.ActivarUsuario(dni);
+                else
+                    _log.DesactivarUsuario(dni);
+            }
+            return ok;
         }
 
         public bool DesbloquearUsuario_750VR(int dni)
         {
-            
-            return dal.DesbloquearUsuario_750VR(dni); // le pasa el dni
+
+            var ok = dal.DesbloquearUsuario_750VR(dni);
+            if (ok) _log.DesbloquearUsuario(dni);
+            return ok;
         }
 
  
@@ -77,7 +118,8 @@ namespace BLL_VR750
 
         public void CambiarContraseña_750VR(BEusuario_750VR usuario, string NuevaContraseña)
         {
-            dal.CambiarContraseña_750VR(usuario,NuevaContraseña);
+            dal.CambiarContraseña_750VR(usuario, NuevaContraseña);
+            _log.CambioClave(); // registra bitácora usando el login del user que cambió su clave
         }
 
         public BEusuario_750VR ObtenerUsuarioPorDNI_750VR(int dni)
@@ -94,6 +136,7 @@ namespace BLL_VR750
         public void BloquearUsuario_750VR(string login)
         {
             dal.BloquearUsuario_750VR(login);
+            
         }
 
         public void ModificarIdiomaUsuario_750VR(string login, string idioma)
