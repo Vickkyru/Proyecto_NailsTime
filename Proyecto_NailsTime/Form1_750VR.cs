@@ -24,9 +24,9 @@ namespace Proyecto_NailsTime
         public FormPrincipal()
         {
             InitializeComponent();
-            //db.VerificarOCrearBaseDeDatos();
-            //db.VerificarYCrearTablaUsuarios_750VR();
-            //db.InsertarServiciosIniciales();
+            db.VerificarOCrearBaseDeDatos();
+            db.VerificarYCrearTablaUsuarios_750VR();
+            db.InsertarServiciosIniciales();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 
@@ -227,6 +227,11 @@ namespace Proyecto_NailsTime
         private void gestionDePerfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirForm(new FormCrearPerfiles());
+        }
+
+        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FormBitacora_750VR());
         }
     }
 }

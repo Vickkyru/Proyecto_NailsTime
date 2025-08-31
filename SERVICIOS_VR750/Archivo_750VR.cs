@@ -16,6 +16,52 @@ namespace SERVICIOS_VR750
 {
     public class Archivo_750VR
     {
+        public static void GenerarBitacoraPDF(List<BEbitacora_750VR> eventos)
+        {
+            string path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                $"Bitacora_{System.DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+            );
+
+            Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
+            PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
+            doc.Open();
+
+            // Título
+            iTextSharp.text.Paragraph titulo = new iTextSharp.text.Paragraph("Bitácora de Eventos")
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            doc.Add(titulo);
+            doc.Add(new iTextSharp.text.Paragraph("\n"));
+
+            // Tabla
+            PdfPTable tabla = new PdfPTable(6);
+            tabla.WidthPercentage = 100;
+            tabla.AddCell("Login");
+            tabla.AddCell("Fecha");
+            tabla.AddCell("Hora");
+            tabla.AddCell("Módulo");
+            tabla.AddCell("Evento");
+            tabla.AddCell("Criticidad");
+
+            foreach (var ev in eventos)
+            {
+                tabla.AddCell(ev.Login);
+                tabla.AddCell(ev.Fecha.ToShortDateString());
+                tabla.AddCell(ev.Hora.ToString(@"hh\:mm"));
+                tabla.AddCell(ev.Modulo);
+                tabla.AddCell(ev.Evento);
+                tabla.AddCell(ev.Criticidad.ToString());
+            }
+
+            doc.Add(tabla);
+            doc.Close();
+
+            // Abrir PDF automáticamente
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        }
+    
         public static void GenerarFacturaPDF(BEfactura_750VR factura)
         {
             // 📂 Carpeta Facturas

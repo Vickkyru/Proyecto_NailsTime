@@ -194,7 +194,22 @@ namespace Proyecto_NailsTime
             );
 
             BLLfactura_750VR bllFactura = new BLLfactura_750VR();
-            bool exitoFactura = bllFactura.GenerarFactura(nuevaFactura);
+            int codFactura = bllFactura.GenerarFactura(nuevaFactura);    // ✅ devuelve int
+            bool exitoFactura = codFactura > 0;
+
+            if (exitoFactura)
+            {
+                MessageBox.Show("Factura generada con éxito. N° " + codFactura);
+                // si querés imprimir ahora:
+                // Archivo_750VR.GenerarFacturaPDF(laFacturaConDatos);
+                // bllFactura.ImprimirFactura(codFactura); // registra en bitácora la impresión
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error al generar factura.");
+            }
 
             if (exitoFactura)
             {

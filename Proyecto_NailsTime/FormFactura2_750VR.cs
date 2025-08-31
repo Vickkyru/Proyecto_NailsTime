@@ -15,12 +15,13 @@ namespace Proyecto_NailsTime
 {
     public partial class FormFactura : Form, Iobserver_750VR
     {
+        private readonly BLLfactura_750VR _bll = new BLLfactura_750VR();
         private List<BEfactura_750VR> listaFacturas;
+
         public FormFactura()
         {
             InitializeComponent();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
-            //ActualizarIdioma();
         }
 
         public void ActualizarIdioma()
@@ -46,33 +47,50 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            int codFactura = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["CodFactura_750VR"].Value);
-            BEfactura_750VR factura = listaFacturas.Find(f => f.CodFactura_750VR == codFactura);
+            try
+            {
+                int codFactura = Convert.ToInt32(
+                    dataGridView1.SelectedRows[0].Cells["CodFactura_750VR"].Value
+                );
 
-           
-            Archivo_750VR.GenerarFacturaPDF(factura);
-            MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MensajeExito"));
+                var factura = listaFacturas?.Find(f => f.CodFactura_750VR == codFactura);
+                if (factura == null)
+                {
+                    MessageBox.Show("No se encontró la factura seleccionada.");
+                    return;
+                }
+
+                // 1) Generar/mostrar PDF (tu lógica actual)
+                Archivo_750VR.GenerarFacturaPDF(factura);
+
+                // 2) Registrar en bitácora la impresión (Criticidad 4) desde la BLL
+                _bll.ImprimirFactura(codFactura);
+
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MensajeExito"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al imprimir la factura: " + ex.Message);
+            }
         }
 
         private void FormFactura2_750VR_Load(object sender, EventArgs e)
         {
             CargarFacturas();
-            ActualizarIdioma(); 
+            ActualizarIdioma();
         }
 
         private void CargarFacturas()
         {
-            BLLfactura_750VR bll = new BLLfactura_750VR();
-            listaFacturas = bll.ObtenerFacturas();
+            listaFacturas = _bll.ObtenerFacturas();
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listaFacturas;
 
-            // ✅ Formatear hora (solo HH:mm)
-            dataGridView1.Columns["horaEmision_750VR"].DefaultCellStyle.Format = @"hh\:mm";
-
-            // ✅ Formatear total (con separador adecuado)
-            dataGridView1.Columns["total_750VR"].DefaultCellStyle.Format = "N2"; // Formato numérico con 2 decimales
-
+            // formatos
+            if (dataGridView1.Columns.Contains("horaEmision_750VR"))
+                dataGridView1.Columns["horaEmision_750VR"].DefaultCellStyle.Format = @"hh\:mm";
+            if (dataGridView1.Columns.Contains("total_750VR"))
+                dataGridView1.Columns["total_750VR"].DefaultCellStyle.Format = "N2";
         }
     }
 }

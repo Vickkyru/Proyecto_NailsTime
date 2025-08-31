@@ -30,26 +30,26 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnlimp = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cmblog = new System.Windows.Forms.ComboBox();
+            this.txtnom = new System.Windows.Forms.TextBox();
+            this.txtape = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbcrit = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cmbmodu = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cmbeve = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnapli = new System.Windows.Forms.Button();
+            this.btnimp = new System.Windows.Forms.Button();
+            this.btnsalir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,14 +70,15 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Bitacora de eventos";
             // 
-            // button1
+            // btnlimp
             // 
-            this.button1.Location = new System.Drawing.Point(200, 386);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Limpiar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnlimp.Location = new System.Drawing.Point(200, 386);
+            this.btnlimp.Name = "btnlimp";
+            this.btnlimp.Size = new System.Drawing.Size(75, 23);
+            this.btnlimp.TabIndex = 2;
+            this.btnlimp.Text = "Limpiar";
+            this.btnlimp.UseVisualStyleBackColor = true;
+            this.btnlimp.Click += new System.EventHandler(this.btnlimp_Click);
             // 
             // label2
             // 
@@ -88,27 +89,27 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Nombre";
             // 
-            // comboBox1
+            // cmblog
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(103, 299);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 4;
+            this.cmblog.FormattingEnabled = true;
+            this.cmblog.Location = new System.Drawing.Point(103, 299);
+            this.cmblog.Name = "cmblog";
+            this.cmblog.Size = new System.Drawing.Size(121, 21);
+            this.cmblog.TabIndex = 4;
             // 
-            // textBox1
+            // txtnom
             // 
-            this.textBox1.Location = new System.Drawing.Point(247, 244);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 5;
+            this.txtnom.Location = new System.Drawing.Point(247, 244);
+            this.txtnom.Name = "txtnom";
+            this.txtnom.Size = new System.Drawing.Size(100, 20);
+            this.txtnom.TabIndex = 5;
             // 
-            // textBox2
+            // txtape
             // 
-            this.textBox2.Location = new System.Drawing.Point(493, 244);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 7;
+            this.txtape.Location = new System.Drawing.Point(493, 244);
+            this.txtape.Name = "txtape";
+            this.txtape.Size = new System.Drawing.Size(100, 20);
+            this.txtape.TabIndex = 7;
             // 
             // label3
             // 
@@ -137,13 +138,13 @@
             this.label5.TabIndex = 10;
             this.label5.Text = "Criticidad";
             // 
-            // comboBox2
+            // cmbcrit
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(103, 326);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 9;
+            this.cmbcrit.FormattingEnabled = true;
+            this.cmbcrit.Location = new System.Drawing.Point(103, 326);
+            this.cmbcrit.Name = "cmbcrit";
+            this.cmbcrit.Size = new System.Drawing.Size(121, 21);
+            this.cmbcrit.TabIndex = 9;
             // 
             // label6
             // 
@@ -154,13 +155,13 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "Modulo";
             // 
-            // comboBox3
+            // cmbmodu
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(603, 326);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 13;
+            this.cmbmodu.FormattingEnabled = true;
+            this.cmbmodu.Location = new System.Drawing.Point(603, 326);
+            this.cmbmodu.Name = "cmbmodu";
+            this.cmbmodu.Size = new System.Drawing.Size(121, 21);
+            this.cmbmodu.TabIndex = 13;
             // 
             // label7
             // 
@@ -171,13 +172,13 @@
             this.label7.TabIndex = 12;
             this.label7.Text = "Evento";
             // 
-            // comboBox4
+            // cmbeve
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(603, 299);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 11;
+            this.cmbeve.FormattingEnabled = true;
+            this.cmbeve.Location = new System.Drawing.Point(603, 299);
+            this.cmbeve.Name = "cmbeve";
+            this.cmbeve.Size = new System.Drawing.Size(121, 21);
+            this.cmbeve.TabIndex = 11;
             // 
             // label8
             // 
@@ -211,32 +212,34 @@
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker2.TabIndex = 18;
             // 
-            // button2
+            // btnapli
             // 
-            this.button2.Location = new System.Drawing.Point(360, 386);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Aplicar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnapli.Location = new System.Drawing.Point(360, 386);
+            this.btnapli.Name = "btnapli";
+            this.btnapli.Size = new System.Drawing.Size(75, 23);
+            this.btnapli.TabIndex = 19;
+            this.btnapli.Text = "Aplicar";
+            this.btnapli.UseVisualStyleBackColor = true;
+            this.btnapli.Click += new System.EventHandler(this.btnapli_Click);
             // 
-            // button3
+            // btnimp
             // 
-            this.button3.Location = new System.Drawing.Point(508, 386);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "Imprimir";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnimp.Location = new System.Drawing.Point(508, 386);
+            this.btnimp.Name = "btnimp";
+            this.btnimp.Size = new System.Drawing.Size(75, 23);
+            this.btnimp.TabIndex = 20;
+            this.btnimp.Text = "Imprimir";
+            this.btnimp.UseVisualStyleBackColor = true;
+            this.btnimp.Click += new System.EventHandler(this.btnimp_Click);
             // 
-            // button4
+            // btnsalir
             // 
-            this.button4.Location = new System.Drawing.Point(672, 415);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 21;
-            this.button4.Text = "Salir";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnsalir.Location = new System.Drawing.Point(672, 415);
+            this.btnsalir.Name = "btnsalir";
+            this.btnsalir.Size = new System.Drawing.Size(75, 23);
+            this.btnsalir.TabIndex = 21;
+            this.btnsalir.Text = "Salir";
+            this.btnsalir.UseVisualStyleBackColor = true;
             // 
             // FormBitacora_750VR
             // 
@@ -244,30 +247,31 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnsalir);
+            this.Controls.Add(this.btnimp);
+            this.Controls.Add(this.btnapli);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.cmbmodu);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.cmbeve);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cmbcrit);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtape);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.txtnom);
+            this.Controls.Add(this.cmblog);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnlimp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "FormBitacora_750VR";
             this.Text = "FormBitacora_750VR";
+            this.Load += new System.EventHandler(this.FormBitacora_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -278,25 +282,25 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnlimp;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.ComboBox cmblog;
+        private System.Windows.Forms.TextBox txtnom;
+        private System.Windows.Forms.TextBox txtape;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbcrit;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cmbmodu;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cmbeve;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnapli;
+        private System.Windows.Forms.Button btnimp;
+        private System.Windows.Forms.Button btnsalir;
     }
 }

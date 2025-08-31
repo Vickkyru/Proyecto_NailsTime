@@ -17,8 +17,7 @@ namespace BE_VR750
         public byte Criticidad { get; set; }       // 1..5
 
         // Opcionalmente, para la GUI:
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+     
 
         public BEbitacora_750VR(
             int idEvento,
@@ -27,9 +26,7 @@ namespace BE_VR750
             TimeSpan hora,
             string modulo,
             string evento,
-            byte criticidad,
-            string nombre,
-            string apellido)
+            byte criticidad)
         {
             Id_Evento = idEvento;
             Login = login;
@@ -38,8 +35,7 @@ namespace BE_VR750
             Modulo = modulo;
             Evento = evento;
             Criticidad = criticidad;
-            Nombre = nombre;
-            Apellido = apellido;
+        
         }
 
     }

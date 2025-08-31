@@ -51,6 +51,7 @@
             this.pestañaAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.bitacoraEvento = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -79,7 +80,8 @@
             // 
             this.pestañaAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gestionUsuarios,
-            this.gestionPerfiles});
+            this.gestionPerfiles,
+            this.bitacoraEvento});
             this.pestañaAdmin.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pestañaAdmin.Name = "pestañaAdmin";
             this.pestañaAdmin.Size = new System.Drawing.Size(123, 25);
@@ -115,28 +117,28 @@
             // ABMclientes
             // 
             this.ABMclientes.Name = "ABMclientes";
-            this.ABMclientes.Size = new System.Drawing.Size(180, 26);
+            this.ABMclientes.Size = new System.Drawing.Size(146, 26);
             this.ABMclientes.Text = "Clientes";
             this.ABMclientes.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
             // ABMservicios
             // 
             this.ABMservicios.Name = "ABMservicios";
-            this.ABMservicios.Size = new System.Drawing.Size(180, 26);
+            this.ABMservicios.Size = new System.Drawing.Size(146, 26);
             this.ABMservicios.Text = "Servicios";
             this.ABMservicios.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
             // ABMhorarios
             // 
             this.ABMhorarios.Name = "ABMhorarios";
-            this.ABMhorarios.Size = new System.Drawing.Size(180, 26);
+            this.ABMhorarios.Size = new System.Drawing.Size(146, 26);
             this.ABMhorarios.Text = "Horarios";
             this.ABMhorarios.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
             // 
             // ABMinsumos
             // 
             this.ABMinsumos.Name = "ABMinsumos";
-            this.ABMinsumos.Size = new System.Drawing.Size(180, 26);
+            this.ABMinsumos.Size = new System.Drawing.Size(146, 26);
             this.ABMinsumos.Text = "Insumos";
             this.ABMinsumos.Click += new System.EventHandler(this.insumosToolStripMenuItem1_Click);
             // 
@@ -252,6 +254,13 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Bienvenido: ";
             // 
+            // bitacoraEvento
+            // 
+            this.bitacoraEvento.Name = "bitacoraEvento";
+            this.bitacoraEvento.Size = new System.Drawing.Size(223, 26);
+            this.bitacoraEvento.Text = "Bitacora";
+            this.bitacoraEvento.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click);
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,6 +307,7 @@
         private System.Windows.Forms.ToolStripMenuItem gestionPerfiles;
         private System.Windows.Forms.ToolStripMenuItem ABMinsumos;
         private System.Windows.Forms.ToolStripMenuItem Facturas;
+        private System.Windows.Forms.ToolStripMenuItem bitacoraEvento;
     }
 }
 

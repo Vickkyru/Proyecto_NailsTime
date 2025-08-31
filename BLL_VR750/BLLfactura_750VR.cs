@@ -10,16 +10,23 @@ namespace BLL_VR750
 {
     public class BLLfactura_750VR
     {
-        private DALfactura_750VR dal = new DALfactura_750VR();
+        private readonly DALfactura_750VR dal = new DALfactura_750VR();
+        private readonly BLLbitacora_750VR log = new BLLbitacora_750VR();
 
-        public bool GenerarFactura(BEfactura_750VR factura)
+
+        public int GenerarFactura(BEfactura_750VR factura)
         {
-            return dal.InsertarFactura(factura);
+            return dal.InsertarFactura(factura); // devuelve CodFactura_VR750
         }
 
-        public List<BEfactura_750VR> ObtenerFacturas()
+        // mantener:
+        public List<BEfactura_750VR> ObtenerFacturas() => dal.LeerFacturas();
+        public BEfactura_750VR ObtenerFacturaPorCodigo(int codFactura) => dal.ObtenerFacturaPorCodigo(codFactura);
+
+        public void ImprimirFactura(int codFactura)
         {
-            return dal.LeerFacturas();
+            log.ImprimirFactura(codFactura); // sólo log (la impresión real la hace el Form)
         }
+
     }
 }

@@ -384,7 +384,7 @@ INSERT INTO @permisos (Nombre) VALUES
 ('pestañaAdmin'), ('pestañaMaestros'), ('pestañaUsuarios'), ('pestañaReserva'), ('pestañaInsumos'),
 ('pestañaReportes'), ('pestañaAyuda'), ('gestionUsuarios'), ('gestionPerfiles'), ('inicioSesion'),
 ('cambiarClave'), ('cerrarSesion'), ('cambiarIdioma'), ('registrarReserva'), ('actualizarAgenda'),
-('Facturas'), ('ABMclientes'), ('ABMhorarios'), ('ABMservicios'), ('ABMinsumos');
+('Facturas'), ('ABMclientes'), ('ABMhorarios'), ('ABMservicios'), ('ABMinsumos'), ('bitacoraEvento');
 
 INSERT INTO Permiso_VR750 (NombrePermiso_VR750)
 SELECT Nombre FROM @permisos
@@ -413,7 +413,7 @@ JOIN Permiso_VR750 p ON p.NombrePermiso_VR750 IN (
     'pestañaAdmin', 'pestañaMaestros', 'pestañaUsuarios', 'pestañaReserva', 'pestañaInsumos',
     'pestañaReportes', 'pestañaAyuda', 'gestionUsuarios', 'gestionPerfiles', 'inicioSesion',
     'cambiarClave', 'cerrarSesion', 'cambiarIdioma', 'registrarReserva', 'actualizarAgenda',
-    'Facturas', 'ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos'
+    'Facturas', 'ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos', 'bitacoraEvento'
 )
 WHERE f.NombreFamilia_VR750 = 'administrador'
 AND NOT EXISTS (
