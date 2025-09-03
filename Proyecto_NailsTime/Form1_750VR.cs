@@ -233,5 +233,10 @@ namespace Proyecto_NailsTime
         {
             AbrirForm(new FormBitacora_750VR());
         }
+
+        private void Respaldos_Click(object sender, EventArgs e)
+        {
+            AbrirForm(new FromBackupRestore_750VR());
+        }
     }
 }

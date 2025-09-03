@@ -32,6 +32,7 @@
             this.pestañaAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionUsuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionPerfiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.bitacoraEvento = new System.Windows.Forms.ToolStripMenuItem();
             this.pestañaMaestros = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMclientes = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMservicios = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,7 @@
             this.pestañaAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.bitacoraEvento = new System.Windows.Forms.ToolStripMenuItem();
+            this.Respaldos = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -81,7 +82,8 @@
             this.pestañaAdmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gestionUsuarios,
             this.gestionPerfiles,
-            this.bitacoraEvento});
+            this.bitacoraEvento,
+            this.Respaldos});
             this.pestañaAdmin.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pestañaAdmin.Name = "pestañaAdmin";
             this.pestañaAdmin.Size = new System.Drawing.Size(123, 25);
@@ -101,6 +103,13 @@
             this.gestionPerfiles.Size = new System.Drawing.Size(223, 26);
             this.gestionPerfiles.Text = "gestion de perfiles";
             this.gestionPerfiles.Click += new System.EventHandler(this.gestionDePerfilesToolStripMenuItem_Click);
+            // 
+            // bitacoraEvento
+            // 
+            this.bitacoraEvento.Name = "bitacoraEvento";
+            this.bitacoraEvento.Size = new System.Drawing.Size(223, 26);
+            this.bitacoraEvento.Text = "Bitacora";
+            this.bitacoraEvento.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click);
             // 
             // pestañaMaestros
             // 
@@ -254,12 +263,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Bienvenido: ";
             // 
-            // bitacoraEvento
+            // Respaldos
             // 
-            this.bitacoraEvento.Name = "bitacoraEvento";
-            this.bitacoraEvento.Size = new System.Drawing.Size(223, 26);
-            this.bitacoraEvento.Text = "Bitacora";
-            this.bitacoraEvento.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click);
+            this.Respaldos.Name = "Respaldos";
+            this.Respaldos.Size = new System.Drawing.Size(223, 26);
+            this.Respaldos.Text = "Respaldos";
+            this.Respaldos.Click += new System.EventHandler(this.Respaldos_Click);
             // 
             // FormPrincipal
             // 
@@ -308,6 +317,7 @@
         private System.Windows.Forms.ToolStripMenuItem ABMinsumos;
         private System.Windows.Forms.ToolStripMenuItem Facturas;
         private System.Windows.Forms.ToolStripMenuItem bitacoraEvento;
+        private System.Windows.Forms.ToolStripMenuItem Respaldos;
     }
 }
 

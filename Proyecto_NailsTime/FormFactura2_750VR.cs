@@ -30,13 +30,13 @@ namespace Proyecto_NailsTime
             this.Text = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Titulo");
             button1.Text = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.btnGenerar");
 
-            dataGridView1.Columns["CodFactura_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Codigo");
-            dataGridView1.Columns["CodReserva_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Reserva");
-            dataGridView1.Columns["fecha_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Fecha");
-            dataGridView1.Columns["horaEmision_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Hora");
-            dataGridView1.Columns["total_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Total");
-            dataGridView1.Columns["metodoPago_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MetodoPago");
-            dataGridView1.Columns["titular_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Titular");
+            //dataGridView1.Columns["CodFactura_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Codigo");
+            //dataGridView1.Columns["CodReserva_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Reserva");
+            //dataGridView1.Columns["fecha_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Fecha");
+            //dataGridView1.Columns["horaEmision_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Hora");
+            //dataGridView1.Columns["total_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Total");
+            //dataGridView1.Columns["metodoPago_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.MetodoPago");
+            //dataGridView1.Columns["titular_750VR"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormFactura.Titular");
         }
 
         private void button1_Click(object sender, EventArgs e)
