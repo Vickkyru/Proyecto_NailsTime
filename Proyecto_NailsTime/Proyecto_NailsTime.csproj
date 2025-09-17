@@ -135,11 +135,29 @@
     <Compile Include="FormFactura2_750VR.Designer.cs">
       <DependentUpon>FormFactura2_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOC_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOC_750VR.Designer.cs">
+      <DependentUpon>FormOC_750VR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPagar_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPagar_750VR.Designer.cs">
+      <DependentUpon>FormPagar_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPreRegistroProveedor_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormPreRegistroProveedor_750VR.Designer.cs">
       <DependentUpon>FormPreRegistroProveedor_750VR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRegistrarRecep_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRegistrarRecep_750VR.Designer.cs">
+      <DependentUpon>FormRegistrarRecep_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRegistrarReserva_750VR.cs">
       <SubType>Form</SubType>
@@ -227,8 +245,17 @@
     <EmbeddedResource Include="FormFactura2_750VR.resx">
       <DependentUpon>FormFactura2_750VR.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormOC_750VR.resx">
+      <DependentUpon>FormOC_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPagar_750VR.resx">
+      <DependentUpon>FormPagar_750VR.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPreRegistroProveedor_750VR.resx">
       <DependentUpon>FormPreRegistroProveedor_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRegistrarRecep_750VR.resx">
+      <DependentUpon>FormRegistrarRecep_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRegistrarReserva_750VR.resx">
       <DependentUpon>FormRegistrarReserva_750VR.cs</DependentUpon>
