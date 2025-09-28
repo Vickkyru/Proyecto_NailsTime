@@ -68,6 +68,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLbackUp_750VR.cs" />
     <Compile Include="BLLbitacora_750VR.cs" />
     <Compile Include="BLLdisponibilidad_750VR.cs" />
     <Compile Include="BLLCliente_750VR.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="BLLinsumos_750VR.cs" />
     <Compile Include="BLLperfil_750VR.cs" />
     <Compile Include="BLLreservaInsumo_750VR.cs" />
+    <Compile Include="BLLrestore_750VR.cs" />
     <Compile Include="BLLServicio_750VR.cs" />
     <Compile Include="BLLReserva_750VR.cs" />
     <Compile Include="BLLusuario_750VR.cs" />

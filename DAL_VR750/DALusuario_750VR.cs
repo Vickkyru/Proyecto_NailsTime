@@ -21,33 +21,40 @@ namespace DAL_VR750
             db = new BaseDeDatos_750VR();
             hasher = new Encriptador_750VR();
         }
- 
 
-        public void CrearUsuario_750VR(BEusuario_750VR usuario) //alta user
+
+        public void CrearUsuario_750VR(BEusuario_750VR usuario)
         {
             using (SqlConnection conn = new SqlConnection(BaseDeDatos_750VR.cadena))
             {
                 conn.Open();
-                string query = @"INSERT INTO Usuario_VR750 
-        (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750, Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750) 
-        VALUES (@DNI, @Nombre, @Apellido, @Email, @Usuario, @Contra, @Salt, @Rol, @Activo, @Bloqueado)";
+                string query = @"
+INSERT INTO Usuario_VR750
+    (DNI_VR750, Nombre_VR750, Apellido_VR750, Email_VR750, Usuario_VR750,
+     Contra_VR750, Salt_VR750, Rol_VR750, Activo_VR750, Bloqueado_VR750, Idioma_VR750)
+VALUES
+    (@DNI, @Nombre, @Apellido, @Email, @Usuario,
+     @Contra, @Salt, @Rol, @Activo, @Bloqueado, @Idioma);";
 
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
-                cmd.Parameters.AddWithValue("@Nombre", usuario.nombre_750VR);
-                cmd.Parameters.AddWithValue("@Apellido", usuario.apellido_750VR);
-                cmd.Parameters.AddWithValue("@Email", usuario.mail_750VR);
-                cmd.Parameters.AddWithValue("@Usuario", usuario.user_750VR);
-                cmd.Parameters.AddWithValue("@Contra", usuario.contraseña_750VR);
-                cmd.Parameters.AddWithValue("@Salt", usuario.salt_750VR);
-                cmd.Parameters.AddWithValue("@Rol", usuario.rol_750VR);
-                cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
-                cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado_750VR);
-              
-
-                cmd.ExecuteNonQuery();
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@DNI", usuario.dni_750VR);
+                    cmd.Parameters.AddWithValue("@Nombre", usuario.nombre_750VR);
+                    cmd.Parameters.AddWithValue("@Apellido", usuario.apellido_750VR);
+                    cmd.Parameters.AddWithValue("@Email", usuario.mail_750VR);
+                    cmd.Parameters.AddWithValue("@Usuario", usuario.user_750VR);
+                    cmd.Parameters.AddWithValue("@Contra", usuario.contraseña_750VR);
+                    cmd.Parameters.AddWithValue("@Salt", usuario.salt_750VR);
+                    cmd.Parameters.AddWithValue("@Rol", usuario.rol_750VR);
+                    cmd.Parameters.AddWithValue("@Activo", usuario.activo_750VR);
+                    cmd.Parameters.AddWithValue("@Bloqueado", usuario.bloqueado_750VR);
+                    
+                    cmd.Parameters.AddWithValue("@Idioma", string.IsNullOrWhiteSpace(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
+
 
 
         public bool ModificarUsuario_750VR(int dni, string nombre, string apellido, string mail, string rol, string usuario) //mod user
