@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -50,12 +49,9 @@
             this.btnelim = new System.Windows.Forms.Button();
             this.btnapli = new System.Windows.Forms.Button();
             this.lblmensaje = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.rbnActivos = new System.Windows.Forms.RadioButton();
             this.rbnTodos = new System.Windows.Forms.RadioButton();
-            this.btnBuscarImport = new FontAwesome.Sharp.IconButton();
-            this.btnBuscarExport = new FontAwesome.Sharp.IconButton();
             this.btnImportar = new System.Windows.Forms.Button();
             this.btnExportar = new System.Windows.Forms.Button();
             this.txtRutaImport = new System.Windows.Forms.TextBox();
@@ -64,6 +60,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnlimpiar = new System.Windows.Forms.Button();
             this.btnactualizar = new System.Windows.Forms.Button();
+            this.btnBuscarImport = new FontAwesome.Sharp.IconButton();
+            this.btnBuscarExport = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -312,30 +310,6 @@
             this.rbnTodos.UseVisualStyleBackColor = true;
             this.rbnTodos.CheckedChanged += new System.EventHandler(this.rbnTodos_CheckedChanged);
             // 
-            // btnBuscarImport
-            // 
-            this.btnBuscarImport.IconChar = FontAwesome.Sharp.IconChar.Folder;
-            this.btnBuscarImport.IconColor = System.Drawing.Color.Black;
-            this.btnBuscarImport.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnBuscarImport.Location = new System.Drawing.Point(677, 341);
-            this.btnBuscarImport.Name = "btnBuscarImport";
-            this.btnBuscarImport.Size = new System.Drawing.Size(57, 54);
-            this.btnBuscarImport.TabIndex = 89;
-            this.btnBuscarImport.UseVisualStyleBackColor = true;
-            this.btnBuscarImport.Click += new System.EventHandler(this.btnBuscarImport_Click_1);
-            // 
-            // btnBuscarExport
-            // 
-            this.btnBuscarExport.IconChar = FontAwesome.Sharp.IconChar.Folder;
-            this.btnBuscarExport.IconColor = System.Drawing.Color.Black;
-            this.btnBuscarExport.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnBuscarExport.Location = new System.Drawing.Point(677, 282);
-            this.btnBuscarExport.Name = "btnBuscarExport";
-            this.btnBuscarExport.Size = new System.Drawing.Size(57, 53);
-            this.btnBuscarExport.TabIndex = 90;
-            this.btnBuscarExport.UseVisualStyleBackColor = true;
-            this.btnBuscarExport.Click += new System.EventHandler(this.btnBuscarExport_Click_1);
-            // 
             // btnImportar
             // 
             this.btnImportar.Location = new System.Drawing.Point(571, 372);
@@ -400,6 +374,7 @@
             this.btnlimpiar.TabIndex = 91;
             this.btnlimpiar.Text = "Limpiar";
             this.btnlimpiar.UseVisualStyleBackColor = false;
+            this.btnlimpiar.Click += new System.EventHandler(this.btnlimpiar_Click);
             // 
             // btnactualizar
             // 
@@ -412,6 +387,31 @@
             this.btnactualizar.TabIndex = 92;
             this.btnactualizar.Text = "Actualizar";
             this.btnactualizar.UseVisualStyleBackColor = false;
+            this.btnactualizar.Click += new System.EventHandler(this.btnactualizar_Click);
+            // 
+            // btnBuscarImport
+            // 
+            this.btnBuscarImport.IconChar = FontAwesome.Sharp.IconChar.Folder;
+            this.btnBuscarImport.IconColor = System.Drawing.Color.Black;
+            this.btnBuscarImport.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnBuscarImport.Location = new System.Drawing.Point(677, 341);
+            this.btnBuscarImport.Name = "btnBuscarImport";
+            this.btnBuscarImport.Size = new System.Drawing.Size(57, 54);
+            this.btnBuscarImport.TabIndex = 89;
+            this.btnBuscarImport.UseVisualStyleBackColor = true;
+            this.btnBuscarImport.Click += new System.EventHandler(this.btnBuscarImport_Click_1);
+            // 
+            // btnBuscarExport
+            // 
+            this.btnBuscarExport.IconChar = FontAwesome.Sharp.IconChar.Folder;
+            this.btnBuscarExport.IconColor = System.Drawing.Color.Black;
+            this.btnBuscarExport.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnBuscarExport.Location = new System.Drawing.Point(677, 282);
+            this.btnBuscarExport.Name = "btnBuscarExport";
+            this.btnBuscarExport.Size = new System.Drawing.Size(57, 53);
+            this.btnBuscarExport.TabIndex = 90;
+            this.btnBuscarExport.UseVisualStyleBackColor = true;
+            this.btnBuscarExport.Click += new System.EventHandler(this.btnBuscarExport_Click_1);
             // 
             // FormABMClientes
             // 
@@ -485,7 +485,6 @@
         private System.Windows.Forms.Button btnelim;
         private System.Windows.Forms.Button btnapli;
         private System.Windows.Forms.Label lblmensaje;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.RadioButton rbnActivos;
         private System.Windows.Forms.RadioButton rbnTodos;

@@ -123,6 +123,12 @@
     <Compile Include="Form1_750VR.Designer.cs">
       <DependentUpon>Form1_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCotizacion_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCotizacion_750VR.Designer.cs">
+      <DependentUpon>FormCotizacion_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCrearPerfiles_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,12 +152,6 @@
     </Compile>
     <Compile Include="FormPagar_750VR.Designer.cs">
       <DependentUpon>FormPagar_750VR.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormPreRegistroProveedor_750VR.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormPreRegistroProveedor_750VR.Designer.cs">
-      <DependentUpon>FormPreRegistroProveedor_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRegistrarRecep_750VR.cs">
       <SubType>Form</SubType>
@@ -195,11 +195,11 @@
     <Compile Include="FormABMClientes_750VR.Designer.cs">
       <DependentUpon>FormABMClientes_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSoliCotizacion_750VR.cs">
+    <Compile Include="FormRegistroProveedores_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSoliCotizacion_750VR.Designer.cs">
-      <DependentUpon>FormSoliCotizacion_750VR.cs</DependentUpon>
+    <Compile Include="FormRegistroProveedores_750VR.Designer.cs">
+      <DependentUpon>FormRegistroProveedores_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="FromBackupRestore_750VR.cs">
       <SubType>Form</SubType>
@@ -239,6 +239,9 @@
     <EmbeddedResource Include="FormCobrarServicio_750VR.resx">
       <DependentUpon>FormCobrarServicio_750VR.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCotizacion_750VR.resx">
+      <DependentUpon>FormCotizacion_750VR.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCrearPerfiles_750VR.resx">
       <DependentUpon>FormCrearPerfiles_750VR.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,9 +253,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPagar_750VR.resx">
       <DependentUpon>FormPagar_750VR.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormPreRegistroProveedor_750VR.resx">
-      <DependentUpon>FormPreRegistroProveedor_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRegistrarRecep_750VR.resx">
       <DependentUpon>FormRegistrarRecep_750VR.cs</DependentUpon>
@@ -272,8 +272,8 @@
     <EmbeddedResource Include="FormABMClientes_750VR.resx">
       <DependentUpon>FormABMClientes_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSoliCotizacion_750VR.resx">
-      <DependentUpon>FormSoliCotizacion_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormRegistroProveedores_750VR.resx">
+      <DependentUpon>FormRegistroProveedores_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FromBackupRestore_750VR.resx">
       <DependentUpon>FromBackupRestore_750VR.cs</DependentUpon>

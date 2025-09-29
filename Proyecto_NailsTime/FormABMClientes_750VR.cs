@@ -31,6 +31,9 @@ namespace Proyecto_NailsTime
             ActivarModoEdicion();
 
         }
+        // ====== Vista actual (BD o XML) ======
+        private enum VistaDatos { BD, XML }
+        private VistaDatos vistaActual = VistaDatos.BD;
 
         // ======== SERIALIZACIÓN: campos y helpers ========
         private readonly BLLserializar_750VR _bllSerializar = new BLLserializar_750VR();
@@ -50,6 +53,22 @@ namespace Proyecto_NailsTime
         {
             EnsureCarpetaSerializacion();
             return System.IO.Path.Combine(CarpetaSerializacion, "Clientes_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xml");
+        }
+        // Muestra lista en grilla, re-aplica headers/colores y deja la UI en consulta
+        private void MostrarListaEnGrilla(List<BECliente_750VR> lista, VistaDatos vista)
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = lista;
+
+            TraducirEncabezadosDataGrid();
+            PintarUsuariosInactivos();
+
+            vistaActual = vista;
+            modoActual = "consulta";
+            ResetearEstadoInterfaz();
+            btnapli.Enabled = false;
+            btncance.Enabled = false;
         }
 
         // Toma lo visible en dataGridView1 y lo convierte a List<BECliente_750VR>
@@ -130,32 +149,48 @@ namespace Proyecto_NailsTime
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGridView1.SelectedRows.Count == 0) return;
+
+            if (vistaActual == VistaDatos.XML)
             {
-                string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
-                BLLCliente_750VR bll = new BLLCliente_750VR();
-                var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
-                
+                // Tomo directamente lo que está en la fila (no consulto BD)
+                var cli = dataGridView1.SelectedRows[0].DataBoundItem as BECliente_750VR;
+                if (cli == null) return;
 
-                if (cliente != null)
-                {
-                    txtdni.Text = cliente.dni_750VR.ToString();
-                    txtnom.Text = cliente.nombre_750VR;
-                    txtape.Text = cliente.apellido_750VR;
+                txtdni.Text = cli.dni_750VR.ToString();
+                txtnom.Text = cli.nombre_750VR;
+                txtape.Text = cli.apellido_750VR;
 
+                emailCifradoActual = cli.gmail_750VR;
+                txtemail.Text = emailCifradoActual;
+                checkBox1.Checked = false;
 
-                    emailCifradoActual = cliente.gmail_750VR;
-txtemail.Text = emailCifradoActual; 
-checkBox1.Checked = false; 
+                txtcel.Text = cli.celular_750VR?.ToString();
+                txtdire.Text = cli.direccion_750VR;
+                return;
+            }
 
-                    txtcel.Text = cliente.celular_750VR.ToString();
-                    txtdire.Text = cliente.direccion_750VR;
-                }
-                else
-                {
-                    //MessageBox.Show("No se encontró el cliente.");
-                    Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.NoClienteEncontrado");
-                }
+            // Vista BD (tu código original)
+            string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
+            BLLCliente_750VR bll = new BLLCliente_750VR();
+            var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
+
+            if (cliente != null)
+            {
+                txtdni.Text = cliente.dni_750VR.ToString();
+                txtnom.Text = cliente.nombre_750VR;
+                txtape.Text = cliente.apellido_750VR;
+
+                emailCifradoActual = cliente.gmail_750VR;
+                txtemail.Text = emailCifradoActual;
+                checkBox1.Checked = false;
+
+                txtcel.Text = cliente.celular_750VR?.ToString();
+                txtdire.Text = cliente.direccion_750VR;
+            }
+            else
+            {
+                Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.NoClienteEncontrado");
             }
         }
 
@@ -308,7 +343,8 @@ checkBox1.Checked = false;
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta(clave));
 
                 bool mostrarSoloActivos = rbnActivos.Checked;
-                CargarUsuarios(mostrarSoloActivos); 
+                CargarUsuarios(mostrarSoloActivos);
+                vistaActual = VistaDatos.BD;
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
@@ -346,6 +382,7 @@ checkBox1.Checked = false;
 
                 bool mostrarSoloActivos = rbnActivos.Checked;
                 CargarUsuarios(mostrarSoloActivos);
+                vistaActual = VistaDatos.BD;
                 ResetearEstadoInterfaz();
                 LimpiarCampos();
             }
@@ -396,6 +433,7 @@ checkBox1.Checked = false;
                 bll.CrearCliente_750VR(nuevo);
 
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.ClienteCreado"));
+                vistaActual = VistaDatos.BD;
                 LimpiarCampos();
                 bool mostrarSoloActivos = rbnActivos.Checked;
                 CargarUsuarios(mostrarSoloActivos);
@@ -541,7 +579,17 @@ checkBox1.Checked = false;
                 btnmod.Enabled = false;
             }
 
-           
+            if(modoActual == "desserializar")
+            {
+
+            }
+
+            if (modoActual == "actualizar")
+            {
+
+            }
+
+
             //btnapli.Enabled = false;
             //btncance.Enabled = false;
 
@@ -622,8 +670,6 @@ checkBox1.Checked = false;
 
         private void FormABMClientes_750VR_Load(object sender, EventArgs e)
         {
-        
-
             if (InvocadoDesdeReserva)
             {
                 modoActual = "añadir";
@@ -645,21 +691,13 @@ checkBox1.Checked = false;
                 dataGridView1.AllowUserToDeleteRows = false;
             }
 
-            // === Serialización: preparar carpeta y ruta por defecto ===
+            // Serialización: carpeta y ruta por defecto
             EnsureCarpetaSerializacion();
             var ctrl = this.Controls.Find("txtRutaExport", true);
             if (ctrl != null && ctrl.Length > 0 && ctrl[0] is TextBox)
                 ((TextBox)ctrl[0]).Text = RutaXmlPorDefecto();
 
-            // Tooltips (si tenés un ToolTip llamado toolTip1 y botones Limpiar/Actualizar)
-            if (this.Controls.Find("toolTip1", true).Length > 0 && toolTip1 != null)
-            {
-                var btnLimpiar = this.Controls.Find("btnLimpiar", true).FirstOrDefault();
-                var btnActualizar = this.Controls.Find("btnActualizar", true).FirstOrDefault();
-                if (btnLimpiar != null) toolTip1.SetToolTip(btnLimpiar, "Limpia filtros y borra la grilla.");
-                if (btnActualizar != null) toolTip1.SetToolTip(btnActualizar, "Actualiza la grilla con los clientes de la base.");
-            }
-
+            vistaActual = VistaDatos.BD;
             ActualizarIdioma();
             ActivarModoEdicion();
             PintarUsuariosInactivos();
@@ -749,20 +787,23 @@ checkBox1.Checked = false;
                 }
 
                 var clientes = _bllDeserializar.ImportarClientes(txt.Text);
-                dataGridView1.Columns.Clear();
-                dataGridView1.AutoGenerateColumns = true;
-                dataGridView1.DataSource = clientes;
 
-                // re-aplicar encabezados traducidos y pintado
-                TraducirEncabezadosDataGrid();
-                PintarUsuariosInactivos();
+                // Mostrar XML en grilla y dejar todo en modo consulta (sin bloquear)
+                MostrarListaEnGrilla(clientes, VistaDatos.XML);
 
-                MessageBox.Show("✅ XML importado a la grilla.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "🔎 Estás viendo datos desde XML (no de BD).\nUsá 'Actualizar' o cualquier operación (Alta/Mod/Activar) para volver a la lista real.",
+                    "XML",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("❌ Error al importar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            modoActual = "desserializar";
+            ActivarModoEdicion();
         }
 
         private void btnBuscarExport_Click_1(object sender, EventArgs e)
@@ -794,6 +835,22 @@ checkBox1.Checked = false;
                     if (txt != null) txt.Text = ofd.FileName;
                 }
             }
+        }
+
+        private void btnactualizar_Click(object sender, EventArgs e)
+        {
+            vistaActual = VistaDatos.BD;
+            CargarUsuarios(rbnActivos.Checked);
+            modoActual = "consulta";
+            ResetearEstadoInterfaz();
+            modoActual = "actualizar";
+            ActivarModoEdicion();
+        }
+
+        private void btnlimpiar_Click(object sender, EventArgs e)
+        {
+            txtRutaExport.Clear();
+            txtRutaImport.Clear();
         }
     }
 }

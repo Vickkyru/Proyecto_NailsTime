@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FormSoliCotizacion_750VR : Form
+    public partial class FormCotizacion_750VR : Form
     {
-        public FormSoliCotizacion_750VR()
+        public FormCotizacion_750VR()
         {
             InitializeComponent();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
