@@ -32,6 +32,75 @@ namespace Proyecto_NailsTime
 
         }
 
+        // ======== SERIALIZACIÓN: campos y helpers ========
+        private readonly BLLserializar_750VR _bllSerializar = new BLLserializar_750VR();
+        private readonly BLLdesserializar_750VR _bllDeserializar = new BLLdesserializar_750VR();
+
+        // Carpeta fija que pediste (se crea si no existe)
+        private static readonly string CarpetaSerializacion =
+            @"C:\Users\mavru\OneDrive\Escritorio\hoy\Proyecto_NailsTime\Proyecto_NailsTime\bin\Debug\Serializacion";
+
+        private static void EnsureCarpetaSerializacion()
+        {
+            if (!System.IO.Directory.Exists(CarpetaSerializacion))
+                System.IO.Directory.CreateDirectory(CarpetaSerializacion);
+        }
+
+        private static string RutaXmlPorDefecto()
+        {
+            EnsureCarpetaSerializacion();
+            return System.IO.Path.Combine(CarpetaSerializacion, "Clientes_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xml");
+        }
+
+        // Toma lo visible en dataGridView1 y lo convierte a List<BECliente_750VR>
+        private List<BECliente_750VR> ObtenerClientesDeLaGrilla()
+        {
+            // Si ya es lista tipada
+            var tipada = dataGridView1.DataSource as IEnumerable<BECliente_750VR>;
+            if (tipada != null) return tipada.ToList();
+
+            // Si es DataTable
+            var dt = dataGridView1.DataSource as DataTable;
+            if (dt != null)
+            {
+                var l = new List<BECliente_750VR>();
+                foreach (DataRow r in dt.Rows)
+                {
+                    var cli = new BECliente_750VR
+                    {
+                        dni_750VR = Convert.ToInt32(r["dni_750VR"]),
+                        nombre_750VR = Convert.ToString(r["nombre_750VR"]),
+                        apellido_750VR = Convert.ToString(r["apellido_750VR"]),
+                        gmail_750VR = Convert.ToString(r["gmail_750VR"]),
+                        direccion_750VR = Convert.ToString(r["direccion_750VR"]),
+                        celular_750VR = Convert.ToString(r["celular_750VR"]),
+                        activo_750VR = Convert.ToBoolean(r["activo_750VR"])
+                    };
+                    l.Add(cli);
+                }
+                return l;
+            }
+
+            // Último recurso: leer celdas
+            var listaGrid = new List<BECliente_750VR>();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+                var cli = new BECliente_750VR
+                {
+                    dni_750VR = Convert.ToInt32(row.Cells["dni_750VR"].Value),
+                    nombre_750VR = Convert.ToString(row.Cells["nombre_750VR"].Value),
+                    apellido_750VR = Convert.ToString(row.Cells["apellido_750VR"].Value),
+                    gmail_750VR = Convert.ToString(row.Cells["gmail_750VR"].Value),
+                    direccion_750VR = Convert.ToString(row.Cells["direccion_750VR"].Value),
+                    celular_750VR = Convert.ToString(row.Cells["celular_750VR"].Value),
+                    activo_750VR = Convert.ToBoolean(row.Cells["activo_750VR"].Value)
+                };
+                listaGrid.Add(cli);
+            }
+            return listaGrid;
+        }
+
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
@@ -553,6 +622,8 @@ checkBox1.Checked = false;
 
         private void FormABMClientes_750VR_Load(object sender, EventArgs e)
         {
+        
+
             if (InvocadoDesdeReserva)
             {
                 modoActual = "añadir";
@@ -574,11 +645,30 @@ checkBox1.Checked = false;
                 dataGridView1.AllowUserToDeleteRows = false;
             }
 
+            // === Serialización: preparar carpeta y ruta por defecto ===
+            EnsureCarpetaSerializacion();
+            var ctrl = this.Controls.Find("txtRutaExport", true);
+            if (ctrl != null && ctrl.Length > 0 && ctrl[0] is TextBox)
+                ((TextBox)ctrl[0]).Text = RutaXmlPorDefecto();
+
+            // Tooltips (si tenés un ToolTip llamado toolTip1 y botones Limpiar/Actualizar)
+            if (this.Controls.Find("toolTip1", true).Length > 0 && toolTip1 != null)
+            {
+                var btnLimpiar = this.Controls.Find("btnLimpiar", true).FirstOrDefault();
+                var btnActualizar = this.Controls.Find("btnActualizar", true).FirstOrDefault();
+                if (btnLimpiar != null) toolTip1.SetToolTip(btnLimpiar, "Limpia filtros y borra la grilla.");
+                if (btnActualizar != null) toolTip1.SetToolTip(btnActualizar, "Actualiza la grilla con los clientes de la base.");
+            }
+
             ActualizarIdioma();
             ActivarModoEdicion();
             PintarUsuariosInactivos();
         }
 
+ 
+    
+
+      
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -620,6 +710,90 @@ checkBox1.Checked = false;
         {
             if (rbnTodos.Checked)
                 CargarUsuarios(false);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExportar_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                EnsureCarpetaSerializacion();
+                var txt = this.Controls.Find("txtRutaExport", true).FirstOrDefault() as TextBox;
+                string destino = (txt != null && !string.IsNullOrWhiteSpace(txt.Text)) ? txt.Text : RutaXmlPorDefecto();
+
+                var lista = ObtenerClientesDeLaGrilla();
+                _bllSerializar.ExportarClientes(destino, lista);
+
+                if (txt != null) txt.Text = destino;
+                MessageBox.Show("✅ Clientes exportados correctamente.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Error al exportar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImportar_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var txt = this.Controls.Find("txtRutaImport", true).FirstOrDefault() as TextBox;
+                if (txt == null || string.IsNullOrWhiteSpace(txt.Text))
+                {
+                    MessageBox.Show("Seleccione un archivo XML.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var clientes = _bllDeserializar.ImportarClientes(txt.Text);
+                dataGridView1.Columns.Clear();
+                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.DataSource = clientes;
+
+                // re-aplicar encabezados traducidos y pintado
+                TraducirEncabezadosDataGrid();
+                PintarUsuariosInactivos();
+
+                MessageBox.Show("✅ XML importado a la grilla.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Error al importar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnBuscarExport_Click_1(object sender, EventArgs e)
+        {
+            EnsureCarpetaSerializacion();
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Archivo XML (*.xml)|*.xml";
+                sfd.InitialDirectory = CarpetaSerializacion;
+                sfd.FileName = "Clientes_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xml";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    var txt = this.Controls.Find("txtRutaExport", true).FirstOrDefault() as TextBox;
+                    if (txt != null) txt.Text = sfd.FileName;
+                }
+            }
+        }
+
+        private void btnBuscarImport_Click_1(object sender, EventArgs e)
+        {
+            EnsureCarpetaSerializacion();
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Archivo XML (*.xml)|*.xml";
+                ofd.InitialDirectory = CarpetaSerializacion;
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    var txt = this.Controls.Find("txtRutaImport", true).FirstOrDefault() as TextBox;
+                    if (txt != null) txt.Text = ofd.FileName;
+                }
+            }
         }
     }
 }

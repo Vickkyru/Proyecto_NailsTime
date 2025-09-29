@@ -16,6 +16,7 @@ namespace BE_VR750
         public string direccion_750VR { get; set; }
         public string celular_750VR { get; set; }
         public bool activo_750VR { get; set; }
+        public BECliente_750VR() { }
 
         public BECliente_750VR(int dni, string nom, string ape, string gmail, string dire, string celu, bool act)
         {
