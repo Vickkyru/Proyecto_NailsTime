@@ -17,9 +17,53 @@ namespace Proyecto_NailsTime
 {
     public partial class FormBackupRestore_750VR : Form, Iobserver_750VR
     {
-      
-        private readonly string _conn = BaseDeDatos_750VR.cadena;
 
+        private const string DB_NAME = "ProyectoNailsTime_VR750";
+
+        private static string GetProjectBakDir()
+        {
+            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ArchivosBak");
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            return dir;
+        }
+
+        private static string NewBakName() => $"BCK_{DateTime.Now:yyMMdd_HHmm}.bak";
+
+        private static string GetSqlWritableDir()
+        {
+            SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder(BaseDeDatos_750VR.cadena);
+            csb.InitialCatalog = "master";
+
+            using (SqlConnection cn = new SqlConnection(csb.ConnectionString))
+            {
+                cn.Open();
+
+                string sql = @"
+DECLARE @bk nvarchar(4000)=NULL, @data nvarchar(4000)=NULL;
+BEGIN TRY
+  EXEC master.dbo.xp_instance_regread
+    N'HKEY_LOCAL_MACHINE',
+    N'SOFTWARE\Microsoft\MSSQLServer\MSSQLServer',
+    N'BackupDirectory', @bk OUTPUT;
+END TRY BEGIN CATCH SET @bk=NULL END CATCH;
+
+SELECT @data = CAST(SERVERPROPERTY('InstanceDefaultDataPath') AS nvarchar(4000));
+
+IF @bk IS NOT NULL SELECT @bk;
+ELSE IF @data IS NOT NULL SELECT @data;
+ELSE
+SELECT SUBSTRING(physical_name,1,LEN(physical_name)-CHARINDEX('\',REVERSE(physical_name))+1)
+FROM sys.master_files WHERE database_id=DB_ID('master') AND type=0;";
+
+                using (SqlCommand cmd = new SqlCommand(sql, cn))
+                {
+                    object o = cmd.ExecuteScalar();
+                    return (o == null || o == DBNull.Value) ? null : o.ToString();
+                }
+            }
+        }
+
+        private readonly string _conn = BaseDeDatos_750VR.cadena;
         private BLLbackUp_750VR _bllBackup;
         private BLLrestore_750VR _bllRestore;
 
@@ -32,175 +76,189 @@ namespace Proyecto_NailsTime
             _bllBackup = new BLLbackUp_750VR(_conn);
             _bllRestore = new BLLrestore_750VR(_conn);
         }
+
         public void ActualizarIdioma()
         {
             Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
-        private void FromBackupRestore_750VR_Load(object sender, EventArgs e)
+        private bool VerificarAccesoDespuesDeRestore()
         {
-            // opcional: limpiar rutas
-            //textBox1.Clear();
-            //textBox2.Clear();
             try
             {
-               
-                string carpetaBackup = @"C:\Users\mavru\OneDrive\Escritorio\hoy\Proyecto_NailsTime\Proyecto_NailsTime\bin\Debug\registrosBackUp";
-
-               
-                if (!Directory.Exists(carpetaBackup))
+                using (var cn = new SqlConnection(BaseDeDatos_750VR.cadena))
                 {
-                    Directory.CreateDirectory(carpetaBackup);
+                    cn.Open();
+
+                    var sql = @"
+SELECT CASE WHEN EXISTS (
+    SELECT 1
+    FROM sys.database_principals
+    WHERE name = SUSER_SNAME()
+) THEN 1 ELSE 0 END;";
+                    using (var cmd = new SqlCommand(sql, cn))
+                    {
+                        var existe = Convert.ToInt32(cmd.ExecuteScalar()) == 1;
+                        if (!existe)
+                        {
+                            MessageBox.Show(
+                                Lenguaje_750VR.ObtenerEtiqueta("Restore.UsuarioNoPertenece"),
+                                Lenguaje_750VR.ObtenerEtiqueta("Restore.AccesoRequerido"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            );
+                            Application.Restart();
+                            return false;
+                        }
+                    }
                 }
-
-                string nombreArchivo = "BCK_" + DateTime.Now.ToString("yyMMdd_HHmm") + ".bak";
-
-           
-                textBox1.Text = Path.Combine(carpetaBackup, nombreArchivo);
+                return true;
+            }
+            catch (SqlException ex) when (ex.Number == 4060 || ex.Number == 18456 || ex.Number == 916)
+            {
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.UsuarioSinAcceso"),
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.AccesoRequerido"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning
+                );
+                Application.Restart();
+                return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error preparando carpeta de backups:\n" + ex.Message,
-                    "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.ErrorValidar") + ex.Message,
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Titulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
+                return true;
             }
         }
 
-      
+        private void FromBackupRestore_750VR_Load(object sender, EventArgs e)
+        {
+            textBox1.ReadOnly = textBox2.ReadOnly = true;
+            textBox1.Text = Path.Combine(GetProjectBakDir(), NewBakName());
+        }
+
         private void btnSeleccionarBackUp_Click(object sender, EventArgs e)
         {
-            using (var fbd = new FolderBrowserDialog())
+            string projDir = GetProjectBakDir();
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                if (fbd.ShowDialog() == DialogResult.OK)
-                {
-                    string nombreArchivo = "BCK_" + DateTime.Now.ToString("yyMMdd_HHmm") + ".bak";
-                    textBox1.Text = Path.Combine(fbd.SelectedPath, nombreArchivo);
-                }
+                sfd.Filter = Lenguaje_750VR.ObtenerEtiqueta("Backup.Dialogo.FiltroBak");
+                sfd.InitialDirectory = projDir;
+                sfd.FileName = NewBakName();
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                    textBox1.Text = sfd.FileName;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) 
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(textBox1.Text))
                 {
-                    MessageBox.Show("Seleccione carpeta de destino para el backup.", "Respaldo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Backup.SeleccioneDestino"));
                     return;
                 }
 
-                var dir = Path.GetDirectoryName(textBox1.Text);
-                if (string.IsNullOrWhiteSpace(dir) || !Directory.Exists(dir))
-                {
-                    MessageBox.Show("La carpeta destino no existe.", "Respaldo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                string projDir = GetProjectBakDir();
+                Directory.CreateDirectory(projDir);
 
-                ToggleUi(false);
-                AppendLog("Iniciando backup...");
-                _bllBackup.GenerarBackup(textBox1.Text, OnInfoMessage);
-                AppendLog("Backup finalizado.");
-                MessageBox.Show("✅ Backup generado correctamente en:\n" + textBox1.Text,
-                    "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string finalName = Path.GetFileName(textBox1.Text);
+                if (string.IsNullOrWhiteSpace(finalName)) finalName = NewBakName();
+
+                string safeDir = GetSqlWritableDir();
+                Directory.CreateDirectory(safeDir);
+                string safePath = Path.Combine(safeDir, finalName);
+
+                _bllBackup.GenerarBackup(safePath, OnInfoMessage);
+
+                string finalPath = Path.Combine(projDir, finalName);
+                File.Copy(safePath, finalPath, true);
+                textBox1.Text = finalPath;
+
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Backup.GeneradoOk") + "\n" + finalPath,
+                    Lenguaje_750VR.ObtenerEtiqueta("Backup.Titulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                AppendLog("ERROR backup: " + ex.Message);
-                MessageBox.Show("Error al generar backup:\n" + ex.Message,
-                    "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                ToggleUi(true);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Backup.ErrorGenerar") + ex.Message,
+                    Lenguaje_750VR.ObtenerEtiqueta("Backup.Titulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-       
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            using (var ofd = new OpenFileDialog())
+            string projDir = GetProjectBakDir();
+
+            using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Archivos de Backup (*.bak)|*.bak";
-                ofd.Title = "Seleccionar archivo .bak";
+                ofd.Filter = Lenguaje_750VR.ObtenerEtiqueta("Backup.Dialogo.FiltroBak");
+                ofd.InitialDirectory = projDir;
+
                 if (ofd.ShowDialog() == DialogResult.OK)
                     textBox2.Text = ofd.FileName;
             }
         }
 
-        private void button2_Click(object sender, EventArgs e) 
+        private void button2_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(textBox2.Text))
+                if (string.IsNullOrWhiteSpace(textBox2.Text) || !File.Exists(textBox2.Text))
                 {
-                    MessageBox.Show("Seleccione un archivo .bak para restaurar.", "Restore",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (!File.Exists(textBox2.Text))
-                {
-                    MessageBox.Show("El archivo .bak no existe.", "Restore",
+                    MessageBox.Show(
+                        Lenguaje_750VR.ObtenerEtiqueta("Restore.SeleccioneBak"),
+                        Lenguaje_750VR.ObtenerEtiqueta("Restore.Titulo"),
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 var rpta = MessageBox.Show(
-                    "Se restaurará la base de datos y se reemplazará el estado actual.\n" +
-                    "Asegúrese de cerrar otras aplicaciones que usen la BD.\n\n¿Continuar?",
-                    "Confirmar Restore", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Confirmar"),
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.TituloConfirmar"),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (rpta != DialogResult.Yes) return;
 
-                ToggleUi(false);
-                AppendLog("Iniciando restore...");
-               
-                _bllRestore.Restaurar(textBox2.Text, OnInfoMessage);
-                AppendLog("Restore finalizado.");
-                MessageBox.Show("Base de datos restaurada desde:\n" + textBox2.Text,
-                    "Restore", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string safeDir = GetSqlWritableDir();
+                Directory.CreateDirectory(safeDir);
+                string safePath = Path.Combine(safeDir, Path.GetFileName(textBox2.Text));
+                File.Copy(textBox2.Text, safePath, true);
+
+                _bllRestore.Restaurar(safePath, OnInfoMessage);
+
+                if (!VerificarAccesoDespuesDeRestore()) return;
+
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Ok") + "\n" + textBox2.Text,
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Titulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                AppendLog("ERROR restore: " + ex.Message);
-                MessageBox.Show("Error al restaurar:\n" + ex.Message,
-                    "Restore", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                ToggleUi(true);
+                MessageBox.Show(
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Error") + ex.Message,
+                    Lenguaje_750VR.ObtenerEtiqueta("Restore.Titulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button3_Click(object sender, EventArgs e) => this.Close();
 
     
-        private void button3_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
-        
-        private void ToggleUi(bool enabled)
-        {
-            try
-            {
-                btnSeleccionarBackUp.Enabled = enabled;
-                button1.Enabled = enabled;        // Realizar backup
-                iconButton1.Enabled = enabled;    // buscar .bak
-                button2.Enabled = enabled;        // Realizar restore
-                button3.Enabled = enabled;        // Volver
-            }
-            catch { /* por si cambian nombres no romper */ }
-        }
-
-        private void OnInfoMessage(string msg)
-        {
-            
-            AppendLog(msg);
-        }
+        private void OnInfoMessage(string msg) => AppendLog(msg);
 
         private void AppendLog(string line)
         {
-            
             Control[] found = this.Controls.Find("txtLog", true);
             if (found != null && found.Length > 0 && found[0] is TextBox)
             {
@@ -212,6 +270,12 @@ namespace Proyecto_NailsTime
             {
                 this.Text = "Respaldo/Restore - " + line;
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox2.Clear();
         }
     }
 }

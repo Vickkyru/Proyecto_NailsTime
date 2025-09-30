@@ -28,12 +28,13 @@ namespace DAL_VR750
                 cn.Open();
 
                 var sql = @"
-DECLARE @p nvarchar(4000) = @path;
+DECLARE @db sysname = @dbName;
+DECLARE @p  nvarchar(4000) = @path;
 DECLARE @supportsCompression bit =
     CASE WHEN CAST(SERVERPROPERTY('Edition') AS nvarchar(128)) LIKE '%Express%' THEN 0 ELSE 1 END;
 
 DECLARE @stmt nvarchar(max) =
-N'BACKUP DATABASE [ProyectoNailsTime_VR750] TO DISK = @p WITH INIT, STATS=10, CHECKSUM'
+N'BACKUP DATABASE [' + @db + N'] TO DISK = @p WITH INIT, STATS=10, CHECKSUM'
 + CASE WHEN @supportsCompression = 1 THEN N', COMPRESSION' ELSE N'' END
 + N';';
 
@@ -45,10 +46,11 @@ RESTORE VERIFYONLY FROM DISK = @p WITH CHECKSUM;";
                 {
                     cmd.CommandTimeout = 0;
                     cmd.Parameters.AddWithValue("@path", fullPath);
+                    cmd.Parameters.AddWithValue("@dbName", _dbName);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-}
+    }
 }
 

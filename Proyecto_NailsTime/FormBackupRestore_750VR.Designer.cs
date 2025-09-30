@@ -38,6 +38,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -135,12 +136,23 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "Back Up:";
             // 
-            // FromBackupRestore_750VR
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(489, 187);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 20;
+            this.button4.Text = "Limpiar";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // FormBackupRestore_750VR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.iconButton1);
             this.Controls.Add(this.btnSeleccionarBackUp);
             this.Controls.Add(this.button3);
@@ -151,7 +163,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Name = "FromBackupRestore_750VR";
+            this.Name = "FormBackupRestore_750VR";
             this.Text = "FromBackupRestore_750VR";
             this.Load += new System.EventHandler(this.FromBackupRestore_750VR_Load);
             this.ResumeLayout(false);
@@ -171,5 +183,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button4;
     }
 }

@@ -12,25 +12,38 @@ namespace BLL_VR750
     public class BLLperfil_750VR
     {
 
-        private DALperfil_750VR dal = new DALperfil_750VR();
+        private readonly DALperfil_750VR dal = new DALperfil_750VR();
+        private readonly BLLbitacora_750VR bllBitacora = new BLLbitacora_750VR(); // <-- bitácora
 
         public List<BEperfil_750VR> ObtenerPerfiles() => dal.ObtenerPerfiles();
 
         public void AgregarPerfil(BEperfil_750VR perfil)
         {
             perfil.CodPerfil_750VR = dal.InsertarPerfilYDevolverID(perfil);
-        }
-
-     
-        public bool PerfilTieneUsuariosAsociados(string rol)
-        {
-            return dal.ExisteUsuarioConRol(rol);
+            
+            bllBitacora.CrearPerfil($"ID={perfil.CodPerfil_750VR}");
         }
 
         public void ModificarNombrePerfil(int codPerfil, string nuevoNombre)
         {
             dal.ActualizarNombrePerfil(codPerfil, nuevoNombre);
+           
+            bllBitacora.ModificarPerfil(!string.IsNullOrWhiteSpace(nuevoNombre) ? nuevoNombre : $"ID={codPerfil}");
         }
+
+        public void EliminarPerfil(int id)
+        {
+            dal.EliminarPerfil(id);
+            bllBitacora.EliminarPerfil($"ID={id}");
+        }
+
+
+        public bool PerfilTieneUsuariosAsociados(string rol)
+        {
+            return dal.ExisteUsuarioConRol(rol);
+        }
+
+       
         public bool FamiliaContieneAFamilia(int idFamiliaOrigen, int idFamiliaBuscada)
         {
             GrupoPermiso_750VR origen = ObtenerFamiliaPorId(idFamiliaOrigen);
@@ -55,7 +68,10 @@ namespace BLL_VR750
 
         public void ModificarNombreFamilia(int codFamilia, string nuevoNombre)
         {
+            // DAL
             dal.ModificarNombreFamilia(codFamilia, nuevoNombre);
+            // Bitácora
+            bllBitacora.ModificarFamilia(nuevoNombre ?? $"ID={codFamilia}");
         }
 
         public bool ExisteFamiliaConNombre(string nombre, int idExcluir = 0)
@@ -63,17 +79,12 @@ namespace BLL_VR750
             return dal.ExisteFamiliaConNombre(nombre, idExcluir);
         }
 
-        public void EliminarPerfil(int id)
-        {
-            dal.EliminarPerfil(id);
-        }
+      
 
         public bool AsignarPermiso(int idPerfil, int idPermiso)
         {
-           return dal.AsignarPermiso(idPerfil, idPermiso);
+            return dal.AsignarPermiso(idPerfil, idPermiso);
         }
-
-   
 
         public void QuitarPermiso(int idPerfil, int idPermiso)
         {
@@ -83,23 +94,24 @@ namespace BLL_VR750
         public void AgregarFamilia(string nombre)
         {
             dal.InsertarFamilia(nombre);
+            bllBitacora.CrearFamilia(nombre ?? "(sin nombre)");
         }
 
         public void EliminarFamilia(int codFamilia)
         {
             dal.EliminarFamilia(codFamilia);
+            bllBitacora.EliminarFamilia($"ID={codFamilia}");
         }
 
         public bool AgregarPermisoAFamilia(int idFamilia, int idPermiso)
         {
-           return dal.AgregarPermisoAFamilia(idFamilia, idPermiso);
+            return dal.AgregarPermisoAFamilia(idFamilia, idPermiso);
         }
 
         public bool QuitarPermisoDeFamilia(int idFamilia, int idPermiso)
         {
             return dal.QuitarPermisoDeFamilia(idFamilia, idPermiso);
         }
-
 
         public bool AsignarFamiliaAFamilia(int idPadre, int idHija)
         {
@@ -126,24 +138,23 @@ namespace BLL_VR750
 
         public List<PermisoSimple_750VR> ObtenerPermisosSimples()
         {
-           return  dal.ObtenerPermisosSimples();
+            return dal.ObtenerPermisosSimples();
         }
 
         public List<GrupoPermiso_750VR> ObtenerFamilias()
         {
-           return dal.ObtenerFamilias();
+            return dal.ObtenerFamilias();
         }
+
         public GrupoPermiso_750VR ObtenerFamiliaCompletaPorId(int idFamilia)
         {
             GrupoPermiso_750VR familia = dal.ObtenerFamiliaPorId(idFamilia);
             if (familia == null) return null;
 
-          
             var permisosSimples = dal.ObtenerPermisosSimplesPorFamilia(idFamilia);
             foreach (var permiso in permisosSimples)
                 familia.Agregar(permiso);
 
-            
             var subfamilias = dal.ObtenerFamiliasHijas(idFamilia);
             foreach (var sub in subfamilias)
             {
@@ -160,51 +171,44 @@ namespace BLL_VR750
             dal.AsignarFamiliaAlPerfil(idPerfil, idFamilia);
         }
 
-
         public bool FamiliaYaAsignada(int idPerfil, int idFamilia)
         {
             return dal.FamiliaYaAsignada(idPerfil, idFamilia);
         }
 
-
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfil(int idPerfil)
         {
             var permisos = new List<IComponentePermiso_750VR>();
 
-            
             var simples = dal.ObtenerPermisosSimplesDePerfil(idPerfil);
             permisos.AddRange(simples);
 
-            
             var familias = dal.ObtenerFamiliasDePerfil(idPerfil);
 
             foreach (var familia in familias)
             {
-                
                 var hijos = ObtenerPermisosDeFamilia(familia.Codigo_750VR);
                 foreach (var hijo in hijos)
                 {
-                    familia.Agregar(hijo);  
+                    familia.Agregar(hijo);
                 }
 
-                permisos.Add(familia);  
+                permisos.Add(familia);
             }
 
             return permisos;
         }
-
-
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDePerfilPorNombre(string nombrePerfil)
         {
             int codPerfil = dal.ObtenerCodPerfilPorNombre(nombrePerfil);
             return ObtenerPermisosDePerfil(codPerfil);
         }
+
         public void EliminarFamiliaDePerfil(int idPerfil, int idFamilia)
         {
             dal.EliminarFamiliaDePerfil(idPerfil, idFamilia);
         }
-
 
         public List<IComponentePermiso_750VR> ObtenerPermisosDeFamilia(int codFamilia)
         {
@@ -227,12 +231,10 @@ namespace BLL_VR750
             }
         }
 
-
         public bool FamiliaAsignadaAAlgunPerfil(int codFamilia)
         {
-            return dal.FamiliaAsignadaAAlgunPerfil(codFamilia); 
+            return dal.FamiliaAsignadaAAlgunPerfil(codFamilia);
         }
-
 
     }
 }

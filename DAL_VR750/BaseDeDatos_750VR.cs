@@ -368,7 +368,11 @@ END;
                 {
                     conn.Open();
                     string script = @"
--- 1. Insertar perfiles si no existen
+/* =============================
+   Perfiles, permisos y familias
+   ============================= */
+
+-- 1) Perfiles base (si no existen)
 IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Administrador')
     INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Administrador');
 
@@ -378,21 +382,23 @@ IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Recepcioni
 IF NOT EXISTS (SELECT 1 FROM Perfil_VR750 WHERE NombrePerfil_VR750 = 'Manicurista')
     INSERT INTO Perfil_VR750 (NombrePerfil_VR750) VALUES ('Manicurista');
 
--- 2. Insertar permisos simples si no existen
+-- 2) Permisos simples necesarios (más todos los que ya usás)
 DECLARE @permisos TABLE (Nombre NVARCHAR(100));
 INSERT INTO @permisos (Nombre) VALUES
 ('pestañaAdmin'), ('pestañaMaestros'), ('pestañaUsuarios'), ('pestañaReserva'), ('pestañaInsumos'),
 ('pestañaReportes'), ('pestañaAyuda'), ('gestionUsuarios'), ('gestionPerfiles'), ('inicioSesion'),
 ('cambiarClave'), ('cerrarSesion'), ('cambiarIdioma'), ('registrarReserva'), ('actualizarAgenda'),
-('Facturas'), ('ABMclientes'), ('ABMhorarios'), ('ABMservicios'), ('ABMinsumos'), ('bitacoraEvento'), ('Respaldos');
+('Facturas'), ('ABMclientes'), ('ABMhorarios'), ('ABMservicios'), ('ABMinsumos'), ('bitacoraEvento'),
+('Respaldos');
 
 INSERT INTO Permiso_VR750 (NombrePermiso_VR750)
-SELECT Nombre FROM @permisos
+SELECT Nombre
+FROM @permisos p
 WHERE NOT EXISTS (
-    SELECT 1 FROM Permiso_VR750 WHERE NombrePermiso_VR750 = Nombre
+  SELECT 1 FROM Permiso_VR750 x WHERE x.NombrePermiso_VR750 = p.Nombre
 );
 
--- 3. Insertar familias si no existen
+-- 3) Familias base (si no existen)
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'administrador')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('administrador');
 
@@ -405,15 +411,20 @@ IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'maestros
 IF NOT EXISTS (SELECT 1 FROM Familia_VR750 WHERE NombreFamilia_VR750 = 'recepcion')
     INSERT INTO Familia_VR750 (NombreFamilia_VR750) VALUES ('recepcion');
 
--- 4. Asignar permisos a la familia administrador
+
+/* ======================================
+   Asignación de permisos a las familias
+   ====================================== */
+
+-- 4) Permisos de la familia ADMINISTRADOR (full como ya tenías)
 INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
 SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
 FROM Familia_VR750 f
 JOIN Permiso_VR750 p ON p.NombrePermiso_VR750 IN (
-    'pestañaAdmin', 'pestañaMaestros', 'pestañaUsuarios', 'pestañaReserva', 'pestañaInsumos',
-    'pestañaReportes', 'pestañaAyuda', 'gestionUsuarios', 'gestionPerfiles', 'inicioSesion',
-    'cambiarClave', 'cerrarSesion', 'cambiarIdioma', 'registrarReserva', 'actualizarAgenda',
-    'Facturas', 'ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos', 'bitacoraEvento','Respaldos'
+    'pestañaAdmin','pestañaMaestros','pestañaUsuarios','pestañaReserva','pestañaInsumos',
+    'pestañaReportes','pestañaAyuda','gestionUsuarios','gestionPerfiles','inicioSesion',
+    'cambiarClave','cerrarSesion','cambiarIdioma','registrarReserva','actualizarAgenda',
+    'Facturas','ABMclientes','ABMhorarios','ABMservicios','ABMinsumos','bitacoraEvento','Respaldos'
 )
 WHERE f.NombreFamilia_VR750 = 'administrador'
 AND NOT EXISTS (
@@ -421,40 +432,78 @@ AND NOT EXISTS (
     WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
 );
 
--- 4b. Asignar permisos a la familia maestros
+-- 4b) Permisos de la familia MAESTROS (opcional, lo que ya tenías)
 INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
 SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
 FROM Familia_VR750 f
-JOIN Permiso_VR750 p ON p.NombrePermiso_VR750 IN ('ABMclientes', 'ABMhorarios', 'ABMservicios', 'ABMinsumos')
+JOIN Permiso_VR750 p ON p.NombrePermiso_VR750 IN ('ABMclientes','ABMhorarios','ABMservicios','ABMinsumos')
 WHERE f.NombreFamilia_VR750 = 'maestros'
 AND NOT EXISTS (
     SELECT 1 FROM PermisoXFamilia_VR750 pf
     WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
 );
 
--- 5. Limpiar asignaciones previas de perfiles (excepto Administrador)
+-- 4c) ✅ Permisos mínimos de USUARIO (para Recepcionista y Manicurista)
+--     (pestañaUsuarios, cambiarClave, cerrarSesion, cambiarIdioma)
+INSERT INTO PermisoXFamilia_VR750 (CodFamilia_VR750, CodPermiso_VR750)
+SELECT f.CodFamilia_VR750, p.CodPermiso_VR750
+FROM Familia_VR750 f
+JOIN Permiso_VR750 p ON p.NombrePermiso_VR750 IN ('pestañaUsuarios','cambiarClave','cerrarSesion','cambiarIdioma')
+WHERE f.NombreFamilia_VR750 = 'usuario'
+AND NOT EXISTS (
+    SELECT 1 FROM PermisoXFamilia_VR750 pf
+    WHERE pf.CodFamilia_VR750 = f.CodFamilia_VR750 AND pf.CodPermiso_VR750 = p.CodPermiso_VR750
+);
+
+
+/* ==========================================
+   Reset selectivo y asignación a los perfiles
+   ========================================== */
+
+-- 5) Limpiar asignaciones previas SOLO de perfiles no-admin
 DELETE FROM PerfilXPermiso_VR750
 WHERE CodPerfil_VR750 IN (
-    SELECT CodPerfil_VR750 FROM Perfil_VR750
-    WHERE NombrePerfil_VR750 <> 'Administrador'
+    SELECT CodPerfil_VR750 FROM Perfil_VR750 WHERE NombrePerfil_VR750 <> 'Administrador'
 );
 
 DELETE FROM PerfilXFamilia_VR750
 WHERE CodPerfil_VR750 IN (
-    SELECT CodPerfil_VR750 FROM Perfil_VR750
-    WHERE NombrePerfil_VR750 <> 'Administrador'
+    SELECT CodPerfil_VR750 FROM Perfil_VR750 WHERE NombrePerfil_VR750 <> 'Administrador'
 );
 
--- 6. Asignar solo la familia al perfil Administrador
+-- 6) Admin -> familia administrador
 INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
 SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
-FROM Perfil_VR750 p, Familia_VR750 f
+FROM Perfil_VR750 p
+JOIN Familia_VR750 f ON f.NombreFamilia_VR750 = 'administrador'
 WHERE p.NombrePerfil_VR750 = 'Administrador'
-  AND f.NombreFamilia_VR750 = 'administrador'
-  AND NOT EXISTS (
-      SELECT 1 FROM PerfilXFamilia_VR750 pf
-      WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilXFamilia_VR750 pf
+    WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
 );
+
+-- 7) ✅ Recepcionista -> familia usuario
+INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
+SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
+FROM Perfil_VR750 p
+JOIN Familia_VR750 f ON f.NombreFamilia_VR750 = 'usuario'
+WHERE p.NombrePerfil_VR750 = 'Recepcionista'
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilXFamilia_VR750 pf
+    WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
+);
+
+-- 8) ✅ Manicurista -> familia usuario
+INSERT INTO PerfilXFamilia_VR750 (CodPerfil_VR750, CodFamilia_VR750)
+SELECT p.CodPerfil_VR750, f.CodFamilia_VR750
+FROM Perfil_VR750 p
+JOIN Familia_VR750 f ON f.NombreFamilia_VR750 = 'usuario'
+WHERE p.NombrePerfil_VR750 = 'Manicurista'
+AND NOT EXISTS (
+    SELECT 1 FROM PerfilXFamilia_VR750 pf
+    WHERE pf.CodPerfil_VR750 = p.CodPerfil_VR750 AND pf.CodFamilia_VR750 = f.CodFamilia_VR750
+);
+
 
 -- 7. Insertar servicios si no existen
 IF NOT EXISTS (SELECT 1 FROM Servicio_VR750)

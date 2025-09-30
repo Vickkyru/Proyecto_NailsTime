@@ -682,6 +682,49 @@
   "FormBitacora_750VR.btnlimp": "Limpiar",
   "FormBitacora_750VR.btnapli": "Aplicar",
   "FormBitacora_750VR.btnimp": "Imprimir",
-  "FormBitacora_750VR.btnsalir": "Salir"
+  "FormBitacora_750VR.btnsalir": "Salir",
 
+  "Backup.Error.CadenaConexion": "Cadena de conexión inválida.",
+  "Backup.Error.RutaInvalida": "Ruta de backup inválida.",
+  "Backup.Error.CarpetaNoExiste": "La carpeta destino del backup no existe.",
+  "Deser.Error.SeleccionarXML": "Debe seleccionar un archivo XML.",
+  "Deser.Error.XMLNoEncontrado": "No se encontró el archivo XML.",
+
+  "Restore.Error.CadenaConexion": "Cadena de conexión inválida.",
+  "Restore.Error.RutaBakInvalida": "Ruta .bak inválida.",
+  "Restore.Error.BakNoEncontrado": "No se encontró el archivo .bak.",
+  "Ser.Error.RutaArchivo": "Debe indicar una ruta de archivo.",
+  "Ser.Error.SinClientes": "No hay clientes para exportar.",
+  "Dialogo.XML.Titulo": "XML",
+  "Dialogo.XML.Filtro": "Archivo XML (*.xml)|*.xml",
+
+  "Clientes.Export.Ok": "Clientes exportados correctamente.",
+  "Clientes.Export.Error": "Error al exportar: ",
+
+  "Clientes.Import.SeleccioneXML": "Seleccione un archivo XML.",
+  "Clientes.Import.ViendoXML": "Estás viendo datos desde XML (no de BD).\nUsá 'Actualizar' o cualquier operación (Alta/Mod/Activar) para volver a la lista real.",
+  "Clientes.Import.Error": "Error al importar: ",
+
+  "Clientes.Grid.Actualizada": "Se ha actualizado la grilla con los datos actuales de la BD.",
+  "Backup.Titulo": "Backup",
+  "Backup.SeleccioneDestino": "Seleccione un destino para el backup.",
+  "Backup.Dialogo.FiltroBak": "SQL Backup (*.bak)|*.bak",
+  "Backup.GeneradoOk": " Backup generado en:",
+  "Backup.ErrorGenerar": " Error al generar backup: ",
+
+  "Restore.Titulo": "Restore",
+  "Restore.TituloConfirmar": "Confirmar Restore",
+  "Restore.SeleccioneBak": "Seleccione un archivo .bak válido.",
+  "Restore.Confirmar": "Se restaurará la base y se reemplazará el estado actual.\n\n¿Continuar?",
+  "Restore.Ok": " Base restaurada desde:",
+  "Restore.Error": " Error al restaurar:\n",
+  "Restore.AccesoRequerido": "Acceso requerido",
+  "Restore.UsuarioNoPertenece": "El usuario actual no pertenece a la base restaurada.\nSe cerrará la sesión para que te vuelvas a loguear con un usuario existente.",
+  "Restore.UsuarioSinAcceso": "El usuario actual no tiene acceso a la base restaurada.\nSe cerrará la sesión para que te vuelvas a loguear con un usuario existente.",
+  "Restore.ErrorValidar": "Error al validar acceso post-restore: ",
+  "Bitacora.Titulo": "Bitácora",
+  "Bitacora.NoDatos": "No hay datos para imprimir.",
+  "Bitacora.ExportadaOk": "Bitácora exportada correctamente."
+
+ 
 }

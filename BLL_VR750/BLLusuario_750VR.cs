@@ -31,19 +31,20 @@ namespace BLL_VR750
 
         public BEusuario_750VR AutenticarEIniciarSesion_750VR(string login, string password)
         {
-            // 1) valida credenciales (lanza excepción si falla)
+            // 1) Credenciales
             var usuario = dal.recuperarUsuario_750VR(login, password);
 
-            // 2) setea idioma en sesión
+            // 2) Idioma de sesión (usa tu valor guardado; sino “Español”)
             SessionManager_750VR.IdiomaActual = string.IsNullOrWhiteSpace(usuario.idioma_750VR)
-                ? "Español"
-                : usuario.idioma_750VR;
+                                                ? "Español"
+                                                : usuario.idioma_750VR;
 
-            // 3) inicia sesión en SessionManager
+            // 3) Iniciar sesión
             var sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
-            if (!sesionOK) throw new Exception("Ya hay una sesión activa.");
+            if (!sesionOK)
+                throw new Exception(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.SesionActiva"));
 
-            // 4) registra en bitácora (desde BLL, no el form)
+            // 4) Bitácora
             _log.LoginOK();
 
             return usuario;

@@ -189,7 +189,10 @@ namespace Proyecto_NailsTime
             }
             else
             {
-                Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.NoClienteEncontrado");
+                MessageBox.Show(
+       Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.NoClienteEncontrado"),
+       Lenguaje_750VR.ObtenerEtiqueta("FormABMClientes_750VR.TituloError"),
+       MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -766,11 +769,17 @@ namespace Proyecto_NailsTime
                 _bllSerializar.ExportarClientes(destino, lista);
 
                 if (txt != null) txt.Text = destino;
-                MessageBox.Show("Clientes exportados correctamente.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+    Lenguaje_750VR.ObtenerEtiqueta("Clientes.Export.Ok"),
+    Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Titulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al exportar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+     Lenguaje_750VR.ObtenerEtiqueta("Clientes.Export.Error") + ex.Message,
+     Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Titulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -781,7 +790,10 @@ namespace Proyecto_NailsTime
                 var txt = this.Controls.Find("txtRutaImport", true).FirstOrDefault() as TextBox;
                 if (txt == null || string.IsNullOrWhiteSpace(txt.Text))
                 {
-                    MessageBox.Show("Seleccione un archivo XML.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(
+       Lenguaje_750VR.ObtenerEtiqueta("Clientes.Import.SeleccioneXML"),
+       Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Titulo"),
+       MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -791,14 +803,16 @@ namespace Proyecto_NailsTime
                 MostrarListaEnGrilla(clientes, VistaDatos.XML);
 
                 MessageBox.Show(
-                    "Estás viendo datos desde XML (no de BD).\nUsá 'Actualizar' o cualquier operación (Alta/Mod/Activar) para volver a la lista real.",
-                    "XML",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+    Lenguaje_750VR.ObtenerEtiqueta("Clientes.Import.ViendoXML"),
+    Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Titulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al importar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+     Lenguaje_750VR.ObtenerEtiqueta("Clientes.Import.Error") + ex.Message,
+     Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Titulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             modoActual = "desserializar";
@@ -810,7 +824,7 @@ namespace Proyecto_NailsTime
             EnsureCarpetaSerializacion();
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "Archivo XML (*.xml)|*.xml";
+                sfd.Filter = Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Filtro");
                 sfd.InitialDirectory = CarpetaSerializacion;
                 sfd.FileName = "Clientes_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xml";
                 if (sfd.ShowDialog() == DialogResult.OK)
@@ -826,7 +840,7 @@ namespace Proyecto_NailsTime
             EnsureCarpetaSerializacion();
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Archivo XML (*.xml)|*.xml";
+                ofd.Filter = Lenguaje_750VR.ObtenerEtiqueta("Dialogo.XML.Filtro");
                 ofd.InitialDirectory = CarpetaSerializacion;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -845,7 +859,7 @@ namespace Proyecto_NailsTime
             modoActual = "actualizar";
             ActivarModoEdicion();
 
-            MessageBox.Show("Se ha actualizado la grilla con los datos actuales de la BD");
+            MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Clientes.Grid.Actualizada"));
         }
 
         private void btnlimpiar_Click(object sender, EventArgs e)

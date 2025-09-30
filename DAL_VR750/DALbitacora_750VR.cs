@@ -146,6 +146,32 @@ ORDER BY e.Fecha DESC, e.Hora DESC;";
             return lista;
         }
 
+        public (string Nombre, string Apellido)? ObtenerNombreApellidoPorLogin(string login)
+        {
+            using (var conn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            using (var cmd = new SqlCommand(@"
+        SELECT TOP 1 Nombre_VR750, Apellidos_VR750
+        FROM Usuario_VR750
+        WHERE Usuario_VR750 = @login;", conn))
+            {
+                cmd.Parameters.AddWithValue("@login", login);
+                conn.Open();
+
+                using (var rd = cmd.ExecuteReader())
+                {
+                    if (rd.Read())
+                    {
+                        return (
+                            rd["Nombre_VR750"].ToString(),
+                            rd["Apellidos_VR750"].ToString()
+                        );
+                    }
+                }
+            }
+
+            return null;
+        }
+
         // (Opcional) lectura completa para debug/exports
         public List<BEbitacora_750VR> LeerTodo_750VR()
         {

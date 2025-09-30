@@ -1,5 +1,6 @@
 ﻿using BE_VR750;
 using DAL_VR750;
+using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,15 +14,21 @@ namespace BLL_VR750
     {
         private readonly DALdesserializar_750VR _dal = new DALdesserializar_750VR();
 
-        /// <summary> Valida y delega la deserialización. </summary>
         public List<BECliente_750VR> ImportarClientes(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
-                throw new ArgumentException("Debe seleccionar un archivo XML.", nameof(filePath));
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("No se encontró el archivo XML.", filePath);
+                throw new ArgumentException(Lenguaje_750VR.ObtenerEtiqueta("Deser.Error.SeleccionarXML"), nameof(filePath));
 
-            return _dal.LeerXml(filePath);
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException(Lenguaje_750VR.ObtenerEtiqueta("Deser.Error.XMLNoEncontrado"), filePath);
+
+            var clientes = _dal.LeerXml(filePath);
+
+            // Bitácora
+            var bllBitacora = new BLLbitacora_750VR();
+            bllBitacora.DesSerializar(filePath);
+
+            return clientes;
         }
     }
 }

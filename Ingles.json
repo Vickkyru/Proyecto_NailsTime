@@ -651,9 +651,52 @@
   "BitacoraPDF.Hora": "Time",
   "BitacoraPDF.Modulo": "Module",
   "BitacoraPDF.Evento": "Event",
-  "BitacoraPDF.Criticidad": "Severity"
+  "BitacoraPDF.Criticidad": "Severity",
 
 
+
+  "Backup.Error.CadenaConexion": "Invalid connection string.",
+  "Backup.Error.RutaInvalida": "Invalid backup path.",
+  "Backup.Error.CarpetaNoExiste": "The backup destination folder does not exist.",
+  "Deser.Error.SeleccionarXML": "You must select an XML file.",
+  "Deser.Error.XMLNoEncontrado": "XML file not found.",
+
+  "Restore.Error.CadenaConexion": "Invalid connection string.",
+  "Restore.Error.RutaBakInvalida": "Invalid .bak path.",
+  "Restore.Error.BakNoEncontrado": ".bak file not found.",
+  "Ser.Error.RutaArchivo": "You must specify a file path.",
+  "Ser.Error.SinClientes": "No clients to export.",
+  "Dialogo.XML.Titulo": "XML",
+  "Dialogo.XML.Filtro": "XML File (*.xml)|*.xml",
+
+  "Clientes.Export.Ok": "Clients successfully exported.",
+  "Clientes.Export.Error": "Error while exporting: ",
+
+  "Clientes.Import.SeleccioneXML": "Please select an XML file.",
+  "Clientes.Import.ViendoXML": "You are viewing data from XML (not from DB).\nUse 'Update' or any operation (Add/Modify/Activate) to return to the real list.",
+  "Clientes.Import.Error": "Error while importing: ",
+
+  "Clientes.Grid.Actualizada": "The grid has been updated with the current database data.",
+  "Backup.Titulo": "Backup",
+  "Backup.SeleccioneDestino": "Select a destination for the backup.",
+  "Backup.Dialogo.FiltroBak": "SQL Backup (*.bak)|*.bak",
+  "Backup.GeneradoOk": " Backup generated at:",
+  "Backup.ErrorGenerar": " Error while generating backup: ",
+
+  "Restore.Titulo": "Restore",
+  "Restore.TituloConfirmar": "Confirm Restore",
+  "Restore.SeleccioneBak": "Please select a valid .bak file.",
+  "Restore.Confirmar": "The database will be restored and the current state will be replaced.\n\nContinue?",
+  "Restore.Ok": " Database restored from:",
+  "Restore.Error": " Error while restoring:\n",
+  "Restore.AccesoRequerido": "Access required",
+  "Restore.UsuarioNoPertenece": "The current user does not belong to the restored database.\nThe session will be closed so you can log in again with an existing user.",
+  "Restore.UsuarioSinAcceso": "The current user has no access to the restored database.\nThe session will be closed so you can log in again with an existing user.",
+  "Restore.ErrorValidar": "Error while validating access after restore: ",
+
+  "Bitacora.Titulo": "Log",
+  "Bitacora.NoDatos": "No data to print.",
+  "Bitacora.ExportadaOk": "Log successfully exported."
 
 }
 

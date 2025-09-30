@@ -13,7 +13,7 @@ namespace BLL_VR750
     {
         private readonly DALrestore_750VR _dal;
 
-        // Pasás tu cadena normal (a tu DB) y acá se la cambia a 'master'
+     
         public BLLrestore_750VR(string connectionStringToDb)
         {
             if (string.IsNullOrWhiteSpace(connectionStringToDb))
@@ -37,6 +37,8 @@ namespace BLL_VR750
                 throw new FileNotFoundException("No se encontró el archivo .bak.", bakPath);
 
             _dal.DoRestore(bakPath, onInfo, dataFilePhysicalPath, logFilePhysicalPath);
+            var bllBitacora = new BLLbitacora_750VR();
+            bllBitacora.RestoreEjecutado(bakPath);
         }
     }
 }
