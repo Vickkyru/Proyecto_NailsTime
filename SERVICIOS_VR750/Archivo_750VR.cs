@@ -18,50 +18,79 @@ namespace SERVICIOS_VR750
     {
         public static void GenerarBitacoraPDF(List<BEbitacora_750VR> eventos)
         {
-            string path = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                $"Bitacora_{System.DateTime.Now:yyyyMMdd_HHmmss}.pdf"
-            );
+            // 🗂 Guardar en carpeta "Bitacoras" dentro del bin
+            string carpeta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bitacoras");
+            if (!Directory.Exists(carpeta)) Directory.CreateDirectory(carpeta);
 
+            string path = Path.Combine(carpeta, $"Bitacora_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+
+            // 🌎 Cultura según idioma actual
+            CultureInfo culture;
+            switch (Lenguaje_750VR.ObtenerInstancia().IdiomaActual)
+            {
+                case "Español": culture = new CultureInfo("es-AR"); break;
+                case "Ingles": culture = new CultureInfo("en-US"); break;
+                case "Portugués": culture = new CultureInfo("pt-BR"); break;
+                default: culture = CultureInfo.InvariantCulture; break;
+            }
+
+            // 🏷️ Etiquetas traducidas (agregá estas claves al JSON)
+            string tTitulo = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Titulo");
+            string tLogin = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Login");
+            string tFecha = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Fecha");
+            string tHora = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Hora");
+            string tModulo = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Modulo");
+            string tEvento = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Evento");
+            string tCriticidad = Lenguaje_750VR.ObtenerEtiqueta("BitacoraPDF.Criticidad");
+
+            // 📄 Documento
             Document doc = new Document(PageSize.A4, 20, 20, 20, 20);
             PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
             doc.Open();
 
-            // Título
-            iTextSharp.text.Paragraph titulo = new iTextSharp.text.Paragraph("Bitácora de Eventos")
-            {
-                Alignment = Element.ALIGN_CENTER
-            };
+            // 🔤 Fuentes simples
+            var fontTitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            var fontHeader = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
+            var fontCell = FontFactory.GetFont(FontFactory.HELVETICA, 10);
+
+            // 🖋️ Título
+            var titulo = new iTextSharp.text.Paragraph(tTitulo, fontTitulo) { Alignment = Element.ALIGN_CENTER };
             doc.Add(titulo);
-            doc.Add(new iTextSharp.text.Paragraph("\n"));
+            doc.Add(new iTextSharp.text.Paragraph(" "));
 
-            // Tabla
-            PdfPTable tabla = new PdfPTable(6);
-            tabla.WidthPercentage = 100;
-            tabla.AddCell("Login");
-            tabla.AddCell("Fecha");
-            tabla.AddCell("Hora");
-            tabla.AddCell("Módulo");
-            tabla.AddCell("Evento");
-            tabla.AddCell("Criticidad");
+            // 📊 Tabla
+            PdfPTable tabla = new PdfPTable(6) { WidthPercentage = 100 };
+            tabla.SetWidths(new float[] { 18f, 14f, 12f, 18f, 24f, 14f });
 
+            // Cabeceras
+            foreach (var h in new[] { tLogin, tFecha, tHora, tModulo, tEvento, tCriticidad })
+            {
+                var cellH = new PdfPCell(new Phrase(h, fontHeader)) { BackgroundColor = BaseColor.LIGHT_GRAY };
+                tabla.AddCell(cellH);
+            }
+
+            // Filas
             foreach (var ev in eventos)
             {
-                tabla.AddCell(ev.Login);
-                tabla.AddCell(ev.Fecha.ToShortDateString());
-                tabla.AddCell(ev.Hora.ToString(@"hh\:mm"));
-                tabla.AddCell(ev.Modulo);
-                tabla.AddCell(ev.Evento);
-                tabla.AddCell(ev.Criticidad.ToString());
+                // Fecha según cultura (corta) y Hora según cultura
+                string fechaStr = ev.Fecha.ToString("d", culture);
+                string horaStr = DateTime.Today.Add(ev.Hora).ToString("t", culture); // TimeSpan -> hora local corta
+
+                tabla.AddCell(new PdfPCell(new Phrase(ev.Login ?? "-", fontCell)));
+                tabla.AddCell(new PdfPCell(new Phrase(fechaStr, fontCell)));
+                tabla.AddCell(new PdfPCell(new Phrase(horaStr, fontCell)));
+                tabla.AddCell(new PdfPCell(new Phrase(ev.Modulo ?? "-", fontCell)));
+                tabla.AddCell(new PdfPCell(new Phrase(ev.Evento ?? "-", fontCell)));
+                tabla.AddCell(new PdfPCell(new Phrase(ev.Criticidad.ToString(), fontCell)));
             }
 
             doc.Add(tabla);
             doc.Close();
 
-            // Abrir PDF automáticamente
-            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            try { Process.Start(new ProcessStartInfo(path) { UseShellExecute = true }); } catch { }
         }
-    
+
+
         public static void GenerarFacturaPDF(BEfactura_750VR factura)
         {
             // 📂 Carpeta Facturas

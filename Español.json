@@ -8,6 +8,8 @@
   "FormPrincipal.pestañaInsumos": "Insumos",
   "FormPrincipal.pestañaReportes": "Reportes",
   "FormPrincipal.pestañaAyuda": "Ayuda",
+  "FormPrincipal.bitacoraEvento": "Bitacora Eventos",
+  "FormPrincipal.Respaldos": "Respaldos",
   "FormPrincipal.gestionUsuarios": "Gestion de usuarios",
   "FormPrincipal.gestionPerfiles": "Gestion de perfiles",
   "FormPrincipal.Facturas": "Facturas",
@@ -407,6 +409,15 @@
   "FormABMClientes_750VR.CamposObligatorios": "Por favor, complete todos los campos obligatorios.",
   "FormABMClientes_750VR.DNIInvalido": "Debe ingresar un DNI valido (7-8 digitos, con o sin puntos).",
   "FormABMClientes_750VR.MensajeAltaDesdeReserva": "unicamente debe poner los datos y dar a aplicar.",
+
+  "FormABMClientes.btnExportar": "Serializar",
+  "FormABMClientes.btnImportar": "Des-Serializar",
+  "FormABMClientes.btnactualizar": "Actualizar",
+  "FormABMClientes.btnlimpiar": "Limpiar",
+  "FormABMClientes.btnBuscarImport": "",
+  "FormABMClientes.btnBuscarExport": "",
+
+
   "Grid.Cliente.DNI": "DNI",
   "Grid.Cliente.Nombre": "Nombre",
   "Grid.Cliente.Apellido": "Apellido",
@@ -619,12 +630,58 @@
   "FormCrearPerfiles.IngreseNuevoNombrePerfil": "Debe ingresar un nuevo nombre para el perfil.",
   "FormCrearPerfiles.NombrePerfilYaExiste": "Ya existe un perfil con ese nombre.",
   "FormCrearPerfiles.PerfilModificadoOK": "Perfil modificado correctamente.",
-  "FormCrearPerfiles.FamiliaModificadaOK": "Familia modificada correctamente."
+  "FormCrearPerfiles.FamiliaModificadaOK": "Familia modificada correctamente.",
 
 
+  "FromBackupRestore_750VR.label1": "Respaldos",
+  "FromBackupRestore_750VR.label3": "Respaldo",
+  "FromBackupRestore_750VR.btnSeleccionarBackUp": "",
+  "FromBackupRestore_750VR.iconButton1": "",
+  "FromBackupRestore_750VR.button1": "Realizar",
+  "FromBackupRestore_750VR.button2": "Realizar",
+  "FromBackupRestore_750VR.button3": "Volver al inicio",
+
+  "BitacoraPDF.Titulo": "Bitácora de Eventos",
+  "BitacoraPDF.Login": "Usuario",
+  "BitacoraPDF.Fecha": "Fecha",
+  "BitacoraPDF.Hora": "Hora",
+  "BitacoraPDF.Modulo": "Módulo",
+  "BitacoraPDF.Evento": "Evento",
+  "BitacoraPDF.Criticidad": "Criticidad",
+  "Bitacora.Grid.Login": "Usuario",
+  "Bitacora.Grid.Fecha": "Fecha",
+  "Bitacora.Grid.Hora": "Hora",
+  "Bitacora.Grid.Modulo": "Módulo",
+  "Bitacora.Grid.Evento": "Evento",
+  "Bitacora.Grid.Criticidad": "Criticidad",
+  "Bitacora.Event.Login": "Login",
+  "Bitacora.Event.Logout": "Logout",
+  "Bitacora.Event.CrearUsuario": "Crear Usuario",
+  "Bitacora.Event.ModificarUsuario": "Modificar Usuario",
+  "Bitacora.Event.CrearCliente": "Crear Cliente",
+  "Bitacora.Event.CancelarReserva": "Cancelar Reserva",
+  "Bitacora.Event.ImprimirFactura": "Imprimir Factura",
+  "Bitacora.Module.Usuario": "Usuario",
+  "Bitacora.Module.Administrador": "Administrador",
+  "Bitacora.Module.Reserva": "Reserva",
+  "Bitacora.Module.Cobro": "Cobro",
+  "Bitacora.Module.Turno": "Turno",
+  "Bitacora.Mensaje.SinDatos": "No hay datos para imprimir.",
+  "Bitacora.Mensaje.ExportOK": "Bitácora exportada correctamente.",
 
 
-
-
+  "FormBitacora_750VR.label1": "Bitacora Eventos",
+  "FormBitacora_750VR.label2": "Nombre",
+  "FormBitacora_750VR.label3": "Apellido",
+  "FormBitacora_750VR.label4": "Usuario",
+  "FormBitacora_750VR.label5": "Criticidad",
+  "FormBitacora_750VR.label6": "Modulo",
+  "FormBitacora_750VR.label7": "Evento",
+  "FormBitacora_750VR.label8": "Fecha inicio",
+  "FormBitacora_750VR.label9": "Fecha fin",
+  "FormBitacora_750VR.btnlimp": "Limpiar",
+  "FormBitacora_750VR.btnapli": "Aplicar",
+  "FormBitacora_750VR.btnimp": "Imprimir",
+  "FormBitacora_750VR.btnsalir": "Salir"
 
 }

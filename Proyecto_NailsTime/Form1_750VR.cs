@@ -24,9 +24,9 @@ namespace Proyecto_NailsTime
         public FormPrincipal()
         {
             InitializeComponent();
-            db.VerificarOCrearBaseDeDatos();
-            db.VerificarYCrearTablaUsuarios_750VR();
-            db.InsertarServiciosIniciales();
+            //db.VerificarOCrearBaseDeDatos();
+            //db.VerificarYCrearTablaUsuarios_750VR();
+            //db.InsertarServiciosIniciales();
             Lenguaje_750VR.ObtenerInstancia().Agregar(this);
             Lenguaje_750VR.ObtenerInstancia().IdiomaActual = "Español";
 
@@ -236,7 +236,7 @@ namespace Proyecto_NailsTime
 
         private void Respaldos_Click(object sender, EventArgs e)
         {
-            AbrirForm(new FromBackupRestore_750VR());
+            AbrirForm(new FormBackupRestore_750VR());
         }
     }
 }

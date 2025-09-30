@@ -201,11 +201,11 @@
     <Compile Include="FormRegistroProveedores_750VR.Designer.cs">
       <DependentUpon>FormRegistroProveedores_750VR.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromBackupRestore_750VR.cs">
+    <Compile Include="FormBackupRestore_750VR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromBackupRestore_750VR.Designer.cs">
-      <DependentUpon>FromBackupRestore_750VR.cs</DependentUpon>
+    <Compile Include="FormBackupRestore_750VR.Designer.cs">
+      <DependentUpon>FormBackupRestore_750VR.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,8 +275,8 @@
     <EmbeddedResource Include="FormRegistroProveedores_750VR.resx">
       <DependentUpon>FormRegistroProveedores_750VR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromBackupRestore_750VR.resx">
-      <DependentUpon>FromBackupRestore_750VR.cs</DependentUpon>
+    <EmbeddedResource Include="FormBackupRestore_750VR.resx">
+      <DependentUpon>FormBackupRestore_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

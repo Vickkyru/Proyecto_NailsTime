@@ -1,5 +1,6 @@
 ﻿using BLL_VR750;
 using DAL_VR750;
+using SERVICIOS_VR750;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,21 +15,26 @@ using System.Windows.Forms;
 
 namespace Proyecto_NailsTime
 {
-    public partial class FromBackupRestore_750VR : Form
+    public partial class FormBackupRestore_750VR : Form, Iobserver_750VR
     {
-        // Tu cadena actual de la DAL (apunta a tu BD, NO a master)
+      
         private readonly string _conn = BaseDeDatos_750VR.cadena;
 
         private BLLbackUp_750VR _bllBackup;
         private BLLrestore_750VR _bllRestore;
 
-        public FromBackupRestore_750VR()
+        public FormBackupRestore_750VR()
         {
             InitializeComponent();
 
-            // Instanciamos BLL (ellas internamente cambian a master y usan ProyectoNailsTime_VR750)
+            Lenguaje_750VR.ObtenerInstancia().Agregar(this);
+            ActualizarIdioma();
             _bllBackup = new BLLbackUp_750VR(_conn);
             _bllRestore = new BLLrestore_750VR(_conn);
+        }
+        public void ActualizarIdioma()
+        {
+            Lenguaje_750VR.ObtenerInstancia().CambiarIdiomaControles(this);
         }
 
         private void FromBackupRestore_750VR_Load(object sender, EventArgs e)
@@ -38,19 +44,18 @@ namespace Proyecto_NailsTime
             //textBox2.Clear();
             try
             {
-                // Ruta fija donde querés que se guarden los backups
+               
                 string carpetaBackup = @"C:\Users\mavru\OneDrive\Escritorio\hoy\Proyecto_NailsTime\Proyecto_NailsTime\bin\Debug\registrosBackUp";
 
-                // Si no existe la carpeta, la creo
+               
                 if (!Directory.Exists(carpetaBackup))
                 {
                     Directory.CreateDirectory(carpetaBackup);
                 }
 
-                // Armo nombre de archivo con fecha y hora
                 string nombreArchivo = "BCK_" + DateTime.Now.ToString("yyMMdd_HHmm") + ".bak";
 
-                // Seteo la ruta completa en el textbox de Backup
+           
                 textBox1.Text = Path.Combine(carpetaBackup, nombreArchivo);
             }
             catch (Exception ex)
@@ -60,7 +65,7 @@ namespace Proyecto_NailsTime
             }
         }
 
-        // ====== BACKUP ======
+      
         private void btnSeleccionarBackUp_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -73,7 +78,7 @@ namespace Proyecto_NailsTime
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) // Realizar BACKUP
+        private void button1_Click(object sender, EventArgs e) 
         {
             try
             {
@@ -102,7 +107,7 @@ namespace Proyecto_NailsTime
             catch (Exception ex)
             {
                 AppendLog("ERROR backup: " + ex.Message);
-                MessageBox.Show("❌ Error al generar backup:\n" + ex.Message,
+                MessageBox.Show("Error al generar backup:\n" + ex.Message,
                     "Respaldo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -111,7 +116,7 @@ namespace Proyecto_NailsTime
             }
         }
 
-        // ====== RESTORE ======
+       
         private void iconButton1_Click(object sender, EventArgs e)
         {
             using (var ofd = new OpenFileDialog())
@@ -123,7 +128,7 @@ namespace Proyecto_NailsTime
             }
         }
 
-        private void button2_Click(object sender, EventArgs e) // Realizar RESTORE
+        private void button2_Click(object sender, EventArgs e) 
         {
             try
             {
@@ -149,19 +154,16 @@ namespace Proyecto_NailsTime
 
                 ToggleUi(false);
                 AppendLog("Iniciando restore...");
-                // Si necesitás mover MDF/LDF a nuevas rutas, pasalas en los parámetros comentados:
-                // _bllRestore.Restaurar(textBox2.Text, OnInfoMessage,
-                //     @"C:\SQLData\ProyectoNailsTime_VR750.mdf",
-                //     @"C:\SQLData\ProyectoNailsTime_VR750_log.ldf");
+               
                 _bllRestore.Restaurar(textBox2.Text, OnInfoMessage);
                 AppendLog("Restore finalizado.");
-                MessageBox.Show("✅ Base de datos restaurada desde:\n" + textBox2.Text,
+                MessageBox.Show("Base de datos restaurada desde:\n" + textBox2.Text,
                     "Restore", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 AppendLog("ERROR restore: " + ex.Message);
-                MessageBox.Show("❌ Error al restaurar:\n" + ex.Message,
+                MessageBox.Show("Error al restaurar:\n" + ex.Message,
                     "Restore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -170,13 +172,13 @@ namespace Proyecto_NailsTime
             }
         }
 
-        // ====== VOLVER ======
+    
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        // ====== Helpers de UI y Log ======
+        
         private void ToggleUi(bool enabled)
         {
             try
@@ -192,13 +194,13 @@ namespace Proyecto_NailsTime
 
         private void OnInfoMessage(string msg)
         {
-            // Llegan mensajes de STATS=10 del motor (10%, 20%, ...)
+            
             AppendLog(msg);
         }
 
         private void AppendLog(string line)
         {
-            // Si no tenés txtLog, usamos el título del form como fallback.
+            
             Control[] found = this.Controls.Find("txtLog", true);
             if (found != null && found.Length > 0 && found[0] is TextBox)
             {

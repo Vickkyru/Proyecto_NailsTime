@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_NailsTime
 {
-    partial class FromBackupRestore_750VR
+    partial class FormBackupRestore_750VR
     {
         /// <summary>
         /// Required designer variable.
@@ -79,7 +79,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(94, 23);
             this.button3.TabIndex = 17;
-            this.button3.Text = "Volver Inicio";
+            this.button3.Text = "Volver al Inicio";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 

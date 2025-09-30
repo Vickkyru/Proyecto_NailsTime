@@ -31,15 +31,14 @@ namespace Proyecto_NailsTime
             ActivarModoEdicion();
 
         }
-        // ====== Vista actual (BD o XML) ======
+        
         private enum VistaDatos { BD, XML }
         private VistaDatos vistaActual = VistaDatos.BD;
 
-        // ======== SERIALIZACIÓN: campos y helpers ========
         private readonly BLLserializar_750VR _bllSerializar = new BLLserializar_750VR();
         private readonly BLLdesserializar_750VR _bllDeserializar = new BLLdesserializar_750VR();
 
-        // Carpeta fija que pediste (se crea si no existe)
+        
         private static readonly string CarpetaSerializacion =
             @"C:\Users\mavru\OneDrive\Escritorio\hoy\Proyecto_NailsTime\Proyecto_NailsTime\bin\Debug\Serializacion";
 
@@ -54,7 +53,7 @@ namespace Proyecto_NailsTime
             EnsureCarpetaSerializacion();
             return System.IO.Path.Combine(CarpetaSerializacion, "Clientes_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + ".xml");
         }
-        // Muestra lista en grilla, re-aplica headers/colores y deja la UI en consulta
+       
         private void MostrarListaEnGrilla(List<BECliente_750VR> lista, VistaDatos vista)
         {
             dataGridView1.Columns.Clear();
@@ -71,14 +70,14 @@ namespace Proyecto_NailsTime
             btncance.Enabled = false;
         }
 
-        // Toma lo visible en dataGridView1 y lo convierte a List<BECliente_750VR>
+        
         private List<BECliente_750VR> ObtenerClientesDeLaGrilla()
         {
-            // Si ya es lista tipada
+            
             var tipada = dataGridView1.DataSource as IEnumerable<BECliente_750VR>;
             if (tipada != null) return tipada.ToList();
 
-            // Si es DataTable
+            
             var dt = dataGridView1.DataSource as DataTable;
             if (dt != null)
             {
@@ -100,7 +99,7 @@ namespace Proyecto_NailsTime
                 return l;
             }
 
-            // Último recurso: leer celdas
+            
             var listaGrid = new List<BECliente_750VR>();
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -153,7 +152,7 @@ namespace Proyecto_NailsTime
 
             if (vistaActual == VistaDatos.XML)
             {
-                // Tomo directamente lo que está en la fila (no consulto BD)
+                
                 var cli = dataGridView1.SelectedRows[0].DataBoundItem as BECliente_750VR;
                 if (cli == null) return;
 
@@ -170,7 +169,7 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            // Vista BD (tu código original)
+          
             string dniSeleccionado = dataGridView1.SelectedRows[0].Cells["dni_750VR"].Value.ToString();
             BLLCliente_750VR bll = new BLLCliente_750VR();
             var cliente = bll.ObtenerClientePorDNI_750VR(Convert.ToInt32(dniSeleccionado));
@@ -241,11 +240,11 @@ namespace Proyecto_NailsTime
                 return;
             }
 
-            // Validar campos solo si no estamos eliminando ni desbloqueando
+           
             if (!ValidarCampos() && modoActual != "Activar/Desactivar" )
                 return;
 
-            // Ejecutar la acción según el modo
+            
             switch (modoActual)
             {
                 case "añadir":
@@ -767,11 +766,11 @@ namespace Proyecto_NailsTime
                 _bllSerializar.ExportarClientes(destino, lista);
 
                 if (txt != null) txt.Text = destino;
-                MessageBox.Show("✅ Clientes exportados correctamente.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Clientes exportados correctamente.", "XML", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Error al exportar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al exportar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -792,14 +791,14 @@ namespace Proyecto_NailsTime
                 MostrarListaEnGrilla(clientes, VistaDatos.XML);
 
                 MessageBox.Show(
-                    "🔎 Estás viendo datos desde XML (no de BD).\nUsá 'Actualizar' o cualquier operación (Alta/Mod/Activar) para volver a la lista real.",
+                    "Estás viendo datos desde XML (no de BD).\nUsá 'Actualizar' o cualquier operación (Alta/Mod/Activar) para volver a la lista real.",
                     "XML",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Error al importar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al importar: " + ex.Message, "XML", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             modoActual = "desserializar";
@@ -845,6 +844,8 @@ namespace Proyecto_NailsTime
             ResetearEstadoInterfaz();
             modoActual = "actualizar";
             ActivarModoEdicion();
+
+            MessageBox.Show("Se ha actualizado la grilla con los datos actuales de la BD");
         }
 
         private void btnlimpiar_Click(object sender, EventArgs e)
