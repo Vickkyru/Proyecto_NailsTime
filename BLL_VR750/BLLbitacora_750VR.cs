@@ -40,33 +40,33 @@ namespace BLL_VR750
         // =========================
         // USUARIOS (ADMIN)
         // =========================
-        public void CrearUsuario(int dniNuevo) => RegistrarDesdeSesion($"Crear usuario DNI={dniNuevo}", "Administrador", Criticidad_750VR.C1);
-        public void ActivarUsuario(int dni) => RegistrarDesdeSesion($"Activar usuario DNI={dni}", "Administrador", Criticidad_750VR.C1);
-        public void DesactivarUsuario(int dni) => RegistrarDesdeSesion($"Desactivar usuario DNI={dni}", "Administrador", Criticidad_750VR.C1);
-        public void ModificarUsuario(int dni) => RegistrarDesdeSesion($"Modificar usuario DNI={dni}", "Administrador", Criticidad_750VR.C1);
-        public void DesbloquearUsuario(int dni) => RegistrarDesdeSesion($"Desbloquear usuario DNI={dni}", "Administrador", Criticidad_750VR.C1);
-        public void BloquearUsuario(string loginBloqueado) => RegistrarDesdeSesion($"Bloquear usuario Login={loginBloqueado}", "Administrador", Criticidad_750VR.C1);
+        public void CrearUsuario(int dniNuevo) => RegistrarDesdeSesion($"Crear usuario ", "Administrador", Criticidad_750VR.C1);
+        public void ActivarUsuario(int dni) => RegistrarDesdeSesion($"Activar usuario ", "Administrador", Criticidad_750VR.C1);
+        public void DesactivarUsuario(int dni) => RegistrarDesdeSesion($"Desactivar usuario ", "Administrador", Criticidad_750VR.C1);
+        public void ModificarUsuario(int dni) => RegistrarDesdeSesion($"Modificar usuario ", "Administrador", Criticidad_750VR.C1);
+        public void DesbloquearUsuario(int dni) => RegistrarDesdeSesion($"Desbloquear usuario ", "Administrador", Criticidad_750VR.C1);
+        public void BloquearUsuario(string loginBloqueado) => RegistrarDesdeSesion($"Bloquear usuario", "Administrador", Criticidad_750VR.C1);
 
         // =========================
         // CLIENTES (ADMIN)
         // =========================
-        public void CrearCliente(int dni) => RegistrarDesdeSesion($"Crear cliente DNI={dni}", "Administrador", Criticidad_750VR.C2);
-        public void ModificarCliente(int dni) => RegistrarDesdeSesion($"Modificar cliente DNI={dni}", "Administrador", Criticidad_750VR.C2);
+        public void CrearCliente(int dni) => RegistrarDesdeSesion($"Crear cliente", "Administrador", Criticidad_750VR.C2);
+        public void ModificarCliente(int dni) => RegistrarDesdeSesion($"Modificar cliente", "Administrador", Criticidad_750VR.C2);
        
 
         // =========================
         // RESERVAS
         // =========================
-        public void CrearReserva(int idReserva) => RegistrarDesdeSesion($"Crear reserva Id={idReserva}", "Reserva", Criticidad_750VR.C2);
-        public void ModificarReserva(int idReserva) => RegistrarDesdeSesion($"Modificar reserva Id={idReserva}", "Reserva", Criticidad_750VR.C2);
+        public void CrearReserva(int idReserva) => RegistrarDesdeSesion($"Crear reserva", "Reserva", Criticidad_750VR.C2);
+        public void ModificarReserva(int idReserva) => RegistrarDesdeSesion($"Modificar reserva", "Reserva", Criticidad_750VR.C2);
 
         // =========================
         // TURNOS
         // =========================
-        public void TurnoRealizado(int idReserva) => RegistrarDesdeSesion($"Turno realizado Id={idReserva}", "Turno", Criticidad_750VR.C3);
-        public void TurnoCancelado(int idReserva) => RegistrarDesdeSesion($"Turno cancelado Id={idReserva}", "Turno", Criticidad_750VR.C3);
-        public void TurnoAusentado(int idReserva) => RegistrarDesdeSesion($"Turno ausentado Id={idReserva}", "Turno", Criticidad_750VR.C3);
-        public void InsumosUtilizados(int idReserva) => RegistrarDesdeSesion($"Insumos utilizados Reserva={idReserva}", "Turno", Criticidad_750VR.C3);
+        public void TurnoRealizado(int idReserva) => RegistrarDesdeSesion($"Turno realizado", "Turno", Criticidad_750VR.C3);
+        public void TurnoCancelado(int idReserva) => RegistrarDesdeSesion($"Turno cancelado", "Turno", Criticidad_750VR.C3);
+        public void TurnoAusentado(int idReserva) => RegistrarDesdeSesion($"Turno ausentado", "Turno", Criticidad_750VR.C3);
+        public void InsumosUtilizados(int idReserva) => RegistrarDesdeSesion($"Insumos utilizados", "Turno", Criticidad_750VR.C3);
 
         // =========================
         // COBROS
@@ -74,64 +74,64 @@ namespace BLL_VR750
 
         //falta 
         public void CobroRealizado(int codFactura, int idReserva)
-            => RegistrarDesdeSesion($"Cobro realizado Factura={codFactura}, Reserva={idReserva}", "Cobro", Criticidad_750VR.C3);
+            => RegistrarDesdeSesion($"Cobro realizado", "Cobro", Criticidad_750VR.C3);
         public void CobroCancelado(int codFactura, int idReserva)
-            => RegistrarDesdeSesion($"Cobro cancelado Factura={codFactura}, Reserva={idReserva}", "Cobro", Criticidad_750VR.C3);
+            => RegistrarDesdeSesion($"Cobro cancelado", "Cobro", Criticidad_750VR.C3);
 
        
         public void ImprimirFactura(int codFactura)
-            => RegistrarDesdeSesion($"Imprimir factura Cod={codFactura}", "Reportes", Criticidad_750VR.C4);
+            => RegistrarDesdeSesion($"Imprimir factura", "Reportes", Criticidad_750VR.C4);
 
         // =========================
         // DISPONIBILIDAD (ADMIN)
         // =========================
         public void CrearDisponibilidad(int idDisp, int dniManic)
-            => RegistrarDesdeSesion($"Crear disponibilidad Id={idDisp} (DNI manicurista={dniManic})", "Administrador", Criticidad_750VR.C2);
+            => RegistrarDesdeSesion($"Crear disponibilidad", "Administrador", Criticidad_750VR.C2);
         public void ModificarDisponibilidad(int idDisp)
-            => RegistrarDesdeSesion($"Modificar disponibilidad Id={idDisp}", "Administrador", Criticidad_750VR.C2);
+            => RegistrarDesdeSesion($"Modificar disponibilidad", "Administrador", Criticidad_750VR.C2);
     
 
         // =========================
         // INSUMOS (ADMIN)
         // =========================
-        public void CrearInsumo(int codInsumo) => RegistrarDesdeSesion($"Crear insumos Cod={codInsumo}", "Administrador", Criticidad_750VR.C2);
-        public void ModificarInsumo(int codInsumo) => RegistrarDesdeSesion($"Modificar insumos Cod={codInsumo}", "Administrador", Criticidad_750VR.C2);
+        public void CrearInsumo(int codInsumo) => RegistrarDesdeSesion($"Crear insumos", "Administrador", Criticidad_750VR.C2);
+        public void ModificarInsumo(int codInsumo) => RegistrarDesdeSesion($"Modificar insumos", "Administrador", Criticidad_750VR.C2);
      
 
         // =========================
         // SERVICIOS (ADMIN)
         // =========================
-        public void CrearServicio(int idServicio) => RegistrarDesdeSesion($"Crear servicios Id={idServicio}", "Administrador", Criticidad_750VR.C2);
-        public void ModificarServicio(int idServicio) => RegistrarDesdeSesion($"Modificar servicios Id={idServicio}", "Administrador", Criticidad_750VR.C2);
+        public void CrearServicio(int idServicio) => RegistrarDesdeSesion($"Crear servicios", "Administrador", Criticidad_750VR.C2);
+        public void ModificarServicio(int idServicio) => RegistrarDesdeSesion($"Modificar servicios", "Administrador", Criticidad_750VR.C2);
       
 
         // =========================
         // PERFILES / FAMILIAS (ADMIN)
         // =========================
-        public void CrearPerfil(string nombre) => RegistrarDesdeSesion($"Crear perfil '{nombre}'", "Administrador", Criticidad_750VR.C1);
-        public void ModificarPerfil(string nombre) => RegistrarDesdeSesion($"Modificar perfil '{nombre}'", "Administrador", Criticidad_750VR.C1);
-        public void EliminarPerfil(string nombre) => RegistrarDesdeSesion($"Eliminar perfil '{nombre}'", "Administrador", Criticidad_750VR.C1);
+        public void CrearPerfil(string nombre) => RegistrarDesdeSesion($"Crear perfil ", "Administrador", Criticidad_750VR.C1);
+        public void ModificarPerfil(string nombre) => RegistrarDesdeSesion($"Modificar perfil ", "Administrador", Criticidad_750VR.C1);
+        public void EliminarPerfil(string nombre) => RegistrarDesdeSesion($"Eliminar perfil ", "Administrador", Criticidad_750VR.C1);
 
-        public void CrearFamilia(string nombre) => RegistrarDesdeSesion($"Crear familia '{nombre}'", "Administrador", Criticidad_750VR.C1);
-        public void ModificarFamilia(string nombre) => RegistrarDesdeSesion($"Modificar familia '{nombre}'", "Administrador", Criticidad_750VR.C1);
-        public void EliminarFamilia(string nombre) => RegistrarDesdeSesion($"Eliminar familia '{nombre}'", "Administrador", Criticidad_750VR.C1);
+        public void CrearFamilia(string nombre) => RegistrarDesdeSesion($"Crear familia ", "Administrador", Criticidad_750VR.C1);
+        public void ModificarFamilia(string nombre) => RegistrarDesdeSesion($"Modificar familia ", "Administrador", Criticidad_750VR.C1);
+        public void EliminarFamilia(string nombre) => RegistrarDesdeSesion($"Eliminar familia ", "Administrador", Criticidad_750VR.C1);
 
         // =========================
         // COMPRAS / RECEPCIÓN
         // =========================
-        public void SolicitaCotizacion(string nro) => RegistrarDesdeSesion($"Solicita cotización Nro={nro}", "Compra", Criticidad_750VR.C2);
-        public void PreRegistraProveedor(string nombre) => RegistrarDesdeSesion($"Pre-Registra proveedor '{nombre}'", "Compra", Criticidad_750VR.C2);
-        public void GeneraOrdenCompra(string nroOC) => RegistrarDesdeSesion($"Genera Orden de compra Nro={nroOC}", "Compra", Criticidad_750VR.C2);
-        public void RegistraProveedor(string nombre) => RegistrarDesdeSesion($"Registra proveedor '{nombre}'", "Compra", Criticidad_750VR.C2);
-        public void RegistraRecepcion(string nroRemito) => RegistrarDesdeSesion($"Registra recepción Remito={nroRemito}", "Recepción", Criticidad_750VR.C2);
+        public void SolicitaCotizacion(string nro) => RegistrarDesdeSesion($"Solicita cotización ", "Compra", Criticidad_750VR.C2);
+        public void PreRegistraProveedor(string nombre) => RegistrarDesdeSesion($"Pre-Registra proveedor ", "Compra", Criticidad_750VR.C2);
+        public void GeneraOrdenCompra(string nroOC) => RegistrarDesdeSesion($"Genera Orden de compra ", "Compra", Criticidad_750VR.C2);
+        public void RegistraProveedor(string nombre) => RegistrarDesdeSesion($"Registra proveedor ", "Compra", Criticidad_750VR.C2);
+        public void RegistraRecepcion(string nroRemito) => RegistrarDesdeSesion($"Registra recepción ", "Recepción", Criticidad_750VR.C2);
 
         // =========================
         // BACKUP / RESTORE / SERIALIZACIÓN (ADMIN)
         // =========================
-        public void BackupEjecutado(string destino) => RegistrarDesdeSesion($"Back up -> {destino}", "Administrador", Criticidad_750VR.C1);
-        public void RestoreEjecutado(string origen) => RegistrarDesdeSesion($"Restore <- {origen}", "Administrador", Criticidad_750VR.C1);
-        public void Serializar(string archivo) => RegistrarDesdeSesion($"Serializar archivo '{archivo}'", "Administrador", Criticidad_750VR.C4);
-        public void DesSerializar(string archivo) => RegistrarDesdeSesion($"DesSerializar archivo '{archivo}'", "Administrador", Criticidad_750VR.C4);
+        public void BackupEjecutado(string destino) => RegistrarDesdeSesion($"Back up ", "Administrador", Criticidad_750VR.C1);
+        public void RestoreEjecutado(string origen) => RegistrarDesdeSesion($"Restore ", "Administrador", Criticidad_750VR.C1);
+        public void Serializar(string archivo) => RegistrarDesdeSesion($"Serializar archivo ", "Administrador", Criticidad_750VR.C4);
+        public void DesSerializar(string archivo) => RegistrarDesdeSesion($"DesSerializar archivo ", "Administrador", Criticidad_750VR.C4);
 
         // =========================
         // GENÉRICO

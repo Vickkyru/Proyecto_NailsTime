@@ -25,7 +25,60 @@
   "FormPrincipal.MensajeUsuario": "Bienvenido {0} - Rol: {1}",
   "FormPrincipal.cambiarIdioma": "Cambiar idioma",
 
+  "ComboBox.Seleccione": "-- Seleccione --",
 
+  "Bitacora.Event.Login": "Iniciar sesión",
+  "Bitacora.Event.Logout": "Cerrar sesión",
+  "Bitacora.Event.CambioClave": "Cambio de clave",
+
+  "Bitacora.Event.CrearUsuario": "Crear usuario",
+  "Bitacora.Event.ActivarUsuario": "Activar usuario",
+  "Bitacora.Event.DesactivarUsuario": "Desactivar usuario",
+  "Bitacora.Event.ModificarUsuario": "Modificar usuario",
+  "Bitacora.Event.DesbloquearUsuario": "Desbloquear usuario",
+  "Bitacora.Event.BloquearUsuario": "Bloquear usuario",
+
+  "Bitacora.Event.CrearCliente": "Crear cliente",
+  "Bitacora.Event.ModificarCliente": "Modificar cliente",
+
+  "Bitacora.Event.CrearReserva": "Crear reserva",
+  "Bitacora.Event.ModificarReserva": "Modificar reserva",
+
+  "Bitacora.Event.TurnoRealizado": "Turno realizado",
+  "Bitacora.Event.TurnoCancelado": "Turno cancelado",
+  "Bitacora.Event.TurnoAusentado": "Turno ausentado",
+  "Bitacora.Event.InsumosUtilizados": "Insumos utilizados",
+
+  "Bitacora.Event.CobroRealizado": "Cobro realizado",
+  "Bitacora.Event.CobroCancelado": "Cobro cancelado",
+  "Bitacora.Event.ImprimirFactura": "Imprimir factura",
+
+  "Bitacora.Event.CrearDisponibilidad": "Crear disponibilidad",
+  "Bitacora.Event.ModificarDisponibilidad": "Modificar disponibilidad",
+
+  "Bitacora.Event.CrearInsumos": "Crear insumos",
+  "Bitacora.Event.ModificarInsumos": "Modificar insumos",
+
+  "Bitacora.Event.CrearServicios": "Crear servicios",
+  "Bitacora.Event.ModificarServicios": "Modificar servicios",
+
+  "Bitacora.Event.CrearPerfil": "Crear perfil",
+  "Bitacora.Event.ModificarPerfil": "Modificar perfil",
+  "Bitacora.Event.EliminarPerfil": "Eliminar perfil",
+  "Bitacora.Event.CrearFamilia": "Crear familia",
+  "Bitacora.Event.ModificarFamilia": "Modificar familia",
+  "Bitacora.Event.EliminarFamilia": "Eliminar familia",
+
+  "Bitacora.Event.SolicitaCotizacion": "Solicita cotización",
+  "Bitacora.Event.PreRegistraProveedor": "Pre-Registra proveedor",
+  "Bitacora.Event.GeneraOC": "Genera Orden de compra",
+  "Bitacora.Event.RegistraProveedor": "Registra proveedor",
+  "Bitacora.Event.RegistraRecepcion": "Registra recepción",
+
+  "Bitacora.Event.Backup": "Back up",
+  "Bitacora.Event.Restore": "Restore",
+  "Bitacora.Event.Serializar": "Serializar",
+  "Bitacora.Event.DesSerializar": "DesSerializar",
 
   "FormLogIn.Text": "Form inicio sesion",
   "FormLogIn.label2": "Usuario",
@@ -342,7 +395,7 @@
   "FormABMdisponibilidad.Mensaje.modificar": "Modo Modificar",
   "FormABMdisponibilidad.Mensaje.consulta": "Modo Consulta",
   "FormABMdisponibilidad.Mensaje.cambiarEstado": "Activar / Desactivar",
-  "ComboBox.Seleccione": "-- Seleccione --",
+
   "FormABMdisponibilidad_750VR.DisponibilidadYaExiste": "Ya existe esa disponibilidad del manicurista, fecha y tiempo.",
   "FormABMdisponibilidad_750VR.DisponibilidadCreada": "Disponibilidad creada .",
   "FormABMdisponibilidad_750VR.ErrorCrearDisponibilidad": "Error al crear disponibilidad",
@@ -633,13 +686,16 @@
   "FormCrearPerfiles.FamiliaModificadaOK": "Familia modificada correctamente.",
 
 
-  "FromBackupRestore_750VR.label1": "Respaldos",
-  "FromBackupRestore_750VR.label3": "Respaldo",
-  "FromBackupRestore_750VR.btnSeleccionarBackUp": "",
-  "FromBackupRestore_750VR.iconButton1": "",
-  "FromBackupRestore_750VR.button1": "Realizar",
-  "FromBackupRestore_750VR.button2": "Realizar",
-  "FromBackupRestore_750VR.button3": "Volver al inicio",
+  "FormBackupRestore_750VR.label1": "Respaldos",
+  "FormBackupRestore_750VR.label3": "Respaldo",
+  "FormBackupRestore_750VR.label2": "Restaurar",
+  "FormBackupRestore_750VR.button4": "Limpiar",
+  "FormBackupRestore_750VR.btnSeleccionarBackUp": "",
+  "FormBackupRestore_750VR.iconButton1": "",
+  "FormBackupRestore_750VR.button1": "Realizar",
+  "FormBackupRestore_750VR.button2": "Realizar",
+  "FormBackupRestore_750VR.button3": "Volver al inicio",
+
 
   "BitacoraPDF.Titulo": "Bitácora de Eventos",
   "BitacoraPDF.Login": "Usuario",
@@ -654,13 +710,7 @@
   "Bitacora.Grid.Modulo": "Módulo",
   "Bitacora.Grid.Evento": "Evento",
   "Bitacora.Grid.Criticidad": "Criticidad",
-  "Bitacora.Event.Login": "Login",
-  "Bitacora.Event.Logout": "Logout",
-  "Bitacora.Event.CrearUsuario": "Crear Usuario",
-  "Bitacora.Event.ModificarUsuario": "Modificar Usuario",
-  "Bitacora.Event.CrearCliente": "Crear Cliente",
-  "Bitacora.Event.CancelarReserva": "Cancelar Reserva",
-  "Bitacora.Event.ImprimirFactura": "Imprimir Factura",
+
   "Bitacora.Module.Usuario": "Usuario",
   "Bitacora.Module.Administrador": "Administrador",
   "Bitacora.Module.Reserva": "Reserva",
@@ -726,5 +776,5 @@
   "Bitacora.NoDatos": "No hay datos para imprimir.",
   "Bitacora.ExportadaOk": "Bitácora exportada correctamente."
 
- 
+
 }

@@ -25,6 +25,61 @@
   "FormPrincipal.cambiarIdioma": "Change Language",
   "FormPrincipal.label1": "",
 
+  "ComboBox.Seleccione": "-- Select --",
+
+  "Bitacora.Event.Login": "Login",
+  "Bitacora.Event.Logout": "Logout",
+  "Bitacora.Event.CambioClave": "Change password",
+
+  "Bitacora.Event.CrearUsuario": "Create user",
+  "Bitacora.Event.ActivarUsuario": "Activate user",
+  "Bitacora.Event.DesactivarUsuario": "Deactivate user",
+  "Bitacora.Event.ModificarUsuario": "Modify user",
+  "Bitacora.Event.DesbloquearUsuario": "Unlock user",
+  "Bitacora.Event.BloquearUsuario": "Block user",
+
+  "Bitacora.Event.CrearCliente": "Create client",
+  "Bitacora.Event.ModificarCliente": "Modify client",
+
+  "Bitacora.Event.CrearReserva": "Create reservation",
+  "Bitacora.Event.ModificarReserva": "Modify reservation",
+
+  "Bitacora.Event.TurnoRealizado": "Appointment completed",
+  "Bitacora.Event.TurnoCancelado": "Appointment cancelled",
+  "Bitacora.Event.TurnoAusentado": "No-show appointment",
+  "Bitacora.Event.InsumosUtilizados": "Supplies used",
+
+  "Bitacora.Event.CobroRealizado": "Payment completed",
+  "Bitacora.Event.CobroCancelado": "Payment cancelled",
+  "Bitacora.Event.ImprimirFactura": "Print invoice",
+
+  "Bitacora.Event.CrearDisponibilidad": "Create availability",
+  "Bitacora.Event.ModificarDisponibilidad": "Modify availability",
+
+  "Bitacora.Event.CrearInsumos": "Create supplies",
+  "Bitacora.Event.ModificarInsumos": "Modify supplies",
+
+  "Bitacora.Event.CrearServicios": "Create services",
+  "Bitacora.Event.ModificarServicios": "Modify services",
+
+  "Bitacora.Event.CrearPerfil": "Create profile",
+  "Bitacora.Event.ModificarPerfil": "Modify profile",
+  "Bitacora.Event.EliminarPerfil": "Delete profile",
+  "Bitacora.Event.CrearFamilia": "Create family",
+  "Bitacora.Event.ModificarFamilia": "Modify family",
+  "Bitacora.Event.EliminarFamilia": "Delete family",
+
+  "Bitacora.Event.SolicitaCotizacion": "Request quotation",
+  "Bitacora.Event.PreRegistraProveedor": "Pre-register supplier",
+  "Bitacora.Event.GeneraOC": "Generate purchase order",
+  "Bitacora.Event.RegistraProveedor": "Register supplier",
+  "Bitacora.Event.RegistraRecepcion": "Register reception",
+
+  "Bitacora.Event.Backup": "Backup",
+  "Bitacora.Event.Restore": "Restore",
+  "Bitacora.Event.Serializar": "Serialize",
+  "Bitacora.Event.DesSerializar": "Deserialize",
+
   "FormLogIn.Text": "Login Form",
   "FormLogIn.label2": "Username",
   "FormLogIn.label3": "Password",
@@ -321,7 +376,7 @@
   "FormABMdisponibilidad.Mensaje.modificar": "Edit mode",
   "FormABMdisponibilidad.Mensaje.consulta": "View mode",
   "FormABMdisponibilidad.Mensaje.cambiarEstado": "Activate/Deactivate",
-  "ComboBox.Seleccione": "-- Select --",
+
   "FormABMdisponibilidad_750VR.DisponibilidadYaExiste": "That availability for the manicurist, date and time already exists.",
   "FormABMdisponibilidad_750VR.DisponibilidadCreada": "Availability created.",
   "FormABMdisponibilidad_750VR.ErrorCrearDisponibilidad": "Error creating availability",
@@ -602,13 +657,15 @@
   "FormCrearPerfiles.PerfilModificadoOK": "Profile modified successfully.",
   "FormCrearPerfiles.FamiliaModificadaOK": "Family modified successfully.",
 
-  "FromBackupRestore_750VR.label1": "Backups",
-  "FromBackupRestore_750VR.label3": "Backup",
-  "FromBackupRestore_750VR.btnSeleccionarBackUp": "",
-  "FromBackupRestore_750VR.iconButton1": "",
-  "FromBackupRestore_750VR.button1": "Run",
-  "FromBackupRestore_750VR.button2": "Run",
-  "FromBackupRestore_750VR.button3": "Back to Home",
+  "FormBackupRestore_750VR.label1": "Backups",
+  "FormBackupRestore_750VR.label3": "Backup",
+  "FormBackupRestore_750VR.label2": "Restore",
+  "FormBackupRestore_750VR.button4": "Clean",
+  "FormBackupRestore_750VR.btnSeleccionarBackUp": "",
+  "FormBackupRestore_750VR.iconButton1": "",
+  "FormBackupRestore_750VR.button1": "Run",
+  "FormBackupRestore_750VR.button2": "Run",
+  "FormBackupRestore_750VR.button3": "Back to Home",
 
   "FormBitacora_750VR.label1": "Event Log",
   "FormBitacora_750VR.label2": "First Name",
@@ -629,13 +686,7 @@
   "Bitacora.Grid.Modulo": "Module",
   "Bitacora.Grid.Evento": "Event",
   "Bitacora.Grid.Criticidad": "Severity",
-  "Bitacora.Event.Login": "Login",
-  "Bitacora.Event.Logout": "Logout",
-  "Bitacora.Event.CrearUsuario": "Create User",
-  "Bitacora.Event.ModificarUsuario": "Edit User",
-  "Bitacora.Event.CrearCliente": "Create Client",
-  "Bitacora.Event.CancelarReserva": "Cancel Booking",
-  "Bitacora.Event.ImprimirFactura": "Print Invoice",
+
   "Bitacora.Module.Usuario": "User",
   "Bitacora.Module.Administrador": "Admin",
   "Bitacora.Module.Reserva": "Booking",

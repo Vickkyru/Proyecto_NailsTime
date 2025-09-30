@@ -45,8 +45,8 @@
             this.cmbeve = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.btnapli = new System.Windows.Forms.Button();
             this.btnimp = new System.Windows.Forms.Button();
             this.btnsalir = new System.Windows.Forms.Button();
@@ -98,6 +98,7 @@
             this.cmblog.Name = "cmblog";
             this.cmblog.Size = new System.Drawing.Size(121, 21);
             this.cmblog.TabIndex = 4;
+            this.cmblog.SelectedIndexChanged += new System.EventHandler(this.cmblog_SelectedIndexChanged);
             // 
             // txtnom
             // 
@@ -200,19 +201,21 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "Fecha fin";
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(326, 324);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 17;
-            // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(326, 300);
+            this.dateTimePicker2.Location = new System.Drawing.Point(326, 324);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 18;
+            this.dateTimePicker2.TabIndex = 17;
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(326, 300);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 18;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // btnapli
             // 
@@ -242,6 +245,7 @@
             this.btnsalir.TabIndex = 21;
             this.btnsalir.Text = "Salir";
             this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
             // 
             // FormBitacora_750VR
             // 
@@ -252,8 +256,8 @@
             this.Controls.Add(this.btnsalir);
             this.Controls.Add(this.btnimp);
             this.Controls.Add(this.btnapli);
-            this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
@@ -299,8 +303,8 @@
         private System.Windows.Forms.ComboBox cmbeve;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button btnapli;
         private System.Windows.Forms.Button btnimp;
         private System.Windows.Forms.Button btnsalir;
