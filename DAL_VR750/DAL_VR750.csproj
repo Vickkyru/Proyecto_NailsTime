@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="BaseDeDatos_750VR.cs" />
     <Compile Include="DALbackUp_750VR.cs" />
+    <Compile Include="DALbitacoraCambios_750VR.cs" />
     <Compile Include="DALbitacora_750VR.cs" />
     <Compile Include="DALdesserializar_750VR.cs" />
     <Compile Include="DALdisponibilidad_750VR.cs" />

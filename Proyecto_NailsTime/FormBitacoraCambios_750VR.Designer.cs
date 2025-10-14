@@ -36,8 +36,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtnom = new System.Windows.Forms.TextBox();
-            this.cmblog = new System.Windows.Forms.ComboBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.cmbInsumo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnlimp = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,6 +53,7 @@
             this.btnsalir.TabIndex = 43;
             this.btnsalir.Text = "Salir";
             this.btnsalir.UseVisualStyleBackColor = true;
+            this.btnsalir.Click += new System.EventHandler(this.btnsalir_Click);
             // 
             // btnimp
             // 
@@ -62,6 +63,7 @@
             this.btnimp.TabIndex = 42;
             this.btnimp.Text = "Activar";
             this.btnimp.UseVisualStyleBackColor = true;
+            this.btnimp.Click += new System.EventHandler(this.btnimp_Click);
             // 
             // btnapli
             // 
@@ -71,6 +73,7 @@
             this.btnapli.TabIndex = 41;
             this.btnapli.Text = "Aplicar";
             this.btnapli.UseVisualStyleBackColor = true;
+            this.btnapli.Click += new System.EventHandler(this.btnapli_Click);
             // 
             // dateTimePicker1
             // 
@@ -113,20 +116,20 @@
             this.label4.TabIndex = 30;
             this.label4.Text = "Cod insumo";
             // 
-            // txtnom
+            // txtNombre
             // 
-            this.txtnom.Location = new System.Drawing.Point(115, 326);
-            this.txtnom.Name = "txtnom";
-            this.txtnom.Size = new System.Drawing.Size(121, 20);
-            this.txtnom.TabIndex = 27;
+            this.txtNombre.Location = new System.Drawing.Point(115, 326);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(121, 20);
+            this.txtNombre.TabIndex = 27;
             // 
-            // cmblog
+            // cmbInsumo
             // 
-            this.cmblog.FormattingEnabled = true;
-            this.cmblog.Location = new System.Drawing.Point(115, 295);
-            this.cmblog.Name = "cmblog";
-            this.cmblog.Size = new System.Drawing.Size(121, 21);
-            this.cmblog.TabIndex = 26;
+            this.cmbInsumo.FormattingEnabled = true;
+            this.cmbInsumo.Location = new System.Drawing.Point(115, 295);
+            this.cmbInsumo.Name = "cmbInsumo";
+            this.cmbInsumo.Size = new System.Drawing.Size(121, 21);
+            this.cmbInsumo.TabIndex = 26;
             // 
             // label2
             // 
@@ -145,6 +148,7 @@
             this.btnlimp.TabIndex = 24;
             this.btnlimp.Text = "Limpiar";
             this.btnlimp.UseVisualStyleBackColor = true;
+            this.btnlimp.Click += new System.EventHandler(this.btnlimp_Click);
             // 
             // label1
             // 
@@ -177,14 +181,15 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtnom);
-            this.Controls.Add(this.cmblog);
+            this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.cmbInsumo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnlimp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "FormBitacoraCambios_750VR";
             this.Text = "FormBitacoraCambios_750VR";
+            this.Load += new System.EventHandler(this.FormBitacoraCambios_750VR_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -201,8 +206,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtnom;
-        private System.Windows.Forms.ComboBox cmblog;
+        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.ComboBox cmbInsumo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnlimp;
         private System.Windows.Forms.Label label1;
