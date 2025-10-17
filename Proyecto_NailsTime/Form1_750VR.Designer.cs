@@ -33,6 +33,7 @@
             this.gestionUsuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionPerfiles = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraEvento = new System.Windows.Forms.ToolStripMenuItem();
+            this.Respaldos = new System.Windows.Forms.ToolStripMenuItem();
             this.pestañaMaestros = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMclientes = new System.Windows.Forms.ToolStripMenuItem();
             this.ABMservicios = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,7 @@
             this.pestañaAyuda = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Respaldos = new System.Windows.Forms.ToolStripMenuItem();
+            this.InsumosC = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -111,13 +112,21 @@
             this.bitacoraEvento.Text = "Bitacora";
             this.bitacoraEvento.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click);
             // 
+            // Respaldos
+            // 
+            this.Respaldos.Name = "Respaldos";
+            this.Respaldos.Size = new System.Drawing.Size(223, 26);
+            this.Respaldos.Text = "Respaldos";
+            this.Respaldos.Click += new System.EventHandler(this.Respaldos_Click);
+            // 
             // pestañaMaestros
             // 
             this.pestañaMaestros.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ABMclientes,
             this.ABMservicios,
             this.ABMhorarios,
-            this.ABMinsumos});
+            this.ABMinsumos,
+            this.InsumosC});
             this.pestañaMaestros.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pestañaMaestros.Name = "pestañaMaestros";
             this.pestañaMaestros.Size = new System.Drawing.Size(123, 25);
@@ -126,28 +135,28 @@
             // ABMclientes
             // 
             this.ABMclientes.Name = "ABMclientes";
-            this.ABMclientes.Size = new System.Drawing.Size(146, 26);
+            this.ABMclientes.Size = new System.Drawing.Size(180, 26);
             this.ABMclientes.Text = "Clientes";
             this.ABMclientes.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
             // ABMservicios
             // 
             this.ABMservicios.Name = "ABMservicios";
-            this.ABMservicios.Size = new System.Drawing.Size(146, 26);
+            this.ABMservicios.Size = new System.Drawing.Size(180, 26);
             this.ABMservicios.Text = "Servicios";
             this.ABMservicios.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
             // ABMhorarios
             // 
             this.ABMhorarios.Name = "ABMhorarios";
-            this.ABMhorarios.Size = new System.Drawing.Size(146, 26);
+            this.ABMhorarios.Size = new System.Drawing.Size(180, 26);
             this.ABMhorarios.Text = "Horarios";
             this.ABMhorarios.Click += new System.EventHandler(this.personalToolStripMenuItem_Click);
             // 
             // ABMinsumos
             // 
             this.ABMinsumos.Name = "ABMinsumos";
-            this.ABMinsumos.Size = new System.Drawing.Size(146, 26);
+            this.ABMinsumos.Size = new System.Drawing.Size(180, 26);
             this.ABMinsumos.Text = "Insumos";
             this.ABMinsumos.Click += new System.EventHandler(this.insumosToolStripMenuItem1_Click);
             // 
@@ -263,12 +272,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Bienvenido: ";
             // 
-            // Respaldos
+            // InsumosC
             // 
-            this.Respaldos.Name = "Respaldos";
-            this.Respaldos.Size = new System.Drawing.Size(223, 26);
-            this.Respaldos.Text = "Respaldos";
-            this.Respaldos.Click += new System.EventHandler(this.Respaldos_Click);
+            this.InsumosC.Name = "InsumosC";
+            this.InsumosC.Size = new System.Drawing.Size(180, 26);
+            this.InsumosC.Text = "Insumos - C";
+            this.InsumosC.Click += new System.EventHandler(this.InsumosC_Click);
             // 
             // FormPrincipal
             // 
@@ -318,6 +327,7 @@
         private System.Windows.Forms.ToolStripMenuItem Facturas;
         private System.Windows.Forms.ToolStripMenuItem bitacoraEvento;
         private System.Windows.Forms.ToolStripMenuItem Respaldos;
+        private System.Windows.Forms.ToolStripMenuItem InsumosC;
     }
 }
 
