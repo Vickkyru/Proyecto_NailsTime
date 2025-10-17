@@ -20,7 +20,7 @@ namespace DAL_VR750
                     SELECT * FROM InsumoCambios_VR750
                     WHERE
                         (@CodInsumo IS NULL OR CodInsumo_750VR = @CodInsumo)
-                        AND (@Nombre IS NULL OR nombre_750VR LIKE '%' + @Nombre + '%')
+                        AND (@Nombre IS NULL OR nombre_VR750 LIKE '%' + @Nombre + '%')
                         AND (Fecha BETWEEN @FechaInicio AND @FechaFin)
                     ORDER BY Fecha DESC, Hora DESC";
 
@@ -41,12 +41,12 @@ namespace DAL_VR750
                                 CodInsumo_750VR = Convert.ToInt32(reader["CodInsumo_750VR"]),
                                 Fecha = Convert.ToDateTime(reader["Fecha"]),
                                 Hora = (TimeSpan)reader["Hora"],
-                                nombre_750VR = reader["nombre_750VR"].ToString(),
-                                descripcion_750VR = reader["descripcion_750VR"].ToString(),
-                                cantidadActual_750VR = Convert.ToInt32(reader["cantidadActual_750VR"]),
-                                stockMinimo_750VR = Convert.ToInt32(reader["stockMinimo_750VR"]),
-                                unidadMedida_750VR = reader["unidadMedida_750VR"].ToString(),
-                                activo_750VR = Convert.ToBoolean(reader["activo_750VR"]),
+                                nombre_750VR = reader["nombre_VR750"].ToString(),
+                                descripcion_750VR = reader["descripcion_VR750"].ToString(),
+                                cantidadActual_750VR = Convert.ToInt32(reader["cantidadActual_VR750"]),
+                                stockMinimo_750VR = Convert.ToInt32(reader["stockMinimo_VR750"]),
+                                unidadMedida_750VR = reader["unidadMedida_VR750"].ToString(),
+                                activo_750VR = Convert.ToBoolean(reader["activo_VR750"]),
                                 Act = Convert.ToBoolean(reader["Act"])
                             });
                         }

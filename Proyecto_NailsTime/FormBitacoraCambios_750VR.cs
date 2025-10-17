@@ -25,12 +25,25 @@ namespace Proyecto_NailsTime
             CargarComboInsumos();
             dateTimePicker1.Value = DateTime.Now.AddDays(-3);
             dateTimePicker2.Value = DateTime.Now;
+            CargarTodosLosCambios();
+        }
+
+        private void CargarTodosLosCambios()
+        {
+            // Muestra los últimos 30 días por defecto
+            DateTime fechaInicio = DateTime.Now.AddDays(-30);
+            DateTime fechaFin = DateTime.Now;
+
+            var lista = bllCambios.ObtenerCambios(null, null, fechaInicio, fechaFin);
+            dataGridView1.DataSource = lista;
+
+            FormatearGrilla();
         }
 
         private void CargarComboInsumos()
         {
             var bllInsumo = new BLLinsumos_750VR();
-            var lista = bllInsumo.LeerInsumosActivos_750VR();
+            var lista = bllInsumo.LeerInsumos_750VR();
 
             cmbInsumo.DataSource = lista;
             cmbInsumo.DisplayMember = "nombre_750VR";
@@ -47,6 +60,7 @@ namespace Proyecto_NailsTime
 
             var lista = bllCambios.ObtenerCambios(codInsumo, nombre, fechaInicio, fechaFin);
             dataGridView1.DataSource = lista;
+            FormatearGrilla();
         }
 
         private void btnlimp_Click(object sender, EventArgs e)
@@ -56,6 +70,29 @@ namespace Proyecto_NailsTime
             dateTimePicker1.Value = DateTime.Now.AddDays(-3);
             dateTimePicker2.Value = DateTime.Now;
             dataGridView1.DataSource = null;
+            CargarTodosLosCambios();
+        }
+        private void FormatearGrilla()
+        {
+            if (dataGridView1.Columns.Contains("Act"))
+            {
+                // Mostrar claramente los activos/inactivos
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    bool activo = Convert.ToBoolean(row.Cells["Act"].Value);
+                    row.DefaultCellStyle.BackColor = activo ? System.Drawing.Color.LightGreen : System.Drawing.Color.MistyRose;
+                }
+            }
+
+            // Ajustar columnas visuales
+            dataGridView1.Columns["CodInsumo_750VR"].HeaderText = "Código";
+            dataGridView1.Columns["nombre_750VR"].HeaderText = "Nombre";
+            dataGridView1.Columns["descripcion_750VR"].HeaderText = "Descripción";
+            dataGridView1.Columns["cantidadActual_750VR"].HeaderText = "Cantidad";
+            dataGridView1.Columns["stockMinimo_750VR"].HeaderText = "Stock Mínimo";
+            dataGridView1.Columns["unidadMedida_750VR"].HeaderText = "Unidad";
+            //dataGridView1.Columns["activo_750VR"].HeaderText = "Activo BD";
+            dataGridView1.Columns["Act"].HeaderText = "Versión Activa";
         }
 
         private void btnimp_Click(object sender, EventArgs e)

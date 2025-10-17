@@ -232,6 +232,26 @@ END;
         );
     END;
 
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_NAME = 'InsumoCambios_VR750'
+    )
+    BEGIN
+        CREATE TABLE InsumoCambios_VR750 (
+            IdCambio_VR750 INT PRIMARY KEY IDENTITY(1,1),
+            CodInsumo_750VR INT NOT NULL,
+            Fecha DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
+            Hora TIME(0) NOT NULL DEFAULT CAST(GETDATE() AS TIME(0)),
+            Nombre_VR750 NVARCHAR(100) NOT NULL,
+            Descripcion_VR750 NVARCHAR(255),
+            CantidadActual_VR750 INT NOT NULL,
+            StockMinimo_VR750 INT NOT NULL,
+            UnidadMedida_VR750 NVARCHAR(50) NOT NULL,
+            Activo_VR750 BIT NOT NULL DEFAULT 1,
+            Act BIT NOT NULL DEFAULT 1,
+            FOREIGN KEY (CodInsumo_750VR) REFERENCES Insumo_VR750(CodInsumo_VR750)
+        );
+    END;
 
 
 -- Tabla de Permisos
@@ -350,6 +370,42 @@ BEGIN
     -- Validación de rango de criticidad
     ALTER TABLE EVENTOS_VR750
       ADD CONSTRAINT CK_EVENTOS_Criticidad_Rango CHECK (Criticidad BETWEEN 1 AND 5);
+END;
+
+IF NOT EXISTS (
+    SELECT * FROM sys.triggers WHERE name = 'TRG_InsumosCambios_VR750'
+)
+BEGIN
+    EXEC('
+    CREATE TRIGGER TRG_InsumosCambios_VR750
+    ON Insumo_VR750
+    AFTER INSERT, UPDATE
+    AS
+    BEGIN
+        SET NOCOUNT ON;
+
+        UPDATE InsumoCambios_VR750
+        SET Act = 0
+        WHERE CodInsumo_750VR IN (SELECT CodInsumo_VR750 FROM inserted);
+
+        INSERT INTO InsumoCambios_VR750
+        (CodInsumo_750VR, Fecha, Hora, Nombre_VR750, Descripcion_VR750,
+         CantidadActual_VR750, StockMinimo_VR750, UnidadMedida_VR750,
+         Activo_VR750, Act)
+        SELECT 
+            i.CodInsumo_VR750,
+            CAST(GETDATE() AS DATE),
+            CAST(GETDATE() AS TIME(0)),
+            i.Nombre_VR750,
+            i.Descripcion_VR750,
+            i.CantidadActual_VR750,
+            i.StockMinimo_VR750,
+            i.UnidadMedida_VR750,
+            i.Activo_VR750,
+            1
+        FROM inserted i;
+    END
+    ');
 END;
 ";
                 using (SqlCommand cmd = new SqlCommand(verificarTabla, conn))
