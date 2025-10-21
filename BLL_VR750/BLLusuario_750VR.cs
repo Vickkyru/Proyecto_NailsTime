@@ -29,22 +29,40 @@ namespace BLL_VR750
             return lista.Where(u => u.rol_750VR.ToLower() == "manicurista" && u.activo_750VR).ToList();
         }
 
-        public BEusuario_750VR AutenticarEIniciarSesion_750VR(string login, string password)
+        public BE_VR750.BEusuario_750VR AutenticarEIniciarSesion_750VR(
+      string login, string password,
+      out bool esAdmin, out bool requiereReparacion)
         {
+            requiereReparacion = false;
+            esAdmin = false;
+
             // 1) Credenciales
             var usuario = dal.recuperarUsuario_750VR(login, password);
+            if (usuario == null)
+                throw new Exception(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.CredencialesInvalidas"));
 
-            // 2) Idioma de sesión (usa tu valor guardado; sino “Español”)
-            SessionManager_750VR.IdiomaActual = string.IsNullOrWhiteSpace(usuario.idioma_750VR)
-                                                ? "Español"
-                                                : usuario.idioma_750VR;
+            // 2) ¿Es admin? -> según rol_750VR
+            esAdmin = (!string.IsNullOrWhiteSpace(usuario.rol_750VR) &&
+                       usuario.rol_750VR.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
 
-            // 3) Iniciar sesión
+            // 3) Detección DV (sin persistir)
+            var gen = DVService_750VR.GenerarDV_BD_SinPersistir();
+            var db = DVService_750VR.LeerDV_Persistido();
+            requiereReparacion = (gen.DVH_DB != db.DVH_DB) || (gen.DVV_DB != db.DVV_DB);
+
+            if (requiereReparacion && !esAdmin)
+                throw new Exception(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.ProblemaSistemaContacteAdmin"));
+
+            // 4) Idioma de sesión
+            SessionManager_750VR.IdiomaActual =
+                string.IsNullOrWhiteSpace(usuario.idioma_750VR) ? "Español" : usuario.idioma_750VR;
+
+            // 5) Iniciar sesión
             var sesionOK = SessionManager_750VR.ObtenerInstancia.IniciarSesion_750VR(usuario);
             if (!sesionOK)
                 throw new Exception(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.SesionActiva"));
 
-            // 4) Bitácora
+            // 6) Bitácora
             _log.LoginOK();
 
             return usuario;

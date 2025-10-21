@@ -213,6 +213,12 @@
     <Compile Include="FormBackupRestore_750VR.Designer.cs">
       <DependentUpon>FormBackupRestore_750VR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReparacionDV_750VR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReparacionDV_750VR.Designer.cs">
+      <DependentUpon>FormReparacionDV_750VR.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -286,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBackupRestore_750VR.resx">
       <DependentUpon>FormBackupRestore_750VR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReparacionDV_750VR.resx">
+      <DependentUpon>FormReparacionDV_750VR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

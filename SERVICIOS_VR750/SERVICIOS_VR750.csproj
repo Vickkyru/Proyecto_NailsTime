@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Archivo_750VR.cs" />
+    <Compile Include="DVService_750VR.cs" />
     <Compile Include="Encriptador_750VR.cs" />
     <Compile Include="GestorPermisos_750VR.cs" />
     <Compile Include="Iobserver_750VR.cs" />

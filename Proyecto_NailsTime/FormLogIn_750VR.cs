@@ -52,10 +52,26 @@ namespace Proyecto_NailsTime
 
             try
             {
-                // ⬇️ La BLL hace: validar + setear idioma + iniciar sesión + loguear bitácora
-                BEusuario_750VR usuario = bll.AutenticarEIniciarSesion_750VR(login, password);
+                bool esAdmin, requiereReparacion;
 
-                // ---- lo demás como lo tenías ----
+                // La BLL hace: validar credenciales -> calcula DV (sin persistir) y compara -> setea idioma -> inicia sesión -> bitácora
+                BEusuario_750VR usuario = bll.AutenticarEIniciarSesion_750VR(
+                    login, password,
+                    out esAdmin, out requiereReparacion);
+
+                // Si hay inconsistencia y es Admin, abrir Reparación y volver al Login (no continuar a principal)
+                if (requiereReparacion && esAdmin)
+                {
+                    using (var f = new FormReparacionDV_750VR())
+                    {
+                        this.Hide();
+                        f.ShowDialog();
+                        this.Show();
+                    }
+                    return; // que reintente login luego de reparar/restore
+                }
+
+                // ===== Permisos (igual que lo tenías) =====
                 var bllPerfil = new BLLperfil_750VR();
                 var componentesRaiz = bllPerfil.ObtenerPermisosDePerfilPorNombre(usuario.rol_750VR);
 
@@ -63,7 +79,7 @@ namespace Proyecto_NailsTime
                 foreach (var comp in componentesRaiz)
                     bllPerfil.ObtenerPermisosRecursivos(comp, listaComponentes);
 
-                List<string> nombresPermisos = listaComponentes
+                var nombresPermisos = listaComponentes
                     .OfType<PermisoSimple_750VR>()
                     .Select(p => p.Nombre_750VR)
                     .Distinct()
@@ -81,6 +97,16 @@ namespace Proyecto_NailsTime
             {
                 string mensaje = ex.Message;
 
+                // Mensaje de “problema de sistema, contacte al admin” => usuario NO admin con DV inconsistente
+                string msgProblema = Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.ProblemaSistemaContacteAdmin");
+                if (mensaje == msgProblema)
+                {
+                    MessageBox.Show(mensaje, "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
+
+                // Lógica de intentos fallidos si la BLL lanza “Contraseña incorrecta”
                 if (mensaje.Contains("Contraseña incorrecta"))
                 {
                     if (!intentosFallidosPorUsuario.ContainsKey(login))
@@ -90,7 +116,7 @@ namespace Proyecto_NailsTime
 
                     if (intentosFallidosPorUsuario[login] >= 3)
                     {
-                        bll.BloquearUsuario_750VR(login); // tu método actual
+                        bll.BloquearUsuario_750VR(login);
                         MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("Login.Mensaje.Bloqueado"));
                     }
                     else
@@ -103,7 +129,8 @@ namespace Proyecto_NailsTime
                 }
                 else
                 {
-                    MessageBox.Show(mensaje);
+                    // Otros mensajes: credenciales inválidas, sesión activa, etc.
+                    MessageBox.Show(mensaje, "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
 

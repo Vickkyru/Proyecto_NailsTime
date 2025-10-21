@@ -23,9 +23,57 @@ namespace Proyecto_NailsTime
         private void FormBitacoraCambios_750VR_Load(object sender, EventArgs e)
         {
             CargarComboInsumos();
-            dateTimePicker1.Value = DateTime.Now.AddDays(-3);
-            dateTimePicker2.Value = DateTime.Now;
-            CargarTodosLosCambios();
+
+            // por defecto: últimos 3 días
+            dateTimePicker1.Value = DateTime.Now.AddDays(-3); // inicio
+            dateTimePicker2.Value = DateTime.Now;             // fin
+
+            // Mostrar algo de entrada
+            btnapli_Click(sender, e);
+
+            // Opcional: formato/ocultos
+            PrepararColumnasGrid();
+        }
+        private void PrepararColumnasGrid()
+        {
+            if (dataGridView1.DataSource == null) return;
+
+            dataGridView1.AutoGenerateColumns = true;
+
+            // Asegurar que Act sea checkbox y editable
+            if (dataGridView1.Columns["Act"] is DataGridViewCheckBoxColumn chk)
+            {
+                chk.ReadOnly = false; // permitir marcar/desmarcar
+            }
+            else if (dataGridView1.Columns["Act"] != null)
+            {
+                // Reemplazar por CheckBox si vino como columna de texto
+                int idx = dataGridView1.Columns["Act"].Index;
+                dataGridView1.Columns.RemoveAt(idx);
+                var col = new DataGridViewCheckBoxColumn
+                {
+                    Name = "Act",
+                    DataPropertyName = "Act",
+                    HeaderText = "Activo",
+                    ReadOnly = false
+                };
+                dataGridView1.Columns.Insert(idx, col);
+            }
+
+            // Ocultar columnas técnicas si existen
+            string[] ocultas = { "IdInterno", "IdCambio", "Id", "RowVersion" };
+            foreach (var nombre in ocultas)
+            {
+                if (dataGridView1.Columns.Contains(nombre))
+                    dataGridView1.Columns[nombre].Visible = false;
+            }
+
+            // Estética
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ReadOnly = false; // solo Act editable
+            foreach (DataGridViewColumn c in dataGridView1.Columns)
+                if (c.Name != "Act") c.ReadOnly = true; // bloquear demás
         }
 
         private void CargarTodosLosCambios()
@@ -55,12 +103,20 @@ namespace Proyecto_NailsTime
         {
             int? codInsumo = (cmbInsumo.SelectedIndex >= 0) ? (int?)cmbInsumo.SelectedValue : null;
             string nombre = txtNombre.Text.Trim();
+
             DateTime fechaInicio = dateTimePicker1.Value.Date;
-            DateTime fechaFin = dateTimePicker2.Value.Date.AddDays(1).AddTicks(-1);
+            DateTime fechaFin = dateTimePicker2.Value.Date.AddDays(1).AddTicks(-1); // incluye todo el día fin
+
+            // Corregir si vienen invertidas
+            if (fechaInicio > fechaFin)
+            {
+                var tmp = fechaInicio; fechaInicio = fechaFin; fechaFin = tmp;
+            }
 
             var lista = bllCambios.ObtenerCambios(codInsumo, nombre, fechaInicio, fechaFin);
             dataGridView1.DataSource = lista;
-            FormatearGrilla();
+
+            PrepararColumnasGrid();
         }
 
         private void btnlimp_Click(object sender, EventArgs e)
@@ -113,6 +169,47 @@ namespace Proyecto_NailsTime
         private void btnsalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private bool _suspendEventosGrid = false;
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_suspendEventosGrid) return;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var col = dataGridView1.Columns[e.ColumnIndex];
+            if (col.Name != "Act") return;
+
+            var fila = dataGridView1.Rows[e.RowIndex].DataBoundItem as BEinsumoCambios_750VR;
+            if (fila == null) return;
+
+            // Si se marcó Act = true -> activar versión
+            bool nuevoValor = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            if (nuevoValor)
+            {
+                try
+                {
+                    bllCambios.ActivarVersion(fila.CodInsumo_750VR, fila.Fecha, fila.Hora);
+                    // refrescar
+                    _suspendEventosGrid = true;
+                    btnapli_Click(null, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al activar versión: " + ex.Message);
+                }
+                finally
+                {
+                    _suspendEventosGrid = false;
+                }
+            }
+            else
+            {
+                // Si el usuario desmarca, volver a marcarlo (siempre debe haber 1 activo)
+                _suspendEventosGrid = true;
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                _suspendEventosGrid = false;
+            }
         }
     }
 }
