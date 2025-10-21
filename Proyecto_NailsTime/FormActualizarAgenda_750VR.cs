@@ -16,6 +16,17 @@ namespace Proyecto_NailsTime
 {
     public partial class FormActualizarAgenda : Form, Iobserver_750VR
     {
+        // ====== Buffer temporal de insumos (no toca BD hasta Aplicar) ======
+        private class InsumoTmp
+        {
+            public int IdInsumo { get; set; }
+            public string Nombre { get; set; }
+            public int Cantidad { get; set; }
+        }
+        private readonly List<InsumoTmp> _insumosTmp = new List<InsumoTmp>();
+
+        private int idReservaSeleccionada = -1;
+        private bool _aplicando = false;
         public FormActualizarAgenda()
         {
             InitializeComponent();
@@ -40,33 +51,34 @@ namespace Proyecto_NailsTime
 
         private void FormActualizarAgenda_750VR_Load(object sender, EventArgs e)
         {
-          
             CargarReservas();
             Disponibilidad();
             CargarInsumos();
+            RefrescarEstadoBotones();
+            RefrescarGridInsumosTmp();
         }
         private void CargarInsumos()
         {
-            BLLinsumos_750VR bllInsumo = new BLLinsumos_750VR();
+            var bllInsumo = new BLLinsumos_750VR();
             var listaInsumos = bllInsumo.LeerInsumosActivos_750VR();
 
             comboBox1.DataSource = listaInsumos;
             comboBox1.DisplayMember = "nombre_750VR";
             comboBox1.ValueMember = "codinsumo_750VR";
+            comboBox1.SelectedIndex = -1;
         }
 
         private void Disponibilidad()
         {
-
-            BLLdisponibilidad_750VR bllDispo = new BLLdisponibilidad_750VR();
-            BLLusuario_750VR bllUsuario = new BLLusuario_750VR();
+            var bllDispo = new BLLdisponibilidad_750VR();
+            var bllUsuario = new BLLusuario_750VR();
             var sesion = SessionManager_750VR.ObtenerInstancia;
             int dniManicurista = sesion.user.dni_750VR;
 
             var listaDispo = bllDispo.ObtenerDisponibilidadesPorManicurista(dniManicurista);
             var listaUsuarios = bllUsuario.leerEntidades_750VR();
 
-            DataTable tabla = new DataTable();
+            var tabla = new DataTable();
             tabla.Columns.Add("IdDisponibilidad", typeof(int));
             tabla.Columns.Add("Manicurista", typeof(string));
             tabla.Columns.Add("DNImanicurista", typeof(int));
@@ -75,31 +87,25 @@ namespace Proyecto_NailsTime
             tabla.Columns.Add("Hora Fin", typeof(string));
             tabla.Columns.Add("Estado", typeof(string));
 
-
-            foreach (var dispo in listaDispo.Where(d => d.activo_750VR && d.estado_750VR == false))
+            foreach (var d in listaDispo.Where(x => x.activo_750VR && x.estado_750VR == false))
             {
-                var usu = listaUsuarios.FirstOrDefault(u => u.dni_750VR == dispo.DNImanic_750VR);
-                string nombreCompleto = usu != null ? $"{usu.nombre_750VR} {usu.apellido_750VR}" : "Desconocido";
-
+                var u = listaUsuarios.FirstOrDefault(z => z.dni_750VR == d.DNImanic_750VR);
+                string nom = u != null ? $"{u.nombre_750VR} {u.apellido_750VR}" : "Desconocido";
                 tabla.Rows.Add(
-                    dispo.CodDisponibilidad_750VR,
-                    nombreCompleto,
-                    dispo.DNImanic_750VR,
-                    dispo.Fecha_750VR.Date,
-                    dispo.HoraInicio_750VR.ToString(@"hh\:mm"),
-                    dispo.HoraFin_750VR.ToString(@"hh\:mm"),
-                     //"Disponible" 
-                     Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
+                    d.CodDisponibilidad_750VR,
+                    nom,
+                    d.DNImanic_750VR,
+                    d.Fecha_750VR.Date,
+                    d.HoraInicio_750VR.ToString(@"hh\:mm"),
+                    d.HoraFin_750VR.ToString(@"hh\:mm"),
+                    Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Disponible")
                 );
             }
 
             dataGridView2.DataSource = tabla;
+            if (dataGridView2.Columns.Contains("IdDisponibilidad")) dataGridView2.Columns["IdDisponibilidad"].Visible = false;
+            if (dataGridView2.Columns.Contains("DNImanicurista")) dataGridView2.Columns["DNImanicurista"].Visible = false;
 
-            if (dataGridView2.Columns.Contains("IdDisponibilidad"))
-                dataGridView2.Columns["IdDisponibilidad"].Visible = false;
-            if (dataGridView2.Columns.Contains("DNImanicurista"))
-                dataGridView2.Columns["DNImanicurista"].Visible = false;
-            // 🔤 Traducción de encabezados
             dataGridView2.Columns["Manicurista"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Manicurista");
             dataGridView2.Columns["Fecha"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_Fecha");
             dataGridView2.Columns["Hora Inicio"].HeaderText = Lenguaje_750VR.ObtenerEtiqueta("FormRegistrarReserva_750VR.Grid1_HoraInicio");
@@ -110,15 +116,13 @@ namespace Proyecto_NailsTime
         {
             var sesion = SessionManager_750VR.ObtenerInstancia;
             int dniManicurista = sesion.user.dni_750VR;
-
             var bll = new BLLReserva_750VR();
 
-            // ⚠️ Filtramos SOLO las reservas cobradas
             var reservas = bll.ObtenerReservasPorManicurista(dniManicurista)
-                              .Where(r => r.Cobrado_750VR) // <-- este filtro es clave
+                              .Where(r => r.Cobrado_750VR)
                               .ToList();
 
-            DataTable tabla = new DataTable();
+            var tabla = new DataTable();
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.DNICliente"), typeof(int));
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.NombreCliente"), typeof(string));
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.NombreManic"), typeof(string));
@@ -128,7 +132,7 @@ namespace Proyecto_NailsTime
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.HoraInicio"), typeof(string));
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.HoraFin"), typeof(string));
             tabla.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.Estado"), typeof(string));
-            tabla.Columns.Add("IdReserva", typeof(int)); // oculta
+            tabla.Columns.Add("IdReserva", typeof(int));
 
             foreach (var r in reservas)
             {
@@ -147,21 +151,31 @@ namespace Proyecto_NailsTime
             }
 
             dataGridView1.DataSource = tabla;
-
             if (dataGridView1.Columns.Contains("IdReserva"))
                 dataGridView1.Columns["IdReserva"].Visible = false;
         }
 
-        private int idReservaSeleccionada = -1;
+      
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
+            if (_aplicando) return;
+
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 idReservaSeleccionada = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IdReserva"].Value);
                 textBox1.Text = idReservaSeleccionada.ToString();
-                button2.Enabled = true;
             }
+            else
+            {
+                idReservaSeleccionada = -1;
+                textBox1.Clear();
+            }
+
+            // cambiar de reserva limpia lista temporal
+            _insumosTmp.Clear();
+            RefrescarGridInsumosTmp();
+            RefrescarEstadoBotones();
 
 
         }
@@ -173,63 +187,51 @@ namespace Proyecto_NailsTime
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeSeleccionarReserva"));
                 return;
             }
+            if (_insumosTmp.Count == 0)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeDebeRegistrarInsumo"));
+                return;
+            }
 
-            BLLReserva_750VR bllReserva = new BLLReserva_750VR();
-            string estadoActual = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
-
-            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            var bllReserva = new BLLReserva_750VR();
+            var estado = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
+            if (!estado.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeNoModificable"));
                 return;
             }
 
-            // Validar campos de insumo
-            if (comboBox1.SelectedItem == null || string.IsNullOrEmpty(textBox2.Text))
-            {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCompletaCampos"));
-                return;
-            }
-
-            // Verificar cantidad
-            if (!int.TryParse(textBox2.Text, out int cantidad) || cantidad <= 0)
-            {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCantidadInvalida"));
-                return;
-            }
-
-            int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
-
-            // Verificar si el insumo ya fue agregado
-            BLLreservaInsumo_750VR bllInsumo = new BLLreservaInsumo_750VR();
-            if (bllInsumo.InsumoYaAgregado(idReservaSeleccionada, idInsumo))
-            {
-                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeInsumoYaAgregado"));
-                return;
-            }
-
             try
             {
-                // Registrar insumo
-                bllInsumo.RegistrarInsumoUsado(idReservaSeleccionada, idInsumo, cantidad);
+                _aplicando = true;
 
-                // Marcar como Realizado
+                var bllInsumo = new BLLreservaInsumo_750VR();
+                foreach (var it in _insumosTmp)
+                {
+                    if (bllInsumo.InsumoYaAgregado(idReservaSeleccionada, it.IdInsumo))
+                        bllInsumo.SumarCantidadInsumo(idReservaSeleccionada, it.IdInsumo, it.Cantidad);
+                    else
+                        bllInsumo.RegistrarInsumoUsado(idReservaSeleccionada, it.IdInsumo, it.Cantidad);
+                }
+
                 bllReserva.ActualizarEstadoReserva(idReservaSeleccionada, "Realizado");
 
-                // Avisar y limpiar
+                _insumosTmp.Clear();
+                RefrescarGridInsumosTmp();
+
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCorrecto"));
-                comboBox1.SelectedIndex = -1;
-                textBox2.Clear();
 
-                // Bloquear botón "Ausente"
-                button2.Enabled = false;
-
-                // Refrescar
                 CargarReservas();
                 Disponibilidad();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeErrorRegistro") + " " + ex.Message);
+            }
+            finally
+            {
+                _aplicando = false;
+                RefrescarEstadoBotones();
             }
         }
 
@@ -313,40 +315,39 @@ namespace Proyecto_NailsTime
         {
             if (idReservaSeleccionada == -1)
             {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeSeleccionaReserva"),
+                                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            BLLReserva_750VR bll = new BLLReserva_750VR();
-            string estadoActual = bll.ObtenerEstadoReserva(idReservaSeleccionada);
-
-            if (!estadoActual.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            if (_insumosTmp.Count > 0)
             {
-                MessageBox.Show(
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoModificable"),
-                    Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeNoAusenteConInsumos"));
+                return;
+            }
+
+            var bll = new BLLReserva_750VR();
+            string estado = bll.ObtenerEstadoReserva(idReservaSeleccionada);
+            if (!estado.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaNoModificable"),
+                                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloError"),
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             bll.ActualizarEstadoReserva(idReservaSeleccionada, "Ausente");
 
-            MessageBox.Show(
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaRealizada"),
-                Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.MensajeReservaRealizada"),
+                            Lenguaje_750VR.ObtenerEtiqueta("FormAgenda_750VR.TituloConfirmacion"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            _insumosTmp.Clear();
+            RefrescarGridInsumosTmp();
             CargarReservas();
             Disponibilidad();
+            RefrescarEstadoBotones();
         }
        
 
@@ -412,10 +413,91 @@ namespace Proyecto_NailsTime
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            button2.Enabled = true;
             textBox1.Clear();
             textBox2.Clear();
             comboBox1.SelectedIndex = -1;
+
+            idReservaSeleccionada = -1;
+            _insumosTmp.Clear();
+            RefrescarGridInsumosTmp();
+            RefrescarEstadoBotones();
+        }
+
+        private void RefrescarEstadoBotones()
+        {
+            bool hayReserva = idReservaSeleccionada != -1;
+
+            bool reservaPendiente = false;
+            if (hayReserva)
+            {
+                var bll = new BLLReserva_750VR();
+                var estado = bll.ObtenerEstadoReserva(idReservaSeleccionada);
+                reservaPendiente = estado.Equals("Pendiente", StringComparison.OrdinalIgnoreCase);
+            }
+
+            // button5 = Agregar, button3 = Aplicar, button2 = Ausente
+            button5.Enabled = hayReserva && reservaPendiente;
+            button3.Enabled = hayReserva && reservaPendiente && _insumosTmp.Count > 0;
+            button2.Enabled = hayReserva && reservaPendiente && _insumosTmp.Count == 0;
+        }
+
+        private void RefrescarGridInsumosTmp()
+        {
+            var grid = this.Controls.Find("dgvInsumos", true).FirstOrDefault() as DataGridView;
+            if (grid == null) return;
+
+            var dt = new DataTable();
+            dt.Columns.Add("IdInsumo", typeof(int));
+            dt.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.ColInsumo") ?? "Insumo", typeof(string));
+            dt.Columns.Add(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.ColCantidad") ?? "Cantidad", typeof(int));
+
+            foreach (var it in _insumosTmp)
+                dt.Rows.Add(it.IdInsumo, it.Nombre, it.Cantidad);
+
+            grid.DataSource = dt;
+            if (grid.Columns.Contains("IdInsumo")) grid.Columns["IdInsumo"].Visible = false;
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            if (idReservaSeleccionada == -1)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeSeleccionarReserva"));
+                return;
+            }
+
+            var bllReserva = new BLLReserva_750VR();
+            var estado = bllReserva.ObtenerEstadoReserva(idReservaSeleccionada);
+            if (!estado.Equals("Pendiente", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeNoModificable"));
+                return;
+            }
+
+            if (comboBox1.SelectedItem == null || string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCompletaCampos"));
+                return;
+            }
+
+            if (!int.TryParse(textBox2.Text, out int cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show(Lenguaje_750VR.ObtenerEtiqueta("FormActualizarAgenda_750VR.MensajeCantidadInvalida"));
+                return;
+            }
+
+            int idInsumo = Convert.ToInt32(comboBox1.SelectedValue);
+            string nombre = ((dynamic)comboBox1.SelectedItem).nombre_750VR;
+
+            var existente = _insumosTmp.FirstOrDefault(x => x.IdInsumo == idInsumo);
+            if (existente != null) existente.Cantidad += cantidad;
+            else _insumosTmp.Add(new InsumoTmp { IdInsumo = idInsumo, Nombre = nombre, Cantidad = cantidad });
+
+            textBox2.Clear();
+            comboBox1.SelectedIndex = -1;
+
+            RefrescarGridInsumosTmp();
+            RefrescarEstadoBotones();
         }
     }
     

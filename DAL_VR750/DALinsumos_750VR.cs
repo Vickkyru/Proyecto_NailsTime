@@ -1,6 +1,7 @@
 ﻿using BE_VR750;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -107,6 +108,55 @@ namespace DAL_VR750
         {
             return LeerInsumos_750VR().FindAll(i => i.activo_750VR);
         }
+
+        public List<BEinsumos_750VR> LeerInsumosActivos()
+        {
+            const string sql = @"SELECT CodInsumo_VR750, nombre_750VR, descripcion_750VR,
+                                        cantidadActual_750VR, stockMinimo_750VR, unidadMedida_750VR, activo_750VR
+                                 FROM Insumo_VR750
+                                 WHERE activo_750VR = 1";
+
+            var lista = new List<BEinsumos_750VR>();
+            using (var cn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                cn.Open();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        lista.Add(new BEinsumos_750VR
+                        {
+                            CodInsumo_750VR = dr.GetInt32(0),
+                            nombre_750VR = dr.GetString(1),
+                            descripcion_750VR = dr.IsDBNull(2) ? "" : dr.GetString(2),
+                            cantidadActual_750VR = dr.GetInt32(3),
+                            stockMinimo_750VR = dr.GetInt32(4),
+                            unidadMedida_750VR = dr.IsDBNull(5) ? "" : dr.GetString(5),
+                            activo_750VR = dr.GetBoolean(6)
+                        });
+                    }
+                }
+            }
+            return lista;
+        }
+
+        public void DescontarStock(int codInsumo, int cantidad)
+        {
+            const string sql = @"UPDATE Insumo_VR750
+                                 SET cantidadActual_750VR = cantidadActual_750VR - @c
+                                 WHERE CodInsumo_VR750=@i";
+            using (var cn = new SqlConnection(BaseDeDatos_750VR.cadena))
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                cmd.Parameters.Add("@c", SqlDbType.Int).Value = cantidad;
+                cmd.Parameters.Add("@i", SqlDbType.Int).Value = codInsumo;
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
     }
 }
 

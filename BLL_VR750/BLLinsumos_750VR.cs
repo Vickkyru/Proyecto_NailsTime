@@ -49,5 +49,28 @@ namespace BLL_VR750
         {
             return dal.LeerInsumosActivos_750VR();
         }
+
+        public List<BEinsumos_750VR> LeerInsumosActivos_750() => dal.LeerInsumosActivos();
+
+        public List<(BEinsumos_750VR insumo, int faltante, int sugerido)> ObtenerBajoMinimo()
+        {
+            // sugerido: reponer para quedar en 2×stockMinimo (ajustalo si querés)
+            return dal.LeerInsumosActivos()
+                     .Where(i => i.cantidadActual_750VR < i.stockMinimo_750VR)
+                     .Select(i =>
+                     {
+                         int faltante = i.stockMinimo_750VR - i.cantidadActual_750VR;
+                         int sugerido = (i.stockMinimo_750VR * 2) - i.cantidadActual_750VR;
+                         if (sugerido < faltante) sugerido = faltante;
+                         return (i, faltante, sugerido);
+                     })
+                     .ToList();
+        }
+
+        public void DescontarStock(int codInsumo, int cantidad)
+        {
+            if (codInsumo <= 0 || cantidad <= 0) throw new ArgumentOutOfRangeException();
+            dal.DescontarStock(codInsumo, cantidad);
+        }
     }
 }
