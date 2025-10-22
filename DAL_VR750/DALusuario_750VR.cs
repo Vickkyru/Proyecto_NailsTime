@@ -259,56 +259,90 @@ VALUES
 
         public BEusuario_750VR recuperarUsuario_750VR(string user, string contraseña)
         {
-            string sqlQuery = "SELECT * FROM Usuario_VR750 WHERE Usuario_VR750 = @Usuario";
+            const string sqlQuery = "SELECT * FROM Usuario_VR750 WHERE Usuario_VR750 = @Usuario";
 
             try
             {
                 if (!db.Conectar_750VR())
                     throw new Exception("Error al conectar a la base de datos.");
 
-                using (SqlCommand command = new SqlCommand(sqlQuery, db.Connection))
+                using (var command = new SqlCommand(sqlQuery, db.Connection))
                 {
                     command.Parameters.AddWithValue("@Usuario", user);
 
-                    using (SqlDataReader lector = command.ExecuteReader())
+                    using (var lector = command.ExecuteReader())
                     {
                         if (!lector.HasRows)
                             throw new Exception("Usuario no encontrado.");
 
                         if (lector.Read())
                         {
-                            int dni = lector.GetInt32(0);
-                            string nombre = lector.GetString(1);
-                            string apellido = lector.GetString(2);
-                            string email = lector.GetString(3);
-                            string usuarioDB = lector.GetString(4);
-                            string contraseñaAlmacenada = lector.GetString(5);
-                            string saltAlmacenado = lector.GetString(6);
-                            string rol = lector.GetString(7);
-                            bool activo = lector.GetBoolean(8);
-                            bool bloqueado = lector.GetBoolean(9);
-                            string idioma = lector["Idioma_VR750"].ToString(); // <-- Agregado
+                            // Campos base (tipos seguros)
+                            int dni = Convert.ToInt32(lector["DNI_VR750"]);
+                            string nombre = lector["Nombre_VR750"]?.ToString() ?? "";
+                            string apellido = lector["Apellido_VR750"]?.ToString() ?? "";
+                            string email = lector["Email_VR750"]?.ToString() ?? "";
+                            string usuarioDB = lector["Usuario_VR750"]?.ToString() ?? "";
+                            string contraseñaAlmacenada = lector["Contra_VR750"]?.ToString() ?? "";
+                            string saltAlmacenado = lector["Salt_VR750"]?.ToString() ?? "";
+                            string rol = lector["Rol_VR750"]?.ToString() ?? "";
 
+                            // ✅ Conversión robusta de booleanos (acepta bit/int/varchar)
+                            bool activo = false;
+                            object oActivo = lector["Activo_VR750"];
+                            if (oActivo != DBNull.Value)
+                            {
+                                if (oActivo is bool b) activo = b;
+                                else
+                                {
+                                    var s = oActivo.ToString().Trim().ToLower();
+                                    activo = (s == "1" || s == "true" || s == "sí" || s == "si");
+                                }
+                            }
+
+                            bool bloqueado = false;
+                            object oBloq = lector["Bloqueado_VR750"];
+                            if (oBloq != DBNull.Value)
+                            {
+                                if (oBloq is bool bb) bloqueado = bb;
+                                else
+                                {
+                                    var s = oBloq.ToString().Trim().ToLower();
+                                    bloqueado = (s == "1" || s == "true" || s == "sí" || s == "si");
+                                }
+                            }
+
+                            // Idioma con default seguro
+                            string idioma = lector["Idioma_VR750"] == DBNull.Value
+                                ? "Español"
+                                : (lector["Idioma_VR750"]?.ToString() ?? "Español");
+
+                            // Validaciones de estado
                             if (!activo) throw new Exception("El usuario está inactivo.");
                             if (bloqueado) throw new Exception("El usuario está bloqueado.");
 
+                            // Validación de contraseña con/ sin salt
                             bool contraseñaValida;
-
                             if (string.IsNullOrEmpty(saltAlmacenado))
                             {
-                                contraseñaValida = contraseñaAlmacenada == contraseña;
+                                // Modo legacy (texto plano)
+                                contraseñaValida = (contraseñaAlmacenada == contraseña);
                             }
                             else
                             {
                                 string hashCalculado = hasher.HashearConSalt_750VR(contraseña, saltAlmacenado);
-                                contraseñaValida = hashCalculado == contraseñaAlmacenada;
+                                contraseñaValida = (hashCalculado == contraseñaAlmacenada);
                             }
 
                             if (!contraseñaValida)
                                 throw new Exception("Contraseña incorrecta");
 
-                            var usuario = new BEusuario_750VR(dni, nombre, apellido, email, usuarioDB, contraseñaAlmacenada, saltAlmacenado, rol, activo, bloqueado, idioma);
-                            return usuario;
+                            // OK -> devolver entidad
+                            return new BEusuario_750VR(
+                                dni, nombre, apellido, email, usuarioDB,
+                                contraseñaAlmacenada, saltAlmacenado, rol,
+                                activo, bloqueado, idioma
+                            );
                         }
                     }
                 }
@@ -320,6 +354,8 @@ VALUES
                 db.Desconectar_750VR();
             }
         }
+
+
 
 
         public void ActualizarIdiomaUsuario_750VR(string login, string idioma)

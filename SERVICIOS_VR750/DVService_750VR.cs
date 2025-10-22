@@ -11,7 +11,7 @@ namespace SERVICIOS_VR750
     public static class DVService_750VR
     {
         private static readonly string _connStr =
-              "Server=.;Database=ProyectoNailsTime_VR750;Trusted_Connection=True;TrustServerCertificate=True;";
+    "Server=localhost\\SQLEXPRESS;Database=ProyectoNailsTime_VR750;Trusted_Connection=True;TrustServerCertificate=True;";
 
         private static readonly HashSet<string> _excluirCols =
             new HashSet<string>(StringComparer.OrdinalIgnoreCase)

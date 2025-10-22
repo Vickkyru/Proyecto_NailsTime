@@ -11,7 +11,7 @@ namespace DAL_VR750
 {
     public class BaseDeDatos_750VR
     {
-        public static string dataSource = @"HP_Victoria\SQLEXPRESS";  // 🔹 Notar el @ para evitar errores con '\'
+        public static string dataSource = @"localhost\SQLEXPRESS";// 🔹 Notar el @ para evitar errores con '\'
         public static string dbName = "ProyectoNailsTime_VR750";
         public static string cadena = $"Data Source={dataSource};Initial Catalog={dbName};Integrated Security=True;";
         public SqlConnection Connection = new SqlConnection(cadena);
@@ -381,6 +381,54 @@ IF NOT EXISTS (SELECT 1 FROM sys.triggers WHERE name = 'TRG_InsumoCambios_Activa
             ON ar.IdCambio = src.IdCambio_VR750;
     END
     ');
+
+-- ============================================================
+-- TABLAS PARA DÍGITOS VERIFICADORES (DV)
+-- ============================================================
+
+-- DV global de la base
+IF NOT EXISTS (
+    SELECT 1 FROM sys.tables 
+    WHERE name = 'DV_DB_VR750' AND schema_id = SCHEMA_ID('dbo')
+)
+BEGIN
+    CREATE TABLE dbo.DV_DB_VR750(
+        ID_DV      INT IDENTITY(1,1) PRIMARY KEY,
+        DVH_DB     VARCHAR(255) NOT NULL,
+        DVV_DB     VARCHAR(255) NOT NULL,
+        UpdatedAt  DATETIME2    NOT NULL DEFAULT SYSDATETIME()
+    );
+
+    -- fila semilla para evitar ""tabla vacía"" la primera vez
+    INSERT INTO dbo.DV_DB_VR750 (DVH_DB, DVV_DB) VALUES ('0','0');
+END;
+
+-- DV por tabla (nombre usado por varios DVService)
+IF NOT EXISTS (
+    SELECT 1 FROM sys.tables 
+    WHERE name = 'DV_TABLAS_VR750' AND schema_id = SCHEMA_ID('dbo')
+)
+BEGIN
+    CREATE TABLE dbo.DV_TABLAS_VR750(
+        NombreTabla SYSNAME      NOT NULL PRIMARY KEY,
+        DVH_Tabla   VARCHAR(255) NOT NULL,
+        UpdatedAt   DATETIME2    NOT NULL DEFAULT SYSDATETIME()
+    );
+END;
+
+-- (Compatibilidad opcional: si tu código viejo miraba DV_Tabla_VR750)
+IF NOT EXISTS (
+    SELECT 1 FROM sys.tables 
+    WHERE name = 'DV_Tabla_VR750' AND schema_id = SCHEMA_ID('dbo')
+)
+BEGIN
+    CREATE TABLE dbo.DV_Tabla_VR750(
+        Tabla      SYSNAME      NOT NULL PRIMARY KEY,
+        DVH_Tabla  VARCHAR(255) NOT NULL,
+        UpdatedAt  DATETIME2    NOT NULL DEFAULT SYSDATETIME()
+    );
+END;
+
 ";
 
                 using (SqlCommand cmd2 = new SqlCommand(scriptTriggers, conn))
